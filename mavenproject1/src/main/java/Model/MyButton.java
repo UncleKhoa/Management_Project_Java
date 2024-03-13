@@ -82,10 +82,10 @@ public class MyButton extends JButton {
 
             }
 
-            @Override
-            public void mousePressed(MouseEvent me) {
-                setBackground(colorClick);
-            }
+//            @Override
+//            public void mousePressed(MouseEvent me) {
+//                setBackground(colorClick);
+//            }
 
             @Override
             public void mouseReleased(MouseEvent me) {
