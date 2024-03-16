@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2024 at 11:37 AM
+-- Generation Time: Mar 16, 2024 at 12:56 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -34,6 +34,13 @@ CREATE TABLE `account` (
   `Gmail` varchar(40) NOT NULL,
   `Enable` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`AccountID`, `StaffID`, `Password`, `Gmail`, `Enable`) VALUES
+('admin001', 'admin', '123465', 'khoanguyen052096@gmail.com', 'unlock');
 
 -- --------------------------------------------------------
 
@@ -213,6 +220,13 @@ CREATE TABLE `staff` (
   `Role` varchar(20) NOT NULL,
   `IMG` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`StaffID`, `FirstName`, `LastName`, `YearOfBirth`, `Gender`, `PhoneNumber`, `Address`, `Salary`, `Role`, `IMG`) VALUES
+('admin', 'Khoa', 'Nguyễn', 2002, 'Nam', '077*****31', 'asadfwewefwef', 20000000, 'admin', '');
 
 -- --------------------------------------------------------
 
