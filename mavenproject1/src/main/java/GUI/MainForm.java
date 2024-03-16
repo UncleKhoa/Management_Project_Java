@@ -17,9 +17,9 @@ import javax.swing.ImageIcon;
  */
 public class MainForm extends javax.swing.JFrame {
     //Lấy đường dẫn tới file
-        File file = new File("");
-        String currentDirectory = file.getAbsolutePath();
-        String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
+    File file = new File("");
+    String currentDirectory = file.getAbsolutePath();
+    String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
     /**
      * Creates new form MainForm
      */
@@ -585,6 +585,12 @@ public class MainForm extends javax.swing.JFrame {
             case 1:
                 pannelBH.setBackground(new java.awt.Color(0, 51, 204));
                 lblBanhang.setForeground(new java.awt.Color(255, 255, 255));
+//                B2.setEnabled(true);
+//                JMain.removeAll();
+//                bai2 = new Bai2();
+//                bai2.setSize(900, 700);
+//                JMain.add(bai2);
+//                JMain.updateUI();
                 break;
             case 2:
                 pannelSP.setBackground(new java.awt.Color(0, 51, 204));
