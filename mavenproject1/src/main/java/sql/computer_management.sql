@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2024 at 12:56 PM
+-- Generation Time: Mar 19, 2024 at 12:06 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `account` (
-  `AccountID` varchar(10) NOT NULL,
   `StaffID` varchar(10) NOT NULL,
+  `Username` varchar(30) NOT NULL,
   `Password` varchar(20) NOT NULL,
   `Gmail` varchar(40) NOT NULL,
   `Enable` varchar(20) NOT NULL
@@ -39,8 +39,8 @@ CREATE TABLE `account` (
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`AccountID`, `StaffID`, `Password`, `Gmail`, `Enable`) VALUES
-('admin001', 'admin', '123465', 'khoanguyen052096@gmail.com', 'unlock');
+INSERT INTO `account` (`StaffID`, `Username`, `Password`, `Gmail`, `Enable`) VALUES
+('admin', 'admin', 'admin', 'khoanguyen052096@gmail.com', 'unlock');
 
 -- --------------------------------------------------------
 
@@ -122,7 +122,7 @@ CREATE TABLE `product` (
   `ProductName` varchar(50) NOT NULL,
   `UnitPrice` longblob NOT NULL,
   `Quantity` int(10) NOT NULL,
-  `IMG` longblob NOT NULL
+  `IMG` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -249,8 +249,7 @@ CREATE TABLE `supplier` (
 -- Indexes for table `account`
 --
 ALTER TABLE `account`
-  ADD PRIMARY KEY (`AccountID`),
-  ADD KEY `fk_acc_staffid` (`StaffID`);
+  ADD PRIMARY KEY (`StaffID`);
 
 --
 -- Indexes for table `activity`
@@ -348,7 +347,7 @@ ALTER TABLE `supplier`
 -- Constraints for table `account`
 --
 ALTER TABLE `account`
-  ADD CONSTRAINT `fk_acc_staffid` FOREIGN KEY (`StaffID`) REFERENCES `staff` (`StaffID`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_acc_staffid` FOREIGN KEY (`StaffID`) REFERENCES `staff` (`StaffID`);
 
 --
 -- Constraints for table `activity`
