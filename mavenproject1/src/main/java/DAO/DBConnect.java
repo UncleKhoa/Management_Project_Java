@@ -18,7 +18,7 @@ public class DBConnect {
     
     public static Connection getConnect(){
         Connection conn = null;
-        String url = "jdbc:mysql://localhost/khoxemay";
+        String url = "jdbc:mysql://localhost/computer_management";
         String username = "root";
         String password = "";
         
