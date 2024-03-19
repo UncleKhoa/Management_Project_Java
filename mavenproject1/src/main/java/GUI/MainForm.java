@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.Connection;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
@@ -110,9 +111,12 @@ public class MainForm extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pannelBHMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pannelBHMouseEntered(evt);
+            }
         });
 
-        lblBanhang.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblBanhang.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblBanhang.setForeground(new java.awt.Color(255, 255, 255));
         lblBanhang.setText("Bán hàng");
 
@@ -134,9 +138,12 @@ public class MainForm extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pannelSPMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pannelSPMouseEntered(evt);
+            }
         });
 
-        lblSanpham.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblSanpham.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblSanpham.setText("Sản phẩm");
 
         javax.swing.GroupLayout pannelSPLayout = new javax.swing.GroupLayout(pannelSP);
@@ -159,7 +166,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        lblNhacungcap.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblNhacungcap.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblNhacungcap.setText("Nhà cung cấp");
 
         javax.swing.GroupLayout pannelNCCLayout = new javax.swing.GroupLayout(pannelNCC);
@@ -180,10 +187,13 @@ public class MainForm extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pannelKHMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pannelKHMouseEntered(evt);
+            }
         });
 
         lblConnguoi.setBackground(new java.awt.Color(255, 255, 255));
-        lblConnguoi.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblConnguoi.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblConnguoi.setText("Khách hàng");
 
         javax.swing.GroupLayout pannelKHLayout = new javax.swing.GroupLayout(pannelKH);
@@ -206,7 +216,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        lblHoadon.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblHoadon.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblHoadon.setText("Hóa đơn");
 
         javax.swing.GroupLayout pannelHDLayout = new javax.swing.GroupLayout(pannelHD);
@@ -230,7 +240,7 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         lblTaikhoan.setBackground(new java.awt.Color(255, 255, 255));
-        lblTaikhoan.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblTaikhoan.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblTaikhoan.setText("Tài khoản");
 
         javax.swing.GroupLayout pannelTKLayout = new javax.swing.GroupLayout(pannelTK);
@@ -254,7 +264,7 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         lblThongke.setBackground(new java.awt.Color(255, 255, 255));
-        lblThongke.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblThongke.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblThongke.setText("Thống kê");
 
         javax.swing.GroupLayout pannelThKLayout = new javax.swing.GroupLayout(pannelThK);
@@ -305,7 +315,7 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         lblNhanvien.setBackground(new java.awt.Color(255, 255, 255));
-        lblNhanvien.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblNhanvien.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblNhanvien.setText("Nhân viên");
 
         javax.swing.GroupLayout pannelNVLayout = new javax.swing.GroupLayout(pannelNV);
@@ -328,7 +338,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        lblKhuyenmai.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblKhuyenmai.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblKhuyenmai.setText("Khuyến mãi");
 
         javax.swing.GroupLayout pannelKMLayout = new javax.swing.GroupLayout(pannelKM);
@@ -351,7 +361,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        lblNhaphang.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblNhaphang.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblNhaphang.setText("Nhập hàng");
 
         javax.swing.GroupLayout pannelNHLayout = new javax.swing.GroupLayout(pannelNH);
@@ -399,7 +409,7 @@ public class MainForm extends javax.swing.JFrame {
             .addComponent(pannelKM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pannelNH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(47, 47, 47)
                 .addComponent(lblDoithongtin)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -429,9 +439,9 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(pannelTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pannelThK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(106, 106, 106)
+                .addGap(108, 108, 108)
                 .addComponent(lblDoithongtin)
-                .addGap(105, 105, 105))
+                .addGap(103, 103, 103))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -474,28 +484,31 @@ public class MainForm extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
-                .addComponent(lblExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addComponent(lblExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(lblRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lblExit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblRole, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblLogo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblExit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(4, 4, 4))
         );
 
         jmain.setBackground(new java.awt.Color(255, 102, 0));
@@ -522,10 +535,9 @@ public class MainForm extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jmain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
@@ -558,7 +570,7 @@ public class MainForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
         System.exit(0);
     }//GEN-LAST:event_lblExitMouseClicked
@@ -617,7 +629,58 @@ public class MainForm extends javax.swing.JFrame {
 //                bai2.setSize(900, 700);
 //                JMain.add(bai2);
 //                JMain.updateUI();
-                System.out.println(name);
+                break;
+            case 2:
+                pannelSP.setBackground(new java.awt.Color(0, 51, 204));
+                lblSanpham.setForeground(new java.awt.Color(255, 255, 255));
+                break;
+            case 3:
+                pannelNCC.setBackground(new java.awt.Color(0, 51, 204));
+                lblNhacungcap.setForeground(new java.awt.Color(255, 255, 255));
+                break;
+            case 4:
+                pannelKH.setBackground(new java.awt.Color(0, 51, 204));
+                lblConnguoi.setForeground(new java.awt.Color(255, 255, 255));
+                break;
+            case 5:
+                pannelHD.setBackground(new java.awt.Color(0, 51, 204));
+                lblHoadon.setForeground(new java.awt.Color(255, 255, 255));
+                break;
+            case 6:
+                pannelTK.setBackground(new java.awt.Color(0, 51, 204));
+                lblTaikhoan.setForeground(new java.awt.Color(255, 255, 255));
+                break;
+            case 7:
+                pannelThK.setBackground(new java.awt.Color(0, 51, 204));
+                lblThongke.setForeground(new java.awt.Color(255, 255, 255));
+                break;
+            case 8:
+                pannelNV.setBackground(new java.awt.Color(0, 51, 204));
+                lblNhanvien.setForeground(new java.awt.Color(255, 255, 255));
+                break;
+            case 9:
+                pannelNH.setBackground(new java.awt.Color(0, 51, 204));
+                lblNhaphang.setForeground(new java.awt.Color(255, 255, 255));
+                break;
+            case 10:
+                pannelKM.setBackground(new java.awt.Color(0, 51, 204));
+                lblKhuyenmai.setForeground(new java.awt.Color(255, 255, 255));
+                break;
+        }
+                    
+    }  
+    
+    private void set_color_pannel_hover(int a) {                                      
+        switch (a) {
+            case 1:
+                pannelBH.setBackground(new java.awt.Color(0, 51, 204));
+                lblBanhang.setForeground(new java.awt.Color(255, 255, 255));
+//                B2.setEnabled(true);
+//                JMain.removeAll();
+//                bai2 = new Bai2();
+//                bai2.setSize(900, 700);
+//                JMain.add(bai2);
+//                JMain.updateUI();
                 break;
             case 2:
                 pannelSP.setBackground(new java.awt.Color(0, 51, 204));
@@ -698,6 +761,18 @@ public class MainForm extends javax.swing.JFrame {
     private void pannelThKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelThKMouseClicked
         set_color_pannel(7);
     }//GEN-LAST:event_pannelThKMouseClicked
+    
+    private void pannelSPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelSPMouseEntered
+        
+    }//GEN-LAST:event_pannelSPMouseEntered
+
+    private void pannelKHMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelKHMouseEntered
+
+    }//GEN-LAST:event_pannelKHMouseEntered
+
+    private void pannelBHMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelBHMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pannelBHMouseEntered
 
     /**
      * @param args the command line arguments
