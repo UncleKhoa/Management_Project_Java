@@ -117,6 +117,11 @@ public class Login extends javax.swing.JFrame {
                 myButton1MouseClicked(evt);
             }
         });
+        myButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                myButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
@@ -324,13 +329,17 @@ public class Login extends javax.swing.JFrame {
             String name = staff.getFirstname();
             String role = staff.getRole();
             
-            JOptionPane.showMessageDialog(this, "Đăng nhập thành công, chào mừng");
+            JOptionPane.showMessageDialog(this, "Đăng nhập thành công, chào mừng "+ name +"");
             MainForm mfrm = new MainForm(name,role);
             mfrm.setVisible(true);
             dispose(); //Phá hủy Jframeform
         }        
         
     }//GEN-LAST:event_myButton1MouseClicked
+
+    private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
+        
+    }//GEN-LAST:event_myButton1ActionPerformed
 
     /**
      * @param args the command line arguments
