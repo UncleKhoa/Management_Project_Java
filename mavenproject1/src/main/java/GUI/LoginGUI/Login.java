@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import BUS.userBUS;
 import DTO.staffDTO;
 import DTO.userDTO;
+import GUI.LoginGUI.ForgetPassword;
 
 /**
  *
@@ -71,7 +72,7 @@ public class Login extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         lblExit = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblForgetPass = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -175,9 +176,14 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Forget your password ?");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 102, 204));
-        jLabel3.setText("Click here");
+        lblForgetPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblForgetPass.setForeground(new java.awt.Color(0, 102, 204));
+        lblForgetPass.setText("Click here");
+        lblForgetPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblForgetPassMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -215,7 +221,7 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(lblForgetPass)
                         .addGap(106, 106, 106))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -245,7 +251,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(lblForgetPass)
                     .addComponent(jLabel2))
                 .addGap(14, 14, 14))
         );
@@ -341,6 +347,11 @@ public class Login extends javax.swing.JFrame {
         
     }//GEN-LAST:event_myButton1ActionPerformed
 
+    private void lblForgetPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgetPassMouseClicked
+        ForgetPassword fg = new ForgetPassword();
+        fg.setVisible(true);
+    }//GEN-LAST:event_lblForgetPassMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -379,7 +390,6 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -389,6 +399,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblExit;
+    private javax.swing.JLabel lblForgetPass;
     private Model.MyButton myButton1;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
