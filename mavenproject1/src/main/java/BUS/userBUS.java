@@ -27,6 +27,7 @@ import javax.mail.internet.MimeMessage;
  * @author khoan
  */
 public class userBUS {
+    private userDAO userDAO;
     
     private ArrayList<userDTO> dsUS;
     
@@ -34,6 +35,9 @@ public class userBUS {
        list();
     }
     
+    public void userBUS(){
+        this.userDAO = new userDAO();
+    }
     
     public void list() {
         userDAO usDAO = new userDAO();
@@ -138,6 +142,13 @@ public class userBUS {
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail, false));
 
         Transport.send(msg);
+    }
+    
+    public void updatePass(String pass, String mail){
+        userDAO usDAO = new userDAO();
+        usDAO.UpdatePassword(pass, mail);
+        System.out.print(mail+" "+pass);
+        return;
     }
     
 }

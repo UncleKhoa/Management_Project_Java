@@ -7,6 +7,7 @@ package GUI.LoginGUI;
 import BUS.staffBUS;
 import BUS.userBUS;
 import DTO.userDTO;
+import GUI.Login;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.logging.Level;
@@ -49,12 +50,12 @@ public class ForgetPassword extends javax.swing.JFrame {
         lblGetCode = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
-        txtNewPass = new javax.swing.JTextField();
-        txtCheckNewPass = new javax.swing.JTextField();
         lblNewPass = new javax.swing.JLabel();
         lblCheckNewPass = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
+        txtNewPass = new javax.swing.JPasswordField();
+        txtCheckNewPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -62,14 +63,17 @@ public class ForgetPassword extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setPreferredSize(new java.awt.Dimension(680, 400));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 32)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Forget PassWord");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 7, -1, 78));
 
         lblGmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblGmail.setText("Email");
+        jPanel1.add(lblGmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 121, -1, -1));
 
         txtGmail.setPreferredSize(new java.awt.Dimension(320, 30));
         txtGmail.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -77,11 +81,14 @@ public class ForgetPassword extends javax.swing.JFrame {
                 txtGmailKeyReleased(evt);
             }
         });
+        jPanel1.add(txtGmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 320, -1));
 
         lblCode.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCode.setText("Code");
+        jPanel1.add(lblCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 221, -1, -1));
 
         txtCode.setPreferredSize(new java.awt.Dimension(320, 30));
+        jPanel1.add(txtCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, -1, -1));
 
         lblGetCode.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblGetCode.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -92,6 +99,7 @@ public class ForgetPassword extends javax.swing.JFrame {
                 lblGetCodeMouseEntered(evt);
             }
         });
+        jPanel1.add(lblGetCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(501, 161, 122, 16));
 
         btnExit.setBackground(new java.awt.Color(255, 0, 0));
         btnExit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -102,6 +110,7 @@ public class ForgetPassword extends javax.swing.JFrame {
                 btnExitMouseClicked(evt);
             }
         });
+        jPanel1.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 338, 112, 31));
 
         btnNext.setBackground(new java.awt.Color(66, 100, 255));
         btnNext.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -112,21 +121,20 @@ public class ForgetPassword extends javax.swing.JFrame {
                 btnNextMouseClicked(evt);
             }
         });
-
-        txtNewPass.setPreferredSize(new java.awt.Dimension(320, 30));
-        txtNewPass.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtNewPassKeyReleased(evt);
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
             }
         });
-
-        txtCheckNewPass.setPreferredSize(new java.awt.Dimension(320, 30));
+        jPanel1.add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(379, 338, 112, 31));
 
         lblNewPass.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNewPass.setText("Mật khẩu mới");
+        jPanel1.add(lblNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 121, -1, -1));
 
         lblCheckNewPass.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCheckNewPass.setText("Nhập lại mật khẩu");
+        jPanel1.add(lblCheckNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 221, -1, -1));
 
         btnSave.setBackground(new java.awt.Color(66, 100, 255));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -137,85 +145,16 @@ public class ForgetPassword extends javax.swing.JFrame {
                 btnSaveMouseClicked(evt);
             }
         });
+        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(379, 338, 112, 31));
 
         lblTitle.setText("*Tạo mật khẩu mới");
+        jPanel1.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 91, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNewPass)
-                            .addComponent(lblGmail)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addComponent(lblGetCode, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCode)
-                            .addComponent(lblCheckNewPass)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCheckNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTitle)
-                            .addComponent(jLabel1))))
-                .addContainerGap(56, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTitle)
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNewPass)
-                    .addComponent(lblGmail))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(lblGetCode, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCode)
-                    .addComponent(lblCheckNewPass))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCheckNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(3, 3, 3))
-        );
+        txtNewPass.setPreferredSize(new java.awt.Dimension(320, 30));
+        jPanel1.add(txtNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 320, 30));
+
+        txtCheckNewPass.setMinimumSize(new java.awt.Dimension(320, 30));
+        jPanel1.add(txtCheckNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 320, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -249,6 +188,8 @@ public class ForgetPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_txtGmailKeyReleased
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
+        Login login = new Login();
+        login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnExitMouseClicked
 
@@ -269,18 +210,14 @@ public class ForgetPassword extends javax.swing.JFrame {
     
     
     
-    private void txtNewPassKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNewPassKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNewPassKeyReleased
-
     private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
         if(txtCode.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Chưa nhập code security", "Error!", JOptionPane.WARNING_MESSAGE);
             txtCode.requestFocus();
         }
-        else{
-            lblGetCode.show(false);
+        else{            
             if(txtCode.getText().equals(randomNumber)){
+                lblGetCode.show(false);
                 OnOff(false,true);
             }
             else{
@@ -290,7 +227,29 @@ public class ForgetPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNextMouseClicked
 
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
-        // TODO add your handling code here:
+        String pass = txtNewPass.getText();
+        if(txtNewPass.getText().equals("") && txtCheckNewPass.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin", "ERROR!", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            if (txtNewPass.getText().length() < 6) {
+                JOptionPane.showMessageDialog(this, "Mật khẩu quá ngắn, cần dài từ 6 kí tự trở lên", "ERROR!", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                if (!txtCheckNewPass.getText().equals(pass)) {
+                    JOptionPane.showMessageDialog(this, "Hai mật khẩu không khớp, vui lòng kiểm tra lại", "ERROR!", JOptionPane.WARNING_MESSAGE);
+                } else {
+//                    System.out.print(txtGmail.getText());
+                    userBUS.updatePass(pass, txtGmail.getText());
+                    JOptionPane.showMessageDialog(this, "Thay đổi mật khẩu thành công", "Succeed!", JOptionPane.INFORMATION_MESSAGE);
+                    Login login = new Login();
+                    login.setVisible(true);
+                    this.dispose();
+                }
+            }
+            
+        }
+        
     }//GEN-LAST:event_btnSaveMouseClicked
 
     private void lblGetCodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGetCodeMouseClicked
@@ -319,6 +278,10 @@ public class ForgetPassword extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_lblGetCodeMouseClicked
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNextActionPerformed
 
     /**
      * @param args the command line arguments
@@ -367,9 +330,9 @@ public class ForgetPassword extends javax.swing.JFrame {
     private javax.swing.JLabel lblGmail;
     private javax.swing.JLabel lblNewPass;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JTextField txtCheckNewPass;
+    private javax.swing.JPasswordField txtCheckNewPass;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtGmail;
-    private javax.swing.JTextField txtNewPass;
+    private javax.swing.JPasswordField txtNewPass;
     // End of variables declaration//GEN-END:variables
 }

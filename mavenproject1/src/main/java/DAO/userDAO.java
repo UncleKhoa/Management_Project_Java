@@ -52,29 +52,70 @@ public class userDAO {
         return userlist;    
     }
     
-    public void add(userDTO user) throws SQLException {
-        String sql = "INSERT INTO USER VALUES('" + user.getStaffID() + "', "
-                + "'" + user.getUsername() + "', "
-                + "('" + user.getPassword() + "'), "
-                + "'" + user.getGmail() + "', "
-                + "'" + user.getEnable() + "')";
-        PreparedStatement stmt_add = conn.prepareStatement(sql);
-        stmt_add.executeUpdate();
+    public void add(userDTO user){
+        try {
+            String sql = "INSERT INTO acount VALUES('" + user.getStaffID() + "', "
+                    + "'" + user.getUsername() + "', "
+                    + "('" + user.getPassword() + "'), "
+                    + "'" + user.getGmail() + "', "
+                    + "'" + user.getEnable() + "')";
+            PreparedStatement stmt_add = conn.prepareStatement(sql);
+            stmt_add.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(userDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void update(userDTO user) throws SQLException{
-        String sql = "UPDATE USER SET Username = '" + user.getUsername() + "'"
-                + "Password = '" + user.getPassword()+ "', "
-                + " Gmail = '" + user.getGmail() + "', "
-                + " Enable = '" + user.getEnable() + "' WHERE AccountID = '" + user.getStaffID()+ "'";
-        PreparedStatement stmt_add = conn.prepareStatement(sql);
-        stmt_add.executeUpdate();
+    public void update(userDTO user) {
+        try {
+            // Câu truy vấn SQL để cập nhật thông tin người dùng
+            String sql = "UPDATE account SET Username = ?, Password = ?, Gmail = ?, Enable = ? WHERE AccountID = ?";
+
+            // Tạo một đối tượng PreparedStatement với câu truy vấn SQL
+            PreparedStatement stmt_update = conn.prepareStatement(sql);
+
+            // Thiết lập các tham số cho câu truy vấn SQL
+            stmt_update.setString(1, user.getUsername());
+            stmt_update.setString(2, user.getPassword());
+            stmt_update.setString(3, user.getGmail());
+            stmt_update.setString(4, user.getEnable());
+            stmt_update.setString(5, user.getStaffID());
+
+            // Thực thi truy vấn SQL
+            stmt_update.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(userDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void delete(String staffID) throws SQLException{
-        String sql = "DELETE FROM USER WHERE StaffID = '" + staffID + "'";
-        PreparedStatement stmt_add = conn.prepareStatement(sql);
-        stmt_add.executeUpdate();
+    public void delete(String staffID){
+        try {
+            String sql = "DELETE FROM USER WHERE StaffID = '" + staffID + "'";
+            PreparedStatement stmt_add = conn.prepareStatement(sql);
+            stmt_add.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(userDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void UpdatePassword(String password, String gmail){
+        try(Connection conn = DBConnect.getConnect()) {
+            // Câu truy vấn SQL để cập nhật mật khẩu
+            String sql = "UPDATE account SET Password = ? WHERE Gmail = ?";
+            
+            // Tạo một đối tượng PreparedStatement với câu truy vấn SQL
+            PreparedStatement stmt_up_pass = conn.prepareStatement(sql);
+            
+            // Thiết lập các tham số cho câu truy vấn SQL
+            stmt_up_pass.setString(1, password);
+            stmt_up_pass.setString(2, gmail);
+            
+            // Thực thi truy vấn SQL
+            stmt_up_pass.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(userDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     
 }

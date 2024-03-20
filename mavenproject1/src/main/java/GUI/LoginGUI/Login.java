@@ -30,6 +30,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        this.userBUS = new userBUS();
         setLocationRelativeTo(null);
         
         File image_background = new File(relativePath+"background.jpg");
@@ -329,7 +330,6 @@ public class Login extends javax.swing.JFrame {
         }
         
         else{
-            
             String id = user.getStaffID();
             staffDTO staff = staffBUS.Get(id);
             String name = staff.getFirstname();
@@ -350,6 +350,7 @@ public class Login extends javax.swing.JFrame {
     private void lblForgetPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgetPassMouseClicked
         ForgetPassword fg = new ForgetPassword();
         fg.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_lblForgetPassMouseClicked
 
     /**
