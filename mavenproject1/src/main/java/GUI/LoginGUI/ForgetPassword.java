@@ -54,6 +54,7 @@ public class ForgetPassword extends javax.swing.JFrame {
         lblNewPass = new javax.swing.JLabel();
         lblCheckNewPass = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -137,15 +138,14 @@ public class ForgetPassword extends javax.swing.JFrame {
             }
         });
 
+        lblTitle.setText("*Tạo mật khẩu mới");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(160, 160, 160)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +174,12 @@ public class ForgetPassword extends javax.swing.JFrame {
                         .addGap(106, 106, 106)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTitle)
+                            .addComponent(jLabel1))))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -182,7 +187,9 @@ public class ForgetPassword extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTitle)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNewPass)
                     .addComponent(lblGmail))
@@ -257,6 +264,7 @@ public class ForgetPassword extends javax.swing.JFrame {
         this.txtNewPass.show(b);
         this.txtCheckNewPass.show(b);
         this.btnSave.show(b);
+        this.lblTitle.show(b);
     }
     
     
@@ -301,8 +309,7 @@ public class ForgetPassword extends javax.swing.JFrame {
                 else{
                     randomNumber = userBUS.generateRandomNumber(6);
                     userBUS.Mail(randomNumber,mail);
-                    JOptionPane.showMessageDialog(this, "Gửi mã thành công, vui lòng kiểm tra email", "Succeeded!", JOptionPane.INFORMATION_MESSAGE);
-                    System.out.println(randomNumber);
+                    JOptionPane.showMessageDialog(this, "Gửi mã thành công, vui lòng kiểm tra email", "Succeed!", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             } catch (MessagingException ex) {
@@ -359,6 +366,7 @@ public class ForgetPassword extends javax.swing.JFrame {
     private javax.swing.JLabel lblGetCode;
     private javax.swing.JLabel lblGmail;
     private javax.swing.JLabel lblNewPass;
+    private javax.swing.JLabel lblTitle;
     private javax.swing.JTextField txtCheckNewPass;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtGmail;

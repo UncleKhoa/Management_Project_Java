@@ -57,7 +57,7 @@ public class userBUS {
     
     public userDTO CheckMail(String mail){
         for(userDTO us:dsUS){
-            if(us.getUsername().equals(mail)){
+            if(us.getGmail().equals(mail)){
                 return us;
             }
         }
@@ -97,47 +97,47 @@ public class userBUS {
         // Trả về chuỗi số ngẫu nhiên
         return sb.toString();
     }
-        
-        public void Mail(String t, String mail) throws MessagingException, UnsupportedEncodingException{
-            //Gửi email
-            final String accountName = "khoanguyen052096@gmail.com";
-            final String accountPassword = "kouk sduc mewa phtq";
-            String subject = "Lấy lại mật khẩu";
 
-            Properties props = new Properties();
-            props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
-            props.put("mail.smtp.port", "587"); //TLS Port
-            props.put("mail.smtp.auth", "true"); //enable authentication
-            props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+    public void Mail(String t, String mail) throws MessagingException, UnsupportedEncodingException {
+        //Gửi email
+        final String accountName = "khoanguyen052096@gmail.com";
+        final String accountPassword = "kouk sduc mewa phtq";
+        String subject = "Lấy lại mật khẩu";
 
-            Authenticator auth = new Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(accountName, accountPassword);
-                }
-            };
-            Session session = Session.getInstance(props, auth);
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+        props.put("mail.smtp.port", "587"); //TLS Port
+        props.put("mail.smtp.auth", "true"); //enable authentication
+        props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
 
-            MimeMessage msg = new MimeMessage(session);
-            //set message headers
-            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-            msg.addHeader("format", "flowed");
-            msg.addHeader("Content-Transfer-Encoding", "8bit");
-            msg.setFrom(new InternetAddress(accountName, "NoReply-JD"));
-            msg.setReplyTo(InternetAddress.parse(accountName, false));
-            msg.setSubject(subject, "UTF-8");
+        Authenticator auth = new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(accountName, accountPassword);
+            }
+        };
+        Session session = Session.getInstance(props, auth);
 
-            // Nội dung email được xây dựng bằng HTML
-            String htmlContent = "<h1>Thông báo!</h1>"
-                    + "<p>Xin chào, </p>"
-                    + "<p>Hiện tại đang có người đăng nhập vào tài khoản của bạn.</p>"
-                    + "<p>Để chắc chắn rằng đó thực sự là bạn, Vui lòng nhập mã xác minh sau: </p>"
-                    + "<h1><strong>" + t + "</strong></h1>";
-            msg.setContent(htmlContent, "text/html; charset=UTF-8");
+        MimeMessage msg = new MimeMessage(session);
+        //set message headers
+        msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+        msg.addHeader("format", "flowed");
+        msg.addHeader("Content-Transfer-Encoding", "8bit");
+        msg.setFrom(new InternetAddress(accountName, "NoReply-JD"));
+        msg.setReplyTo(InternetAddress.parse(accountName, false));
+        msg.setSubject(subject, "UTF-8");
 
-            msg.setSentDate(new Date());
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail, false));
+        // Nội dung email được xây dựng bằng HTML
+        String htmlContent = "<h1>Thông báo!</h1>"
+                + "<p>Xin chào, </p>"
+                + "<p>Hiện tại đang có người đăng nhập vào tài khoản của bạn.</p>"
+                + "<p>Để chắc chắn rằng đó thực sự là bạn, Vui lòng nhập mã xác minh sau: </p>"
+                + "<h1><strong>" + t + "</strong></h1>";
+        msg.setContent(htmlContent, "text/html; charset=UTF-8");
 
-            Transport.send(msg);
-        }
+        msg.setSentDate(new Date());
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail, false));
+
+        Transport.send(msg);
+    }
     
 }
