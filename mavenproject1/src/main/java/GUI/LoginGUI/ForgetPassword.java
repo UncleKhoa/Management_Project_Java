@@ -6,6 +6,7 @@ package GUI.LoginGUI;
 
 import BUS.staffBUS;
 import BUS.userBUS;
+import DTO.userDTO;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.logging.Level;
@@ -290,11 +291,20 @@ public class ForgetPassword extends javax.swing.JFrame {
             txtGmail.requestFocus();
         }
         else{
-            randomNumber = userBUS.generateRandomNumber(8);
             try {
-                userBUS.Mail(randomNumber);
-                JOptionPane.showMessageDialog(this, "Gửi mã thành công, vui lòng kiểm tra email","Succeeded!",JOptionPane.INFORMATION_MESSAGE);
-                System.out.println(randomNumber);
+                String mail = txtGmail.getText();
+                userDTO user = userBUS.CheckMail(mail);
+                if(user == null){
+                    JOptionPane.showMessageDialog(this, "Không tồn tại Email này, vui lòng kiểm tra lại!", "ERROR", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                else{
+                    randomNumber = userBUS.generateRandomNumber(6);
+                    userBUS.Mail(randomNumber,mail);
+                    JOptionPane.showMessageDialog(this, "Gửi mã thành công, vui lòng kiểm tra email", "Succeeded!", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(randomNumber);
+                }
+
             } catch (MessagingException ex) {
                 Logger.getLogger(ForgetPassword.class.getName()).log(Level.SEVERE, null, ex);
             } catch (UnsupportedEncodingException ex) {

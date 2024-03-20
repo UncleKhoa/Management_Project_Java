@@ -55,6 +55,15 @@ public class userBUS {
         return null;
     }
     
+    public userDTO CheckMail(String mail){
+        for(userDTO us:dsUS){
+            if(us.getUsername().equals(mail)){
+                return us;
+            }
+        }
+        return null;
+    }
+    
     public ArrayList<userDTO> getList() {
         return dsUS;
     }
@@ -89,7 +98,7 @@ public class userBUS {
         return sb.toString();
     }
         
-        public void Mail(String t) throws MessagingException, UnsupportedEncodingException{
+        public void Mail(String t, String mail) throws MessagingException, UnsupportedEncodingException{
             //Gửi email
             final String accountName = "khoanguyen052096@gmail.com";
             final String accountPassword = "kouk sduc mewa phtq";
@@ -126,7 +135,7 @@ public class userBUS {
             msg.setContent(htmlContent, "text/html; charset=UTF-8");
 
             msg.setSentDate(new Date());
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("khoanguyen052096@gmail.com", false));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail, false));
 
             Transport.send(msg);
         }
