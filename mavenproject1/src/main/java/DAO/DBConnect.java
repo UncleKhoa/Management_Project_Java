@@ -33,4 +33,12 @@ public class DBConnect {
         
         return conn;
     }
+    
+    // Phương thức để làm mới lại Connection khi cơ sở dữ liệu thay đổi
+    public static void refreshConnection() throws SQLException {
+        Connection conn = getConnect();
+        if (conn != null && !conn.isClosed()) {
+            conn.close();
+        }
+    }
 }
