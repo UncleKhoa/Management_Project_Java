@@ -29,7 +29,7 @@ public class ForgetPassword extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(HIDE_ON_CLOSE); //Tắt không ảnh hưởng tới cửa số chính
-        OnOff(true, false);
+        OnOff(true, false, true);
     }
 
     /**
@@ -56,6 +56,7 @@ public class ForgetPassword extends javax.swing.JFrame {
         lblTitle = new javax.swing.JLabel();
         txtNewPass = new javax.swing.JPasswordField();
         txtCheckNewPass = new javax.swing.JPasswordField();
+        lblYeucau = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -156,6 +157,10 @@ public class ForgetPassword extends javax.swing.JFrame {
         txtCheckNewPass.setMinimumSize(new java.awt.Dimension(320, 30));
         jPanel1.add(txtCheckNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 320, 30));
 
+        lblYeucau.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblYeucau.setText("Vui lòng nhập code");
+        jPanel1.add(lblYeucau, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 110, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,7 +198,7 @@ public class ForgetPassword extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExitMouseClicked
 
-    public void OnOff(boolean a, boolean b) {
+    public void OnOff(boolean a, boolean b, boolean c) {
         this.lblGmail.show(a);
         this.lblCode.show(a);
         this.txtGmail.show(a);
@@ -206,9 +211,9 @@ public class ForgetPassword extends javax.swing.JFrame {
         this.txtCheckNewPass.show(b);
         this.btnSave.show(b);
         this.lblTitle.show(b);
+        
+        this.lblYeucau.show(c);
     }
-    
-    
     
     private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
         if(txtCode.getText().equals("")){
@@ -218,7 +223,7 @@ public class ForgetPassword extends javax.swing.JFrame {
         else{            
             if(txtCode.getText().equals(randomNumber)){
                 lblGetCode.show(false);
-                OnOff(false,true);
+                OnOff(false,true,false);
             }
             else{
                 JOptionPane.showMessageDialog(this, "Code không hợp lệ, vui lòng kiểm tra lại", "Error!", JOptionPane.WARNING_MESSAGE);
@@ -330,6 +335,7 @@ public class ForgetPassword extends javax.swing.JFrame {
     private javax.swing.JLabel lblGmail;
     private javax.swing.JLabel lblNewPass;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblYeucau;
     private javax.swing.JPasswordField txtCheckNewPass;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtGmail;
