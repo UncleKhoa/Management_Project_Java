@@ -50,6 +50,15 @@ public class userBUS {
         
     }
     
+    public userDTO Get(String id){
+        for(userDTO us:dsUS){
+            if(us.getStaffID().equals(id)){
+                return us;
+            }
+        }
+        return null;
+    }
+    
     public userDTO Check(String username, String password){
         for(userDTO us:dsUS){
             if(us.getUsername().equals(username) && us.getPassword().equals(password)){

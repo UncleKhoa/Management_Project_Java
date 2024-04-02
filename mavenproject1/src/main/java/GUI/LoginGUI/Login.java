@@ -336,7 +336,7 @@ public class Login extends javax.swing.JFrame {
             String role = staff.getRole();
             
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công, chào mừng "+ name +"");
-            MainGUI mfrm = new MainGUI(name,role);
+            MainGUI mfrm = new MainGUI(id,name,role);
             mfrm.setVisible(true);
             dispose(); //Phá hủy Jframeform
         }        

@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import GUI.DoiThongTinGUI;
 import static DAO.DBConnect.getConnect;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -25,16 +26,15 @@ public class MainGUI extends javax.swing.JFrame {
      * Creates new form MainForm
      */
     
-    public String name, role;
+    public String id, name, role;
     
     public MainGUI(){
         initComponents();
         setLocationRelativeTo(null);
-        
-
     }
     
-    public MainGUI(String name, String role) {
+    public MainGUI(String id,String name, String role) {
+        this.id = id;
         this.name = name;
         this.role = role;
         
@@ -382,6 +382,9 @@ public class MainGUI extends javax.swing.JFrame {
         lblDoithongtin.setText("Đổi thông tin tài khoản");
         lblDoithongtin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblDoithongtin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDoithongtinMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblDoithongtinMouseEntered(evt);
             }
@@ -580,7 +583,6 @@ public class MainGUI extends javax.swing.JFrame {
         File image_exit_hover = new File(relativePath+"exit_hover.png");
         ImageIcon icon_exit_hover = new ImageIcon(image_exit_hover.getAbsolutePath());
         lblExit.setIcon(icon_exit_hover);
-
     }//GEN-LAST:event_lblExitMouseEntered
 
     private void lblExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseExited
@@ -774,6 +776,11 @@ public class MainGUI extends javax.swing.JFrame {
     private void pannelBHMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelBHMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_pannelBHMouseEntered
+
+    private void lblDoithongtinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDoithongtinMouseClicked
+        DoiThongTinGUI changeinfo = new DoiThongTinGUI(id);
+        changeinfo.setVisible(true);
+    }//GEN-LAST:event_lblDoithongtinMouseClicked
 
     /**
      * @param args the command line arguments
