@@ -3,8 +3,8 @@
     
   </head>
   <body>
-    <h1>IDE: NetBean</h1>
-    <h1>Database: XAMPP</h1>
+    <h3>IDE: NetBean</h3>
+    <h3>Database: XAMPP</h3>
   </body>
     
 </html>
