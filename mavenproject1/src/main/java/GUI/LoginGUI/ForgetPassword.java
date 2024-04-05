@@ -6,6 +6,7 @@ package GUI.LoginGUI;
 
 import BUS.staffBUS;
 import BUS.userBUS;
+import DTO.staffDTO;
 import DTO.userDTO;
 import GUI.Login;
 import java.io.UnsupportedEncodingException;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class ForgetPassword extends javax.swing.JFrame {
     private static userBUS userBUS = new userBUS();
+    private static staffBUS staffBUS = new staffBUS();
     /**
      * Creates new form ForgetPassword
      */
@@ -272,7 +274,11 @@ public class ForgetPassword extends javax.swing.JFrame {
                 }
                 else{
                     randomNumber = userBUS.generateRandomNumber(6);
-                    userBUS.Mail(randomNumber,mail);
+                    userDTO user_mail = userBUS.GetMail(mail);
+                    String id = user_mail.getStaffID();
+                    staffDTO staff = staffBUS.Get(id);
+                    String name = staff.getFirstname();
+                    userBUS.Mail(randomNumber,mail,name);
                     JOptionPane.showMessageDialog(this, "Gửi mã thành công, vui lòng kiểm tra email", "Succeed!", JOptionPane.INFORMATION_MESSAGE);
                 }
 

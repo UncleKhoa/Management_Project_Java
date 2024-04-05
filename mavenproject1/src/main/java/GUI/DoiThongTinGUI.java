@@ -200,7 +200,6 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
 
         panelShowInfo.setBackground(new java.awt.Color(255, 255, 255));
         panelShowInfo.setPreferredSize(new java.awt.Dimension(650, 550));
-        panelShowInfo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setPreferredSize(new java.awt.Dimension(125, 125));
 
@@ -216,8 +215,6 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblIMG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        panelShowInfo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 53, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -272,8 +269,6 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        panelShowInfo.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 43, -1, -1));
-
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setPreferredSize(new java.awt.Dimension(498, 280));
 
@@ -323,7 +318,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                                 .addComponent(jLabel4))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(36, 36, 36)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtMail, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
@@ -338,7 +333,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                                 .addComponent(radioMale, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(84, 84, 84)
                                 .addComponent(radioFemale, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36))))
+                                .addGap(38, 38, 38))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel6)
@@ -348,16 +343,20 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(radioMale)
-                    .addComponent(radioFemale))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(radioMale)
+                            .addComponent(radioFemale))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
@@ -372,14 +371,11 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelShowInfo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 190, 556, -1));
-
         jButton1.setBackground(new java.awt.Color(66, 100, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Lưu");
         jButton1.setPreferredSize(new java.awt.Dimension(120, 35));
-        panelShowInfo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 485, -1, -1));
 
         btnReturn.setBackground(new java.awt.Color(255, 0, 51));
         btnReturn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -391,7 +387,6 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 btnReturnActionPerformed(evt);
             }
         });
-        panelShowInfo.add(btnReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 485, -1, -1));
 
         jButton3.setBackground(new java.awt.Color(51, 255, 51));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -403,7 +398,43 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        panelShowInfo.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(268, 485, -1, -1));
+
+        javax.swing.GroupLayout panelShowInfoLayout = new javax.swing.GroupLayout(panelShowInfo);
+        panelShowInfo.setLayout(panelShowInfoLayout);
+        panelShowInfoLayout.setHorizontalGroup(
+            panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelShowInfoLayout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panelShowInfoLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panelShowInfoLayout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        panelShowInfoLayout.setVerticalGroup(
+            panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelShowInfoLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelShowInfoLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addGroup(panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         getContentPane().add(panelShowInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 

@@ -59,6 +59,15 @@ public class userBUS {
         return null;
     }
     
+    public userDTO GetMail(String mail){
+        for(userDTO us:dsUS){
+            if(us.getGmail().equals(mail)){
+                return us;
+            }
+        }
+        return null;
+    }
+    
     public userDTO Check(String username, String password){
         for(userDTO us:dsUS){
             if(us.getUsername().equals(username) && us.getPassword().equals(password)){
@@ -111,7 +120,7 @@ public class userBUS {
         return sb.toString();
     }
 
-    public void Mail(String t, String mail) throws MessagingException, UnsupportedEncodingException {
+    public void Mail(String t, String mail, String name) throws MessagingException, UnsupportedEncodingException {
         //Gửi email
         final String accountName = "khoanguyen052096@gmail.com";
         final String accountPassword = "kouk sduc mewa phtq";
@@ -141,7 +150,7 @@ public class userBUS {
 
         // Nội dung email được xây dựng bằng HTML
         String htmlContent = "<h1>Thông báo!</h1>"
-                + "<p>Xin chào, </p>"
+                + "<p>Xin chào, <strong>"+name+"</strong></p>"
                 + "<p>Hiện tại đang có người đăng nhập vào tài khoản của bạn.</p>"
                 + "<p>Để chắc chắn rằng đó thực sự là bạn, Vui lòng nhập mã xác minh sau: </p>"
                 + "<h1><strong>" + t + "</strong></h1>";
