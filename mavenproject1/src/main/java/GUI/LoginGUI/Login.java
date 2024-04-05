@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
+package GUI.LoginGUI;
 
 import BUS.staffBUS;
 import Model.MyButton;
@@ -13,6 +13,7 @@ import BUS.userBUS;
 import DTO.staffDTO;
 import DTO.userDTO;
 import GUI.LoginGUI.ForgetPassword;
+import GUI.MainGUI;
 
 /**
  *
@@ -63,7 +64,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lblBackground = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        myButton1 = new Model.MyButton();
+        myButton1 = new org.netbeans.modules.form.InvalidComponent();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
@@ -106,24 +107,6 @@ public class Login extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(350, 440));
-
-        myButton1.setBackground(new java.awt.Color(66, 100, 255));
-        myButton1.setForeground(new java.awt.Color(255, 255, 255));
-        myButton1.setText("Sing In");
-        myButton1.setColor(new java.awt.Color(66, 100, 255));
-        myButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        myButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        myButton1.setRadius(15);
-        myButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                myButton1MouseClicked(evt);
-            }
-        });
-        myButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButton1ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
@@ -401,7 +384,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblForgetPass;
-    private Model.MyButton myButton1;
+    private org.netbeans.modules.form.InvalidComponent myButton1;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
