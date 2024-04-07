@@ -12,8 +12,10 @@ public class staffDTO {
     String staffID, firstname, lastname, Gender, phonenumber, address, role, img;
     double salary;
     int yearofbirth;
+
+   
     
-    public void staffDTO(){
+    public staffDTO(){
         
     }
 

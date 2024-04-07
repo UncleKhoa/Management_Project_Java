@@ -315,7 +315,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExitMouseEntered
 
     private void lblExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseExited
-        Exit();
+       
     }//GEN-LAST:event_lblExitMouseExited
 
     private void myButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myButton1MouseClicked
