@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 19, 2024 at 12:06 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.1.17
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 04, 2024 lúc 07:16 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `computer_management`
+-- Cơ sở dữ liệu: `computer_management`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account`
+-- Cấu trúc bảng cho bảng `account`
 --
 
 CREATE TABLE `account` (
@@ -36,16 +36,17 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `account`
+-- Đang đổ dữ liệu cho bảng `account`
 --
 
 INSERT INTO `account` (`StaffID`, `Username`, `Password`, `Gmail`, `Enable`) VALUES
+('3122560022', 'vithoang', 'hoang1', 'vithoang1608@gmail.com', 'unlock'),
 ('admin', 'admin', 'admin', 'khoanguyen052096@gmail.com', 'unlock');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `activity`
+-- Cấu trúc bảng cho bảng `activity`
 --
 
 CREATE TABLE `activity` (
@@ -58,7 +59,7 @@ CREATE TABLE `activity` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brand`
+-- Cấu trúc bảng cho bảng `brand`
 --
 
 CREATE TABLE `brand` (
@@ -66,10 +67,26 @@ CREATE TABLE `brand` (
   `BrandName` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `brand`
+--
+
+INSERT INTO `brand` (`BrandID`, `BrandName`) VALUES
+('Acer', 'Acer Inc'),
+('Apple', 'Apple Inc'),
+('Asus', 'ASUSTeK Computer Inc'),
+('DELL', 'Dell Inc'),
+('HP', 'HP Inc'),
+('Lenovo', 'Lenovo Group'),
+('Microsoft', 'Microsoft Corporation'),
+('Samsung', 'Samsung Electronics'),
+('Sony', 'Sony Corporation'),
+('Toshiba', 'Toshiba Corporation');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Cấu trúc bảng cho bảng `customer`
 --
 
 CREATE TABLE `customer` (
@@ -82,10 +99,19 @@ CREATE TABLE `customer` (
   `Address` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `customer`
+--
+
+INSERT INTO `customer` (`CusID`, `FirstName`, `LastName`, `Gender`, `PhoneNumber`, `Gmail`, `Address`) VALUES
+('3122560022', 'Hoàng', 'Nguyễn', 'Nam', '0961589023', 'vithoang1608@gmail.com', '123 Nguyễn Văn Cừ'),
+('3122560023', 'Hoàng', 'Vũ', 'Nam', '0961589024', 'hoangvu8@gmail.com', '273 An Dương Vương'),
+('3122560024', 'Quang', 'Dương', 'Nam', '0971495534', 'quangteoprokt@gmail.com', '302 Dương Bá Trạc');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `import`
+-- Cấu trúc bảng cho bảng `import`
 --
 
 CREATE TABLE `import` (
@@ -99,7 +125,7 @@ CREATE TABLE `import` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `importdetail`
+-- Cấu trúc bảng cho bảng `importdetail`
 --
 
 CREATE TABLE `importdetail` (
@@ -113,22 +139,38 @@ CREATE TABLE `importdetail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Cấu trúc bảng cho bảng `product`
 --
 
 CREATE TABLE `product` (
   `ProductID` varchar(10) NOT NULL,
   `BrandID` varchar(10) NOT NULL,
   `ProductName` varchar(50) NOT NULL,
-  `UnitPrice` longblob NOT NULL,
+  `UnitPrice` double NOT NULL,
   `Quantity` int(10) NOT NULL,
   `IMG` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `product`
+--
+
+INSERT INTO `product` (`ProductID`, `BrandID`, `ProductName`, `UnitPrice`, `Quantity`, `IMG`) VALUES
+('ASPIRE5', 'Acer', 'Acer Aspire 5', 12000000, 25, 'acer_aspire5.jpg'),
+('ASUSVIVO', 'ASUS', 'ASUS VivoBook S14', 18000000, 10, 'asus_vivobook.jpg'),
+('DELLXPS13', 'Dell', 'Dell XPS 13', 29000000, 15, 'dell_xps13.jpg'),
+('HPENVY15', 'HP', 'HP Envy 15', 25000000, 12, 'hp_envy15.jpg'),
+('LENOVO11', 'Lenovo', 'Lenovo Think Book 14 G2 ITL', 21000000, 20, 'think_book.jpg'),
+('LENOVOFLEX', 'Lenovo', 'Lenovo Flex 5', 15000000, 18, 'lenovo_flex.jpg'),
+('MACBOOKPRO', 'Apple', 'MacBook Pro 16', 50000000, 8, 'macbook_pro16.jpg'),
+('ROGZEPHYRU', 'ASUS', 'ASUS ROG Zephyrus', 40000000, 5, 'rog_zephyrus.jpg'),
+('SURFACEPRO', 'Microsoft', 'Microsoft Surface Pro 7', 35000000, 7, 'surface_pro7.jpg'),
+('THINKPADX1', 'Lenovo', 'Lenovo ThinkPad X1 Carbon', 45000000, 9, 'thinkpad_x1.jpg');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productdetail`
+-- Cấu trúc bảng cho bảng `productdetail`
 --
 
 CREATE TABLE `productdetail` (
@@ -145,10 +187,26 @@ CREATE TABLE `productdetail` (
   `Size` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `productdetail`
+--
+
+INSERT INTO `productdetail` (`ProductID`, `CPU`, `RAM`, `HaskDisk`, `Screen`, `Webcam`, `Pin`, `OperatingSys`, `Weight`, `Color`, `Size`) VALUES
+('ASPIRE5', 'Intel Core i5', '8GB', '512GB SSD', '15.6 inch', 'HD Webcam', '4-cell', 'Windows 10', 1.9, 'Silver', 'Large'),
+('ASUSVIVO', 'AMD Ryzen 7', '16GB', '512GB SSD', '14 inch', 'HD Webcam', '3-cell', 'Windows 10', 1.6, 'Black', 'Medium'),
+('DELLXPS13', 'Intel Core i7', '16GB', '1TB SSD', '13.3 inch', 'HD Webcam', '4-cell', 'Windows 10', 1.2, 'Rose Gold', 'Small'),
+('HPENVY15', 'Intel Core i7', '16GB', '1TB SSD', '15.6 inch', 'HD Webcam', '6-cell', 'Windows 10', 1.9, 'Silver', 'Large'),
+('LENOVO11', 'Intel Core i5', '8GB', '512GB SSD', '14 inch', 'HD Webcam', '6-cell', 'Windows 10', 1.5, 'Silver', 'Medium'),
+('LENOVOFLEX', 'AMD Ryzen 5', '8GB', '256GB SSD', '14 inch', 'HD Webcam', '4-cell', 'Windows 10', 1.8, 'Graphite Gray', 'Medium'),
+('MACBOOKPRO', 'Intel Core i9', '32GB', '1TB SSD', '16 inch', 'HD Webcam', '8-cell', 'macOS', 2, 'Space Gray', 'Large'),
+('ROGZEPHYRU', 'AMD Ryzen 9', '32GB', '1TB SSD', '15.6 inch', 'HD Webcam', '6-cell', 'Windows 10', 2.1, 'Black', 'Large'),
+('SURFACEPRO', 'Intel Core i7', '16GB', '512GB SSD', '12.3 inch', 'HD Webcam', '5-cell', 'Windows 10', 1.4, 'Platinum', 'Small'),
+('THINKPADX1', 'Intel Core i7', '16GB', '512GB SSD', '14 inch', 'HD Webcam', '6-cell', 'Windows 10', 1.3, 'Black', 'Medium');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `promotion`
+-- Cấu trúc bảng cho bảng `promotion`
 --
 
 CREATE TABLE `promotion` (
@@ -159,10 +217,17 @@ CREATE TABLE `promotion` (
   `Status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `promotion`
+--
+
+INSERT INTO `promotion` (`PromotionID`, `PromotionName`, `From`, `To`, `Status`) VALUES
+('TET01', 'Sale 4/4 2024 vui ve', '2024-04-04 08:37:53', '2024-05-05 08:37:53', 'on');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `promotiondetail`
+-- Cấu trúc bảng cho bảng `promotiondetail`
 --
 
 CREATE TABLE `promotiondetail` (
@@ -172,10 +237,17 @@ CREATE TABLE `promotiondetail` (
   `PromotionPercent` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `promotiondetail`
+--
+
+INSERT INTO `promotiondetail` (`PromotionID`, `ProductID`, `Description`, `PromotionPercent`) VALUES
+('TET01', 'LENOVO11', 'Sale 4/4 vui ve', 10);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `receipt`
+-- Cấu trúc bảng cho bảng `receipt`
 --
 
 CREATE TABLE `receipt` (
@@ -186,10 +258,17 @@ CREATE TABLE `receipt` (
   `Total` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `receipt`
+--
+
+INSERT INTO `receipt` (`ReceiptID`, `CusID`, `StaffID`, `CreatedTime`, `Total`) VALUES
+('BILL01', '3122560022', '3122560022', '2024-04-04 08:35:58', 20000000);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `receiptdetail`
+-- Cấu trúc bảng cho bảng `receiptdetail`
 --
 
 CREATE TABLE `receiptdetail` (
@@ -202,10 +281,17 @@ CREATE TABLE `receiptdetail` (
   `SubTotal` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `receiptdetail`
+--
+
+INSERT INTO `receiptdetail` (`ReceiptID`, `PromotionID`, `ProductID`, `Quantity`, `UnitPrice`, `OriginalTotal`, `SubTotal`) VALUES
+('BILL01', 'TET01', 'LENOVO11', 1, 21000000, 190000000, 1000000);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `staff`
+-- Cấu trúc bảng cho bảng `staff`
 --
 
 CREATE TABLE `staff` (
@@ -222,16 +308,18 @@ CREATE TABLE `staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `staff`
+-- Đang đổ dữ liệu cho bảng `staff`
 --
 
 INSERT INTO `staff` (`StaffID`, `FirstName`, `LastName`, `YearOfBirth`, `Gender`, `PhoneNumber`, `Address`, `Salary`, `Role`, `IMG`) VALUES
+('3122560020', 'Khuê', 'Minh', 2002, 'Nữ', '097673245`', '317 An Dương Vương', 12, 'Quản lý', ''),
+('3122560022', 'Hoàng', 'Nguyễn', 2004, 'nam', '09DDS', '', 22, '223', ''),
 ('admin', 'Khoa', 'Nguyễn', 2002, 'Nam', '077*****31', 'asadfwewefwef', 20000000, 'admin', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supplier`
+-- Cấu trúc bảng cho bảng `supplier`
 --
 
 CREATE TABLE `supplier` (
@@ -242,36 +330,43 @@ CREATE TABLE `supplier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Đang đổ dữ liệu cho bảng `supplier`
+--
+
+INSERT INTO `supplier` (`SupplierID`, `SupplierName`, `PhoneNumber`, `Address`) VALUES
+('SUP01', 'Tạp hóa VÂN', '0961589023', '312 An Dương Vương');
+
+--
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `account`
+-- Chỉ mục cho bảng `account`
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`StaffID`);
 
 --
--- Indexes for table `activity`
+-- Chỉ mục cho bảng `activity`
 --
 ALTER TABLE `activity`
   ADD PRIMARY KEY (`ActID`),
   ADD KEY `fk_act_staffid` (`StaffID`);
 
 --
--- Indexes for table `brand`
+-- Chỉ mục cho bảng `brand`
 --
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`BrandID`);
 
 --
--- Indexes for table `customer`
+-- Chỉ mục cho bảng `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`CusID`);
 
 --
--- Indexes for table `import`
+-- Chỉ mục cho bảng `import`
 --
 ALTER TABLE `import`
   ADD PRIMARY KEY (`importID`),
@@ -279,40 +374,40 @@ ALTER TABLE `import`
   ADD KEY `fk_import_supplierid` (`SupplierID`);
 
 --
--- Indexes for table `importdetail`
+-- Chỉ mục cho bảng `importdetail`
 --
 ALTER TABLE `importdetail`
   ADD PRIMARY KEY (`ImportID`),
   ADD KEY `fk_importdetail_productid` (`ProductID`);
 
 --
--- Indexes for table `product`
+-- Chỉ mục cho bảng `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`ProductID`),
   ADD KEY `fk_product_brandid` (`BrandID`);
 
 --
--- Indexes for table `productdetail`
+-- Chỉ mục cho bảng `productdetail`
 --
 ALTER TABLE `productdetail`
   ADD PRIMARY KEY (`ProductID`);
 
 --
--- Indexes for table `promotion`
+-- Chỉ mục cho bảng `promotion`
 --
 ALTER TABLE `promotion`
   ADD PRIMARY KEY (`PromotionID`);
 
 --
--- Indexes for table `promotiondetail`
+-- Chỉ mục cho bảng `promotiondetail`
 --
 ALTER TABLE `promotiondetail`
   ADD PRIMARY KEY (`PromotionID`),
   ADD KEY `fk_promotiondetail_productid` (`ProductID`);
 
 --
--- Indexes for table `receipt`
+-- Chỉ mục cho bảng `receipt`
 --
 ALTER TABLE `receipt`
   ADD PRIMARY KEY (`ReceiptID`),
@@ -320,7 +415,7 @@ ALTER TABLE `receipt`
   ADD KEY `fk_staff_receipt_staffid` (`StaffID`);
 
 --
--- Indexes for table `receiptdetail`
+-- Chỉ mục cho bảng `receiptdetail`
 --
 ALTER TABLE `receiptdetail`
   ADD PRIMARY KEY (`ReceiptID`),
@@ -328,76 +423,75 @@ ALTER TABLE `receiptdetail`
   ADD KEY `fk_reciptdetail_promotionid` (`PromotionID`);
 
 --
--- Indexes for table `staff`
+-- Chỉ mục cho bảng `staff`
 --
 ALTER TABLE `staff`
   ADD PRIMARY KEY (`StaffID`);
 
 --
--- Indexes for table `supplier`
+-- Chỉ mục cho bảng `supplier`
 --
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`SupplierID`);
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `account`
+-- Các ràng buộc cho bảng `account`
 --
 ALTER TABLE `account`
   ADD CONSTRAINT `fk_acc_staffid` FOREIGN KEY (`StaffID`) REFERENCES `staff` (`StaffID`);
 
 --
--- Constraints for table `activity`
+-- Các ràng buộc cho bảng `activity`
 --
 ALTER TABLE `activity`
   ADD CONSTRAINT `fk_act_staffid` FOREIGN KEY (`StaffID`) REFERENCES `staff` (`StaffID`);
 
 --
--- Constraints for table `import`
+-- Các ràng buộc cho bảng `import`
 --
 ALTER TABLE `import`
   ADD CONSTRAINT `fk_import_staffid` FOREIGN KEY (`StaffID`) REFERENCES `staff` (`StaffID`),
   ADD CONSTRAINT `fk_import_supplierid` FOREIGN KEY (`SupplierID`) REFERENCES `supplier` (`SupplierID`);
 
 --
--- Constraints for table `importdetail`
+-- Các ràng buộc cho bảng `importdetail`
 --
 ALTER TABLE `importdetail`
   ADD CONSTRAINT `fk_importdetail_importid` FOREIGN KEY (`ImportID`) REFERENCES `import` (`importID`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_importdetail_productid` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`);
 
 --
--- Constraints for table `product`
+-- Các ràng buộc cho bảng `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `FK_product_productID` FOREIGN KEY (`ProductID`) REFERENCES `productdetail` (`ProductID`),
-  ADD CONSTRAINT `fk_product_brandid` FOREIGN KEY (`BrandID`) REFERENCES `brand` (`BrandID`);
+  ADD CONSTRAINT `fk_product_brand` FOREIGN KEY (`BrandID`) REFERENCES `brand` (`BrandID`);
 
 --
--- Constraints for table `productdetail`
+-- Các ràng buộc cho bảng `productdetail`
 --
 ALTER TABLE `productdetail`
   ADD CONSTRAINT `fk_productdetail` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `promotiondetail`
+-- Các ràng buộc cho bảng `promotiondetail`
 --
 ALTER TABLE `promotiondetail`
   ADD CONSTRAINT `fk_promotiondetail_productid` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`),
   ADD CONSTRAINT `fk_promotiondetail_promotionid` FOREIGN KEY (`PromotionID`) REFERENCES `promotion` (`PromotionID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `receipt`
+-- Các ràng buộc cho bảng `receipt`
 --
 ALTER TABLE `receipt`
   ADD CONSTRAINT `fk_cus_cusid` FOREIGN KEY (`CusID`) REFERENCES `customer` (`CusID`),
   ADD CONSTRAINT `fk_staff_receipt_staffid` FOREIGN KEY (`StaffID`) REFERENCES `staff` (`StaffID`);
 
 --
--- Constraints for table `receiptdetail`
+-- Các ràng buộc cho bảng `receiptdetail`
 --
 ALTER TABLE `receiptdetail`
   ADD CONSTRAINT `fk_reciptdetail_productid` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`),
