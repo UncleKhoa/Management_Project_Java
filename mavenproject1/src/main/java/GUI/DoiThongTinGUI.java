@@ -8,7 +8,11 @@ import DTO.staffDTO;
 import DTO.userDTO;
 import BUS.staffBUS;
 import java.io.File;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +27,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
     
-    public String id, firstname, lastname, yearofbirth, role, address, gmail, img;
+    public String id, firstname, lastname, yearofbirth, gender, phone_number, role, address, gmail, img;
+    public double salary;
     
     /**
      * Creates new form DoiThongTinGUI
@@ -34,7 +39,9 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     }
     
     public DoiThongTinGUI(String id) {
-        this.id = id;               
+        this.staffBUS = new staffBUS();
+        this.userBUS = new userBUS();
+        this.id = id;
         
         initComponents();
         setLocationRelativeTo(null);
@@ -45,8 +52,12 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         lastname = staff.getLastname();
         int yob = staff.getYearofbirth();
         yearofbirth = String.valueOf(yob);
+        phone_number = staff.getPhonenumber();
         role = staff.getRole();
         address = staff.getAddress();
+        gender = staff.getGender();
+        salary =  staff.getSalary();
+        String img = staff.getImg();
         
         userDTO user = userBUS.Get(id);
         gmail = user.getGmail();
@@ -57,10 +68,11 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         txtRole.setText(role);
         txtMail.setText(gmail);
         txtAddress.setText(address);
+        txtPhone.setText(phone_number);
         
         ButtonGroup gendergrp = new ButtonGroup();
         gendergrp.add(radioMale);
-        gendergrp.add(radioFemale);
+        gendergrp.add(radioFemale);      
         
         showOnOff(true,false);
     }
@@ -93,6 +105,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtLastName = new javax.swing.JTextField();
         txtFirstName = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAddress = new javax.swing.JTextArea();
@@ -240,19 +254,23 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel12.setText("Số điện thoại");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtPhone)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -262,11 +280,15 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -276,6 +298,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         txtAddress.setRows(5);
         jScrollPane1.setViewportView(txtAddress);
 
+        txtRole.setEnabled(false);
         txtRole.setPreferredSize(new java.awt.Dimension(200, 35));
 
         txtMail.setPreferredSize(new java.awt.Dimension(250, 35));
@@ -376,6 +399,11 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Lưu");
         jButton1.setPreferredSize(new java.awt.Dimension(120, 35));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnReturn.setBackground(new java.awt.Color(255, 0, 51));
         btnReturn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -422,12 +450,14 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         panelShowInfoLayout.setVerticalGroup(
             panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelShowInfoLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
                 .addGroup(panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelShowInfoLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGap(53, 53, 53)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelShowInfoLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addGroup(panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -469,6 +499,37 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     private void radioFemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFemaleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioFemaleActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String idstf = id;
+        String frtname_new = txtFirstName.getText();
+        String lstname_new = txtLastName.getText();
+        String yob_text = txtYear.getText();
+        int yob_new = Integer.parseInt(yob_text);
+        String phone_nb_new = txtPhone.getText();
+        String email_new = txtMail.getText();
+        String address_new = txtAddress.getText();
+        
+        staffBUS staff = new staffBUS();
+        staffDTO stf = staff.NewStaffDTO(idstf, frtname_new, lstname_new, yob_new, gender, phone_nb_new, address_new, salary, role, img);
+        try {
+            staff.Update(stf);
+        } catch (SQLException ex) {
+            Logger.getLogger(DoiThongTinGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        userBUS user = new userBUS();
+        try {
+            System.out.println(email_new+" "+id);
+            user.update_mail(email_new, id);
+        } catch (SQLException ex) {
+            Logger.getLogger(DoiThongTinGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        JOptionPane.showMessageDialog(this, "Thay đổi thông tin thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -515,6 +576,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -539,6 +601,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtPasswordCur;
     private javax.swing.JPasswordField txtPasswordNew;
     private javax.swing.JPasswordField txtPasswordNewRep;
+    private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtRole;
     private javax.swing.JTextField txtYear;
     // End of variables declaration//GEN-END:variables

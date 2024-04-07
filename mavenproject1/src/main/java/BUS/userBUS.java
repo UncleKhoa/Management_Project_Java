@@ -7,6 +7,7 @@ package BUS;
 import DAO.userDAO;
 import DTO.userDTO;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
@@ -84,6 +85,11 @@ public class userBUS {
             }
         }
         return null;
+    }
+    
+    public void update_mail(String mail, String staffid) throws SQLException{
+        userDAO user = new userDAO();
+        user.update_email(mail, staffid);
     }
     
     public ArrayList<userDTO> getList() {
@@ -165,7 +171,6 @@ public class userBUS {
     public void updatePass(String pass, String mail){
         userDAO usDAO = new userDAO();
         usDAO.UpdatePassword(pass, mail);
-        System.out.print(mail+" "+pass);
         return;
     }
     

@@ -13,7 +13,7 @@ public class staffDTO {
     double salary;
     int yearofbirth;
     
-    public void staffDTO(){
+    public staffDTO(){
         
     }
 

@@ -69,7 +69,7 @@ public class staffDAO {
     }
         
     public void update(staffDTO staff) throws SQLException {
-        String sql = "UPDATE USER SET firstname = ?, lastname = ?, yearofbirth = ?, gender = ?, phonenumber = ?, address = ?, salary = ?, role = ?, img = ? WHERE staffID = ?";
+        String sql = "UPDATE staff SET firstname = ?, lastname = ?, yearofbirth = ?, gender = ?, phonenumber = ?, address = ?, salary = ?, role = ?, img = ? WHERE staffID = ?";
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.setString(1, staff.getFirstname());
         stmt_add.setString(2, staff.getLastname());
@@ -84,6 +84,7 @@ public class staffDAO {
 
         stmt_add.executeUpdate();
     }
+        
     public void delete(String staffID) throws SQLException {
         String sql = "delete from staff wwhere staffid = '"+ staffID +"'";
         PreparedStatement stmt_add = conn.prepareStatement(sql);
