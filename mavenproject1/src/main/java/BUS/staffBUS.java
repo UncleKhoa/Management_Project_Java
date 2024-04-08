@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class staffBUS {
     private ArrayList<staffDTO> dsStaff;
     
-    
+
     public staffBUS(){
         list();
     }
@@ -40,6 +40,7 @@ public class staffBUS {
         }
         return null;
     }
+
     public staffDTO search(int i){
         return dsStaff.get(i);
     }
@@ -93,5 +94,4 @@ public class staffBUS {
         return list2;
         }
     }
-    
 

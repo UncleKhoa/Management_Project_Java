@@ -84,6 +84,7 @@ public class staffDAO {
         
     public void delete(String staffID) throws SQLException {
         String sql = "delete from staff where staffid = '"+ staffID +"'";
+
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
