@@ -54,7 +54,7 @@ public class staffDAO {
     }
     
         public void add(staffDTO staff) throws SQLException {
-        String sql = "INSERT INTO USER VALUES('" + staff.getStaffID() + "', "
+        String sql = "INSERT INTO STAFF VALUES('" + staff.getStaffID() + "', "
                 + "'" + staff.getFirstname()+ "', "
                 + "'" + staff.getLastname()+ "', "
                 + "'" + staff.getYearofbirth()+ "', "
@@ -69,7 +69,17 @@ public class staffDAO {
     }
         
     public void update(staffDTO staff) throws SQLException {
-        String sql = "UPDATE staff SET firstname = ?, lastname = ?, yearofbirth = ?, gender = ?, phonenumber = ?, address = ?, salary = ?, role = ?, img = ? WHERE staffID = ?";
+
+        String sql = "UPDATE STAFF SET firstname = '" + staff.getFirstname()+ "', "
+                + " lastname = '" + staff.getLastname()+ "', "
+                + " yearofbirth = '" + staff.getYearofbirth()+ "', "
+                + " gender = '" + staff.getGender()+ "', "
+                + " phonenumber = '" + staff.getPhonenumber()+ "', "
+                + " address = '" + staff.getAddress()+ "', "
+                + " salary = '" + staff.getSalary()+ "', "
+                + " role = '" + staff.getRole()+ "', "
+                + " img = '" + staff.getImg()+ "' WHERE staffID = '" + staff.getStaffID()+ "'";
+
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.setString(1, staff.getFirstname());
         stmt_add.setString(2, staff.getLastname());
@@ -86,7 +96,8 @@ public class staffDAO {
     }
         
     public void delete(String staffID) throws SQLException {
-        String sql = "delete from staff wwhere staffid = '"+ staffID +"'";
+        String sql = "delete from staff where staffid = '"+ staffID +"'";
+
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
