@@ -228,7 +228,7 @@ public class ForgetPassword extends javax.swing.JFrame {
                 OnOff(false,true,false);
             }
             else{
-                JOptionPane.showMessageDialog(this, "Code không hợp lệ, vui lòng kiểm tra lại", "Error!", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Code không hợp lệ, vui lòng kiểm tra lại", "Error!", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnNextMouseClicked
