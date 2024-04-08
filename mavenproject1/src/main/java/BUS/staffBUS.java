@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class staffBUS {
     private ArrayList<staffDTO> dsStaff;
     
+
     public staffBUS(){
         list();
     }
@@ -39,5 +40,58 @@ public class staffBUS {
         }
         return null;
     }
-    
-}
+
+    public staffDTO search(int i){
+        return dsStaff.get(i);
+    }
+    public void add(staffDTO staff){
+        dsStaff.add(staff);
+    }
+    public ArrayList<staffDTO> sortByBirth() {
+        ArrayList <staffDTO> list = dsStaff;
+        int n = list.size();
+        
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                staffDTO staff1 = list.get(j);
+                staffDTO staff2 = list.get(j + 1);
+
+                if ((staff1.getYearofbirth())>staff2.getYearofbirth()) {
+                    list.set(j, staff2);
+                    list.set(j + 1, staff1);
+                }
+            }
+        }
+        return list;
+    }
+        public ArrayList<staffDTO> sortByName() {
+        ArrayList <staffDTO> list = dsStaff;    
+        int n = list.size();
+        
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                staffDTO staff1 = list.get(j);
+                staffDTO staff2 = list.get(j + 1);
+
+                if (staff1.getFirstname().charAt(0) > staff2.getFirstname().charAt(0)) {
+                    list.set(j, staff2);
+                    list.set(j + 1, staff1);
+                }
+            }
+        }
+        return list;
+    }
+        
+        public ArrayList<staffDTO> search(String id){
+        ArrayList <staffDTO> list = dsStaff;   
+        ArrayList<staffDTO> list2 = new ArrayList<>();
+        for (staffDTO i:list){
+            if ((i.getStaffID().equals(id)) || (i.getFirstname().equals(id)))
+            {
+                list2.add(i);
+            }
+        }
+        return list2;
+        }
+    }
+

@@ -54,7 +54,7 @@ public class staffDAO {
     }
     
         public void add(staffDTO staff) throws SQLException {
-        String sql = "INSERT INTO USER VALUES('" + staff.getStaffID() + "', "
+        String sql = "INSERT INTO STAFF VALUES('" + staff.getStaffID() + "', "
                 + "'" + staff.getFirstname()+ "', "
                 + "'" + staff.getLastname()+ "', "
                 + "'" + staff.getYearofbirth()+ "', "
@@ -69,7 +69,7 @@ public class staffDAO {
     }
         
     public void update(staffDTO staff) throws SQLException {
-        String sql = "UPDATE USER SET firstname = '" + staff.getFirstname()+ "'"
+        String sql = "UPDATE STAFF SET firstname = '" + staff.getFirstname()+ "', "
                 + " lastname = '" + staff.getLastname()+ "', "
                 + " yearofbirth = '" + staff.getYearofbirth()+ "', "
                 + " gender = '" + staff.getGender()+ "', "
@@ -83,7 +83,8 @@ public class staffDAO {
     }
         
     public void delete(String staffID) throws SQLException {
-        String sql = "delete from staff wwhere staffid = '"+ staffID +"'";
+        String sql = "delete from staff where staffid = '"+ staffID +"'";
+
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
