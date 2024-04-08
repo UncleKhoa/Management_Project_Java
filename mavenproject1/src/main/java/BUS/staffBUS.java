@@ -72,9 +72,11 @@ public class staffBUS {
     public staffDTO search(int i){
         return dsStaff.get(i);
     }
+    
     public void add(staffDTO staff){
         dsStaff.add(staff);
     }
+    
     public ArrayList<staffDTO> sortByBirth() {
         ArrayList <staffDTO> list = dsStaff;
         int n = list.size();
@@ -92,7 +94,8 @@ public class staffBUS {
         }
         return list;
     }
-        public ArrayList<staffDTO> sortByName() {
+    
+    public ArrayList<staffDTO> sortByName() {
         ArrayList <staffDTO> list = dsStaff;    
         int n = list.size();
         
@@ -110,7 +113,7 @@ public class staffBUS {
         return list;
     }
         
-        public ArrayList<staffDTO> search(String id){
+    public ArrayList<staffDTO> search(String id){
         ArrayList <staffDTO> list = dsStaff;   
         ArrayList<staffDTO> list2 = new ArrayList<>();
         for (staffDTO i:list){
@@ -121,5 +124,5 @@ public class staffBUS {
         }
         return list2;
         }
-    }
+}
 
