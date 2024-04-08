@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 04, 2024 lúc 07:16 PM
+-- Thời gian đã tạo: Th4 07, 2024 lúc 07:34 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -40,6 +40,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`StaffID`, `Username`, `Password`, `Gmail`, `Enable`) VALUES
+('3122560020', 'admin2', 'admin2', 'no', 'u'),
 ('3122560022', 'vithoang', 'hoang1', 'vithoang1608@gmail.com', 'unlock'),
 ('admin', 'admin', 'admin', 'khoanguyen052096@gmail.com', 'unlock');
 
@@ -312,9 +313,9 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`StaffID`, `FirstName`, `LastName`, `YearOfBirth`, `Gender`, `PhoneNumber`, `Address`, `Salary`, `Role`, `IMG`) VALUES
-('3122560020', 'Khuê', 'Minh', 2002, 'Nữ', '097673245`', '317 An Dương Vương', 12, 'Quản lý', ''),
-('3122560022', 'Hoàng', 'Nguyễn', 2004, 'nam', '09DDS', '', 22, '223', ''),
-('admin', 'Khoa', 'Nguyễn', 2002, 'Nam', '077*****31', 'asadfwewefwef', 20000000, 'admin', '');
+('3122560020', 'Khuê', 'Minh', 2002, 'Nam', '097673245', '317 An Dương Vương', 12, 'Quản lý', 0x6d696e686b6875652c6a7067),
+('3122560022', 'Hoàng', 'Việt ', 2004, 'nam', '096159023', '230 Dương Bá Trạc', 1000, 'Nhân viên', 0x76696574686f616e672e6a7067),
+('admin', 'Khoa', 'Nguyễn', 2002, 'Nam', '077*****31', '271 An Dương Vương', 20000000, 'admin', 0x6e677579656e6b686f612c6a7067);
 
 -- --------------------------------------------------------
 

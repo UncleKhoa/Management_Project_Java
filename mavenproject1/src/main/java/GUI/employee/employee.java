@@ -28,7 +28,7 @@ import javax.swing.ImageIcon;
  * @author ThinkBook
  */
 public class employee extends javax.swing.JFrame {
-    ArrayList<staffDTO> list = new ArrayList<>();
+    private ArrayList<staffDTO> list = new ArrayList<>();
     DefaultTableModel model;
     /**
      * Creates new form employee
