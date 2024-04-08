@@ -69,6 +69,7 @@ public class staffDAO {
     }
         
     public void update(staffDTO staff) throws SQLException {
+
         String sql = "UPDATE STAFF SET firstname = '" + staff.getFirstname()+ "', "
                 + " lastname = '" + staff.getLastname()+ "', "
                 + " yearofbirth = '" + staff.getYearofbirth()+ "', "
@@ -78,7 +79,19 @@ public class staffDAO {
                 + " salary = '" + staff.getSalary()+ "', "
                 + " role = '" + staff.getRole()+ "', "
                 + " img = '" + staff.getImg()+ "' WHERE staffID = '" + staff.getStaffID()+ "'";
+
         PreparedStatement stmt_add = conn.prepareStatement(sql);
+        stmt_add.setString(1, staff.getFirstname());
+        stmt_add.setString(2, staff.getLastname());
+        stmt_add.setInt(3, staff.getYearofbirth());
+        stmt_add.setString(4, staff.getGender());
+        stmt_add.setString(5, staff.getPhonenumber());
+        stmt_add.setString(6, staff.getAddress());
+        stmt_add.setDouble(7, staff.getSalary());
+        stmt_add.setString(8, staff.getRole());
+        stmt_add.setString(9, staff.getImg());
+        stmt_add.setString(10, staff.getStaffID());
+
         stmt_add.executeUpdate();
     }
         

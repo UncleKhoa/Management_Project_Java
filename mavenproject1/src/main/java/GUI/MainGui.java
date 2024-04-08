@@ -33,7 +33,7 @@ public class MainGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
-    public MainGUI(String id,String name, String role) {
+    public MainGUI(String id, String name, String role) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -54,7 +54,6 @@ public class MainGUI extends javax.swing.JFrame {
 
         lblName.setText(name);
         lblRole.setText(role);
-
     }
 
     /**

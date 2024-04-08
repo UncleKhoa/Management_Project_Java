@@ -5,8 +5,10 @@
 package BUS;
 
 import DAO.staffDAO;
+import DAO.userDAO;
 import DTO.staffDTO;
 import DTO.userDTO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -15,10 +17,15 @@ import java.util.ArrayList;
  */
 public class staffBUS {
     private ArrayList<staffDTO> dsStaff;
+    private staffDAO staffDAO;
     
 
     public staffBUS(){
         list();
+    }
+    
+    public void staffBUS(){
+        this.staffDAO = new staffDAO();
     }
     
     public void list() {
@@ -30,6 +37,27 @@ public class staffBUS {
     
     public ArrayList<staffDTO> getList() {
         return dsStaff;
+    }
+    
+    public staffDTO NewStaffDTO(String staffID, String firstName, String lastName, int yearOfBirth, String gender, String phoneNumber, String address, double salary, String role, String img) {
+        staffDTO staff = new staffDTO();
+        staff.setStaffID(staffID);
+        staff.setFirstname(firstName);
+        staff.setLastname(lastName);
+        staff.setYearofbirth(yearOfBirth);
+        staff.setGender(gender);
+        staff.setPhonenumber(phoneNumber);
+        staff.setAddress(address);
+        staff.setSalary(salary);
+        staff.setRole(role);
+        staff.setImg(img);
+
+        return staff;
+    }
+    
+    public void Update(staffDTO stf) throws SQLException{
+        staffDAO stfDAO = new staffDAO();
+        stfDAO.update(stf);
     }
     
     public staffDTO Get(String staffID){

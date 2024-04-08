@@ -88,6 +88,15 @@ public class userDAO {
         }
     }
     
+    public void update_email(String mail, String staffID) throws SQLException{
+        String sql = "update account set Gmail= ? where StaffID = ?";
+        PreparedStatement stmt_update = conn.prepareStatement(sql);
+        stmt_update.setString(1, mail);
+        stmt_update.setString(2, staffID);
+        
+        stmt_update.executeUpdate();
+    }
+    
     public void delete(String staffID){
         try {
             String sql = "DELETE FROM USER WHERE StaffID = '" + staffID + "'";
