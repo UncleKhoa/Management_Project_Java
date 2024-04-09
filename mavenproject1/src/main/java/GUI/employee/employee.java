@@ -6,24 +6,13 @@ package GUI.employee;
 import BUS.staffBUS;
 import DAO.staffDAO;
 import DTO.staffDTO;
-import GUI.employee.edit_popup;
-import GUI.employee.export_popup;
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import GUI.employee.add_popup;
-import Model.CustomHeaderRenderer;
-import java.awt.Color;
-import java.awt.Window;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.table.JTableHeader;
 /**
@@ -661,12 +650,12 @@ public class employee extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        int selectCollum = staffTable.getSelectedRow();
-        if (selectCollum == -1){
+        int selectRow = staffTable.getSelectedRow();
+        if (selectRow == -1){
             JOptionPane.showMessageDialog(null, "Vui lòng chọn STAFF để sửa!", "Lỗi", JOptionPane.ERROR_MESSAGE);;
        
         }else{
-        edit_popup edit = new edit_popup(list.get(selectCollum));
+        edit_popup edit = new edit_popup(list.get(selectRow));
         edit.setVisible(true);
         }
         
@@ -692,8 +681,8 @@ public class employee extends javax.swing.JFrame {
 
     private void staffTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_staffTableMouseClicked
         // TODO add your handling code here:
-                int selectColumn = staffTable.getSelectedRow();
-                viewInformation(list.get(selectColumn));
+                int selectRow = staffTable.getSelectedRow();
+                viewInformation(list.get(selectRow));
                 
     }//GEN-LAST:event_staffTableMouseClicked
 

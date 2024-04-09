@@ -34,6 +34,14 @@ public class customerBUS {
         }
         return null;
     }
-    
+    public ArrayList<customerDTO> search(String s){
+        ArrayList<customerDTO> list = new ArrayList<>();
+        for (customerDTO i:dsCus){
+            if (i.getCusID().equals(s) || i.getFirstName().equals(s)){
+                list.add(i);
+            }
+        }
+        return list;
+    }
     
 }
