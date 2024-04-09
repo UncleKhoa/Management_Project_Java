@@ -6,6 +6,7 @@ package GUI.employee;
 import BUS.staffBUS;
 import DAO.staffDAO;
 import DTO.staffDTO;
+import Model.CustomHeaderRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.table.JTableHeader;
 /**
  *
  * @author ThinkBook
@@ -29,8 +31,11 @@ public class employee extends javax.swing.JFrame {
         initComponents();
         this.staffBUS = new staffBUS();
         list = staffBUS.getList();
-        model = (DefaultTableModel) staffTable.getModel(); 
+        model = (DefaultTableModel) staffTable.getModel();
+        JTableHeader header = staffTable.getTableHeader();
+        header.setDefaultRenderer(new CustomHeaderRenderer());
         viewData(list);
+        setLocationRelativeTo(null);
 
     }
     public void addLineData(staffDTO i)
@@ -275,20 +280,26 @@ public class employee extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        staffTable.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         staffTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "StaffID", "Firstname", "Lastname", "Yearofbirth", "Gender", "Phonenumber", "Address", "Salary", "Role", "Img"
+                "Staff ID", "Firstname", "Lastname", "YearofBirth", "Gender", "Phonenumber", "Address", "Salary", "Role"
             }
         ));
+        staffTable.setGridColor(new java.awt.Color(255, 255, 255));
         staffTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 staffTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(staffTable);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -426,7 +437,7 @@ public class employee extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(role, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -505,10 +516,11 @@ public class employee extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
