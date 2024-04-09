@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -70,6 +71,13 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         txtAddress.setText(address);
         txtPhone.setText(phone_number);
         
+        // Up ảnh nhân viên từ dưới database
+        File image_staff = new File(relativePath+"\\IMG_STAFF\\"+img);
+        // Tạo một ImageIcon từ một File
+        ImageIcon staff_image = new ImageIcon(image_staff.getAbsolutePath());
+        // Thiết lập biểu tượng cho JLabel
+        lblIMG.setIcon(staff_image);
+        
         ButtonGroup gendergrp = new ButtonGroup();
         gendergrp.add(radioMale);
         gendergrp.add(radioFemale);      
@@ -88,7 +96,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         panelChangePassword = new javax.swing.JPanel();
-        txtPasswordCur = new javax.swing.JTextField();
+        txtPasswordOld = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtPasswordNew = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
@@ -96,7 +104,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnSaveNewPass = new javax.swing.JButton();
         panelShowInfo = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lblIMG = new javax.swing.JLabel();
@@ -131,7 +139,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         panelChangePassword.setBackground(new java.awt.Color(255, 255, 255));
         panelChangePassword.setPreferredSize(new java.awt.Dimension(650, 550));
 
-        txtPasswordCur.setPreferredSize(new java.awt.Dimension(250, 35));
+        txtPasswordOld.setPreferredSize(new java.awt.Dimension(250, 35));
 
         jLabel8.setText("Nhập mật khẩu hiện tại");
 
@@ -155,11 +163,16 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(66, 100, 255));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Lưu");
-        jButton4.setPreferredSize(new java.awt.Dimension(120, 35));
+        btnSaveNewPass.setBackground(new java.awt.Color(66, 100, 255));
+        btnSaveNewPass.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSaveNewPass.setForeground(new java.awt.Color(255, 255, 255));
+        btnSaveNewPass.setText("Lưu");
+        btnSaveNewPass.setPreferredSize(new java.awt.Dimension(120, 35));
+        btnSaveNewPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveNewPassActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelChangePasswordLayout = new javax.swing.GroupLayout(panelChangePassword);
         panelChangePassword.setLayout(panelChangePasswordLayout);
@@ -175,8 +188,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelChangePasswordLayout.createSequentialGroup()
                                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(txtPasswordCur, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnSaveNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtPasswordOld, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtPasswordNew, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtPasswordNewRep, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,7 +207,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPasswordCur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPasswordOld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -206,7 +219,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(panelChangePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSaveNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40))
         );
 
@@ -214,10 +227,13 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
 
         panelShowInfo.setBackground(new java.awt.Color(255, 255, 255));
         panelShowInfo.setPreferredSize(new java.awt.Dimension(650, 550));
+        panelShowInfo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(125, 125));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(151, 151));
 
-        lblIMG.setPreferredSize(new java.awt.Dimension(125, 125));
+        lblIMG.setBackground(new java.awt.Color(255, 255, 255));
+        lblIMG.setPreferredSize(new java.awt.Dimension(151, 151));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -230,6 +246,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
             .addComponent(lblIMG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        panelShowInfo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
+
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("Họ");
@@ -237,7 +255,6 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         jLabel2.setText("Tên");
 
         txtLastName.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        txtLastName.setText("Nguyễn");
         txtLastName.setPreferredSize(new java.awt.Dimension(250, 35));
         txtLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,7 +263,6 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         });
 
         txtFirstName.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        txtFirstName.setText("Khoa");
         txtFirstName.setPreferredSize(new java.awt.Dimension(250, 35));
         txtFirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -290,6 +306,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                     .addComponent(jLabel12))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        panelShowInfo.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setPreferredSize(new java.awt.Dimension(498, 280));
@@ -394,6 +412,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        panelShowInfo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 192, 556, -1));
+
         jButton1.setBackground(new java.awt.Color(66, 100, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -404,6 +424,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        panelShowInfo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 487, -1, -1));
 
         btnReturn.setBackground(new java.awt.Color(255, 0, 51));
         btnReturn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -415,6 +436,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 btnReturnActionPerformed(evt);
             }
         });
+        panelShowInfo.add(btnReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 487, -1, -1));
 
         jButton3.setBackground(new java.awt.Color(51, 255, 51));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -426,45 +448,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout panelShowInfoLayout = new javax.swing.GroupLayout(panelShowInfo);
-        panelShowInfo.setLayout(panelShowInfoLayout);
-        panelShowInfoLayout.setHorizontalGroup(
-            panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShowInfoLayout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelShowInfoLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelShowInfoLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        panelShowInfoLayout.setVerticalGroup(
-            panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShowInfoLayout.createSequentialGroup()
-                .addGroup(panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelShowInfoLayout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelShowInfoLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, 0)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addGroup(panelShowInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        panelShowInfo.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(268, 487, -1, -1));
 
         getContentPane().add(panelShowInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -531,6 +515,38 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnSaveNewPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveNewPassActionPerformed
+        userBUS user = new userBUS();
+        String pass_old = txtPasswordOld.getText();
+        String new_pass = txtPasswordNew.getText();
+        String new_pass_re = txtPasswordNewRep.getText();
+        userDTO user_pass =  user.Check_Password(id, pass_old);
+        if(pass_old.equals("") || new_pass.equals("") || new_pass_re.equals("")){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin", "ERROR!",JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            if(new_pass.length() < 6){
+                JOptionPane.showMessageDialog(this, "Mật khẩu mới quá ngắn, vui lòng đổi mật khẩu khác", "ERROR!",JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                if (!new_pass.equals(new_pass_re)) {
+                    JOptionPane.showMessageDialog(this, "Hai mật khẩu mới không khớp, vui lòng kiểm tra lại", "ERROR!", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    if (user_pass == null) {
+                        System.out.println("Cancel");
+                        JOptionPane.showMessageDialog(this, "Mật khẩu cũ không đúng, vui lòng kiểm tra lại", "ERROR!", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    } else {
+                        user.updatePass(new_pass_re, gmail);
+                        JOptionPane.showMessageDialog(this, "Thay đổi mật khẩu thành công", "Succeed", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
+                    }
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_btnSaveNewPassActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -569,10 +585,10 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReturn;
+    private javax.swing.JButton btnSaveNewPass;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -598,9 +614,9 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
     private javax.swing.JTextField txtMail;
-    private javax.swing.JTextField txtPasswordCur;
     private javax.swing.JPasswordField txtPasswordNew;
     private javax.swing.JPasswordField txtPasswordNewRep;
+    private javax.swing.JTextField txtPasswordOld;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtRole;
     private javax.swing.JTextField txtYear;

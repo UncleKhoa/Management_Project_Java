@@ -78,6 +78,15 @@ public class userBUS {
         return null;
     }
     
+    public userDTO Check_Password(String id, String password){
+        for(userDTO us:dsUS){
+            if(us.getStaffID().equals(id) &&us.getPassword().equals(password)){
+                return us;
+            }
+        }
+        return null;
+    }
+    
     public userDTO CheckMail(String mail){
         for(userDTO us:dsUS){
             if(us.getGmail().equals(mail)){
