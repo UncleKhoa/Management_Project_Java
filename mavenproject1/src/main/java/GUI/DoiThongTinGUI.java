@@ -30,6 +30,7 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     
     public String id, firstname, lastname, yearofbirth, gender, phone_number, role, address, gmail, img;
     public double salary;
+    public int flag;
     
     /**
      * Creates new form DoiThongTinGUI
@@ -78,15 +79,20 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         // Thiết lập biểu tượng cho JLabel
         lblIMG.setIcon(staff_image);
         
-        // Icon cho giới tính
-        File icon_male = new File(relativePath+"male.png");
-        ImageIcon i_male = new ImageIcon(icon_male.getAbsolutePath());
-        // Thiết lập biểu tượng cho JLabel
-        radioMale.setIcon(i_male);
-        
         ButtonGroup gendergrp = new ButtonGroup();
         gendergrp.add(radioMale);
-        gendergrp.add(radioFemale);             
+        gendergrp.add(radioFemale);
+        
+        // Giới tính    
+        if(gender.equals("Nam")){
+            flag = 1;
+        }
+        else{
+            flag = 0;
+        }
+        
+        change_gender();
+        select_gender(flag);
         
         showOnOff(true,false);
     }
@@ -371,21 +377,23 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMail, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
+                                .addGap(36, 36, 36)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(txtMail, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addGap(9, 9, 9)
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(radioMale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(77, 77, 77)
+                                .addGap(54, 54, 54)
                                 .addComponent(radioFemale, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(49, 49, 49))))
+                                .addGap(66, 66, 66))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel6)
@@ -463,6 +471,39 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    public void change_gender(){
+        // Icon cho giới tính
+        File icon_male_not = new File(relativePath+"male_notSelected.png");
+        ImageIcon i_male_not = new ImageIcon(icon_male_not.getAbsolutePath());
+        // Thiết lập biểu tượng cho JLabel
+        radioMale.setIcon(i_male_not);
+        
+        // Icon cho giới tính
+        File icon_female_not = new File(relativePath+"female_notSelected.png");
+        ImageIcon i_female_not = new ImageIcon(icon_female_not.getAbsolutePath());
+        // Thiết lập biểu tượng cho JLabel
+        radioFemale.setIcon(i_female_not);
+    }
+    
+    public void select_gender(int a){
+        change_gender();
+        
+        if(a == 1){
+            // Icon cho giới tính
+            File icon_male = new File(relativePath+"male.png");
+            ImageIcon i_male = new ImageIcon(icon_male.getAbsolutePath());
+            // Thiết lập biểu tượng cho JLabel
+            radioMale.setIcon(i_male);
+        }
+        if(a == 0){
+            // Icon cho giới tính
+            File icon_female = new File(relativePath+"female.png");
+            ImageIcon i_female = new ImageIcon(icon_female.getAbsolutePath());
+            // Thiết lập biểu tượng cho JLabel
+            radioFemale.setIcon(i_female);
+        }
+    }
+    
     public void showOnOff(boolean a, boolean b){
         panelShowInfo.show(a);
         panelChangePassword.show(b);
@@ -493,7 +534,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void radioFemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFemaleActionPerformed
-        // TODO add your handling code here:
+        flag = 0;
+        select_gender(flag);
     }//GEN-LAST:event_radioFemaleActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -505,9 +547,16 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         String phone_nb_new = txtPhone.getText();
         String email_new = txtMail.getText();
         String address_new = txtAddress.getText();
+        String gender_new;
+        if(flag == 1){
+            gender_new = "Nam";
+        }
+        else{
+            gender_new = "Nữ";
+        }
         
         staffBUS staff = new staffBUS();
-        staffDTO stf = staff.NewStaffDTO(idstf, frtname_new, lstname_new, yob_new, gender, phone_nb_new, address_new, salary, role, img);
+        staffDTO stf = staff.NewStaffDTO(idstf, frtname_new, lstname_new, yob_new, gender_new, phone_nb_new, address_new, salary, role, img);
         try {
             staff.Update(stf);
         } catch (SQLException ex) {
@@ -560,7 +609,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveNewPassActionPerformed
 
     private void radioMaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioMaleActionPerformed
-        // TODO add your handling code here:
+        flag = 1;
+        select_gender(flag);
     }//GEN-LAST:event_radioMaleActionPerformed
 
     /**
