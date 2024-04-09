@@ -48,23 +48,23 @@ public class customerDAO {
     }
     
     public void add(customerDTO cus) throws SQLException {
-        String sql = "INSERT INTO STAFF VALUES('" + cus.getCusID()+ "', "
+        String sql = "INSERT INTO customer VALUES('" + cus.getCusID()+ "', "
                 + "'" + cus.getFirstName()+ "', "
                 + "'" + cus.getLastName()+ "', "
                 + "'" + cus.getGender()+ "', "
                 + "'" + cus.getPhoneNumber()+ "', "
                 + "'" + cus.getGmail()+ "', "
-                + "'" + cus.getAddress()+ "', ";
+                + "'" + cus.getAddress()+ "')";
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
     public void update(customerDTO cus) throws SQLException {
-        String sql = "UPDATE STAFF SET firstname = '" + cus.getFirstName()+ "', "
+        String sql = "UPDATE customer SET firstname = '" + cus.getFirstName()+ "', "
                 + " lastname = '" + cus.getLastName()+ "', "
                 + " gender = '" + cus.getGender()+ "', "
                 + " phonenumber = '" + cus.getPhoneNumber()+ "', "
-                + "gmail = '"+ cus.getGmail()+ "'. "
-                + " address = '" + cus.getAddress()+ "' WHERE cusID = '" + cus.getCusID()+ "'";
+                + "gmail = '"+ cus.getGmail()+ "', "
+                + " address = '" + cus.getAddress()+ "' WHERE cusID = '" + cus.getCusID()+"'";
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
