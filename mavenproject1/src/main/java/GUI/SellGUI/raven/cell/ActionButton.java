@@ -4,6 +4,10 @@
  */
 package GUI.SellGUI.raven.cell;
 
+/**
+ *
+ * @author MY PC
+ */
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
