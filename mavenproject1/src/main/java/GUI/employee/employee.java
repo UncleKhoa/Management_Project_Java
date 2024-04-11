@@ -42,7 +42,7 @@ public class employee extends javax.swing.JFrame {
     {
      model.addRow(new Object[]{
            i.getStaffID(),i.getFirstname(),i.getLastname(),i.getYearofbirth(),i.getGender(),i.getPhonenumber(),i.getAddress(),i.getSalary(),i.getRole(),i.getImg()
-        });   
+        });
     }
     public void viewData(ArrayList<staffDTO> list){
         removeData();
@@ -593,7 +593,7 @@ public class employee extends javax.swing.JFrame {
         }else{
         ArrayList <staffDTO> list2 = staffBUS.search(searchField.getText());
         if (list2.size()==0 ){
-             JOptionPane.showMessageDialog(null, "Không tìm thấy!", "Lỗi tìm kiếm", JOptionPane.ERROR_MESSAGE);;
+             JOptionPane.showMessageDialog(null, "Không tìm thấy!", "Lỗi tìm kiếm", JOptionPane.ERROR_MESSAGE);
         }
         else{
             removeData();
@@ -685,7 +685,7 @@ public class employee extends javax.swing.JFrame {
     private void staffTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_staffTableMouseClicked
         // TODO add your handling code here:
                 int selectRow = staffTable.getSelectedRow();
-                viewInformation(list.get(selectRow));
+        viewInformation(list.get(selectRow));
                 
     }//GEN-LAST:event_staffTableMouseClicked
 

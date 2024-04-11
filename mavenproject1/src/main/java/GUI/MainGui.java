@@ -13,6 +13,7 @@ import java.sql.Connection;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import Model.CustomConfirmDialog;
 
 /**
  *
@@ -762,8 +763,12 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblLogoutMouseExited
 
     private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
-        int reply = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất?", "Đăng xuất ?", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
+        File image_exit = new File(relativePath+"exit.png");
+        ImageIcon icon_exit = new ImageIcon(image_exit.getAbsolutePath());
+        lblExit.setIcon(icon_exit);
+        CustomConfirmDialog logout = new CustomConfirmDialog(this,"Xác nhận đăng xuất","Bạn có muốn đăng xuất?","close_red.png");
+        logout.setVisible(true);
+        if(logout.getSelected()){
             Login login = new Login();
             login.setVisible(true);
             this.dispose();

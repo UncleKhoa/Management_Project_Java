@@ -7,6 +7,8 @@ import BUS.userBUS;
 import DTO.staffDTO;
 import DTO.userDTO;
 import BUS.staffBUS;
+import Model.MyMessageAccept;
+import Model.MyMessageAlert;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -410,9 +412,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(radioFemale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(radioMale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(radioMale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -571,7 +572,8 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
             Logger.getLogger(DoiThongTinGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        JOptionPane.showMessageDialog(this, "Thay đổi thông tin thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+        MyMessageAccept accept = new MyMessageAccept(this, "Cập nhật thông tin thành công");
+        accept.setVisible(true);
         this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -583,23 +585,27 @@ public class DoiThongTinGUI extends javax.swing.JFrame {
         String new_pass_re = txtPasswordNewRep.getText();
         userDTO user_pass =  user.Check_Password(id, pass_old);
         if(pass_old.equals("") || new_pass.equals("") || new_pass_re.equals("")){
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin", "ERROR!",JOptionPane.WARNING_MESSAGE);
+            MyMessageAlert alert_1 = new MyMessageAlert(this, "Vui lòng nhập đầy đủ thông tin");
+            alert_1.setVisible(true);
         }
         else{
             if(new_pass.length() < 6){
-                JOptionPane.showMessageDialog(this, "Mật khẩu mới quá ngắn, vui lòng đổi mật khẩu khác", "ERROR!",JOptionPane.WARNING_MESSAGE);
+                MyMessageAlert alert_2 = new MyMessageAlert(this, "Mật khẩu mới quá ngắn, vui lòng đổi mật khẩu khác");
+                alert_2.setVisible(true);                
             }
             else{
                 if (!new_pass.equals(new_pass_re)) {
-                    JOptionPane.showMessageDialog(this, "Hai mật khẩu mới không khớp, vui lòng kiểm tra lại", "ERROR!", JOptionPane.WARNING_MESSAGE);
+                    MyMessageAlert alert_3 = new MyMessageAlert(this, "Hai mật khẩu mới không khớp, vui lòng kiểm tra lại");
+                    alert_3.setVisible(true);   
                 } else {
                     if (user_pass == null) {
-                        System.out.println("Cancel");
-                        JOptionPane.showMessageDialog(this, "Mật khẩu cũ không đúng, vui lòng kiểm tra lại", "ERROR!", JOptionPane.ERROR_MESSAGE);
+                        MyMessageAlert alert_4 = new MyMessageAlert(this, "Mật khẩu cũ không đúng, vui lòng kiểm tra lại");
+                        alert_4.setVisible(true); 
                         return;
                     } else {
                         user.updatePass(new_pass_re, gmail);
-                        JOptionPane.showMessageDialog(this, "Thay đổi mật khẩu thành công", "Succeed", JOptionPane.INFORMATION_MESSAGE);
+                        MyMessageAccept accept = new MyMessageAccept(this, "Thay đổi mật khẩu thành công");
+                        accept.setVisible(true); 
                         this.dispose();
                     }
                 }
