@@ -110,17 +110,13 @@ public class userDAO {
     public void UpdatePassword(String password, String gmail){
         try(Connection conn = DBConnect.getConnect()) {
             // Câu truy vấn SQL để cập nhật mật khẩu
-            String sql = "UPDATE account SET Password = ? WHERE Gmail = ?";
+            String sql = "UPDATE account SET Password = '"+password+"' "
+                    + "WHERE Gmail = '"+gmail+"'";
             
-            // Tạo một đối tượng PreparedStatement với câu truy vấn SQL
             PreparedStatement stmt_up_pass = conn.prepareStatement(sql);
-            
-            // Thiết lập các tham số cho câu truy vấn SQL
-            stmt_up_pass.setString(1, password);
-            stmt_up_pass.setString(2, gmail);
+            stmt_up_pass.executeUpdate();
             
             // Thực thi truy vấn SQL
-            stmt_up_pass.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(userDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

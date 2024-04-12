@@ -58,6 +58,7 @@ public class customerDAO {
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
+    
     public void update(customerDTO cus) throws SQLException {
         String sql = "UPDATE customer SET firstname = '" + cus.getFirstName()+ "', "
                 + " lastname = '" + cus.getLastName()+ "', "
@@ -68,6 +69,7 @@ public class customerDAO {
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
+    
     public void delete(String cusID) throws SQLException {
         String sql = "delete from customer where cusID = '"+ cusID +"'";
         PreparedStatement stmt_add = conn.prepareStatement(sql);

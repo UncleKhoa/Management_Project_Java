@@ -84,7 +84,7 @@ public class edit_popup extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setText("Edit employee");
+        jLabel1.setText("Sửa thông tin nhân viên");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -129,19 +129,19 @@ public class edit_popup extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("IDStaff");
+        jLabel2.setText("ID");
 
-        jLabel3.setText("FirstName");
+        jLabel3.setText("Tên");
 
-        jLabel4.setText("LastName");
+        jLabel4.setText("Họ");
 
-        jLabel5.setText("YearOfBirth");
+        jLabel5.setText("Năm sinh");
 
-        jLabel6.setText("Gender");
+        jLabel6.setText("Giới tính");
 
-        jLabel7.setText("PhoneNumber");
+        jLabel7.setText("Số điện thoại");
 
-        jLabel8.setText("Address");
+        jLabel8.setText("Địa chỉ");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -218,13 +218,13 @@ public class edit_popup extends javax.swing.JFrame {
 
         salary.setPreferredSize(new java.awt.Dimension(250, 35));
 
-        jLabel9.setText("Salary");
+        jLabel9.setText("Lương");
 
         role.setPreferredSize(new java.awt.Dimension(250, 35));
 
         img.setPreferredSize(new java.awt.Dimension(250, 35));
 
-        jLabel10.setText("Role");
+        jLabel10.setText("Chức vụ");
 
         jLabel11.setText("IMG");
 
@@ -266,7 +266,7 @@ public class edit_popup extends javax.swing.JFrame {
                                     .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 13, Short.MAX_VALUE)
+                        .addGap(0, 19, Short.MAX_VALUE)
                         .addComponent(cancel)
                         .addGap(18, 18, 18)
                         .addComponent(confirm)
