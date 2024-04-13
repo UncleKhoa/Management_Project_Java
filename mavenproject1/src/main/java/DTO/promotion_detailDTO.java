@@ -9,18 +9,22 @@ package DTO;
  * @author Bon Nguyen
  */
 public class promotion_detailDTO {
-    String PromotionID, ProductID, Description;
-    int PromotionPercent;
+    String PromotionDetailID, PromotionID, ProductID;
+    float PromotionPercent;
     
     public promotion_detailDTO(){
         
     }
 
-    public promotion_detailDTO(String PromotionID, String ProductID, String Description, int PromotionPercent) {
+    public promotion_detailDTO(String PromotionDetailID, String PromotionID, String ProductID, float PromotionPercent) {
+        this.PromotionDetailID = PromotionDetailID;
         this.PromotionID = PromotionID;
         this.ProductID = ProductID;
-        this.Description = Description;
         this.PromotionPercent = PromotionPercent;
+    }
+
+    public String getPromotionDetailID() {
+        return PromotionDetailID;
     }
 
     public String getPromotionID() {
@@ -31,12 +35,12 @@ public class promotion_detailDTO {
         return ProductID;
     }
 
-    public String getDescription() {
-        return Description;
+    public float getPromotionPercent() {
+        return PromotionPercent;
     }
 
-    public int getPromotionPercent() {
-        return PromotionPercent;
+    public void setPromotionDetailID(String PromotionDetailID) {
+        this.PromotionDetailID = PromotionDetailID;
     }
 
     public void setPromotionID(String PromotionID) {
@@ -47,14 +51,8 @@ public class promotion_detailDTO {
         this.ProductID = ProductID;
     }
 
-    public void setDescription(String Description) {
-        this.Description = Description;
-    }
-
-    public void setPromotionPercent(int PromotionPercent) {
+    public void setPromotionPercent(float PromotionPercent) {
         this.PromotionPercent = PromotionPercent;
     }
-    
-    
     
 }

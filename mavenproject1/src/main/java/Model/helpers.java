@@ -9,6 +9,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -20,7 +22,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class helpers {
     static public void convertBackgroundOfTable(JTable table)
-    {        Color ivory = new Color(255, 255, 255);
+    {        
+        Color ivory = new Color(255, 255, 255);
 
         table.setOpaque(true);
         table.setFillsViewportHeight(true);
@@ -39,11 +42,13 @@ public class helpers {
                 Writer writer = new java.io.OutputStreamWriter((out), "utf8");
                 try (BufferedWriter bwrite = new BufferedWriter(writer)) {
                     DefaultTableModel model = (DefaultTableModel) tableNCC.getModel();
+                    
                     // ten Cot
                     for (int j = 0; j < tableNCC.getColumnCount(); j++) {
                         bwrite.write(model.getColumnName(j) + "\t");
                     }
                     bwrite.write("\n");
+                    
                     // Lay du lieu dong
                     for (int j = 0; j < tableNCC.getRowCount(); j++) {
                         for (int k = 0; k < tableNCC.getColumnCount(); k++) {
@@ -58,6 +63,33 @@ public class helpers {
                 System.out.println(e2);
             }
         }
+    }
+    
+    
+    static public ArrayList<Object[]> copyTableData(int selectedRow, JTable sourceTable, JTable destinationTable) {
+        selectedRow = sourceTable.getSelectedRow();
+        ArrayList<Object[]> new_list = new ArrayList<>();
+        if (selectedRow != -1) {
+            // Lấy dữ liệu từ dòng được chọn
+            Object[] rowData = new Object[sourceTable.getColumnCount()];
+            for (int i = 0; i < sourceTable.getColumnCount(); i++) {
+                rowData[i] = sourceTable.getValueAt(selectedRow, i);
+            }
+
+            // Thêm dữ liệu vào bảng đích
+            DefaultTableModel model = (DefaultTableModel) destinationTable.getModel();
+            model.addRow(rowData);
+            
+            Object[] copiedRow = new Object[rowData.length];
+            System.arraycopy(rowData, 0, copiedRow, 0, rowData.length);
+            new_list.add(copiedRow);
+
+            // Xóa dòng dữ liệu đã thêm
+            DefaultTableModel productModel = (DefaultTableModel) sourceTable.getModel();
+            productModel.removeRow(selectedRow);
+
+        }
+        return new_list;
     }
     
 }

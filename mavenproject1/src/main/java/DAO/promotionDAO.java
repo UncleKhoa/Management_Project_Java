@@ -22,10 +22,6 @@ import java.util.ArrayList;
 public class promotionDAO {
     Connection conn = getConnect(); 
     
-    public promotionDAO(){
-        
-    }
-    
     public ArrayList<promotionDTO> list() {
         ArrayList<promotionDTO> promotionlist = new ArrayList<>();
         try{

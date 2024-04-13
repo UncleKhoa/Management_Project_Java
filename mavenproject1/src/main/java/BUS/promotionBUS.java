@@ -12,6 +12,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -46,6 +48,16 @@ public class promotionBUS {
         }
         else return false;
     }
+    
+    public java.sql.Date Convert_date_SQL(Date date){
+        // Chuyển đổi sang kiểu dữ liệu Date của Java
+        java.sql.Date Date = new java.sql.Date(date.getTime());
+
+        // Trả về giá trị đã chuyển đổi
+        return Date;
+    }
+    
+    
     
 //    public int Calculate_Date(Date date_from, Date date_to){
 //        
