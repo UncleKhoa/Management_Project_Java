@@ -13,6 +13,8 @@ import BUS.userBUS;
 import DTO.staffDTO;
 import DTO.userDTO;
 import GUI.LoginGUI.ForgetPassword;
+import Model.MyMessageAccept;
+import Model.MyMessageAlert;
 
 /**
  *
@@ -325,7 +327,9 @@ public class Login extends javax.swing.JFrame {
         userDTO user = userBUS.Check(username, password);
         
         if(user == null){
-            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác!", "ERROR", JOptionPane.WARNING_MESSAGE);
+            MyMessageAlert alert = new MyMessageAlert(this, "Tài khoản hoặc mật khẩu không chính xác!");
+            alert.setVisible(true);
+//            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác!", "ERROR", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -335,7 +339,8 @@ public class Login extends javax.swing.JFrame {
             String name = staff.getFirstname();
             String role = staff.getRole();
             
-            JOptionPane.showMessageDialog(this, "Đăng nhập thành công, chào mừng "+ name +"");
+            MyMessageAccept accept = new MyMessageAccept(this, "Đăng nhập thành công, chào mừng "+ name +"");
+            accept.setVisible(true);
             MainGUI mfrm = new MainGUI(id,name,role);
             mfrm.setVisible(true);
             dispose(); //Phá hủy Jframeform
