@@ -60,7 +60,7 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
         tablePromotion = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtPromoID = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -70,6 +70,7 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
         FromDate = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(950, 650));
@@ -170,12 +171,12 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(372, 650));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Tên khuyến mãi");
+        jLabel3.setText("Mã khuyến mãi");
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(71, 35));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtPromoID.setPreferredSize(new java.awt.Dimension(71, 35));
+        txtPromoID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtPromoIDActionPerformed(evt);
             }
         });
 
@@ -205,19 +206,15 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel4)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel3)))
-                        .addGap(45, 45, 45)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPromoID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(FromDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ToDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -233,7 +230,7 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel3))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPromoID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -301,7 +298,7 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
     public void addLineData(promotionDTO promo)
     {
      model.addRow(new Object[]{
-           promo.getPromotionID(), promo.getPromotionName(), promo.getFrom(), promo.getTo(), promo.getStatus()
+           promo.getPromotionID(), promo.getDescription(), promo.getFrom(), promo.getTo(), promo.getStatus()
         });
     }
     
@@ -313,7 +310,7 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
 
         convertBackgroundOfTable(tablePromotion);
 
-        String[] headers = {"MÃ CODE", "TÊN CHƯƠNG TRÌNH", "TỪ NGÀY", "ĐẾN NGÀY", "TRẠNG THÁI"}; // Đặt tiêu đề cột của bảng
+        String[] headers = {"MÃ CODE", "MÔ TẢ", "TỪ NGÀY", "ĐẾN NGÀY", "TRẠNG THÁI"}; // Đặt tiêu đề cột của bảng
         model = (DefaultTableModel) tablePromotion.getModel();
         model.setColumnIdentifiers(headers);
         tablePromotion.getColumnModel().getColumn(0).setPreferredWidth(70);
@@ -334,18 +331,13 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
         }
     }
     
-    public void viewInformation(promotionDTO promo) throws ParseException{
-        try {
-            String from = promo.getFrom();
-            String to = promo.getTo();          
-            FromDate.setDate(promotionBUS.Convert_date(from));
-            ToDate.setDate(promotionBUS.Convert_date(to));
-            Date from_date = promotionBUS.Convert_date_SQL(FromDate.getDate());
-            Date to_date = promotionBUS.Convert_date_SQL(ToDate.getDate());
-            txtDescribe.setText(promo.getDescription());
-        } catch (ParseException ex) {
-            Logger.getLogger(KhuyenMaiGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void viewInformation(promotionDTO promo) throws ParseException {
+        Date from = promo.getFrom();
+        Date to = promo.getTo();
+        FromDate.setDate(from);
+        ToDate.setDate(to);
+        txtDescribe.setText(promo.getDescription());
+        txtPromoID.setText(promo.getPromotionID());
     }
     
     private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
@@ -363,9 +355,9 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tablePromotionMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtPromoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPromoIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtPromoIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -417,10 +409,10 @@ public class KhuyenMaiGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private Model.MyButton myButton1;
     private javax.swing.JTable tablePromotion;
     private javax.swing.JTextArea txtDescribe;
+    private javax.swing.JTextField txtPromoID;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

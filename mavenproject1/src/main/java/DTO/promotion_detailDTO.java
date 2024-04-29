@@ -55,4 +55,14 @@ public class promotion_detailDTO {
         this.PromotionPercent = PromotionPercent;
     }
     
+    @Override
+    public String toString() {
+        return "promotion_detailDTO{" +
+                "id='" + PromotionDetailID + '\'' +
+                ", promotionID='" + PromotionID + '\'' +
+                ", productID='" + ProductID + '\'' +
+                ", promotionPercent=" + PromotionPercent +
+                '}';
+    }
+    
 }

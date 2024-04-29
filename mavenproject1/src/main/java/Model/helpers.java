@@ -65,7 +65,6 @@ public class helpers {
         }
     }
     
-    
     static public ArrayList<Object[]> copyTableData(int selectedRow, JTable sourceTable, JTable destinationTable) {
         selectedRow = sourceTable.getSelectedRow();
         ArrayList<Object[]> new_list = new ArrayList<>();
@@ -91,5 +90,33 @@ public class helpers {
         }
         return new_list;
     }
+    
+    static public ArrayList<Object> getItem(ArrayList<Object[]> copiedDataList, ArrayList<Object> newlist) {
+        for (Object[] rowData : copiedDataList) {
+            newlist.add(rowData);
+        }
+        return newlist;
+    }
+   
+    
+    static public ArrayList<String> new_ARR(int t, ArrayList<Object> newList){
+        ArrayList<String> list_add = new ArrayList<>();
+        for (Object object : newList) {
+            if (object instanceof Object[]) {
+                Object[] rowData = (Object[]) object;
+                // Kiểm tra xem rowData có đủ phần tử không trước khi truy cập vào phần tử thứ hai
+                if (rowData.length > 1) {
+//                    System.out.println(rowData[0]);
+                    list_add.add(rowData[0].toString());
+                } else {
+                    System.out.println("Không đủ phần tử trong mảng rowData");
+                }
+            } else {
+                System.out.println("Không phải là một mảng đối tượng");
+            }
+        }
+        return list_add;
+    }
+
     
 }

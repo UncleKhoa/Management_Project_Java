@@ -6,6 +6,7 @@ package GUI;
 
 import GUI.DoiThongTinGUI;
 import static DAO.DBConnect.getConnect;
+import GUI.PromotionGUI.Hello;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Model.CustomConfirmDialog;
+import GUI.PromotionGUI.KhuyenMaiGUI;
 
 /**
  *
@@ -27,6 +29,10 @@ public class MainGUI extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
+    
+    //Mở panel riêng
+    private KhuyenMaiGUI khuyenmai;
+    private Hello hello;
     
     public String id, name, role;
     
@@ -646,6 +652,12 @@ public class MainGUI extends javax.swing.JFrame {
                     
     }  
     
+    private void Open_GUI(int a){
+        switch(a){
+            case 1:
+        }
+    }
+    
     private void set_color_pannel_hover(int a) {                                      
         switch (a) {
             case 1:
@@ -669,6 +681,7 @@ public class MainGUI extends javax.swing.JFrame {
             case 4:
                 pannelKH.setBackground(new java.awt.Color(0, 51, 204));
                 lblConnguoi.setForeground(new java.awt.Color(255, 255, 255));
+                System.out.println("ok");
                 break;
             case 5:
                 pannelHD.setBackground(new java.awt.Color(0, 51, 204));
@@ -693,6 +706,12 @@ public class MainGUI extends javax.swing.JFrame {
             case 10:
                 pannelKM.setBackground(new java.awt.Color(0, 51, 204));
                 lblKhuyenmai.setForeground(new java.awt.Color(255, 255, 255));
+                lblKhuyenmai.setEnabled(true);                
+                jmain.removeAll();
+                khuyenmai = new KhuyenMaiGUI();
+                khuyenmai.setSize(900, 700);
+                jmain.add(khuyenmai);
+                jmain.updateUI();
                 break;
         }
                     

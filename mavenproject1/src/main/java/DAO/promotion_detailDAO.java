@@ -58,11 +58,9 @@ public class promotion_detailDAO {
                 s = rs.getString("promotionDTID");
             }
             
-            // Sử dụng biểu thức chính quy để tìm và trích xuất số từ chuỗi
             Pattern pattern = Pattern.compile("\\d+");
             Matcher matcher = pattern.matcher(s);
             
-            // Kiểm tra xem có tìm thấy số không
             if (matcher.find()) {
                 String numberStr = matcher.group();
                 t = Integer.parseInt(numberStr);
@@ -84,8 +82,9 @@ public class promotion_detailDAO {
             String s = "Detail"+s_;
             String sql = "insert into promotiondetail values ('"+s+"',"
                     + "'"+promo_detail.getPromotionID()+"',"
-                    + "'"+promo_detail.getProductID()+","
-                    + "'"+promo_detail.getPromotionPercent()+"')";
+                    + "'"+promo_detail.getProductID()+"',"
+                    + "'"+promo_detail.getPromotionPercent()+"'"
+                    + ")";
             PreparedStatement stmt_add = conn.prepareStatement(sql);
             stmt_add.executeUpdate();
             

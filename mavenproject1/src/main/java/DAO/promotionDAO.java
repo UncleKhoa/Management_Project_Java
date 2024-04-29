@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -31,13 +32,14 @@ public class promotionDAO {
             
             while(rs.next()){
                 String promotionid = rs.getString("PromotionID");
-                String promotion_name = rs.getString("PromotionName");
-                String from = rs.getString("From");
-                String to = rs.getString("To");
+                Date fromsql = rs.getDate("From");
+                Date tosql = rs.getDate("To");
+                java.util.Date from = new java.util.Date(fromsql.getTime());
+                java.util.Date to = new java.util.Date(tosql.getTime());
                 String describe = rs.getString("Description");
                 String status = rs.getString("Status");
                 
-                promotionDTO promotion = new promotionDTO(promotionid, promotion_name, from, to, describe, status);
+                promotionDTO promotion = new promotionDTO(promotionid, from, to, describe, status);
                 promotionlist.add(promotion);                
             }
         }
@@ -49,17 +51,17 @@ public class promotionDAO {
     
     public void add(promotionDTO promo) throws SQLException{
         String sql = "INSERT INTO promotion VALUES('" + promo.getPromotionID() + "', "
-                + "'" + promo.getPromotionName() + "', "
                 + "'" + promo.getFrom() + "', "
                 + "'" + promo.getTo() + "', "
-                + "'" + promo.getStatus() + "', "
+                + "'" +promo.getDescription() +"', "
+                + "'" + promo.getStatus() + "'"
                 + ")";
         PreparedStatement stmt_add = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt_add.executeUpdate();
     }
     
     public void update(promotionDTO promo) throws SQLException{
-        String sql = "update promotion set values PromotionName = '"+promo.getPromotionName()+"' "
+        String sql = "update promotion set values ("
                 + "From = '"+promo.getFrom()+"' "
                 + "To = '"+promo.getTo()+"' "
                 + "Status = '"+promo.getStatus()+"'";

@@ -4,6 +4,7 @@
  */
 package DTO;
 
+import java.util.Date;
 import java.util.ArrayList;
 
 /**
@@ -11,69 +12,61 @@ import java.util.ArrayList;
  * @author Bon Nguyen
  */
 public class promotionDTO {
-    String PromotionID, PromotionName, From, To, Description, Status;
-
+    String PromotionID, Description, Status;
+    Date From, To;
+    
     public promotionDTO(){
         
     }
     
-    public promotionDTO(String PromotionID, String PromotionName, String From, String To, String Description, String Status) {
+    public promotionDTO(String PromotionID, Date From, Date To, String Description, String Status) {
         this.PromotionID = PromotionID;
-        this.PromotionName = PromotionName;
         this.From = From;
         this.To = To;
         this.Description = Description;
         this.Status = Status;
-    }
-
-    public void setDescription(String Description) {
-        this.Description = Description;
-    }
-
-    public String getDescription() {
-        return Description;
     }
 
     public String getPromotionID() {
         return PromotionID;
     }
 
-    public String getPromotionName() {
-        return PromotionName;
+    public String getDescription() {
+        return Description;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public Date getFrom() {
+        return From;
+    }
+
+    public Date getTo() {
+        return To;
     }
 
     public void setPromotionID(String PromotionID) {
         this.PromotionID = PromotionID;
     }
 
-    public void setPromotionName(String PromotionName) {
-        this.PromotionName = PromotionName;
-    }
-
-    public void setFrom(String From) {
-        this.From = From;
-    }
-
-    public void setTo(String To) {
-        this.To = To;
+    public void setDescription(String Description) {
+        this.Description = Description;
     }
 
     public void setStatus(String Status) {
         this.Status = Status;
     }
 
-    public String getFrom() {
-        return From;
+    public void setFrom(Date From) {
+        this.From = From;
     }
 
-    public String getTo() {
-        return To;
+    public void setTo(Date To) {
+        this.To = To;
     }
 
-    public String getStatus() {
-        return Status;
-    }
-    
     
     
 }
