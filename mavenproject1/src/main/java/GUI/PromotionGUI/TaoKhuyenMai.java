@@ -435,7 +435,7 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
             //Lưu vào Promotion
             try {
                 end_date = promotionBUS.Convert_date(rs);
-                promo = new promotionDTO(promoID, from, end_date, des, "active");
+                promo = new promotionDTO(promoID, from, end_date, des, percent, "active");
                 promotionBUS.Add(promo);
             } catch (ParseException ex) {
                 Logger.getLogger(TaoKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);

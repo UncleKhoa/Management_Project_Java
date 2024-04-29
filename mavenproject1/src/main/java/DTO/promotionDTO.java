@@ -14,18 +14,30 @@ import java.util.ArrayList;
 public class promotionDTO {
     String PromotionID, Description, Status;
     Date From, To;
+    float PromotionPercent;
     
     public promotionDTO(){
         
     }
     
-    public promotionDTO(String PromotionID, Date From, Date To, String Description, String Status) {
+    public promotionDTO(String PromotionID, Date From, Date To, String Description, float PromotionPercent, String Status) {
         this.PromotionID = PromotionID;
         this.From = From;
         this.To = To;
         this.Description = Description;
+        this.PromotionPercent = PromotionPercent;
         this.Status = Status;
     }
+
+    public float getPromotionPercent() {
+        return PromotionPercent;
+    }
+
+    public void setPromotionPercent(float PromotionPercent) {
+        this.PromotionPercent = PromotionPercent;
+    }
+    
+    
 
     public String getPromotionID() {
         return PromotionID;

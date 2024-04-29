@@ -6,7 +6,7 @@ package GUI;
 
 import GUI.DoiThongTinGUI;
 import static DAO.DBConnect.getConnect;
-import GUI.PromotionGUI.Hello;
+import GUI.PromotionGUI.KhuyenMaiGUI;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -32,7 +32,6 @@ public class MainGUI extends javax.swing.JFrame {
     
     //Mở panel riêng
     private KhuyenMaiGUI khuyenmai;
-    private Hello hello;
     
     public String id, name, role;
     
@@ -484,11 +483,9 @@ public class MainGUI extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(950, 700));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(66, 100, 220));
         jPanel1.setPreferredSize(new java.awt.Dimension(1200, 40));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblExit.setBackground(new java.awt.Color(255, 255, 255));
         lblExit.setForeground(new java.awt.Color(255, 255, 255));
@@ -506,35 +503,85 @@ public class MainGUI extends javax.swing.JFrame {
                 lblExitMouseExited(evt);
             }
         });
-        jPanel1.add(lblExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 6, -1, 38));
 
         lblLogo.setBackground(new java.awt.Color(255, 255, 255));
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLogo.setPreferredSize(new java.awt.Dimension(35, 35));
-        jPanel1.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 8, -1, 38));
 
         lblRole.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblRole.setForeground(new java.awt.Color(255, 255, 255));
         lblRole.setPreferredSize(new java.awt.Dimension(110, 16));
-        jPanel1.add(lblRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
 
         lblName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblName.setForeground(new java.awt.Color(255, 255, 255));
         lblName.setPreferredSize(new java.awt.Dimension(110, 16));
-        jPanel1.add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(684, 0, 266, 52));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addComponent(lblExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(lblRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lblExit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         jmain.setBackground(new java.awt.Color(255, 102, 0));
         jmain.setPreferredSize(new java.awt.Dimension(950, 650));
-        jmain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(jmain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 52, -1, -1));
+
+        javax.swing.GroupLayout jmainLayout = new javax.swing.GroupLayout(jmain);
+        jmain.setLayout(jmainLayout);
+        jmainLayout.setHorizontalGroup(
+            jmainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 950, Short.MAX_VALUE)
+        );
+        jmainLayout.setVerticalGroup(
+            jmainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 650, Short.MAX_VALUE)
+        );
 
         jLabel3.setFont(new java.awt.Font("Sitka Text", 1, 20)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Computer Store Software");
         jLabel3.setAutoscrolls(true);
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 684, 52));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jmain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jmain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -654,7 +701,13 @@ public class MainGUI extends javax.swing.JFrame {
     
     private void Open_GUI(int a){
         switch(a){
-            case 1:
+            case 10:
+                lblKhuyenmai.setEnabled(true);
+                jmain.removeAll();
+                khuyenmai = new KhuyenMaiGUI();
+                khuyenmai.setSize(950, 650);
+                jmain.add(khuyenmai);
+                jmain.updateUI();
         }
     }
     
@@ -663,12 +716,6 @@ public class MainGUI extends javax.swing.JFrame {
             case 1:
                 pannelBH.setBackground(new java.awt.Color(0, 51, 204));
                 lblBanhang.setForeground(new java.awt.Color(255, 255, 255));
-//                B2.setEnabled(true);
-//                JMain.removeAll();
-//                bai2 = new Bai2();
-//                bai2.setSize(900, 700);
-//                JMain.add(bai2);
-//                JMain.updateUI();
                 break;
             case 2:
                 pannelSP.setBackground(new java.awt.Color(0, 51, 204));
@@ -706,12 +753,6 @@ public class MainGUI extends javax.swing.JFrame {
             case 10:
                 pannelKM.setBackground(new java.awt.Color(0, 51, 204));
                 lblKhuyenmai.setForeground(new java.awt.Color(255, 255, 255));
-                lblKhuyenmai.setEnabled(true);                
-                jmain.removeAll();
-                khuyenmai = new KhuyenMaiGUI();
-                khuyenmai.setSize(900, 700);
-                jmain.add(khuyenmai);
-                jmain.updateUI();
                 break;
         }
                     
@@ -743,6 +784,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelKMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelKMMouseClicked
         set_color_pannel(10);
+        Open_GUI(10);
     }//GEN-LAST:event_pannelKMMouseClicked
 
     private void pannelNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelNVMouseClicked

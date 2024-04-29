@@ -37,9 +37,10 @@ public class promotionDAO {
                 java.util.Date from = new java.util.Date(fromsql.getTime());
                 java.util.Date to = new java.util.Date(tosql.getTime());
                 String describe = rs.getString("Description");
+                float promotionpercent = rs.getFloat("PromotionPercent");
                 String status = rs.getString("Status");
                 
-                promotionDTO promotion = new promotionDTO(promotionid, from, to, describe, status);
+                promotionDTO promotion = new promotionDTO(promotionid, from, to, describe, promotionpercent, status);
                 promotionlist.add(promotion);                
             }
         }
