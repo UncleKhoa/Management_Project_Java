@@ -9,7 +9,15 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import BUS.staffBUS;
+import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.ArrayList;
 /**
  *
  * @author ThinkBook
@@ -36,7 +44,6 @@ public class export_popup extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         fname = new javax.swing.JTextField();
         path = new javax.swing.JTextField();
@@ -62,23 +69,15 @@ public class export_popup extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setText("Export to TXT file");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 299, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel2)
-                .addContainerGap(36, Short.MAX_VALUE))
+            .addGap(0, 81, Short.MAX_VALUE)
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -202,11 +201,13 @@ public class export_popup extends javax.swing.JFrame {
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         // TODO add your handling code here:
-        export();
+        exportToExcel();
         dispose();
         
     }//GEN-LAST:event_confirmActionPerformed
-    public void export(){
+
+    
+    public void exportToTXT(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.getText()+"//"+fname.getText(),true))){
             staffBUS a = new staffBUS();
             for (staffDTO i:a.getList()){
@@ -219,7 +220,29 @@ public class export_popup extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(null, "Thông báo", "Xuất file thành công!", JOptionPane.OK_OPTION);;
         }
-           
+    
+    public void exportToExcel(){
+    Workbook workbook = new XSSFWorkbook();
+    Sheet sheet = workbook.createSheet("Seet 1");
+    int rownum =0;
+    staffBUS a = new staffBUS();
+    for (staffDTO i:a.getList()){
+    Row row = sheet.createRow(rownum);
+    Cell cell = row.createCell(0);
+    cell.setCellValue(1);
+    }
+    
+    
+    // viet workbook vao excel
+    try ( FileOutputStream fo = new FileOutputStream("D:\\TEST.xlsx"))
+    {
+           workbook.write(fo);
+    }catch (IOException e){
+        System.out.println("Loi");
+    }
+}       
+    
+    
     
     /**
      * @param args the command line arguments
@@ -261,7 +284,6 @@ public class export_popup extends javax.swing.JFrame {
     private javax.swing.JButton confirm;
     private javax.swing.JTextField fname;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
