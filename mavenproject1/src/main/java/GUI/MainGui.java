@@ -728,7 +728,6 @@ public class MainGUI extends javax.swing.JFrame {
             case 4:
                 pannelKH.setBackground(new java.awt.Color(0, 51, 204));
                 lblConnguoi.setForeground(new java.awt.Color(255, 255, 255));
-                System.out.println("ok");
                 break;
             case 5:
                 pannelHD.setBackground(new java.awt.Color(0, 51, 204));
