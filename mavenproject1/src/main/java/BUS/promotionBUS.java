@@ -28,6 +28,7 @@ import javax.swing.table.TableModel;
 public class promotionBUS {
     private ArrayList<promotionDTO> dsPromo;
     private ArrayList<promotion_detailDTO> dsPromo_detail;
+    private ArrayList<promotionDTO> dsPromo_search;
     private promotionDAO promotionDAO;
     private promotion_detailDAO promotion_detailDAO;
 
@@ -36,8 +37,7 @@ public class promotionBUS {
     }
     
     public void list() {
-        promotionDAO promotionDAO = new promotionDAO();
-        promotion_detailDAO promotion_detailDAO = new promotion_detailDAO();
+        promotionDAO promotionDAO = new promotionDAO();       
         dsPromo = new ArrayList<>();
         dsPromo = promotionDAO.list();
     }
@@ -69,8 +69,16 @@ public class promotionBUS {
         }
     }
     
-    public ArrayList<promotionDTO> getList() {
+    public ArrayList<promotionDTO> getList() {        
+        list();
         return dsPromo;
+    }
+    
+    public ArrayList<promotion_detailDTO> getList_detail(String id){
+        promotion_detailDAO promotion_detailDAO = new promotion_detailDAO();
+        dsPromo_detail = new ArrayList<>();
+        dsPromo_detail = promotion_detailDAO.list(id);
+        return dsPromo_detail;
     }
     
     public Date Convert_date(String date) throws ParseException{
@@ -108,6 +116,29 @@ public class promotionBUS {
         }
         
         return list;
+    }
+    
+    public void Up_Active(String id, String a){
+        promotionDAO promotionDAO = new promotionDAO();
+        promotionDAO.Activation(id, a);
+    }
+    
+    public String Get_name(String id){
+        promotion_detailDAO promotion_detailDAO = new promotion_detailDAO();
+        String name = promotion_detailDAO.Get_Name(id);
+        return name;
+
+    }
+    
+    public void list_search(String a){
+        promotionDAO promotionDAO = new promotionDAO();
+        dsPromo_search = new ArrayList<>();
+        dsPromo_search = promotionDAO.Search(a);
+    }
+    
+    public ArrayList<promotionDTO> getList_Search(String a) {     
+        list_search(a);
+        return dsPromo_search;
     }
     
 //    public int Calculate_Date(Date date_from, Date date_to){
