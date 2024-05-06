@@ -49,28 +49,33 @@ public class promotion_detailDAO {
     
     public int GET_promotiondetail_ID(){
         int t = 0;
-        try{
+        try {
             String sql = "select promotionDTID from promotiondetail order by promotionDTID desc limit 1";
             PreparedStatement stmt_getID = conn.prepareStatement(sql);
             ResultSet rs = stmt_getID.executeQuery();
             String s = null;
 
-            while(rs.next()){
+            while (rs.next()) {
                 s = rs.getString("promotionDTID");
             }
-            
-            Pattern pattern = Pattern.compile("\\d+");
-            Matcher matcher = pattern.matcher(s);
-            
-            if (matcher.find()) {
-                String numberStr = matcher.group();
-                t = Integer.parseInt(numberStr);
+
+            if (s != null) {
+                // Nếu chuỗi không null, trích xuất số từ chuỗi
+                Pattern pattern = Pattern.compile("\\d+");
+                Matcher matcher = pattern.matcher(s);
+
+                if (matcher.find()) {
+                    String numberStr = matcher.group();
+                    t = Integer.parseInt(numberStr);
+                } else {
+                    System.out.println("Không tìm thấy số trong chuỗi!");
+                }
             } else {
-                System.out.println("Không tìm thấy số trong chuỗi!");
+                // Nếu chuỗi là null, gán giá trị mặc định là "Detail0"
+                t = 0;
             }
-            
-        }
-        catch(SQLException ex){
+
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
         return t;

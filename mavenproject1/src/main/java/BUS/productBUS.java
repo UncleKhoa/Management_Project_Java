@@ -34,4 +34,15 @@ public class productBUS {
         return (int) price;
     }
     
+    public int TotalProduct() {
+        int totalProducts = 0;
+        try {
+            productDAO productDAO = new productDAO();
+            totalProducts = productDAO.SL_Sanpham();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return totalProducts;
+    }
+    
 }
