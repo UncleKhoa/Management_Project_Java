@@ -32,6 +32,12 @@ public class customer extends javax.swing.JFrame {
         model = (DefaultTableModel) cusTable.getModel(); 
         viewData(list);
     } 
+    public customer(ArrayList<customerDTO> list2){
+        list = list2;
+        initComponents();
+        model = (DefaultTableModel) cusTable.getModel(); 
+        viewData(list);
+    }
     public void addLineData(customerDTO i)
     {
      model.addRow(new Object[]{
@@ -311,8 +317,18 @@ public class customer extends javax.swing.JFrame {
         jPanel14.setBackground(new java.awt.Color(239, 239, 239));
 
         jButton5.setText("Nhập DS");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Xuất DS");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thống kê" }));
 
@@ -733,6 +749,19 @@ public class customer extends javax.swing.JFrame {
         viewData(list);
         
     }//GEN-LAST:event_editActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        import_popup a = new import_popup();
+        dispose();
+        a.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        export_popup a = new export_popup();
+        a.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

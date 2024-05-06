@@ -2,15 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI.employee;
-
-import DTO.staffDTO;
+package GUI.customer;
+import GUI.employee.*;
+import DTO.customerDTO;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import BUS.staffBUS;
+import BUS.customerBUS;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
+import org.apache.commons.compress.archivers.dump.InvalidFormatException;
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
@@ -226,19 +231,7 @@ public class export_popup extends javax.swing.JFrame {
         dispose();
         
     }//GEN-LAST:event_confirmActionPerformed
-    public void exportToTXT(){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.getText()+"//"+fname.getText(),true))){
-            staffBUS a = new staffBUS();
-            for (staffDTO i:a.getList()){
-            String s= i.getStaffID()+ i.getFirstname()+ i.getLastname()+ i.getYearofbirth()+ i.getGender() + i.getPhonenumber()+ i.getAddress()+ i.getSalary()+ i.getRole()+ i.getImg();
-             writer.write(String.valueOf(s));
-             writer.newLine();
-                    } } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Thông báo", "lỗi xuất file!", JOptionPane.ERROR_MESSAGE);;
-        
-        }
-        JOptionPane.showMessageDialog(null, "Thông báo", "Xuất file thành công!", JOptionPane.OK_OPTION);;
-        }
+
 public void exportToExcel() {
     try (Workbook workbook = new XSSFWorkbook()) {
         Sheet sheet = workbook.createSheet("Data");
@@ -246,7 +239,7 @@ public void exportToExcel() {
         headerStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
         headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        staffBUS a = new staffBUS();
+        customerBUS a = new customerBUS();
         Row headerRow = sheet.createRow(0);
         int cellNumber = 0;
         Cell cell;
@@ -263,9 +256,6 @@ public void exportToExcel() {
         cell.setCellValue("Last Name");
         cell.setCellStyle(headerStyle);
 
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Year of Birth");
-        cell.setCellStyle(headerStyle);
 
         cell = headerRow.createCell(cellNumber++);
         cell.setCellValue("Gender");
@@ -276,35 +266,24 @@ public void exportToExcel() {
         cell.setCellStyle(headerStyle);
 
         cell = headerRow.createCell(cellNumber++);
+        cell.setCellValue("Gmail");
+        cell.setCellStyle(headerStyle);        
+        
+        cell = headerRow.createCell(cellNumber++);
         cell.setCellValue("Address");
         cell.setCellStyle(headerStyle);
 
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Salary");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Role");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Image");
-        cell.setCellStyle(headerStyle);
-
         int rowNumber = 1;
-        for (staffDTO i : a.getList()) {
+        for (customerDTO i : a.getList()) {
             cellNumber = 0;
             Row row = sheet.createRow(rowNumber++);
-            row.createCell(cellNumber++).setCellValue(i.getStaffID());
-            row.createCell(cellNumber++).setCellValue(i.getFirstname());
-            row.createCell(cellNumber++).setCellValue(i.getLastname());
-            row.createCell(cellNumber++).setCellValue(i.getYearofbirth());
+            row.createCell(cellNumber++).setCellValue(i.getCusID());
+            row.createCell(cellNumber++).setCellValue(i.getFirstName());
+            row.createCell(cellNumber++).setCellValue(i.getLastName());
             row.createCell(cellNumber++).setCellValue(i.getGender());
-            row.createCell(cellNumber++).setCellValue(i.getPhonenumber());
+            row.createCell(cellNumber++).setCellValue(i.getPhoneNumber());
+                        row.createCell(cellNumber++).setCellValue(i.getGmail());
             row.createCell(cellNumber++).setCellValue(i.getAddress());
-            row.createCell(cellNumber++).setCellValue(i.getSalary());
-            row.createCell(cellNumber++).setCellValue(i.getRole());
-            row.createCell(cellNumber++).setCellValue(i.getImg());
         }
 
         // Auto-size columns for better visibility
@@ -322,6 +301,48 @@ public void exportToExcel() {
     } catch (IOException e) {
         JOptionPane.showMessageDialog(null, "Thông báo", "Lỗi xuất file Excel!", JOptionPane.ERROR_MESSAGE);
     }
+}
+public ArrayList<customerDTO> importFromExcel() {
+    ArrayList<customerDTO> customerList = new ArrayList<>();
+    
+    try (Workbook workbook = WorkbookFactory.create(new FileInputStream(""))) {
+        Sheet sheet = workbook.getSheetAt(0);
+        
+        Iterator<Row> rowIterator = sheet.iterator();
+        rowIterator.next(); // Bỏ qua hàng tiêu đề
+        
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            
+            int cellNumber = 0;
+            Cell cell;
+            
+            String id = row.getCell(cellNumber++).getStringCellValue();
+            String firstName = row.getCell(cellNumber++).getStringCellValue();
+            String lastName = row.getCell(cellNumber++).getStringCellValue();
+            String gender = row.getCell(cellNumber++).getStringCellValue();
+            String phoneNumber = row.getCell(cellNumber++).getStringCellValue();
+            String gmail = row.getCell(cellNumber++).getStringCellValue();
+            String address = row.getCell(cellNumber++).getStringCellValue();
+            
+            customerDTO customer = new customerDTO();
+            customer.setCusID(id);
+            customer.setFirstName(firstName);
+            customer.setLastName(lastName);
+            customer.setGender(gender);
+            customer.setPhoneNumber(phoneNumber);
+            customer.setGmail(gmail);
+            customer.setAddress(address);
+            
+            customerList.add(customer);
+        }
+        
+        JOptionPane.showMessageDialog(null, "Thông báo", "Import từ file Excel thành công!", JOptionPane.OK_OPTION);
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Thông báo", "Lỗi import từ file Excel!", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    return customerList;
 }
     
     /**
@@ -349,6 +370,13 @@ public void exportToExcel() {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(export_popup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
