@@ -95,28 +95,26 @@ public class staffBUS {
         return list;
     }
     
-    public ArrayList<staffDTO> sortByName() {
-        ArrayList <staffDTO> list = dsStaff;    
-        int n = list.size();
+    public ArrayList<staffDTO> sortByName() {   
+        int n = dsStaff.size();
         
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                staffDTO staff1 = list.get(j);
-                staffDTO staff2 = list.get(j + 1);
+                staffDTO staff1 = dsStaff.get(j);
+                staffDTO staff2 = dsStaff.get(j + 1);
 
                 if (staff1.getFirstname().charAt(0) > staff2.getFirstname().charAt(0)) {
-                    list.set(j, staff2);
-                    list.set(j + 1, staff1);
+                    dsStaff.set(j, staff2);
+                    dsStaff.set(j + 1, staff1);
                 }
             }
         }
-        return list;
+        return dsStaff;
     }
         
-    public ArrayList<staffDTO> search(String id){
-        ArrayList <staffDTO> list = dsStaff;   
+    public ArrayList<staffDTO> search(String id){  
         ArrayList<staffDTO> list2 = new ArrayList<>();
-        for (staffDTO i:list){
+        for (staffDTO i:dsStaff){
             if ((i.getStaffID().equals(id)) || (i.getFirstname().equals(id)))
             {
                 list2.add(i);
@@ -125,4 +123,4 @@ public class staffBUS {
         return list2;
         }
 }
-
+    

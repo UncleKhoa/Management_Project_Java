@@ -132,11 +132,11 @@ public class employee extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.setBackground(new java.awt.Color(0, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setForeground(new java.awt.Color(204, 204, 204));
         jPanel2.setFocusable(false);
 
         headline.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
-        headline.setForeground(new java.awt.Color(255, 255, 255));
         headline.setText("Nhân viên");
 
         jButton1.setText("Xuất");
@@ -166,7 +166,7 @@ public class employee extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Excel", "txt" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Excel" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -304,7 +304,7 @@ public class employee extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(51, 204, 255));
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -425,7 +425,7 @@ public class employee extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(185, 185, 185)
+                        .addGap(194, 194, 194)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(87, 87, 87))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
@@ -710,7 +710,8 @@ public class employee extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new export_popup().setVisible(true);
+        //kiem tra goi exel 
+        new export_popup("a").setVisible(true);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
