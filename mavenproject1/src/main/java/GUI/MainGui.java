@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Model.CustomConfirmDialog;
 import GUI.PromotionGUI.KhuyenMaiGUI;
-import GUI.customer.customerGUI;
-import GUI.employee.employeeGUI;
+import GUI.customer.customer;
+import GUI.employee.employee;
 /**
  *
  * @author khoan

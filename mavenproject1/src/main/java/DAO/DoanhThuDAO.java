@@ -6,6 +6,7 @@ package DAO;
 
 import java.sql.Connection;
 import static DAO.DBConnect.getConnect;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -21,10 +22,12 @@ public class DoanhThuDAO {
         ArrayList ds_dtsp = new ArrayList<>();
         try{
             String sql = "select ";
+            PreparedStatement stmt_ = conn.prepareStatement(sql);
         }
         catch(SQLException ex){
             System.out.print(ex);
         }
+        return ds_dtsp;
     }
     
 }
