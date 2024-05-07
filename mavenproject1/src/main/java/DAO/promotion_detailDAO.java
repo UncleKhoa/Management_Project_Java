@@ -8,6 +8,7 @@ import static DAO.DBConnect.getConnect;
 import java.sql.Connection;
 import java.util.ArrayList;
 import DTO.promotion_detailDTO;
+import com.mysql.cj.xdevapi.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -93,6 +94,25 @@ public class promotion_detailDAO {
             System.out.println(ex);
         }
         
+    }
+    
+    public String Get_Name(String id){
+        String name = null;
+        try{
+            String sql = "select ProductName from product where ProductID = '"+ id +"'";
+            PreparedStatement stmt_name = conn.prepareStatement(sql);
+            ResultSet rs= stmt_name.executeQuery();
+            
+            if(rs.next()){
+                name = rs.getString("ProductName");
+            }
+            
+        }
+        catch(SQLException ex){
+            System.out.print(ex);
+        }
+        
+        return name;
     }
     
 }

@@ -118,5 +118,11 @@ public class helpers {
         return list_add;
     }
 
+    static public boolean Check_Number(String a){
+        if(a.matches("\\d+")){
+            return true;
+        }
+        return false;
+    }
     
 }

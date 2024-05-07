@@ -4,17 +4,50 @@
  */
 package GUI.PromotionGUI;
 
+import BUS.promotionBUS;
+import java.util.ArrayList;
+import DTO.product_detailDTO;
+import DTO.promotionDTO;
+import DTO.promotion_detailDTO;
+import Model.CustomHeaderRenderer;
+import Model.NonEditableTableModel;
+import javax.swing.table.DefaultTableModel;
+import Model.helpers;
+import static Model.helpers.convertBackgroundOfTable;
+import java.awt.Font;
+import javax.swing.table.JTableHeader;
+
+
 /**
  *
  * @author Bon Nguyen
  */
 public class XemChiTietKMGUI extends javax.swing.JFrame {
-
+    promotionBUS promotionBUS;
+    public String id;
+    private ArrayList<promotion_detailDTO> dsDetail = new ArrayList<>();
+    DefaultTableModel model_info;
+    Font font = new Font("Segoe UI", Font.PLAIN, 14);
+    
     /**
      * Creates new form XemChiTietKMGUI
      */
     public XemChiTietKMGUI() {
         initComponents();
+    }
+    
+    public XemChiTietKMGUI(String id, promotionDTO promo){
+        initComponents();
+        setLocationRelativeTo(null);
+        this.id = id;
+        this.promotionBUS = new promotionBUS();
+        JTableHeader header = tbPromoDetail.getTableHeader();
+        header.setDefaultRenderer(new CustomHeaderRenderer());
+        dsDetail = promotionBUS.getList_detail(id);
+        viewData_ChooseProduct();
+        txtPromoID.setText(id);
+        txtStart.setText(promotionBUS.Date_String(promo.getFrom()));
+        txtEnd.setText(promotionBUS.Date_String(promo.getTo()));
     }
 
     /**
@@ -27,30 +60,139 @@ public class XemChiTietKMGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btnClose = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbPromoDetail = new javax.swing.JTable();
+        txtPromoID = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtStart = new javax.swing.JTextField();
+        txtEnd = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(950, 650));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setPreferredSize(new java.awt.Dimension(950, 550));
+
+        btnClose.setBackground(new java.awt.Color(255, 0, 51));
+        btnClose.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnClose.setForeground(new java.awt.Color(255, 255, 255));
+        btnClose.setText("Đóng");
+        btnClose.setPreferredSize(new java.awt.Dimension(120, 35));
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
+
+        tbPromoDetail.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbPromoDetail);
+
+        txtPromoID.setEnabled(false);
+        txtPromoID.setPreferredSize(new java.awt.Dimension(73, 35));
+        txtPromoID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPromoIDActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setText("Chi tiết khuyến mãi");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 13)); // NOI18N
+        jLabel1.setText("Mã khuyến mãi (CODE)");
+
+        txtStart.setEnabled(false);
+        txtStart.setPreferredSize(new java.awt.Dimension(73, 35));
+        txtStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStartActionPerformed(evt);
+            }
+        });
+
+        txtEnd.setEnabled(false);
+        txtEnd.setPreferredSize(new java.awt.Dimension(73, 35));
+        txtEnd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEndActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 13)); // NOI18N
+        jLabel3.setText("Ngày bắt đầu");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 13)); // NOI18N
+        jLabel4.setText("Ngày kết thúc");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 950, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPromoID, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtStart, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(79, 79, 79)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(288, 288, 288)
+                        .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPromoID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -61,7 +203,63 @@ public class XemChiTietKMGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void addLineData(promotion_detailDTO promo_detail){
+        model_info.addRow(new Object[]{
+            promo_detail.getPromotionDetailID(), promo_detail.getPromotionID(), promotionBUS.Get_name(promo_detail.getProductID()), promo_detail.getPromotionPercent()*100 + " %"
+        });
+    }
+    
+    public void viewData_ChooseProduct() {
+        convertBackgroundOfTable(tbPromoDetail);
+        String[] headers = {"MÃ CHI TIẾT", "MÃ GIẢM GIÁ", "TÊN SẢN PHẨM", "PHẦN TRĂM GIẢM GIÁ"};
+        
+        model_info = new NonEditableTableModel(new Object[0][headers.length], headers);
 
+        tbPromoDetail.setModel(model_info);
+
+        tbPromoDetail.getColumnModel().getColumn(0).setPreferredWidth(90);
+        tbPromoDetail.getColumnModel().getColumn(1).setPreferredWidth(120);
+        tbPromoDetail.getColumnModel().getColumn(2).setPreferredWidth(310);
+        tbPromoDetail.getColumnModel().getColumn(3).setPreferredWidth(180);
+        tbPromoDetail.setRowHeight(30);
+        tbPromoDetail.setFont(font);
+
+        // Xóa dữ liệu hiện có trong JTable
+        removeData();
+
+        // Thêm dữ liệu mới vào JTable
+        for (promotion_detailDTO promo_detail : dsDetail) {
+            addLineData(promo_detail);
+        }
+
+    }
+    
+    public void removeData(){
+        int rowCount = model_info.getRowCount();
+        for (int i=rowCount-1;i>=0;i--){
+            model_info.removeRow(i);
+        }
+    }
+    
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void txtPromoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPromoIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPromoIDActionPerformed
+
+    private void txtStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStartActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStartActionPerformed
+
+    private void txtEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEndActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEndActionPerformed
+
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -98,6 +296,18 @@ public class XemChiTietKMGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd2;
+    private javax.swing.JButton btnAdd3;
+    private javax.swing.JButton btnClose;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbPromoDetail;
+    private javax.swing.JTextField txtEnd;
+    private javax.swing.JTextField txtPromoID;
+    private javax.swing.JTextField txtStart;
     // End of variables declaration//GEN-END:variables
 }
