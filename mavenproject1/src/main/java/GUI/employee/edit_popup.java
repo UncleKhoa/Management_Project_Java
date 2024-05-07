@@ -21,10 +21,12 @@ public class edit_popup extends javax.swing.JFrame {
      */
     public edit_popup() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     public edit_popup(staffDTO staff) {
         this.staff = staff;
         initComponents();
+        setLocationRelativeTo(null);
         view();
     }
     public void view(){

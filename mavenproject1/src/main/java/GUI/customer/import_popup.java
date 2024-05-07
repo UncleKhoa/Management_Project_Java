@@ -26,6 +26,7 @@ public class import_popup extends javax.swing.JFrame {
      */
     public import_popup() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     public import_popup(String s){
         initComponents();

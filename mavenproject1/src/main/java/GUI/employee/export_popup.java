@@ -24,9 +24,11 @@ public class export_popup extends javax.swing.JFrame {
      */
     public export_popup() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     public export_popup(String s){
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

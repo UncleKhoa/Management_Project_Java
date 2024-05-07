@@ -29,9 +29,11 @@ public class export_popup extends javax.swing.JFrame {
      */
     public export_popup() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     public export_popup(String s){
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -73,9 +75,6 @@ public class export_popup extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
-        setFocusCycleRoot(false);
-        setFocusTraversalPolicyProvider(true);
-        setFocusableWindowState(false);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
