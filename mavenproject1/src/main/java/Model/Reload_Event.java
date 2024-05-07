@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package BUS;
+package Model;
 
 /**
  *
  * @author Bon Nguyen
  */
-class promoBUS {
-    
+public abstract class Reload_Event {
+    public void load(){};
 }

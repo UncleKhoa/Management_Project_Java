@@ -15,6 +15,9 @@ import DTO.userDTO;
 import GUI.LoginGUI.ForgetPassword;
 import Model.MyMessageAccept;
 import Model.MyMessageAlert;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import javax.swing.AbstractAction;
 
 /**
  *
@@ -65,7 +68,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lblBackground = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        myButton1 = new Model.MyButton();
+        Login_In = new Model.MyButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
@@ -109,21 +112,26 @@ public class Login extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(350, 440));
 
-        myButton1.setBackground(new java.awt.Color(66, 100, 255));
-        myButton1.setForeground(new java.awt.Color(255, 255, 255));
-        myButton1.setText("Sing In");
-        myButton1.setColor(new java.awt.Color(66, 100, 255));
-        myButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        myButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        myButton1.setRadius(15);
-        myButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Login_In.setBackground(new java.awt.Color(66, 100, 255));
+        Login_In.setForeground(new java.awt.Color(255, 255, 255));
+        Login_In.setText("Sing In");
+        Login_In.setColor(new java.awt.Color(66, 100, 255));
+        Login_In.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        Login_In.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Login_In.setRadius(15);
+        Login_In.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                myButton1MouseClicked(evt);
+                Login_InMouseClicked(evt);
             }
         });
-        myButton1.addActionListener(new java.awt.event.ActionListener() {
+        Login_In.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButton1ActionPerformed(evt);
+                Login_InActionPerformed(evt);
+            }
+        });
+        Login_In.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Login_InKeyPressed(evt);
             }
         });
 
@@ -210,7 +218,7 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                            .addComponent(myButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(Login_In, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)))
@@ -251,7 +259,7 @@ public class Login extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(44, 44, 44)
-                .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Login_In, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblForgetPass)
@@ -320,7 +328,7 @@ public class Login extends javax.swing.JFrame {
         Exit();
     }//GEN-LAST:event_lblExitMouseExited
 
-    private void myButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myButton1MouseClicked
+    private void Login_InMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Login_InMouseClicked
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         
@@ -346,17 +354,21 @@ public class Login extends javax.swing.JFrame {
             dispose(); //Phá hủy Jframeform
         }        
         
-    }//GEN-LAST:event_myButton1MouseClicked
+    }//GEN-LAST:event_Login_InMouseClicked
 
-    private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
+    private void Login_InActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_InActionPerformed
         
-    }//GEN-LAST:event_myButton1ActionPerformed
+    }//GEN-LAST:event_Login_InActionPerformed
 
     private void lblForgetPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgetPassMouseClicked
         ForgetPassword fg = new ForgetPassword();
         fg.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblForgetPassMouseClicked
+
+    private void Login_InKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Login_InKeyPressed
+        
+    }//GEN-LAST:event_Login_InKeyPressed
 
     /**
      * @param args the command line arguments
@@ -384,7 +396,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -394,6 +406,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private Model.MyButton Login_In;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -406,7 +419,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblForgetPass;
-    private Model.MyButton myButton1;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
