@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.apache.poi.ss.usermodel.*;
+//import org.apache.poi.ss.usermodel.*;
 /**
  *
  * @author ThinkBook
@@ -193,73 +193,73 @@ public class import_popup extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelActionPerformed
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
-        // TODO add your handling code here:
-        ArrayList<customerDTO> list = importFromExcel();
-        customerDAO customerDAO = new customerDAO();
-        ArrayList<customerDTO> checkList = customerDAO.list();
-        for (customerDTO i:list){
-            try {
-                
-                for (customerDTO ds:checkList){
-                    if (!ds.getCusID().equals(i.getCusID()))
-                    {
-                        customerDAO.add(i);
-                    }
-                    else continue;
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(import_popup.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-        dispose();
-        
-        
+//        // TODO add your handling code here:
+//        ArrayList<customerDTO> list = importFromExcel();
+//        customerDAO customerDAO = new customerDAO();
+//        ArrayList<customerDTO> checkList = customerDAO.list();
+//        for (customerDTO i:list){
+//            try {
+//                
+//                for (customerDTO ds:checkList){
+//                    if (!ds.getCusID().equals(i.getCusID()))
+//                    {
+//                        customerDAO.add(i);
+//                    }
+//                    else continue;
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(import_popup.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//        }
+//        dispose();
+//        
+//        
     }//GEN-LAST:event_confirmActionPerformed
 
-public ArrayList<customerDTO> importFromExcel() {
-    String path2 = path.getText();
-    ArrayList<customerDTO> customerList = new ArrayList<>();
-    
-    try (Workbook workbook = WorkbookFactory.create(new FileInputStream(path2))) {
-        Sheet sheet = workbook.getSheetAt(0);
-        
-        Iterator<Row> rowIterator = sheet.iterator();
-        rowIterator.next(); // Bỏ qua hàng tiêu đề
-        
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            
-            int cellNumber = 0;
-            Cell cell;
-            
-            String id = row.getCell(cellNumber++).getStringCellValue();
-            String firstName = row.getCell(cellNumber++).getStringCellValue();
-            String lastName = row.getCell(cellNumber++).getStringCellValue();
-            String gender = row.getCell(cellNumber++).getStringCellValue();
-            String phoneNumber = row.getCell(cellNumber++).getStringCellValue();
-            String gmail = row.getCell(cellNumber++).getStringCellValue();
-            String address = row.getCell(cellNumber++).getStringCellValue();
-            
-            customerDTO customer = new customerDTO();
-            customer.setCusID(id);
-            customer.setFirstName(firstName);
-            customer.setLastName(lastName);
-            customer.setGender(gender);
-            customer.setPhoneNumber(phoneNumber);
-            customer.setGmail(gmail);
-            customer.setAddress(address);
-            
-            customerList.add(customer);
-        }
-        
-        JOptionPane.showMessageDialog(null, "Thông báo", "Import từ file Excel thành công!", JOptionPane.OK_OPTION);
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(null, "Thông báo", "Lỗi import từ file Excel!", JOptionPane.ERROR_MESSAGE);
-    }
-    
-    return customerList;
-}
+//public ArrayList<customerDTO> importFromExcel() {
+//    String path2 = path.getText();
+//    ArrayList<customerDTO> customerList = new ArrayList<>();
+//    
+//    try (Workbook workbook = WorkbookFactory.create(new FileInputStream(path2))) {
+//        Sheet sheet = workbook.getSheetAt(0);
+//        
+//        Iterator<Row> rowIterator = sheet.iterator();
+//        rowIterator.next(); // Bỏ qua hàng tiêu đề
+//        
+//        while (rowIterator.hasNext()) {
+//            Row row = rowIterator.next();
+//            
+//            int cellNumber = 0;
+//            Cell cell;
+//            
+//            String id = row.getCell(cellNumber++).getStringCellValue();
+//            String firstName = row.getCell(cellNumber++).getStringCellValue();
+//            String lastName = row.getCell(cellNumber++).getStringCellValue();
+//            String gender = row.getCell(cellNumber++).getStringCellValue();
+//            String phoneNumber = row.getCell(cellNumber++).getStringCellValue();
+//            String gmail = row.getCell(cellNumber++).getStringCellValue();
+//            String address = row.getCell(cellNumber++).getStringCellValue();
+//            
+//            customerDTO customer = new customerDTO();
+//            customer.setCusID(id);
+//            customer.setFirstName(firstName);
+//            customer.setLastName(lastName);
+//            customer.setGender(gender);
+//            customer.setPhoneNumber(phoneNumber);
+//            customer.setGmail(gmail);
+//            customer.setAddress(address);
+//            
+//            customerList.add(customer);
+//        }
+//        
+//        JOptionPane.showMessageDialog(null, "Thông báo", "Import từ file Excel thành công!", JOptionPane.OK_OPTION);
+//    } catch (IOException e) {
+//        JOptionPane.showMessageDialog(null, "Thông báo", "Lỗi import từ file Excel!", JOptionPane.ERROR_MESSAGE);
+//    }
+//    
+//    return customerList;
+//}
     
     /**
      * @param args the command line arguments

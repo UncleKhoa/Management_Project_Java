@@ -9,6 +9,9 @@ import javax.swing.ImageIcon;
 import Model.ScrollBarCustom;
 import BUS.productBUS;
 import BUS.customerBUS;
+import BUS.receptBUS;
+import Model.helpers.*;
+import static Model.helpers.formatMoney;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import org.jfree.chart.ChartFactory;
@@ -19,25 +22,56 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import BUS.doanhthuBUS;
+import BUS.staffBUS;
+import DTO.doanhthuDTO;
+import java.util.ArrayList;
+import static Model.helpers.*;
+import Model.MyMessageAlert;
+import javax.swing.JFrame;
+import GUI.StatisticGUI.ThongKeDT_SanPhamTable;
+import GUI.StatisticGUI.ThongKeDT_SanPhamBarChart;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static Model.helpers.*;
 /**
  *
  * @author Bon Nguyen
  */
 public class ThongKeGUI extends javax.swing.JFrame {
+    int selected;
+    JFrame parentFrame;
     productBUS productBUS;
     customerBUS customerBUS;
+    receptBUS receptBUS;
+    staffBUS staffBUS;
+    doanhthuBUS doanhthuBUS;
+    ThongKeDT_SanPhamTable DT_SP;
+    ThongKeDT_SanPhamBarChart DT_SP_Chart;
+    ThongKeDT_TheoNgayTable DT_TN;
+    ThongKeDT_TheoNgayBarChart DT_TN_Chart;
+    private ArrayList<doanhthuDTO> ds_DTSP = new ArrayList<>();
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
+    
+    //DTO
+    doanhthuDTO doanhthuDTO;
     /**
      * Creates new form ThongKeGUI
      */
     public ThongKeGUI() {
         initComponents();
+        selected = -1;
+        parentFrame = new JFrame();
         setLocationRelativeTo(null);
         productBUS productBUS = new productBUS();
         customerBUS customerBUS = new customerBUS();
+        receptBUS receptBUS = new receptBUS();
+        staffBUS staffBUS = new staffBUS();
         File image_cus = new File(relativePath+"user.png");
         // Tạo một ImageIcon từ một File
         ImageIcon cus = new ImageIcon(image_cus.getAbsolutePath());
@@ -68,12 +102,17 @@ public class ThongKeGUI extends javax.swing.JFrame {
         int t = customerBUS.TotalCustomer();
         lblNBCus.setText(""+t);
         
+        int f = receptBUS.Get_SLHD();
+        lblNBReceipt.setText(""+f);
+        
+        int b = staffBUS.Get_SLNV();
+        lblNBStf.setText(""+b);
+        
         cbMethod.addItem("Doanh thu");
         cbMethod.addItem("Bán hàng");
-        cbMethod.addItem("Nhập hàng");
         
         OnOff(false);
-        
+        showUpBtnDetail();
     }
 
     /**
@@ -90,18 +129,18 @@ public class ThongKeGUI extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         lblProfit = new javax.swing.JLabel();
         text1 = new javax.swing.JLabel();
-        lblNBCus1 = new javax.swing.JLabel();
+        lblNBStf = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         lblProduct = new javax.swing.JLabel();
         text2 = new javax.swing.JLabel();
         lblNBProduct = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel14 = new javax.swing.JPanel();
+        pannelTable = new javax.swing.JPanel();
         pannelChart = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         lblReceipt = new javax.swing.JLabel();
         text3 = new javax.swing.JLabel();
-        lblNBCus3 = new javax.swing.JLabel();
+        lblNBReceipt = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lblcus = new javax.swing.JLabel();
         text = new javax.swing.JLabel();
@@ -116,8 +155,8 @@ public class ThongKeGUI extends javax.swing.JFrame {
         txtDateEnd = new javax.swing.JLabel();
         cbType = new Model.Combobox();
         jLabel5 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnShow = new javax.swing.JButton();
+        btnDetail = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,13 +169,13 @@ public class ThongKeGUI extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(66, 100, 255));
         jPanel9.setPreferredSize(new java.awt.Dimension(200, 120));
 
-        text1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        text1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         text1.setForeground(new java.awt.Color(255, 255, 255));
-        text1.setText("Doanh thu");
+        text1.setText("Tổng số nhân viên");
 
-        lblNBCus1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        lblNBCus1.setForeground(new java.awt.Color(255, 255, 255));
-        lblNBCus1.setText("1,000,000,000");
+        lblNBStf.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblNBStf.setForeground(new java.awt.Color(255, 255, 255));
+        lblNBStf.setText("10");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -148,7 +187,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(text1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(lblNBCus1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblNBStf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -160,16 +199,16 @@ public class ThongKeGUI extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(text1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblNBCus1)))
+                        .addComponent(lblNBStf)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel10.setBackground(new java.awt.Color(204, 153, 0));
         jPanel10.setPreferredSize(new java.awt.Dimension(200, 120));
 
-        text2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        text2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         text2.setForeground(new java.awt.Color(255, 255, 255));
-        text2.setText("Sản phẩm");
+        text2.setText("Sản phẩm hiện có");
 
         lblNBProduct.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lblNBProduct.setForeground(new java.awt.Color(255, 255, 255));
@@ -201,20 +240,28 @@ public class ThongKeGUI extends javax.swing.JFrame {
                         .addComponent(text2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNBProduct)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jPanel14.setBackground(new java.awt.Color(255, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pannelTable.setBackground(new java.awt.Color(255, 102, 102));
+        pannelTable.setPreferredSize(new java.awt.Dimension(426, 420));
+        pannelTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pannelTableMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pannelTableLayout = new javax.swing.GroupLayout(pannelTable);
+        pannelTable.setLayout(pannelTableLayout);
+        pannelTableLayout.setHorizontalGroup(
+            pannelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 426, Short.MAX_VALUE)
         );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+        pannelTableLayout.setVerticalGroup(
+            pannelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 423, Short.MAX_VALUE)
         );
 
         pannelChart.setBackground(new java.awt.Color(0, 255, 0));
@@ -224,11 +271,11 @@ public class ThongKeGUI extends javax.swing.JFrame {
         pannelChart.setLayout(pannelChartLayout);
         pannelChartLayout.setHorizontalGroup(
             pannelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 507, Short.MAX_VALUE)
         );
         pannelChartLayout.setVerticalGroup(
             pannelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 423, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -237,27 +284,27 @@ public class ThongKeGUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pannelChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pannelTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pannelChart, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pannelChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pannelTable, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+            .addComponent(pannelChart, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
         );
 
         jPanel12.setBackground(new java.awt.Color(0, 204, 102));
         jPanel12.setPreferredSize(new java.awt.Dimension(220, 120));
 
-        text3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        text3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         text3.setForeground(new java.awt.Color(255, 255, 255));
-        text3.setText("Đơn hàng");
+        text3.setText("Tổng số đơn hàng");
 
-        lblNBCus3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        lblNBCus3.setForeground(new java.awt.Color(255, 255, 255));
-        lblNBCus3.setText("1500");
+        lblNBReceipt.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblNBReceipt.setForeground(new java.awt.Color(255, 255, 255));
+        lblNBReceipt.setText("1500");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -272,7 +319,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
                         .addComponent(text3, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                         .addGap(12, 12, 12))
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addComponent(lblNBCus3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNBReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel12Layout.setVerticalGroup(
@@ -284,16 +331,16 @@ public class ThongKeGUI extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addComponent(text3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblNBCus3)))
+                        .addComponent(lblNBReceipt)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(204, 0, 204));
         jPanel3.setPreferredSize(new java.awt.Dimension(200, 120));
 
-        text.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        text.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         text.setForeground(new java.awt.Color(255, 255, 255));
-        text.setText("Khách hàng");
+        text.setText("Tổng số khách hàng");
 
         lblNBCus.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lblNBCus.setForeground(new java.awt.Color(255, 255, 255));
@@ -330,6 +377,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Chọn ");
 
+        DateStart.setDateFormatString("yyyy-MM-dd");
         DateStart.setPreferredSize(new java.awt.Dimension(200, 42));
 
         cbMethod.addItemListener(new java.awt.event.ItemListener() {
@@ -344,8 +392,9 @@ public class ThongKeGUI extends javax.swing.JFrame {
         });
 
         txtDateStart.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtDateStart.setText("Ngày ban đầu");
+        txtDateStart.setText("Ngày bắt đầu");
 
+        DateEnd.setDateFormatString("yyyy-MM-dd");
         DateEnd.setPreferredSize(new java.awt.Dimension(188, 42));
 
         jButton1.setBackground(new java.awt.Color(255, 51, 51));
@@ -371,12 +420,12 @@ public class ThongKeGUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Hình thức");
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setText("Xác nhận");
-        jButton3.setPreferredSize(new java.awt.Dimension(97, 23));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnShow.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnShow.setText("Xác nhận");
+        btnShow.setPreferredSize(new java.awt.Dimension(97, 23));
+        btnShow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnShowActionPerformed(evt);
             }
         });
 
@@ -404,7 +453,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnShow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel13Layout.setVerticalGroup(
@@ -429,19 +478,19 @@ public class ThongKeGUI extends javax.swing.JFrame {
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnShow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12))
         );
 
-        jButton3.getAccessibleContext().setAccessibleName("");
+        btnShow.getAccessibleContext().setAccessibleName("");
 
-        jButton2.setBackground(new java.awt.Color(51, 204, 0));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Xem chi tiết");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnDetail.setBackground(new java.awt.Color(51, 204, 0));
+        btnDetail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDetail.setForeground(new java.awt.Color(255, 255, 255));
+        btnDetail.setText("Xem chi tiết");
+        btnDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnDetailActionPerformed(evt);
             }
         });
 
@@ -459,7 +508,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(759, 759, 759)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -477,7 +526,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jButton2))
+                    .addComponent(btnDetail))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
@@ -516,6 +565,15 @@ public class ThongKeGUI extends javax.swing.JFrame {
         txtDateEnd.show(a);
     }
     
+    public void showUpBtnDetail() {
+        if (this.selected == -1) {
+            btnDetail.setVisible(false);
+        } else {
+            btnDetail.setVisible(true);
+
+        }
+    }
+
     public void Method() {
         Object selectedItem = cbMethod.getSelectedItem();
         System.err.println(selectedItem);
@@ -527,10 +585,6 @@ public class ThongKeGUI extends javax.swing.JFrame {
                 cbType.addItem("Sản phẩm");
                 cbType.addItem("Khách hàng");
                 cbType.addItem("Khoảng thời gian");
-            } else if (selectedItem.equals("Nhập hàng")) {
-                cbType.addItem("Sản phẩm");
-                cbType.addItem("Nhà cung cấp");
-                cbType.addItem("Khoảng thời gian");
             }
         }
         else{
@@ -538,22 +592,93 @@ public class ThongKeGUI extends javax.swing.JFrame {
         }
     }
     
+    public void CheckDate(){
+        if(DateStart.getDate() == null || DateEnd.getDate() == null){
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn đầy đủ ngày");
+            alert.setVisible(true);
+            return;
+        }
+    }    
+    
+    public Date getDateStartChooser() throws ParseException{
+        return Convert_date(DateStart.getDate());
+    }
+    
+    public Date getDateEndChooser() throws ParseException{
+        return Convert_date(DateEnd.getDate());
+    }
+    
+    public void Show_DT() throws ParseException{
+        if(cbMethod.getSelectedItem() != null && cbType.getSelectedItem() != null){
+            if(cbMethod.getSelectedItem().equals("Doanh thu") && cbType.getSelectedItem().equals("Sản phẩm")){
+                pannelTable.removeAll();
+                DT_SP = new ThongKeDT_SanPhamTable(this);
+                DT_SP.setSize(426, 420);
+                pannelTable.add(DT_SP);
+                pannelTable.updateUI();
+                
+                pannelChart.removeAll();
+                DT_SP_Chart = new ThongKeDT_SanPhamBarChart();
+                DT_SP_Chart.setSize(507, 420);
+                pannelChart.add(DT_SP_Chart);
+                pannelChart.updateUI();
+            }
+            
+            if (cbMethod.getSelectedItem().equals("Doanh thu") && cbType.getSelectedItem().equals("Khoảng thời gian")) {
+                CheckDate();
+                if (!Compare_Date(DateStart.getDate(), DateEnd.getDate())) {
+                    MyMessageAlert alert = new MyMessageAlert(parentFrame, "Ngày chọn không hợp lệ");
+                    alert.setVisible(true);
+                } else {
+                    pannelTable.removeAll();
+                    DT_TN = new ThongKeDT_TheoNgayTable(this);
+                    DT_TN.setSize(426, 420);
+                    pannelTable.add(DT_TN);
+                    pannelTable.updateUI();
+
+                    pannelChart.removeAll();
+                    DT_TN_Chart = new ThongKeDT_TheoNgayBarChart(this);
+                    DT_TN_Chart.setSize(507,420);
+                    pannelChart.add(DT_TN_Chart);
+                    pannelChart.updateUI();
+                }
+            }
+        }
+        
+        else{
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn đầy đủ");
+            alert.setVisible(true);
+        }
+    }
+    
+    public void XemChiTiet(){
+        
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
+        if(cbMethod.getSelectedItem() != null){
+            if(cbMethod.getSelectedItem().equals("Doanh thu")){
+                try {
+                    Show_DT();
+                } catch (ParseException ex) {
+                    Logger.getLogger(ThongKeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnShowActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailActionPerformed
+        System.out.println(doanhthuDTO.getProductName());
+    }//GEN-LAST:event_btnDetailActionPerformed
 
     private void cbMethodItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMethodItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             cbType.removeAllItems();
-            Method();               
+            Method();
         }
     }//GEN-LAST:event_cbMethodItemStateChanged
 
@@ -570,6 +695,11 @@ public class ThongKeGUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_cbTypeItemStateChanged
+
+    private void pannelTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelTableMouseClicked
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pannelTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -609,11 +739,11 @@ public class ThongKeGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateEnd;
     private com.toedter.calendar.JDateChooser DateStart;
+    private javax.swing.JButton btnDetail;
+    private javax.swing.JButton btnShow;
     private Model.Combobox cbMethod;
     private Model.Combobox cbType;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -621,19 +751,19 @@ public class ThongKeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblNBCus;
-    private javax.swing.JLabel lblNBCus1;
-    private javax.swing.JLabel lblNBCus3;
     private javax.swing.JLabel lblNBProduct;
+    private javax.swing.JLabel lblNBReceipt;
+    private javax.swing.JLabel lblNBStf;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblProfit;
     private javax.swing.JLabel lblReceipt;
     private javax.swing.JLabel lblcus;
     private javax.swing.JPanel pannelChart;
+    private javax.swing.JPanel pannelTable;
     private javax.swing.JLabel text;
     private javax.swing.JLabel text1;
     private javax.swing.JLabel text2;

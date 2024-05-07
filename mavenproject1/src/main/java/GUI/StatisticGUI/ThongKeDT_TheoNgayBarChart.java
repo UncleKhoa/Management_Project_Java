@@ -8,7 +8,9 @@ import BUS.doanhthuBUS;
 import DTO.doanhthuDTO;
 import java.awt.Color;
 import java.awt.Font;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -23,22 +25,27 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author Bon Nguyen
  */
-public class ThongKeDT_SanPhamBarChart extends javax.swing.JPanel {
-    Font font = new Font("Segoe UI", Font.PLAIN, 15); 
-    private ArrayList<doanhthuDTO> dt_sp_chart;
+public class ThongKeDT_TheoNgayBarChart extends javax.swing.JPanel {
+    Font font = new Font("Segoe UI", Font.BOLD, 16);
+    private ArrayList<doanhthuDTO> dt_tn_chart;
     doanhthuBUS doanhthuBUS;
+    private ThongKeGUI tk;
     /**
-     * Creates new form ThongKeDT_SanPhamBarChart
+     * Creates new form ThongKeDT_TheoNgayBarChart
      */
-    public ThongKeDT_SanPhamBarChart() {
+    public ThongKeDT_TheoNgayBarChart(ThongKeGUI tk) throws ParseException {
+        this.tk = tk;
         initComponents();
         doanhthuBUS doanhthuBUS = new doanhthuBUS();
-        dt_sp_chart = doanhthuBUS.getList_DTSP_Chart();
+        Date start = tk.getDateStartChooser();
+        Date end = tk.getDateEndChooser();        
+        dt_tn_chart = doanhthuBUS.getLoiNhuanBanHang_NgayBan_Chart(start, end); 
+        System.out.println(dt_tn_chart);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        for (doanhthuDTO dtsp : dt_sp_chart) {
-            String productName = dtsp.getProductName();
-            double revenue = dtsp.getTiensauKM();
-            dataset.setValue(revenue, "Doanh thu", productName);
+        for (doanhthuDTO dttn : dt_tn_chart) {
+            Date date = dttn.getNgayban();
+            double revenue = dttn.getTongtien();
+            dataset.setValue(revenue, "Doanh thu", date);
         }
         
         JFreeChart chart = ChartFactory.createBarChart("Top 5 sản phẩm có doanh số cao", "", "Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
@@ -57,7 +64,7 @@ public class ThongKeDT_SanPhamBarChart extends javax.swing.JPanel {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setSize(507, 420);
         
-        pannelDTSP.add(chartPanel);
+        pannelDTTN.add(chartPanel);
     }
 
     /**
@@ -69,18 +76,18 @@ public class ThongKeDT_SanPhamBarChart extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pannelDTSP = new javax.swing.JPanel();
+        pannelDTTN = new javax.swing.JPanel();
 
-        pannelDTSP.setPreferredSize(new java.awt.Dimension(513, 420));
+        pannelDTTN.setPreferredSize(new java.awt.Dimension(513, 420));
 
-        javax.swing.GroupLayout pannelDTSPLayout = new javax.swing.GroupLayout(pannelDTSP);
-        pannelDTSP.setLayout(pannelDTSPLayout);
-        pannelDTSPLayout.setHorizontalGroup(
-            pannelDTSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pannelDTTNLayout = new javax.swing.GroupLayout(pannelDTTN);
+        pannelDTTN.setLayout(pannelDTTNLayout);
+        pannelDTTNLayout.setHorizontalGroup(
+            pannelDTTNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 513, Short.MAX_VALUE)
         );
-        pannelDTSPLayout.setVerticalGroup(
-            pannelDTSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pannelDTTNLayout.setVerticalGroup(
+            pannelDTTNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 410, Short.MAX_VALUE)
         );
 
@@ -88,18 +95,16 @@ public class ThongKeDT_SanPhamBarChart extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pannelDTSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pannelDTTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pannelDTSP, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+            .addComponent(pannelDTTN, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
         );
-
-        getAccessibleContext().setAccessibleName("pannelDTSP");
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel pannelDTSP;
+    private javax.swing.JPanel pannelDTTN;
     // End of variables declaration//GEN-END:variables
 }
