@@ -43,4 +43,21 @@ public class productDAO {
         return productlist;
     }
     
+    public int SL_Sanpham(){
+        int totalProducts = 0;
+        try{
+            String sql = "SELECT COUNT(*) AS total_products from product";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                totalProducts = rs.getInt("total_products");
+            }
+        }
+        catch(SQLException ex){
+            System.out.print(ex);
+        }
+        return totalProducts;
+    }
+    
 }

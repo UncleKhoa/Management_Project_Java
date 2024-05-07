@@ -34,6 +34,7 @@ import GUI.PromotionGUI.KhuyenMaiGUI;
 import Model.NonEditableTableModel;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
+
 /**
  *
  * @author Bon Nguyen
