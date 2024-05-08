@@ -796,9 +796,9 @@ public class sell extends javax.swing.JPanel {
             double subTotal = Double.parseDouble(this.lbThanhtoan.getText());
             productBUS product = new productBUS();
             receptDetailDTO dto = new receptDetailDTO(receiptDetailID, receiptID, promotionID, productID, quantity, unitPrice, subTotal);
-            receipt_DetailDAO dao = new receipt_DetailDAO();
+            receipt_DetailBUS bus = new receipt_DetailBUS();
             try {
-                dao.add(dto);
+                bus.add(dto);
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
             }
