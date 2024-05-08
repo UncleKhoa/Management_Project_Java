@@ -48,7 +48,6 @@
             <version>1.4</version>
         </dependency>
         <dependency>
-
             <groupId>org.swinglabs</groupId>
             <artifactId>swingx</artifactId>
             <version>1.6.1</version>
@@ -58,11 +57,11 @@
             <artifactId>timingframework</artifactId>
             <version>1.0</version>
            </dependency>
-<dependency>
+        <dependency>   
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.0</version>
-            </dependency>
+        </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
