@@ -26,6 +26,7 @@ public class addKh extends javax.swing.JFrame {
      public addKh() {}
     public addKh( sell testsell) {
         initComponents();
+        setLocationRelativeTo(null);
         customerBUS customer = new customerBUS();
         String id = customer.createId();
         testSell = testsell;
@@ -65,6 +66,7 @@ public class addKh extends javax.swing.JFrame {
         txtTen = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

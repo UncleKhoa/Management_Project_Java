@@ -9,8 +9,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.Writer;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -123,6 +129,40 @@ public class helpers {
             return true;
         }
         return false;
+    }
+    
+    public static String formatMoney(int amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedAmount = formatter.format(amount);
+        return formattedAmount.replace(",", ".");
+    }
+
+    static public int ConvertDoubleToInt(double a){
+        return (int) a;
+    }
+    
+    static public boolean Compare_Date(Date date_from, Date date_to){
+        if(date_to.after(date_from) == true){
+            return true;
+        }
+        else return false;
+    }
+    
+    static public String Date_String(Date date){        
+        if(date == null){
+            return null;
+        }
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = sdf.format(date);
+        
+        return formattedDate;
+    } 
+    
+    static public Date Convert_date(Date date) throws ParseException{
+        String date_start = Date_String(date);
+        java.util.Date date1 = java.sql.Date.valueOf(date_start);
+        return date1;
     }
     
 }

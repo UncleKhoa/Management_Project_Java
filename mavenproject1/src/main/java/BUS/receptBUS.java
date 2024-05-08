@@ -24,10 +24,12 @@ public class receptBUS {
         dshd = new ArrayList<>();
         dshd = dao.list();
     }
+
     public void add(receptDTO recept) throws SQLException{
         receptDAO dao = new receptDAO();
-                    dao.add(recept);
+        dao.add(recept);
     }
+    
     public String createId()
     {
         receptDAO dao = new  receptDAO();
@@ -41,9 +43,14 @@ public class receptBUS {
             maHh = "HD" + String.valueOf(l);
         }
         
-        return maHh;
-        
-        
+        return maHh; 
     }       
+    
+    public int Get_SLHD(){
+        int s = 0;
+        receptDAO receptDAO = new receptDAO();
+        s = receptDAO.TongDonHang();
+        return s;
+    }
    
 }

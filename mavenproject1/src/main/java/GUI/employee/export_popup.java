@@ -11,8 +11,8 @@ import java.io.IOException;
 import BUS.staffBUS;
 import java.io.FileOutputStream;
 import javax.swing.JOptionPane;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.ss.usermodel.*;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  *
  * @author ThinkBook
@@ -222,7 +222,7 @@ public class export_popup extends javax.swing.JFrame {
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         // TODO add your handling code here:
-        exportToExcel();
+//        exportToExcel();
         dispose();
         
     }//GEN-LAST:event_confirmActionPerformed
@@ -239,90 +239,91 @@ public class export_popup extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(null, "Thông báo", "Xuất file thành công!", JOptionPane.OK_OPTION);;
         }
-public void exportToExcel() {
-    try (Workbook workbook = new XSSFWorkbook()) {
-        Sheet sheet = workbook.createSheet("Data");
-        CellStyle headerStyle = workbook.createCellStyle();
-        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        staffBUS a = new staffBUS();
-        Row headerRow = sheet.createRow(0);
-        int cellNumber = 0;
-        Cell cell;
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("ID");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("First Name");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Last Name");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Year of Birth");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Gender");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Phone Number");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Address");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Salary");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Role");
-        cell.setCellStyle(headerStyle);
-
-        cell = headerRow.createCell(cellNumber++);
-        cell.setCellValue("Image");
-        cell.setCellStyle(headerStyle);
-
-        int rowNumber = 1;
-        for (staffDTO i : a.getList()) {
-            cellNumber = 0;
-            Row row = sheet.createRow(rowNumber++);
-            row.createCell(cellNumber++).setCellValue(i.getStaffID());
-            row.createCell(cellNumber++).setCellValue(i.getFirstname());
-            row.createCell(cellNumber++).setCellValue(i.getLastname());
-            row.createCell(cellNumber++).setCellValue(i.getYearofbirth());
-            row.createCell(cellNumber++).setCellValue(i.getGender());
-            row.createCell(cellNumber++).setCellValue(i.getPhonenumber());
-            row.createCell(cellNumber++).setCellValue(i.getAddress());
-            row.createCell(cellNumber++).setCellValue(i.getSalary());
-            row.createCell(cellNumber++).setCellValue(i.getRole());
-            row.createCell(cellNumber++).setCellValue(i.getImg());
-        }
-
-        // Auto-size columns for better visibility
-        for (int i = 0; i < 10; i++) {
-            sheet.autoSizeColumn(i);
-        }
-
-        // Write the workbook to a file
-        String outputFile = path.getText() + "//" + fname.getText() + ".xlsx";
-        try (FileOutputStream fileOut = new FileOutputStream(outputFile)) {
-            workbook.write(fileOut);
-        }
-
-        JOptionPane.showMessageDialog(null, "Thông báo", "Xuất file Excel thành công!", JOptionPane.OK_OPTION);
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(null, "Thông báo", "Lỗi xuất file Excel!", JOptionPane.ERROR_MESSAGE);
-    }
-}
+    
+//    public void exportToExcel() {
+//        try (Workbook workbook = new XSSFWorkbook()) {
+//            Sheet sheet = workbook.createSheet("Data");
+//            CellStyle headerStyle = workbook.createCellStyle();
+//            headerStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+//            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//
+//            staffBUS a = new staffBUS();
+//            Row headerRow = sheet.createRow(0);
+//            int cellNumber = 0;
+//            Cell cell;
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("ID");
+//            cell.setCellStyle(headerStyle);
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("First Name");
+//            cell.setCellStyle(headerStyle);
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("Last Name");
+//            cell.setCellStyle(headerStyle);
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("Year of Birth");
+//            cell.setCellStyle(headerStyle);
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("Gender");
+//            cell.setCellStyle(headerStyle);
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("Phone Number");
+//            cell.setCellStyle(headerStyle);
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("Address");
+//            cell.setCellStyle(headerStyle);
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("Salary");
+//            cell.setCellStyle(headerStyle);
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("Role");
+//            cell.setCellStyle(headerStyle);
+//
+//            cell = headerRow.createCell(cellNumber++);
+//            cell.setCellValue("Image");
+//            cell.setCellStyle(headerStyle);
+//
+//            int rowNumber = 1;
+//            for (staffDTO i : a.getList()) {
+//                cellNumber = 0;
+//                Row row = sheet.createRow(rowNumber++);
+//                row.createCell(cellNumber++).setCellValue(i.getStaffID());
+//                row.createCell(cellNumber++).setCellValue(i.getFirstname());
+//                row.createCell(cellNumber++).setCellValue(i.getLastname());
+//                row.createCell(cellNumber++).setCellValue(i.getYearofbirth());
+//                row.createCell(cellNumber++).setCellValue(i.getGender());
+//                row.createCell(cellNumber++).setCellValue(i.getPhonenumber());
+//                row.createCell(cellNumber++).setCellValue(i.getAddress());
+//                row.createCell(cellNumber++).setCellValue(i.getSalary());
+//                row.createCell(cellNumber++).setCellValue(i.getRole());
+//                row.createCell(cellNumber++).setCellValue(i.getImg());
+//            }
+//
+//            // Auto-size columns for better visibility
+//            for (int i = 0; i < 10; i++) {
+//                sheet.autoSizeColumn(i);
+//            }
+//
+//            // Write the workbook to a file
+//            String outputFile = path.getText() + "//" + fname.getText() + ".xlsx";
+//            try (FileOutputStream fileOut = new FileOutputStream(outputFile)) {
+//                workbook.write(fileOut);
+//            }
+//
+//            JOptionPane.showMessageDialog(null, "Thông báo", "Xuất file Excel thành công!", JOptionPane.OK_OPTION);
+//        } catch (IOException e) {
+//            JOptionPane.showMessageDialog(null, "Thông báo", "Lỗi xuất file Excel!", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
     
     /**
      * @param args the command line arguments
