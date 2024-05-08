@@ -78,10 +78,10 @@ public class DoanhThuDAO {
     public ArrayList<doanhthuDTO> getDT_TheoNgay(){
         ArrayList<doanhthuDTO> ds_dttn = new ArrayList<>();
         try{
-            String sql = "select hd.CreatedTime, count(hd.ReceiptID) as SLdon, sum(cthd.Quantity) as SLSP, sum(hd.Total) as Tongtien "
+            String sql = "select hd.CreatedTime, count(DISTINCT hd.ReceiptID) as SLdon, sum(cthd.Quantity) as SLSP, sum(hd.Total) as Tongtien "
             + "from receiptdetail cthd, receipt hd "
             + "where hd.ReceiptID = cthd.ReceiptID "
-            + "group by (hd.CreatedTime)";
+            + "group by (hd.CreatedTime) DESC";
             PreparedStatement stmt_DTSP = conn.prepareStatement(sql);
             ResultSet rs = stmt_DTSP.executeQuery();
             
@@ -100,15 +100,17 @@ public class DoanhThuDAO {
         return ds_dttn;
     }
     
-    public ArrayList<doanhthuDTO> getDT_TheoNgay_Chart(){
+    public ArrayList<doanhthuDTO> getDT_TheoNgay_Chart(Date Start, Date End){
         ArrayList<doanhthuDTO> ds_dttn = new ArrayList<>();
         try{
-            String sql = "select hd.CreatedTime, count(hd.ReceiptID) as SLdon, sum(cthd.Quantity) as SLSP, sum(hd.Total) as Tongtien "
-            + "from receiptdetail cthd, receipt hd "
-            + "where hd.ReceiptID = cthd.ReceiptID "
-            + "group by (hd.CreatedTime) "
-            + "ORDER BY hd.CreatedTime ASC, Tongtien DESC "
-            + "LIMIT 5";
+            String sql = "SELECT CreatedTime, SLdon, SLSP, Tongtien "
+                    + "FROM (SELECT hd.CreatedTime, COUNT(DISTINCT hd.ReceiptID) AS SLdon, SUM(cthd.Quantity) AS SLSP, SUM(hd.Total) AS Tongtien "
+                    + "FROM receiptdetail cthd, receipt hd "
+                    + "WHERE hd.ReceiptID = cthd.ReceiptID AND hd.CreatedTime BETWEEN '" + Start + "' AND '" + End + "' "
+                    + "GROUP BY hd.CreatedTime "
+                    + "ORDER BY Tongtien DESC, hd.CreatedTime ASC "
+                    + "LIMIT 5) AS Top5Days "
+                    + "ORDER BY Tongtien DESC";
             PreparedStatement stmt_DTSP = conn.prepareStatement(sql);
             ResultSet rs = stmt_DTSP.executeQuery();
             

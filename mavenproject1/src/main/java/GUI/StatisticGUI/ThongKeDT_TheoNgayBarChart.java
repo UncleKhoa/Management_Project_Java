@@ -48,7 +48,7 @@ public class ThongKeDT_TheoNgayBarChart extends javax.swing.JPanel {
             dataset.setValue(revenue, "Doanh thu", date);
         }
         
-        JFreeChart chart = ChartFactory.createBarChart("Top 5 sản phẩm có doanh số cao", "", "Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart chart = ChartFactory.createBarChart("Top 5 ngày có doanh số cao", "", "Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
         chart.setBackgroundPaint(Color.white);
         chart.getTitle().setPaint(Color.black);
         chart.getTitle().setFont(font);

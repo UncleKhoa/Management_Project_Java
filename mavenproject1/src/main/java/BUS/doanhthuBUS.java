@@ -9,6 +9,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import static Model.helpers.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Bon Nguyen
@@ -24,8 +27,7 @@ public class doanhthuBUS {
     public doanhthuBUS(){
         list_SP();
         list_SP_chart();
-        list_TN();
-        list_TN_chart();
+        list_TN();        
     }
     
     //Doanh thu sản phẩm
@@ -78,31 +80,46 @@ public class doanhthuBUS {
     }
     
     //doanh thu theo ngày chart
-    public void list_TN_chart(){
-        DoanhThuDAO DoanhthuDao = new DoanhThuDAO();
-        ds_dttn_chart = new ArrayList<>();
-        ds_dttn_chart = DoanhthuDao.getDT_TheoNgay_Chart();
-    }
+//    public void list_TN_chart(){
+//        try {
+//            DoanhThuDAO DoanhthuDao = new DoanhThuDAO();
+//            ds_dttn_chart = new ArrayList<>();
+//            ds_dttn_chart = DoanhthuDao.getDT_TheoNgay_Chart(Convert_date(Start), Convert_date(End));
+//        } catch (ParseException ex) {
+//            Logger.getLogger(doanhthuBUS.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
     
-    public ArrayList<doanhthuDTO> getList_DTTN_Chart(){
-        return ds_dttn_chart;
-    }
-    
-    public ArrayList<doanhthuDTO> getLoiNhuanBanHang_NgayBan_Chart(Date dateStart, Date dateEnd) {
-        listdata_chart = getList_DTTN_Chart();
-        ArrayList<doanhthuDTO> new_listdata = new ArrayList<>();
-        for(doanhthuDTO dttn:listdata_chart){
-            try{
-                if(compareDate(dttn.getNgayban(), dateStart, dateEnd)){
-                    new_listdata.add(dttn);
-                }                
-            }
-            catch(ParseException ex){
-                
-            }
+    public ArrayList<doanhthuDTO> getLoiNhuanBanHang_NgayBan_Chart(Date Start, Date End){
+        try {
+            DoanhThuDAO DoanhthuDao = new DoanhThuDAO();
+            ds_dttn_chart = new ArrayList<>();
+            ds_dttn_chart = DoanhthuDao.getDT_TheoNgay_Chart(Convert_date(Start), Convert_date(End));
+        } catch (ParseException ex) {
+            Logger.getLogger(doanhthuBUS.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new_listdata;
+        return  ds_dttn_chart;
     }
+    
+//    public ArrayList<doanhthuDTO> getLoiNhuanBanHang_NgayBan_Chart(Date dateStart, Date dateEnd) {
+//        int c = 0;
+//        listdata_chart = getList_DTTN_Chart();
+//        ArrayList<doanhthuDTO> new_listdata = new ArrayList<>();
+//        for (doanhthuDTO dttn : listdata_chart) {
+//            try {
+//                if (compareDate(dttn.getNgayban(), dateStart, dateEnd)) {
+//                    if (c < 5) {
+//                        new_listdata.add(dttn);
+//                        c++;
+//                    }
+//                }
+//
+//            } catch (ParseException ex) {
+//
+//            }
+//        }
+//        return new_listdata;
+//    }
 
     public Boolean compareDate(Date dateBanHang, Date dateStart, Date dateEnd) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -112,12 +129,8 @@ public class doanhthuBUS {
         String dateEnd2 = sdf.format(dateEnd);
         Date datestart22 = formatter.parse(datestart2);
         Date dateEnd22 = formatter.parse(dateEnd2);
-        Boolean flag = false;
 
-        if (dateBanHang.after(datestart22) == true && dateEnd22.after(dateBanHang) == true) {
-            flag = true;
-        }
-        return flag;
+        return (dateBanHang.compareTo(datestart22) >= 0 && dateBanHang.compareTo(dateEnd22) <= 0);
     }
-    
+
 }
