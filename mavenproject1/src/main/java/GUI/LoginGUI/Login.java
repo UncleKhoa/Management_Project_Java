@@ -349,7 +349,7 @@ public class Login extends javax.swing.JFrame {
             
             MyMessageAccept accept = new MyMessageAccept(this, "Đăng nhập thành công, chào mừng "+ name +"");
             accept.setVisible(true);
-            MainGUI mfrm = new MainGUI(id,name,role);
+                        MainGUI mfrm = new MainGUI(id,name,role);
             mfrm.setVisible(true);
             dispose(); //Phá hủy Jframeform
         }        
