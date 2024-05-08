@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BUS;
 
 import DAO.productDAO;
 import DTO.productDTO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -33,16 +30,21 @@ public class productBUS {
     public int ConvertDoubleToInt(double price){
         return (int) price;
     }
+     public int getQuantity(String productID) throws SQLException
+     {
+           productDAO dao = new productDAO();
+           return dao.getQuantity(productID);
+     }
+     public int compareQuantity(String productID,int sl) throws SQLException
+     {
+         productDAO dao = new productDAO();
+         return dao.compareQuantity(productID, sl);
+     }
+       public void update_quantity(String productID,int sl) throws SQLException
+       {
+             productDAO dao = new productDAO();
+             dao.update_quantity(productID, sl);
+       }
     
-    public int TotalProduct() {
-        int totalProducts = 0;
-        try {
-            productDAO productDAO = new productDAO();
-            totalProducts = productDAO.SL_Sanpham();
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return totalProducts;
-    }
     
 }

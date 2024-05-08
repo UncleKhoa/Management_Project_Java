@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 import static DAO.DBConnect.getConnect;
 import DTO.productDTO;
@@ -42,22 +38,38 @@ public class productDAO {
         }
         return productlist;
     }
-    
-    public int SL_Sanpham(){
-        int totalProducts = 0;
-        try{
-            String sql = "SELECT COUNT(*) AS total_products from product";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            
+    public int getQuantity(String productID) throws SQLException
+    {
+           int quantity = 0;
+           String sql = "SELECT quantity FROM product WHERE productID = '"+ productID+"'";
+           PreparedStatement stmt_find = conn.prepareStatement(sql);
+           ResultSet rs = stmt_find.executeQuery(sql);
             if (rs.next()) {
-                totalProducts = rs.getInt("total_products");
+               quantity = rs.getInt("Quantity");
             }
-        }
-        catch(SQLException ex){
-            System.out.print(ex);
-        }
-        return totalProducts;
+           return quantity;
     }
     
-}
+    public int compareQuantity(String productID,int sl) throws SQLException
+    {
+         int quantity = getQuantity(productID);
+         if(quantity<sl)
+             return 0;
+         return 1;
+         
+    }
+ 
+    public void update_quantity(String productID,int sl) throws SQLException
+    {
+        productDTO product = new productDTO();
+        int quantity = getQuantity(productID);
+        int updateQuantity =  quantity - sl;
+        String sql = "UPDATE product SET Quantity = ? WHERE productID = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, updateQuantity);
+        pstmt.setString(2, productID);
+        pstmt.executeUpdate();
+    }
+        
+    }
+    

@@ -49,8 +49,8 @@ public class ThongKeGUI extends javax.swing.JFrame {
         // Thiết lập biểu tượng cho JLabel
         lblReceipt.setIcon(receipt);
         
-        int s = productBUS.TotalProduct();
-        lblNBProduct.setText(""+s);
+//        int s = productBUS.TotalProduct();
+    //    lblNBProduct.setText(""+s);
         
     }
 

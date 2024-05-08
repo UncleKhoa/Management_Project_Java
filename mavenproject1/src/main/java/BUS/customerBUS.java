@@ -5,6 +5,7 @@
 package BUS;
 import DAO.customerDAO;
 import DTO.customerDTO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 /**
  *
@@ -43,5 +44,51 @@ public class customerBUS {
         }
         return list;
     }
+    public customerDTO searchsdt(String sdt)throws SQLException
+    {
+       customerDTO cusDTO = new customerDTO();
+        customerDAO cus = new customerDAO();
+       // cus_list = new ArrayList<>();
+        cusDTO = cus.searchsdt(sdt);
+        return cusDTO;
+    }
+    public int add(customerDTO cus) throws SQLException{
+        if(cus.getPhoneNumber().length()!=10)
+        {
+            return 0;
+        }
+        else {
+            if(!cus.getGender().equals("Nam") && !cus.getGender().equals("Nữ"))
+            {    
+                return -1;
+            }
+            else {
+                   customerDAO customer = new customerDAO();
+                    customer.add(cus);
+                    return 1;
+            }
+        }
+     
+    }
     
-}
+    public String createId()
+    {
+        customerDAO dao = new customerDAO();
+        String maKh;
+        dsCus = new ArrayList<>();
+        dsCus = dao.list();
+        int l = dsCus.size();
+        l=l+1;
+        if(l<10){ maKh = "KH0" + String.valueOf(l);}
+        else{
+            maKh = "KH" + String.valueOf(l);
+        }
+        
+        return maKh;
+        
+        
+    }       
+   
+    }
+    
+

@@ -75,5 +75,21 @@ public class customerDAO {
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
-    
+    public customerDTO searchsdt(String sdt)throws SQLException {
+        customerDTO cus = new customerDTO();
+        String sql = "SELECT* FROM customer WHERE PhoneNumber LIKE ?";
+         PreparedStatement  pstmt= conn.prepareStatement(sql);
+         pstmt.setString(1, "%" + sdt + "%");
+         ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            // Create a new customerDTO object and set its attributes
+            cus.setCusID(rs.getString("CusID"));
+            cus.setFirstName(rs.getString("FirstName"));
+            cus.setLastName(rs.getString("LastName"));
+            // Set other attributes similarly
+        }
+        return cus;
+      
+}
+       
 }
