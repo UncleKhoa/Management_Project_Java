@@ -1,19 +1,10 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI.SellGUI;
 import BUS.customerBUS;
-import BUS.productBUS;
-import BUS.promotion_detailBUS;
-import BUS.receipt_DetailBUS;
-import BUS.receptBUS;
-import DAO.promotion_detailDAO;
-import DAO.receipt_DetailDAO;
 import DTO.customerDTO;
-import DTO.receptDTO;
-import DTO.receptDetailDTO;
-import GUI.MainGUI;
 import GUI.SellGUI.raven.cell.TableActionCellRender;
 import java.io.File;
 import javax.swing.table.DefaultTableModel;
@@ -34,21 +25,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import Model.MyMessageAccept;
-import Model.MyMessageAlert;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author MY PC
  */
-public class sell extends javax.swing.JPanel {
-
+public class TestSell extends javax.swing.JFrame {
+   
     /**
-     * Creates new form sell
+     * Creates new form TestSell
      */
-     customerBUS customerBUS;
+    customerBUS customerBUS;
     File file = new File("");
     DefaultTableModel model;
     String currentDirectory = file.getAbsolutePath();
@@ -58,11 +45,9 @@ public class sell extends javax.swing.JPanel {
     private DateTimeFormatter formatter;
     private String formattedDate;
     public String adress;
-    private String iD;
-    MainGUI maingui;
-    productBUS productBUS;
-    showkm showkm;
-    private ImageIcon scaleImage(String filename,int width, int height) {
+    
+    
+   private ImageIcon scaleImage(String filename,int width, int height) {
         try {
             BufferedImage img = ImageIO.read(new File(relativePath+filename));
             Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -72,32 +57,28 @@ public class sell extends javax.swing.JPanel {
         }
         return null;
     }
-   public sell(MainGUI main){
-           initComponents();
-    
-
-          ImageIcon  hoadon= scaleImage("bill.png", 83, 84);
+    public TestSell() {
+        initComponents();
+     
+          setLocationRelativeTo(null);
+          //File hd = new File(relativePath+ "meo-cute.jpg");
+          //ImageIcon hoadon= new ImageIcon(hd.getAbsolutePath());
+          ImageIcon  hoadon= scaleImage("bill.png", lbHD.getWidth(),  lbHD.getHeight());
           lbHD.setIcon(hoadon);
-
-          ImageIcon Sdt = scaleImage("bill.jpg",47, 45);
+          //File sdt = new File (relativePath+"phone.png");
+          //ImageIcon Sdt= new ImageIcon(sdt.getAbsolutePath());
+          ImageIcon Sdt = scaleImage("bill.jpg",lbSdt.getWidth(), lbSdt.getHeight());
           lbSdt.setIcon(Sdt);
            this.btnThanhtoan.hide();
            this.btnXuathd.hide();
            this.btnHuy.hide();
            this.lbXemkm.hide();
           customerBUS customer = new customerBUS();
-          maingui = main;
-          iD= maingui.id;
-          this.lbNhanvien.setText(maingui.name);
-          receptBUS  receipt = new receptBUS ();
-          String mhd =receipt.createId();
-          this.lbhd.setText(mhd);
-     
+        //  tlbProduct.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
            today = LocalDate.now();
           formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
           formattedDate = today.format(formatter);
-          lbNgay.setText(formattedDate);
-          
+          lbMahd.setText(formattedDate);
          convertBackgroundOfTable(tblProduct);
             String[] header = {"Mã sản phẩm","Hãng","Tên sản phẩm","Số lượng","Giá"};
             model = (DefaultTableModel) 
@@ -109,47 +90,10 @@ public class sell extends javax.swing.JPanel {
             tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
             tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
             removeData();
-   }
-     public sell(MainGUI main,showkm show){
-           initComponents();
-    
-
-          ImageIcon  hoadon= scaleImage("bill.png", 83, 84);
-          lbHD.setIcon(hoadon);
-
-          ImageIcon Sdt = scaleImage("bill.jpg",47, 45);
-          lbSdt.setIcon(Sdt);
-           this.btnThanhtoan.hide();
-           this.btnXuathd.hide();
-           this.btnHuy.hide();
-           this.lbXemkm.hide();
-          customerBUS customer = new customerBUS();
-          showkm =show;
-          maingui = main;
-          iD= maingui.id;
-          this.lbNhanvien.setText(maingui.name);
-          receptBUS  receipt = new receptBUS ();
-          String mhd =receipt.createId();
-          this.lbhd.setText(mhd);
-     
-           today = LocalDate.now();
-          formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-          formattedDate = today.format(formatter);
-          lbNgay.setText(formattedDate);
           
-         convertBackgroundOfTable(tblProduct);
-            String[] header = {"Mã sản phẩm","Hãng","Tên sản phẩm","Số lượng","Giá"};
-            model = (DefaultTableModel) 
-            tblProduct.getModel();
-            model.setColumnIdentifiers(header);
-            tblProduct.getColumnModel().getColumn(0).setPreferredWidth(110);
-            tblProduct.getColumnModel().getColumn(1).setPreferredWidth(90);
-            tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
-            tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
-            tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
-            removeData();
-   }
-   
+          
+        
+    }
        public void removeData()
     {
         int count = model.getRowCount();
@@ -158,9 +102,6 @@ public class sell extends javax.swing.JPanel {
             model.removeRow(i);
         }
     }
-        
-    
-     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -191,7 +132,7 @@ public class sell extends javax.swing.JPanel {
         lbThanhtoan = new javax.swing.JLabel();
         txtTiennhan = new javax.swing.JTextField();
         lbTienthua = new javax.swing.JLabel();
-        lbhd = new javax.swing.JLabel();
+        lbNgay1 = new javax.swing.JLabel();
         lbXemkm = new javax.swing.JLabel();
         lbSdt = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -201,12 +142,12 @@ public class sell extends javax.swing.JPanel {
         btnAddkh = new javax.swing.JButton();
         lbSdt7 = new javax.swing.JLabel();
         txtSdt = new javax.swing.JTextField();
-        jPanel6 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         lbHD = new javax.swing.JLabel();
-        lbNhanvien = new javax.swing.JLabel();
+        lbSdt2 = new javax.swing.JLabel();
         lbSdt5 = new javax.swing.JLabel();
         lbSdt8 = new javax.swing.JLabel();
-        lbNgay = new javax.swing.JLabel();
+        lbMahd = new javax.swing.JLabel();
         btnXoa = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
         btnXuathd = new javax.swing.JButton();
@@ -218,13 +159,9 @@ public class sell extends javax.swing.JPanel {
         lbsl = new javax.swing.JLabel();
         btnLammoi = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
-        setMinimumSize(new java.awt.Dimension(950, 650));
-        setPreferredSize(new java.awt.Dimension(950, 650));
-        setRequestFocusEnabled(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel4.setPreferredSize(new java.awt.Dimension(950, 650));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -248,8 +185,7 @@ public class sell extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblProduct.setPreferredSize(new java.awt.Dimension(380, 120));
-        tblProduct.setRowHeight(40);
+        tblProduct.setRowHeight(30);
         tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProductMouseClicked(evt);
@@ -269,7 +205,7 @@ public class sell extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tblProduct);
 
-        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 510, 440));
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 110, 502, 430));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -362,16 +298,11 @@ public class sell extends javax.swing.JPanel {
                 .addGap(8, 8, 8))
         );
 
-        lbhd.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lbhd.setText("HD01");
+        lbNgay1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lbNgay1.setText("HD001");
 
         lbXemkm.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         lbXemkm.setText("Xem chi tiết");
-        lbXemkm.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbXemkmMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -394,7 +325,7 @@ public class sell extends javax.swing.JPanel {
                             .addComponent(lbTongtien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbXemkm, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lbhd))
+                    .addComponent(lbNgay1))
                 .addContainerGap(49, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -414,7 +345,7 @@ public class sell extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbSdt9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbhd, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbNgay1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbSdt10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -433,8 +364,8 @@ public class sell extends javax.swing.JPanel {
                 .addGap(14, 14, 14))
         );
 
-        jPanel4.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, 381, 440));
-        jPanel4.add(lbSdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 47, 45));
+        jPanel4.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 110, 381, 430));
+        jPanel4.add(lbSdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 16, 47, 45));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -470,7 +401,7 @@ public class sell extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbTenkh, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbMakh, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(btnAddkh, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
@@ -492,67 +423,66 @@ public class sell extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 370, 98));
+        jPanel4.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 6, 365, 98));
 
         txtSdt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtSdt.setText("0353379815");
         txtSdt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSdtActionPerformed(evt);
             }
         });
-        jPanel4.add(txtSdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 86, 110, -1));
+        jPanel4.add(txtSdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 73, -1, -1));
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lbHD.setPreferredSize(new java.awt.Dimension(83, 84));
-
-        lbNhanvien.setText("Nhân viên");
+        lbSdt2.setText("Nhân viên");
 
         lbSdt5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lbSdt5.setText("Ngày");
 
         lbSdt8.setText("Nhân viên");
 
-        lbNgay.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lbNgay.setPreferredSize(new java.awt.Dimension(10, 10));
+        lbMahd.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbHD, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbHD, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbSdt8, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbSdt5, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbSdt2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbMahd))
+                .addGap(66, 66, 66))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbSdt8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbSdt5)
-                    .addComponent(lbNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbSdt8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbSdt2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbSdt5)
+                            .addComponent(lbMahd, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 10, Short.MAX_VALUE))
+                    .addComponent(lbHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel4.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, 380, -1));
+        jPanel4.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 6, 380, -1));
 
         btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
@@ -623,57 +553,32 @@ public class sell extends javax.swing.JPanel {
         });
         jPanel4.add(btnLammoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 580, 100, 33));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
-        // TODO add your handling code here:
-
-        int row = this.tblProduct.getSelectedRow();
-        Object sl =model.getValueAt(row,3);
-        this.txtSp.setText(sl.toString());
-    }//GEN-LAST:event_tblProductMouseClicked
 
     private void tblProductInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_tblProductInputMethodTextChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_tblProductInputMethodTextChanged
 
-    private void tblProductKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProductKeyPressed
-        // TODO add your handling code here:
-        // int cellValue = (int) tlbProduct.getValueAt(1, 3)
-    }//GEN-LAST:event_tblProductKeyPressed
-
-    private void txtTiennhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiennhanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTiennhanActionPerformed
-
-    private void btnAddkhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddkhActionPerformed
-        // TODO add your handling code here:
-        addKh add = new addKh();
-        add.setVisible(true);
-
-    }//GEN-LAST:event_btnAddkhActionPerformed
-
     private void txtSdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSdtActionPerformed
         // TODO add your handling code here:
         this.customerBUS = new customerBUS ();
         String sdt= this.txtSdt.getText();
-        if (sdt.length() == 10){
-            customerDTO cus = new customerDTO();
+         if (sdt.length() == 10){
+             customerDTO cus = new customerDTO();
             try {
                 cus = customerBUS.searchsdt(sdt);
                 this.lbMakh.setText(cus.getCusID());
@@ -681,29 +586,37 @@ public class sell extends javax.swing.JPanel {
             } catch (SQLException ex) {
                 Logger.getLogger(TestSell.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        }
+             
+                
+         }
     }//GEN-LAST:event_txtSdtActionPerformed
+
+    private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
+        // TODO add your handling code here:
+        chonSP choose = new chonSP();
+        choose.setVisible(true);
+    }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
-
+ 
         try{
-          
-            int[] rows  = tblProduct.getSelectedRows();
+          //  int row  = tblProduct.getSelectedRow();
+             //   model.removeRow(row);
+             int[] rows  = tblProduct.getSelectedRows();
             for(int i = rows.length - 1; i >= 0; i--)
             {
-                model.removeRow(rows[i]);
+                  model.removeRow(rows[i]);
             }
-          //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
         }
-        catch(Exception ex)
-        {
-           
-        }
-
+         catch(Exception ex)
+         {
+               MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
+         }
+            
+                
+        
     }//GEN-LAST:event_btnXoaActionPerformed
-
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
         // TODO add your handling code here:
@@ -719,151 +632,51 @@ public class sell extends javax.swing.JPanel {
     private void btnXuathdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuathdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXuathdActionPerformed
-    
+
     private void btnThanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhtoanActionPerformed
         // TODO add your handling code here:
         this.btnThanhtoan.hide();
         this.btnXuathd.show();
         this.btnHuy.hide();
         this.btnLammoi.show();
-        String maHd = this.lbhd.getText();
-        String maKh = this.lbMakh.getText();
-        String id = iD;
-        Date create_day = java.sql.Date.valueOf(today);
-        String totalText = this.lbThanhtoan.getText();
-        double Total = Double.parseDouble(totalText);
-       
-        receptDTO receipt = new receptDTO(maHd,maKh,id, create_day,Total);
-        receptBUS bus = new receptBUS();
-         try {
-             bus.add(receipt);
-         } catch (SQLException ex) {
-             Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         receptDetailDTO receiptDTO = new receptDetailDTO();
-//         for(int row = 1;row<=this.tblProduct.getRowCount();row ++)
-//         {
-//             receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
-//             int l = receiptDetailBUS.list_size();
-//             String receiptDetailID = receiptDetailBUS.createId(l, row);
-//             String receiptID = this.lbhd.getText();
-//             Object proID = model.getValueAt(row, 0);
-//             String productID = proID.toString();
-//             String PromotionID = "NORMAL";
-//             Object sl = model.getValueAt(row, 3);
-//             int quantity = ((Integer) sl).intValue();
-//             Object dongia = model.getValueAt(row, 4);
-//             double unitPrice = Double.parseDouble(dongia.toString());
-//             double subTotal = Double.parseDouble(this.lbThanhtoan.getText());
-//             receptDetailDTO dto = new receptDetailDTO(receiptDetailID,receiptID,PromotionID,productID,quantity,unitPrice,subTotal);
-//             receipt_DetailDAO dao = new receipt_DetailDAO();
-//            try {
-//                dao.add(dto);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//         }
-        // System.out.println(tblProduct.getRowCount());
-        receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
-         int l = receiptDetailBUS.list_size();
-         l=l+1;
         
-         for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
-         
-            String receiptDetailID = receiptDetailBUS.createId(l, row+1);
-            String receiptID = this.lbhd.getText();
-            Object proID = model.getValueAt(row, 0);
-            String productID = proID.toString();
-            String promotionID =" ";
-           promotion_detailBUS proBUS = new promotion_detailBUS();
-           
-            try {
-                promotionID =  proBUS.getPromotionID(productID);
-            } catch (SQLException ex) {
-                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            //String promotionID = "NORMAL"; // Changed variable name to lowercase for convention
-            Object sl = model.getValueAt(row, 3);
-            int quantity = sl instanceof Integer ? (int) sl : 0; // Safely cast to Integer
-  
-            Object dongia = model.getValueAt(row, 4);
-            double unitPrice = 0.0; // Default value if parsing fails
-            if (dongia instanceof Number) {
-                unitPrice = ((Number) dongia).doubleValue(); // Safely parse to double
-            }
-           
-            
-            double subTotal = Double.parseDouble(this.lbThanhtoan.getText());
-            productBUS product = new productBUS();
-            receptDetailDTO dto = new receptDetailDTO(receiptDetailID, receiptID, promotionID, productID, quantity, unitPrice, subTotal);
-            receipt_DetailDAO dao = new receipt_DetailDAO();
-            try {
-                dao.add(dto);
-            } catch (SQLException ex) {
-                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                product.update_quantity(productID, quantity);
-            } catch (SQLException ex) {
-                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-
+        
     }//GEN-LAST:event_btnThanhtoanActionPerformed
 
-    private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
+    private void btnAddkhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddkhActionPerformed
         // TODO add your handling code here:
-        chonSP choose = new chonSP(this);
-        choose.setVisible(true);
-    }//GEN-LAST:event_btnChonActionPerformed
+        addKh add = new addKh();
+        add.setVisible(true);
+        
+    }//GEN-LAST:event_btnAddkhActionPerformed
+
+    private void tblProductKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProductKeyPressed
+        // TODO add your handling code here:
+      // int cellValue = (int) tlbProduct.getValueAt(1, 3)
+
+    }//GEN-LAST:event_tblProductKeyPressed
+
+    private void txtTiennhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiennhanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTiennhanActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
         int row = this.tblProduct.getSelectedRow();
-        Object ID = model.getValueAt(row, 0);
-        String id = ID.toString();
+        //String s = this.txtSp.getText();
         int sl = Integer.valueOf(txtSp.getText());
-        productBUS product = new  productBUS();
-         try {
-             if(product.compareQuantity(id, sl)==0)
-             {
-               //   MyMessageAlert alert = new MyMessageAlert(,"Giới tính sai định dạng. Vui lòng nhập lại");
-                   // alert.setVisible(true);
-                   JOptionPane.showMessageDialog(null, "Số lượng còn lại trong kho không đủ ", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-             else{
-                    model.setValueAt(sl, row, 3);
-             }
-              
-         } catch (SQLException ex) {
-             Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-         }
-
+        model.setValueAt(sl, row, 3);
+        
     }//GEN-LAST:event_btnSuaActionPerformed
-    private int Tinh(String productID, int sl,int dongia)
-    {    
-        promotion_detailBUS proBUS = new promotion_detailBUS();
-        float km;
-        //double quantity = sl;
-         float percent=0.0f;
-            try {
-                 percent = proBUS.promotion_percent(productID);
-            } catch (SQLException ex) {
-                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          //double per = (double) percent;
-          
-          System.out.println(percent);
-          System.out.println(sl);
-          System.out.println(dongia);
-          km = percent*dongia;
-          System.out.println(km);
-          double total = percent*dongia*sl;
-          int totalInt = (int) total;
-          return  totalInt;
-          
-    }
+
+    private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
+        // TODO add your handling code here:
+        
+        int row = this.tblProduct.getSelectedRow();
+      Object sl =model.getValueAt(row,3);
+        this.txtSp.setText(sl.toString());
+    }//GEN-LAST:event_tblProductMouseClicked
+
     private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
         // TODO add your handling code here:
         this.btnXacnhan.hide();
@@ -877,69 +690,55 @@ public class sell extends javax.swing.JPanel {
         this.btnThanhtoan.show();
         //object [] o;
         tblProduct.clearSelection();
-        int s =0;
-        showkm show= new showkm();
         for (int row = tblProduct.getRowCount()- 1; row >= 0; row--)
         {
-            int tinhkm = 0;
-            Object id = model.getValueAt(row,0);
-            String productID = id.toString();
-            
-            Object sl= model.getValueAt(row,3);
-            Object g= model.getValueAt(row,4);
-            int sL = ((Integer) sl).intValue();
-            int gia = ((Integer) g).intValue();
-            int giasp =sL*gia;
-            sum = sum+giasp;
-            tinhkm = Tinh(productID,sL,gia);
-            if (tinhkm<giasp)
-            {  s = s+ tinhkm;
-            
-                Object [] newFormRow = new Object[5];
-                newFormRow[0] = model.getValueAt(row,0);//masp
-                newFormRow[1] = model.getValueAt(row,4);//gia goc
-                promotion_detailBUS proBUS = new promotion_detailBUS();
-                try {
-                    newFormRow[2] = proBUS.promotion_percent(productID);
-                } catch (SQLException ex) {
-                    Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                 newFormRow[3] = model.getValueAt(row,3);//so luong
-                 Integer tinhkmObject = Integer.valueOf(tinhkm);
-                 newFormRow[4]= tinhkmObject;
-                 show.model1.addRow(newFormRow);
-                
-            }
-            
+           Object sl= model.getValueAt(row,3);
+           Object g= model.getValueAt(row,4);
+           int sL = ((Integer) sl).intValue();
+           int gia = ((Integer) g).intValue();
+           sum = sum+sL*gia;
         }
-        // showkm show = new showkm();
-      //   show.setVisible(true);
-        int tt = sum - s;
-
-        this.lbKm.setText("- " + Integer.toString(s));
-        lbTongtien.setText(Integer.toString(sum));
-        lbThanhtoan.setText(Integer.toString(tt));
+       lbTongtien.setText(Integer.toString(sum));
     }//GEN-LAST:event_btnXacnhanActionPerformed
 
     private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
         // TODO add your handling code here:
-        this.lbKm.setVisible(false);
-        
     }//GEN-LAST:event_btnLammoiActionPerformed
 
-    private void lbXemkmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbXemkmMouseClicked
-        // TODO add your handling code here:
-        String tienkm = this.lbKm.getText();
-        String text = tienkm.substring(2); 
-        int value = Integer.parseInt(text);
-        if(value>0)
-        {
-              showkm km = new showkm();
-               km.setVisible(true);
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TestSell.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TestSell.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TestSell.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TestSell.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-      
-    }//GEN-LAST:event_lbXemkmMouseClicked
+        //</editor-fold>
 
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TestSell().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddkh;
@@ -954,21 +753,22 @@ public class sell extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbHD;
     private javax.swing.JLabel lbKm;
+    private javax.swing.JLabel lbMahd;
     public javax.swing.JLabel lbMakh;
-    private javax.swing.JLabel lbNgay;
-    private javax.swing.JLabel lbNhanvien;
+    private javax.swing.JLabel lbNgay1;
     private javax.swing.JLabel lbSdt;
     private javax.swing.JLabel lbSdt10;
     private javax.swing.JLabel lbSdt12;
     private javax.swing.JLabel lbSdt13;
     private javax.swing.JLabel lbSdt14;
     private javax.swing.JLabel lbSdt15;
+    private javax.swing.JLabel lbSdt2;
     private javax.swing.JLabel lbSdt3;
     private javax.swing.JLabel lbSdt4;
     private javax.swing.JLabel lbSdt5;
@@ -982,15 +782,10 @@ public class sell extends javax.swing.JPanel {
     private javax.swing.JLabel lbTienthua;
     private javax.swing.JLabel lbTongtien;
     private javax.swing.JLabel lbXemkm;
-    private javax.swing.JLabel lbhd;
     private javax.swing.JLabel lbsl;
     public javax.swing.JTable tblProduct;
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txtSp;
     private javax.swing.JTextField txtTiennhan;
     // End of variables declaration//GEN-END:variables
-
-    private void setLocationRelativeTo(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
