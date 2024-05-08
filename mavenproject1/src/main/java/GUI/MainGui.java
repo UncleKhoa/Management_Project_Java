@@ -6,6 +6,7 @@ package GUI;
 
 import GUI.DoiThongTinGUI;
 import static DAO.DBConnect.getConnect;
+import GUI.LoginGUI.Login;
 import GUI.PromotionGUI.KhuyenMaiGUI;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -17,13 +18,11 @@ import javax.swing.JPanel;
 import Model.CustomConfirmDialog;
 import GUI.PromotionGUI.KhuyenMaiGUI;
 import GUI.SellGUI.sell;
-
 import GUI.customer.customerGUI;
 import GUI.employee.employeeGUI;
-
 import GUI.SellGUI.sell;
 import GUI.SellGUI.showkm;
-
+import GUI.StatisticGUI.ThongKe;
 
 /**
  *
@@ -42,6 +41,7 @@ public class MainGUI extends javax.swing.JFrame {
     
     //Mở panel riêng
     private KhuyenMaiGUI khuyenmai;
+    private ThongKe thongke;
 
 
    
@@ -615,7 +615,11 @@ public class MainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
-        System.exit(0);
+        CustomConfirmDialog confirm = new CustomConfirmDialog(this,"Xác nhận thoát","Bạn có muốn thoát?","close_red.png");
+        confirm.setVisible(true);
+        if(confirm.getSelected()){
+            System.exit(0);
+        }
     }//GEN-LAST:event_lblExitMouseClicked
 
     private void lblExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseEntered
@@ -747,6 +751,15 @@ public class MainGUI extends javax.swing.JFrame {
 //                jmain.updateUI();
 //                break;
 
+           case 7:
+               lblThongke.setEnabled(true);
+               jmain.removeAll();
+               thongke = new ThongKe();
+               thongke.setSize(950, 650);
+               jmain.add(thongke);
+               jmain.updateUI();
+               break;
+                
             case 10:
                 lblKhuyenmai.setEnabled(true);
                 jmain.removeAll();
@@ -754,6 +767,7 @@ public class MainGUI extends javax.swing.JFrame {
                 khuyenmai.setSize(950, 650);
                 jmain.add(khuyenmai);
                 jmain.updateUI();
+                break;
         }
     }    
     
@@ -799,6 +813,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelThKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelThKMouseClicked
         set_color_pannel(7);
+        Open_GUI(7);
     }//GEN-LAST:event_pannelThKMouseClicked
     
     private void pannelSPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelSPMouseEntered

@@ -141,6 +141,16 @@ public class promotionBUS {
         return dsPromo_search;
     }
     
+    public boolean Check_Code(String code){
+        ArrayList<promotionDTO> newlist = dsPromo;
+        for(promotionDTO promo:newlist){
+            if(promo.getPromotionID().equals(code)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
 //    public int Calculate_Date(Date date_from, Date date_to){
 //        
 //    }

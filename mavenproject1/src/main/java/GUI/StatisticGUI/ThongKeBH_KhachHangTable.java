@@ -3,83 +3,40 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.StatisticGUI;
-import DTO.doanhthuDTO;
-import BUS.doanhthuBUS;
+
+import DTO.customerDTO;
 import Model.CustomHeaderRenderer;
-import Model.CustomTableCellRenderer;
-import Model.NonEditableTableModel;
-import static Model.helpers.ConvertDoubleToInt;
-import static Model.helpers.convertBackgroundOfTable;
-import static Model.helpers.formatMoney;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import BUS.banhangBUS;
+import DTO.doanhthuDTO;
+import Model.CustomTableCellRenderer;
+import Model.NonEditableTableModel;
+import static Model.helpers.convertBackgroundOfTable;
+import static Model.helpers.formatMoney;
 import static Model.helpers.*;
-import java.text.ParseException;
 /**
  *
  * @author Bon Nguyen
  */
-public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
-    DefaultTableModel model;    
-    Date start;
-    Date end;
-    private ArrayList<doanhthuDTO> ds_dttn;
+public class ThongKeBH_KhachHangTable extends javax.swing.JPanel {
+    DefaultTableModel model;
+    ArrayList<customerDTO> ds_bhkh = new ArrayList<>();
     Font font = new Font("Segoe UI", Font.PLAIN, 14);
     /**
-     * Creates new form ThongKeDT_TheoNgay
+     * Creates new form ThongKeBH_KhachHang
      */
-    public ThongKeDT_TheoNgayTable(Date from, Date to) throws ParseException {
+    public ThongKeBH_KhachHangTable() {
         initComponents();
-        doanhthuBUS doanhthuBUS = new doanhthuBUS();
-        this.start = from;
-        this.end = to;
-        System.out.println(start+""+end);
-        ds_dttn = doanhthuBUS.getLoiNhuanBanHang_NgayBan(start, end);
-        JTableHeader header = tblDTTheoNgay.getTableHeader();
+        JTableHeader header = tblBHKH.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
-        viewData(ds_dttn);
+        banhangBUS banhangBUS = new banhangBUS();
+        ds_bhkh = banhangBUS.Get_ListBHKH();
+        System.out.println(ds_bhkh);
+        viewData(ds_bhkh);
     }
-    
-    public void addLine(doanhthuDTO dt_tn){
-        model.addRow(new Object[]{
-            dt_tn.getNgayban(), dt_tn.getSLdon(), dt_tn.getSLSP(), formatMoney(ConvertDoubleToInt(dt_tn.getTongtien())) + "đ"
-        });
-    }
-    
-    public void viewData(ArrayList<doanhthuDTO> list){
-        int s=0;
-        convertBackgroundOfTable(tblDTTheoNgay);
-        String[] headers = {"Ngày bán", "Số lượng đơn", "Số lượng SP", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
-        model = new NonEditableTableModel(new Object[0][headers.length], headers);            
-        tblDTTheoNgay.setModel(model);
-        tblDTTheoNgay.setRowHeight(30);
-        tblDTTheoNgay.setFont(font);
-        
-        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
-        tblDTTheoNgay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        tblDTTheoNgay.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        tblDTTheoNgay.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        
-        for(doanhthuDTO dttn:ds_dttn){
-            addLine(dttn);
-            s += dttn.getTongtien();
-        }
-        model.addRow(new Object[]{
-            "","","Tổng",formatMoney(s) + "đ"
-        });
-        
-    }
-    
-    public void removeData() {
-        int rowCount = model.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            model.removeRow(i);
-        }
-    }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,9 +49,9 @@ public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblDTTheoNgay = new javax.swing.JTable();
+        tblBHKH = new javax.swing.JTable();
 
-        tblDTTheoNgay.setModel(new javax.swing.table.DefaultTableModel(
+        tblBHKH.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -105,7 +62,7 @@ public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblDTTheoNgay);
+        jScrollPane1.setViewportView(tblBHKH);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,10 +87,46 @@ public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void addLine(customerDTO bh_kh){
+        model.addRow(new Object[]{
+            bh_kh.getCusID(), bh_kh.getLastName(), bh_kh.getSldon(), formatMoney(ConvertDoubleToInt(bh_kh.getTongtien())) + "đ"
+        });
+        
+    }
+    
+    public void viewData(ArrayList<customerDTO> list){
+        int s=0;
+        convertBackgroundOfTable(tblBHKH);
+        String[] headers = {"Mã khách hàng", "Tên khách", "Số lượng đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);            
+        tblBHKH.setModel(model);
+        tblBHKH.setRowHeight(30);
+        tblBHKH.setFont(font);
+        
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblBHKH.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblBHKH.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        
+        removeData();
+        for(customerDTO dt_bh:ds_bhkh){
+            addLine(dt_bh);
+            s+=dt_bh.getTongtien();
+        }       
+        model.addRow(new Object[]{
+            "","","Tổng",formatMoney(s)+"đ"
+        });
+    }
+    
+    public void removeData(){
+        int rowCount = model.getRowCount();
+        for (int i=rowCount-1;i>=0;i--){
+            model.removeRow(i);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblDTTheoNgay;
+    private javax.swing.JTable tblBHKH;
     // End of variables declaration//GEN-END:variables
 }

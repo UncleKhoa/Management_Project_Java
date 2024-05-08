@@ -1,46 +1,33 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.StatisticGUI;
 
-import java.io.File;
-import javax.swing.ImageIcon;
-import Model.ScrollBarCustom;
-import BUS.productBUS;
 import BUS.customerBUS;
-import BUS.receptBUS;
-import Model.helpers.*;
-import static Model.helpers.formatMoney;
-import java.awt.Color;
-import java.awt.event.ItemEvent;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 import BUS.doanhthuBUS;
+import BUS.productBUS;
+import BUS.receptBUS;
 import BUS.staffBUS;
 import DTO.doanhthuDTO;
-import java.util.ArrayList;
-import static Model.helpers.*;
 import Model.MyMessageAlert;
-import javax.swing.JFrame;
-import GUI.StatisticGUI.ThongKeDT_SanPhamTable;
-import GUI.StatisticGUI.ThongKeDT_SanPhamBarChart;
+import static Model.helpers.Compare_Date;
+import static Model.helpers.Convert_date;
+import java.awt.event.ItemEvent;
+import java.io.File;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static Model.helpers.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Bon Nguyen
  */
-public class ThongKeGUI extends javax.swing.JFrame {
+public class ThongKe extends javax.swing.JPanel {
     int selected;
     JFrame parentFrame;
     productBUS productBUS;
@@ -52,22 +39,19 @@ public class ThongKeGUI extends javax.swing.JFrame {
     ThongKeDT_SanPhamBarChart DT_SP_Chart;
     ThongKeDT_TheoNgayTable DT_TN;
     ThongKeDT_TheoNgayBarChart DT_TN_Chart;
+    ThongKeBH_KhachHangTable BH_KH;
+    ThongKeBH_KhachHangBarChart BH_KH_Chart;
     private ArrayList<doanhthuDTO> ds_DTSP = new ArrayList<>();
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
-    
-    //DTO
-    doanhthuDTO doanhthuDTO;
     /**
-     * Creates new form ThongKeGUI
+     * Creates new form ThongKe
      */
-    public ThongKeGUI() {
-        initComponents();
-        selected = -1;
+    public ThongKe() {
+        initComponents();selected = -1;
         parentFrame = new JFrame();
-        setLocationRelativeTo(null);
         productBUS productBUS = new productBUS();
         customerBUS customerBUS = new customerBUS();
         receptBUS receptBUS = new receptBUS();
@@ -156,10 +140,8 @@ public class ThongKeGUI extends javax.swing.JFrame {
         cbType = new Model.Combobox();
         jLabel5 = new javax.swing.JLabel();
         btnShow = new javax.swing.JButton();
-        btnDetail = new javax.swing.JButton();
         btnExportExcel = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        btnDetail = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(950, 650));
@@ -241,12 +223,12 @@ public class ThongKeGUI extends javax.swing.JFrame {
                         .addComponent(text2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNBProduct)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        pannelTable.setBackground(new java.awt.Color(255, 102, 102));
+        pannelTable.setBackground(new java.awt.Color(255, 255, 255));
         pannelTable.setPreferredSize(new java.awt.Dimension(426, 420));
         pannelTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -262,10 +244,10 @@ public class ThongKeGUI extends javax.swing.JFrame {
         );
         pannelTableLayout.setVerticalGroup(
             pannelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        pannelChart.setBackground(new java.awt.Color(0, 255, 0));
+        pannelChart.setBackground(new java.awt.Color(255, 255, 255));
         pannelChart.setPreferredSize(new java.awt.Dimension(513, 420));
 
         javax.swing.GroupLayout pannelChartLayout = new javax.swing.GroupLayout(pannelChart);
@@ -276,7 +258,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
         );
         pannelChartLayout.setVerticalGroup(
             pannelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
+            .addGap(0, 428, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -292,8 +274,8 @@ public class ThongKeGUI extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pannelTable, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-            .addComponent(pannelChart, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+            .addComponent(pannelTable, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+            .addComponent(pannelChart, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
         );
 
         jPanel12.setBackground(new java.awt.Color(0, 204, 102));
@@ -333,7 +315,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
                         .addComponent(text3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNBReceipt)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(204, 0, 204));
@@ -452,9 +434,9 @@ public class ThongKeGUI extends javax.swing.JFrame {
                     .addComponent(DateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnShow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnShow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel13Layout.setVerticalGroup(
@@ -483,7 +465,15 @@ public class ThongKeGUI extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
-        btnShow.getAccessibleContext().setAccessibleName("");
+        btnExportExcel.setBackground(new java.awt.Color(51, 204, 0));
+        btnExportExcel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnExportExcel.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportExcel.setText("Xuất Excel");
+        btnExportExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportExcelActionPerformed(evt);
+            }
+        });
 
         btnDetail.setBackground(new java.awt.Color(51, 204, 0));
         btnDetail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -495,72 +485,59 @@ public class ThongKeGUI extends javax.swing.JFrame {
             }
         });
 
-        btnExportExcel.setBackground(new java.awt.Color(51, 204, 0));
-        btnExportExcel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnExportExcel.setForeground(new java.awt.Color(255, 255, 255));
-        btnExportExcel.setText("Xuất Excel");
-        btnExportExcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportExcelActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnDetail)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExportExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(35, 35, 35)
                                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(645, 645, 645)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(btnDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnExportExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(8, 8, 8)))))
-                .addContainerGap())
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(btnDetail)
-                    .addComponent(btnExportExcel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDetail)
+                            .addComponent(btnExportExcel))))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(6, 6, 6)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -573,8 +550,6 @@ public class ThongKeGUI extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     public void OnOff(boolean a){
@@ -629,7 +604,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
         if(cbMethod.getSelectedItem() != null && cbType.getSelectedItem() != null){
             if(cbMethod.getSelectedItem().equals("Doanh thu") && cbType.getSelectedItem().equals("Sản phẩm")){
                 pannelTable.removeAll();
-                DT_SP = new ThongKeDT_SanPhamTable(this);
+                DT_SP = new ThongKeDT_SanPhamTable();
                 DT_SP.setSize(426, 420);
                 pannelTable.add(DT_SP);
                 pannelTable.updateUI();
@@ -648,18 +623,34 @@ public class ThongKeGUI extends javax.swing.JFrame {
                     alert.setVisible(true);
                 } else {
                     pannelTable.removeAll();
-                    DT_TN = new ThongKeDT_TheoNgayTable(this);
+                    DT_TN = new ThongKeDT_TheoNgayTable(getDateStartChooser(), getDateEndChooser());
                     DT_TN.setSize(426, 420);
                     pannelTable.add(DT_TN);
                     pannelTable.updateUI();
 
                     pannelChart.removeAll();
-                    DT_TN_Chart = new ThongKeDT_TheoNgayBarChart(this);
+                    DT_TN_Chart = new ThongKeDT_TheoNgayBarChart(getDateStartChooser(), getDateEndChooser());
                     DT_TN_Chart.setSize(507,420);
                     pannelChart.add(DT_TN_Chart);
                     pannelChart.updateUI();
                 }
             }
+            
+            if(cbMethod.getSelectedItem().equals("Bán hàng") && cbType.getSelectedItem().equals("Khách hàng")){
+                System.out.print("OK");
+                pannelTable.removeAll();
+                BH_KH = new ThongKeBH_KhachHangTable();
+                BH_KH.setSize(426, 420);
+                pannelTable.add(BH_KH);
+                pannelTable.updateUI();                
+                
+                pannelChart.removeAll();
+                BH_KH_Chart = new ThongKeBH_KhachHangBarChart();
+                BH_KH_Chart.setSize(507, 420);
+                pannelChart.add(BH_KH_Chart);
+                pannelChart.updateUI();
+            }
+            
         }
         
         else{
@@ -668,29 +659,10 @@ public class ThongKeGUI extends javax.swing.JFrame {
         }
     }
     
-    public void XemChiTiet(){
-        
-    }
-    
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void pannelTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelTableMouseClicked
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
-        if(cbMethod.getSelectedItem() != null){
-            if(cbMethod.getSelectedItem().equals("Doanh thu")){
-                try {
-                    Show_DT();
-                } catch (ParseException ex) {
-                    Logger.getLogger(ThongKeGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }//GEN-LAST:event_btnShowActionPerformed
-
-    private void btnDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailActionPerformed
-        System.out.println(doanhthuDTO.getProductName());
-    }//GEN-LAST:event_btnDetailActionPerformed
+    }//GEN-LAST:event_pannelTableMouseClicked
 
     private void cbMethodItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMethodItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
@@ -700,8 +672,12 @@ public class ThongKeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_cbMethodItemStateChanged
 
     private void cbMethodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMethodActionPerformed
-        
+
     }//GEN-LAST:event_cbMethodActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTypeItemStateChanged
         if (cbType.getSelectedItem() != null) {
@@ -713,49 +689,24 @@ public class ThongKeGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbTypeItemStateChanged
 
-    private void pannelTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelTableMouseClicked
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pannelTableMouseClicked
+    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
+        if (cbMethod.getSelectedItem() != null) {
+            try {
+                Show_DT();
+            } catch (ParseException ex) {
+                Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            } 
+    }//GEN-LAST:event_btnShowActionPerformed
 
     private void btnExportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportExcelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExportExcelActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ThongKeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ThongKeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ThongKeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ThongKeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailActionPerformed
+        
+    }//GEN-LAST:event_btnDetailActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ThongKeGUI().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateEnd;
