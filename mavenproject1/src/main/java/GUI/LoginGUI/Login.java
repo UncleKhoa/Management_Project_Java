@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
+package GUI.LoginGUI;
 
 import BUS.staffBUS;
 import Model.MyButton;
@@ -13,6 +13,7 @@ import BUS.userBUS;
 import DTO.staffDTO;
 import DTO.userDTO;
 import GUI.LoginGUI.ForgetPassword;
+import GUI.MainGUI;
 import Model.MyMessageAccept;
 import Model.MyMessageAlert;
 import java.awt.event.ActionEvent;

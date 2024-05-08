@@ -25,13 +25,13 @@ import static Model.helpers.*;
 public class ThongKeDT_SanPhamTable extends javax.swing.JPanel {
     DefaultTableModel model;
     doanhthuBUS doanhthuBUS;
-    ThongKeGUI tk;
+    ThongKe tk;
     Font font = new Font("Segoe UI", Font.PLAIN, 14);
     private ArrayList<doanhthuDTO> ds_dtsp = new ArrayList<>();
     /**
      * Creates new form ThongKeDT_SanPhamTable
      */
-    public ThongKeDT_SanPhamTable(ThongKeGUI tk) {
+    public ThongKeDT_SanPhamTable() {
         initComponents();
         this.tk = tk;
         doanhthuBUS doanhthuBUS = new doanhthuBUS();
@@ -138,11 +138,7 @@ public class ThongKeDT_SanPhamTable extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblDTSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDTSPMouseClicked
-           tk.selected = getSelectedIndex();
-           tk.showUpBtnDetail();
-           tk.doanhthuDTO = ds_dtsp.get(tk.selected);
 
-        // TODO add your handling code here:
     }//GEN-LAST:event_tblDTSPMouseClicked
 
 
