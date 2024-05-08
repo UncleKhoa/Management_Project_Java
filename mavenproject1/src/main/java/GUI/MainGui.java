@@ -73,6 +73,7 @@ public class MainGUI extends javax.swing.JFrame {
         
         lblName.setText(name);
         lblRole.setText(role);
+        Open_GUI(1);
     }
 
     /**

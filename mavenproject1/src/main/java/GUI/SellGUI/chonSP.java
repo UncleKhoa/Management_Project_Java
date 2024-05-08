@@ -127,8 +127,6 @@ public class chonSP extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSP = new javax.swing.JTable();
-        btnXacnhan = new java.awt.Button();
-        btnXacnhan1 = new java.awt.Button();
         btnBack = new javax.swing.JButton();
         btnChon = new javax.swing.JButton();
 
@@ -139,16 +137,16 @@ public class chonSP extends javax.swing.JFrame {
 
         tblSP.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ));
-        tblSP.setRowHeight(30);
+        tblSP.setRowHeight(40);
         tblSP.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tblSP.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tblSP.setShowGrid(true);
@@ -158,21 +156,6 @@ public class chonSP extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tblSP);
-
-        btnXacnhan.setLabel("Xác nhận");
-        btnXacnhan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXacnhanActionPerformed(evt);
-            }
-        });
-
-        btnXacnhan1.setActionCommand("Chọn");
-        btnXacnhan1.setLabel("Xác nhận");
-        btnXacnhan1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXacnhan1ActionPerformed(evt);
-            }
-        });
 
         btnBack.setText("Quay về");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -194,32 +177,22 @@ public class chonSP extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(btnXacnhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(btnXacnhan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addGap(200, 200, 200)
                 .addComponent(btnBack)
-                .addGap(28, 28, 28)
+                .addGap(42, 42, 42)
                 .addComponent(btnChon)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnXacnhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnXacnhan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBack)
-                        .addComponent(btnChon)))
-                .addGap(11, 11, 11))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnChon)
+                    .addComponent(btnBack))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
-
-        btnXacnhan1.getAccessibleContext().setAccessibleName("Chọn");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,9 +202,7 @@ public class chonSP extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -251,34 +222,6 @@ public class chonSP extends javax.swing.JFrame {
          
     }//GEN-LAST:event_tblSPMouseClicked
    
-    private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
-        // TODO add your handling code here:
-//        model1 = (DefaultTableModel)_testsell.tblProduct.getModel();
-//        addList(listsp);
-//        this.hide();
-//        for(productDTO product:listsp)
-//        {
-//             listsp.remove(product);
-//            
-//        }
-        TableModel model2 = tblSP.getModel();
-        int [] select = tblSP.getSelectedRows();
-         Object [] newFormRow = new Object[4];
-        for(int i =0; i<select.length;i++)
-       {
-           newFormRow[0] = model2.getValueAt(select[i],0);
-           newFormRow[1] = model2.getValueAt(select[i],1);
-           newFormRow[2] = model2.getValueAt(select[i],2);
-           newFormRow[3] = model2.getValueAt(select[i],3);
-           _testsell.model.addRow(newFormRow);       }
-        
-        
-    }//GEN-LAST:event_btnXacnhanActionPerformed
-
-    private void btnXacnhan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhan1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnXacnhan1ActionPerformed
-
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         // TODO add your handling code here:
 //        model1 = (DefaultTableModel)_testsell.tblProduct.getModel();
@@ -347,8 +290,6 @@ public class chonSP extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnChon;
-    private java.awt.Button btnXacnhan;
-    private java.awt.Button btnXacnhan1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tblSP;
