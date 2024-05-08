@@ -663,7 +663,7 @@ public class sell extends javax.swing.JPanel {
 
     private void btnAddkhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddkhActionPerformed
         // TODO add your handling code here:
-        addKh add = new addKh();
+        addKh add = new addKh(this);
         add.setVisible(true);
 
     }//GEN-LAST:event_btnAddkhActionPerformed
