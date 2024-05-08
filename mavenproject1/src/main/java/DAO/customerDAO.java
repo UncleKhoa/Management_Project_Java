@@ -75,7 +75,7 @@ public class customerDAO {
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
-    
+
     public customerDTO searchsdt(String sdt)throws SQLException {
         customerDTO cus = new customerDTO();
         String sql = "SELECT* FROM customer WHERE PhoneNumber LIKE ?";
@@ -109,5 +109,8 @@ public class customerDAO {
         }
         return s;
     }
+   
+}
+
        
 }

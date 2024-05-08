@@ -23,6 +23,7 @@ public class receptDAO {
     Connection conn = getConnect();
 
     public ArrayList<receptDTO> list() {
+
        ArrayList<receptDTO> receptlist = new ArrayList<>();
         try{
             String sql = "select * from receipt";
@@ -57,7 +58,7 @@ public class receptDAO {
         stmt_add.executeUpdate(); 
         
     }
-    
+
     public int TongDonHang(){
         int s = 0;
         try{
@@ -95,3 +96,5 @@ public class receptDAO {
     }
 
 }
+
+}   

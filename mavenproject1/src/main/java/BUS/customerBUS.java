@@ -52,30 +52,35 @@ public class customerBUS {
         return list;
     }
 
-    public customerDTO searchsdt(String sdt) throws SQLException {
-        customerDTO cusDTO = new customerDTO();
+    public customerDTO searchsdt(String sdt)throws SQLException
+    {
+       customerDTO cusDTO = new customerDTO();
         customerDAO cus = new customerDAO();
-        // cus_list = new ArrayList<>();
+       // cus_list = new ArrayList<>();
         cusDTO = cus.searchsdt(sdt);
         return cusDTO;
     }
-
-    public int add(customerDTO cus) throws SQLException {
-        if (cus.getPhoneNumber().length() != 10) {
+    public int add(customerDTO cus) throws SQLException{
+        if(cus.getPhoneNumber().length()!=10)
+        {
             return 0;
-        } else {
-            if (!cus.getGender().equals("Nam") && !cus.getGender().equals("Nữ")) {
+        }
+        else {
+            if(!cus.getGender().equals("Nam") && !cus.getGender().equals("Nữ"))
+            {    
                 return -1;
-            } else {
-                customerDAO customer = new customerDAO();
-                customer.add(cus);
-                return 1;
+            }
+            else {
+                   customerDAO customer = new customerDAO();
+                    customer.add(cus);
+                    return 1;
             }
         }
-
+     
     }
-
-    public String createId() {
+    
+    public String createId()
+    {
         customerDAO dao = new customerDAO();
         String maKh;
         dsCus = new ArrayList<>();
@@ -104,3 +109,4 @@ public class customerBUS {
     }
 
 }
+

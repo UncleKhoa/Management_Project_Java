@@ -9,77 +9,79 @@ package DTO;
  * @author MY PC
  */
 public class receptDetailDTO {
-    String receptID,promotionID,productID,quantity;
-    double unitPrice,originalTotal,promotionTotal;
+    String detailReceiptID,receptID,promotionID,productID;
+    int quantity;
+    double unitPrice,subTotal;
 
-    public receptDetailDTO() {
-    }
-
-    public receptDetailDTO(String receptID, String promotionID, String productID, String quantity, double unitPrice, double originalTotal, double promotionTotal) {
+    public receptDetailDTO(String detailReceiptID,String receptID, String promotionID, String productID, int quantity, double unitPrice, double subTotal) {
+        this.detailReceiptID = detailReceiptID;
         this.receptID = receptID;
         this.promotionID = promotionID;
         this.productID = productID;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
-        this.originalTotal = originalTotal;
-        this.promotionTotal = promotionTotal;
+        this.subTotal = subTotal;
     }
+
+    public receptDetailDTO() {
+    }
+
+    public String getDetailReceiptID() {
+        return detailReceiptID;
+    }
+    
 
     public String getReceptID() {
         return receptID;
-    }
-
-    public void setReceptID(String receptID) {
-        this.receptID = receptID;
     }
 
     public String getPromotionID() {
         return promotionID;
     }
 
-    public void setPromotionID(String promotionID) {
-        this.promotionID = promotionID;
-    }
-
     public String getProductID() {
         return productID;
     }
 
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
-
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
     }
 
     public double getUnitPrice() {
         return unitPrice;
     }
 
+    public double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setDetailReceiptID(String detailReceiptID) {
+        this.detailReceiptID = detailReceiptID;
+    }
+    
+
+    public void setReceptID(String receptID) {
+        this.receptID = receptID;
+    }
+
+    public void setPromotionID(String promotionID) {
+        this.promotionID = promotionID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public double getOriginalTotal() {
-        return originalTotal;
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
     }
 
-    public void setOriginalTotal(double originalTotal) {
-        this.originalTotal = originalTotal;
-    }
-
-    public double getPromotionTotal() {
-        return promotionTotal;
-    }
-
-    public void setPromotionTotal(double promotionTotal) {
-        this.promotionTotal = promotionTotal;
-    }
-    
-    
 }

@@ -14,56 +14,37 @@ import java.util.ArrayList;
  * @author MY PC
  */
 public class receptBUS {
-
-    private ArrayList<receptDTO> dshd;
-
-    public receptBUS() {
+    private ArrayList <receptDTO> dshd ;
+    public receptBUS(){
         list();
     }
-
-    public void list() {
+      public void list()
+    {
         receptDAO dao = new receptDAO();
         dshd = new ArrayList<>();
         dshd = dao.list();
     }
 
-    public void add(receptDTO recept) throws SQLException {
+    public void add(receptDTO recept) throws SQLException{
         receptDAO dao = new receptDAO();
         dao.add(recept);
     }
-
-    public String createId() {
-        receptDAO dao = new receptDAO();
+    public String createId()
+    {
+        receptDAO dao = new  receptDAO();
         String maHh;
         dshd = new ArrayList<>();
         dshd = dao.list();
         int l = dshd.size();
-        l = l + 1;
-        if (l < 10) {
-            maHh = "HD0" + String.valueOf(l);
-        } else {
+        l=l+1;
+        if(l<10){ maHh = "HD0" + String.valueOf(l);}
+        else{
             maHh = "HD" + String.valueOf(l);
         }
-
+        
         return maHh;
-    }
-    
-    public int Get_SLHD(){
-        int s = 0;
-        receptDAO receptDAO = new receptDAO();
-        s = receptDAO.TongDonHang();
-        return s;
-    }
-    
-    public int ConvertDoubletoInt(double a){
-        return (int) a;
-    }
-    
-    public int Get_Income(){
-        double s = 0;
-        receptDAO receptDAO = new receptDAO();
-        s = receptDAO.DoanhThu_BH();
-        return ConvertDoubletoInt(s);
-    }
-
+        
+        
+    }       
+   
 }
