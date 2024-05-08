@@ -75,6 +75,7 @@ public class customerDAO {
         PreparedStatement stmt_add = conn.prepareStatement(sql);
         stmt_add.executeUpdate();
     }
+
     public customerDTO searchsdt(String sdt)throws SQLException {
         customerDTO cus = new customerDTO();
         String sql = "SELECT* FROM customer WHERE PhoneNumber LIKE ?";
@@ -89,7 +90,27 @@ public class customerDAO {
             // Set other attributes similarly
         }
         return cus;
-      
+    }
+    
+    public int SL_KH(){
+        int s = 0;
+        try{
+            String sql = "SELECT COUNT(*) AS total_customers from customer";
+            PreparedStatement stmt_sl = conn.prepareCall(sql);
+            ResultSet rs = stmt_sl.executeQuery();
+            
+            if(rs.next()){
+                s = rs.getInt("total_customers");
+            }
+            
+        }
+        catch(SQLException ex){
+            System.out.print(ex);
+        }
+        return s;
+    }
+   
 }
+
        
 }

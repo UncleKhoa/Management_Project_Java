@@ -112,15 +112,21 @@ public class staffBUS {
         return dsStaff;
     }
         
-    public ArrayList<staffDTO> search(String id){  
+    public ArrayList<staffDTO> search(String id) {
         ArrayList<staffDTO> list2 = new ArrayList<>();
-        for (staffDTO i:dsStaff){
-            if ((i.getStaffID().equals(id)) || (i.getFirstname().equals(id)))
-            {
+        for (staffDTO i : dsStaff) {
+            if ((i.getStaffID().equals(id)) || (i.getFirstname().equals(id))) {
                 list2.add(i);
             }
         }
         return list2;
-        }
+    }
+    
+    public int Get_SLNV(){
+        staffDAO staffDAO = new staffDAO();
+        int s = staffDAO.SL_NV();
+        return s;
+    }
+    
 }
     

@@ -24,9 +24,10 @@ public class receptBUS {
         dshd = new ArrayList<>();
         dshd = dao.list();
     }
+
     public void add(receptDTO recept) throws SQLException{
         receptDAO dao = new receptDAO();
-                    dao.add(recept);
+        dao.add(recept);
     }
     public String createId()
     {

@@ -342,7 +342,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
 
     public void addLineData(promotionDTO promo)
     {
-     model.addRow(new Object[]{
+    model.addRow(new Object[]{
            promo.getPromotionID(), promo.getDescription(), promotionBUS.Date_String(promo.getFrom()), promotionBUS.Date_String(promo.getTo()), String.format("%.1f", promo.getPromotionPercent()*100) + " %", promo.getStatus()
         });
     }   
