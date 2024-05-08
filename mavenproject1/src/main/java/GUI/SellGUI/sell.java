@@ -62,6 +62,7 @@ public class sell extends javax.swing.JPanel {
     MainGUI maingui;
     productBUS productBUS;
     showkm showkm;
+    receipt_DetailBUS receipt_DetailBUS;
     private ImageIcon scaleImage(String filename,int width, int height) {
         try {
             BufferedImage img = ImageIO.read(new File(relativePath+filename));
@@ -767,10 +768,11 @@ public class sell extends javax.swing.JPanel {
         receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
          int l = receiptDetailBUS.list_size();
          l=l+1;
-        
+          
          for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
          
             String receiptDetailID = receiptDetailBUS.createId(l, row+1);
+            System.out.println(receiptDetailID);
             String receiptID = this.lbhd.getText();
             Object proID = model.getValueAt(row, 0);
             String productID = proID.toString();
@@ -796,11 +798,12 @@ public class sell extends javax.swing.JPanel {
             double subTotal = Double.parseDouble(this.lbThanhtoan.getText());
             productBUS product = new productBUS();
             receptDetailDTO dto = new receptDetailDTO(receiptDetailID, receiptID, promotionID, productID, quantity, unitPrice, subTotal);
-            receipt_DetailBUS bus = new receipt_DetailBUS();
+         
             try {
-                bus.add(dto);
+               receiptDetailBUS.add(dto);
             } catch (SQLException ex) {
-                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.print("Cant add");
             }
             try {
                 product.update_quantity(productID, quantity);
