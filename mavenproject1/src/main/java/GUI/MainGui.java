@@ -30,8 +30,8 @@ import GUI.SellGUI.showkm;
  * @author khoan
  */
 public class MainGUI extends javax.swing.JFrame {
-     private sell sell;
-         private showkm showkm;
+    private sell sell;
+    private showkm showkm;
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
@@ -73,6 +73,9 @@ public class MainGUI extends javax.swing.JFrame {
         
         lblName.setText(name);
         lblRole.setText(role);
+        
+        Open_GUI(1);
+        
     }
 
     /**
@@ -664,20 +667,20 @@ public class MainGUI extends javax.swing.JFrame {
             case 1:
                 pannelBH.setBackground(new java.awt.Color(0, 51, 204));
                 lblBanhang.setForeground(new java.awt.Color(255, 255, 255));
-                
+
 //                B2.setEnabled(true);
 //                JMain.removeAll();
 //                bai2 = new Bai2();
 //                bai2.setSize(900, 700);
 //                JMain.add(bai2);
 //                JMain.updateUI();
-                   lblBanhang.setEnabled(true);
-                  jmain.removeAll();
-                  sell = new sell(this);
-                  sell.setSize(950, 650);
-                   jmain.add(sell);
-                   jmain.updateUI();
-                 
+//                lblBanhang.setEnabled(true);
+//                jmain.removeAll();
+//                sell = new sell(this);
+//                sell.setSize(950, 650);
+//                jmain.add(sell);
+//                jmain.updateUI();
+                 break;
             case 2:
                 pannelSP.setBackground(new java.awt.Color(0, 51, 204));
                 lblSanpham.setForeground(new java.awt.Color(255, 255, 255));
@@ -721,13 +724,13 @@ public class MainGUI extends javax.swing.JFrame {
     private void Open_GUI(int a){
         switch(a){
            case 1:
-                  lblBanhang.setEnabled(true);
-                  jmain.removeAll();
-                  sell = new sell(this,showkm);
-                  sell.setSize(950, 650);
-                   jmain.add(sell);
-                   jmain.updateUI();
-                   break;
+//                lblBanhang.setEnabled(true);
+                jmain.removeAll();
+                sell = new sell(this, showkm);
+                sell.setSize(950, 650);
+                jmain.add(sell);
+                jmain.updateUI();
+                break;
 
            // case 4:
 //                lblConnguoi.setEnabled(true);
@@ -754,59 +757,11 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.add(khuyenmai);
                 jmain.updateUI();
         }
-    }
-    
-    private void set_color_pannel_hover(int a) {                                      
-        switch (a) {
-            case 1:
-                 pannelBH.setBackground(new java.awt.Color(0, 51, 204));
-                lblBanhang.setForeground(new java.awt.Color(255, 255, 255));
-
-                   break;
-                
-            case 2:
-                pannelSP.setBackground(new java.awt.Color(0, 51, 204));
-                lblSanpham.setForeground(new java.awt.Color(255, 255, 255));
-                break;
-            case 3:
-                pannelNCC.setBackground(new java.awt.Color(0, 51, 204));
-                lblNhacungcap.setForeground(new java.awt.Color(255, 255, 255));
-                break;
-            case 4:
-                pannelKH.setBackground(new java.awt.Color(0, 51, 204));
-                lblConnguoi.setForeground(new java.awt.Color(255, 255, 255));
-                break;
-            case 5:
-                pannelHD.setBackground(new java.awt.Color(0, 51, 204));
-                lblHoadon.setForeground(new java.awt.Color(255, 255, 255));
-                break;
-            case 6:
-                pannelTK.setBackground(new java.awt.Color(0, 51, 204));
-                lblTaikhoan.setForeground(new java.awt.Color(255, 255, 255));
-                break;
-            case 7:
-                pannelThK.setBackground(new java.awt.Color(0, 51, 204));
-                lblThongke.setForeground(new java.awt.Color(255, 255, 255));
-                break;
-            case 8:
-                pannelNV.setBackground(new java.awt.Color(0, 51, 204));
-                lblNhanvien.setForeground(new java.awt.Color(255, 255, 255));
-                break;
-            case 9:
-                pannelNH.setBackground(new java.awt.Color(0, 51, 204));
-                lblNhaphang.setForeground(new java.awt.Color(255, 255, 255));
-                break;
-            case 10:
-                pannelKM.setBackground(new java.awt.Color(0, 51, 204));
-                lblKhuyenmai.setForeground(new java.awt.Color(255, 255, 255));
-                break;
-        }
-                    
-    }  
+    }    
     
     private void pannelBHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelBHMouseClicked
         set_color_pannel(1);
-         Open_GUI(1);
+        Open_GUI(1);
     }//GEN-LAST:event_pannelBHMouseClicked
 
     private void pannelSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelSPMouseClicked

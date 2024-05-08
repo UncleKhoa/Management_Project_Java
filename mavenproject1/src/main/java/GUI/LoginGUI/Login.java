@@ -304,12 +304,37 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void LoginAction() {
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+
+        userDTO user = userBUS.Check(username, password);
+
+        if (user == null) {
+            MyMessageAlert alert = new MyMessageAlert(this, "Tài khoản hoặc mật khẩu không chính xác!");
+            alert.setVisible(true);
+//            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác!", "ERROR", JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            String id = user.getStaffID();
+            staffDTO staff = staffBUS.Get(id);
+            String name = staff.getFirstname();
+            String role = staff.getRole();
+
+            MyMessageAccept accept = new MyMessageAccept(this, "Đăng nhập thành công, chào mừng " + name + "");
+            accept.setVisible(true);
+            MainGUI mfrm = new MainGUI(id, name, role);
+            mfrm.setVisible(true);
+            dispose(); //Phá hủy Jframeform
+        }
+    }
+    
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
+        LoginAction();
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
@@ -329,31 +354,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExitMouseExited
 
     private void Login_InMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Login_InMouseClicked
-        String username = txtUsername.getText();
-        String password = txtPassword.getText();
-        
-        userDTO user = userBUS.Check(username, password);
-        
-        if(user == null){
-            MyMessageAlert alert = new MyMessageAlert(this, "Tài khoản hoặc mật khẩu không chính xác!");
-            alert.setVisible(true);
-//            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác!", "ERROR", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        else{
-            String id = user.getStaffID();
-            staffDTO staff = staffBUS.Get(id);
-            String name = staff.getFirstname();
-            String role = staff.getRole();
-            
-            MyMessageAccept accept = new MyMessageAccept(this, "Đăng nhập thành công, chào mừng "+ name +"");
-            accept.setVisible(true);
-                        MainGUI mfrm = new MainGUI(id,name,role);
-            mfrm.setVisible(true);
-            dispose(); //Phá hủy Jframeform
-        }        
-        
+        LoginAction();
     }//GEN-LAST:event_Login_InMouseClicked
 
     private void Login_InActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_InActionPerformed
