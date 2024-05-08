@@ -72,10 +72,8 @@ public class MainGUI extends javax.swing.JFrame {
         lblExit.setIcon(icon_exit);
         
         lblName.setText(name);
-        lblRole.setText(role);
-        
-        Open_GUI(1);
-        
+        lblRole.setText(role);  
+        Open_GUI(1);       
     }
 
     /**

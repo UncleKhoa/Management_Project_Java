@@ -62,6 +62,7 @@ public class sell extends javax.swing.JPanel {
     MainGUI maingui;
     productBUS productBUS;
     showkm showkm;
+    receipt_DetailBUS receipt_DetailBUS;
     private ImageIcon scaleImage(String filename,int width, int height) {
         try {
             BufferedImage img = ImageIO.read(new File(relativePath+filename));
@@ -443,10 +444,7 @@ public class sell extends javax.swing.JPanel {
         lbSdt4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lbSdt4.setText("Mã khách hàng");
 
-        lbTenkh.setText("Tên khách hàng");
-
         lbMakh.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lbMakh.setText("KH01");
 
         btnAddkh.setForeground(new java.awt.Color(255, 255, 255));
         btnAddkh.addActionListener(new java.awt.event.ActionListener() {
@@ -470,29 +468,30 @@ public class sell extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbTenkh, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbMakh, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnAddkh, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbTenkh, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbSdt7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbSdt4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbMakh, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(btnAddkh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbTenkh, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbSdt7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbSdt4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbMakh, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAddkh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))))
         );
 
-        jPanel4.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 370, 98));
+        jPanel4.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 360, 98));
 
         txtSdt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtSdt.addActionListener(new java.awt.event.ActionListener() {
@@ -500,7 +499,12 @@ public class sell extends javax.swing.JPanel {
                 txtSdtActionPerformed(evt);
             }
         });
-        jPanel4.add(txtSdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 86, 110, -1));
+        txtSdt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSdtKeyReleased(evt);
+            }
+        });
+        jPanel4.add(txtSdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 86, 130, -1));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -678,6 +682,7 @@ public class sell extends javax.swing.JPanel {
                 cus = customerBUS.searchsdt(sdt);
                 this.lbMakh.setText(cus.getCusID());
                 this.lbTenkh.setText(cus.getFirstName() +" "+cus.getLastName());
+                this.lbTenkhach.setText(cus.getFirstName() +" "+cus.getLastName());
             } catch (SQLException ex) {
                 Logger.getLogger(TestSell.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -767,10 +772,11 @@ public class sell extends javax.swing.JPanel {
         receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
          int l = receiptDetailBUS.list_size();
          l=l+1;
-        
+          
          for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
          
             String receiptDetailID = receiptDetailBUS.createId(l, row+1);
+          //  System.out.println(receiptDetailID);
             String receiptID = this.lbhd.getText();
             Object proID = model.getValueAt(row, 0);
             String productID = proID.toString();
@@ -796,11 +802,12 @@ public class sell extends javax.swing.JPanel {
             double subTotal = Double.parseDouble(this.lbThanhtoan.getText());
             productBUS product = new productBUS();
             receptDetailDTO dto = new receptDetailDTO(receiptDetailID, receiptID, promotionID, productID, quantity, unitPrice, subTotal);
-            receipt_DetailDAO dao = new receipt_DetailDAO();
+         
             try {
-                dao.add(dto);
+               receiptDetailBUS.add(dto);
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+              //  System.out.print("Cant add");
             }
             try {
                 product.update_quantity(productID, quantity);
@@ -854,11 +861,11 @@ public class sell extends javax.swing.JPanel {
             }
           //double per = (double) percent;
           
-          System.out.println(percent);
-          System.out.println(sl);
-          System.out.println(dongia);
+//          System.out.println(percent);
+//          System.out.println(sl);
+//          System.out.println(dongia);
           km = percent*dongia;
-          System.out.println(km);
+//          System.out.println(km);
           double total = percent*dongia*sl;
           int totalInt = (int) total;
           return  totalInt;
@@ -878,47 +885,66 @@ public class sell extends javax.swing.JPanel {
         //object [] o;
         tblProduct.clearSelection();
         int s =0;
-        showkm show= new showkm();
+         showkm show= new showkm();
         for (int row = tblProduct.getRowCount()- 1; row >= 0; row--)
         {
-            int tinhkm = 0;
-            Object id = model.getValueAt(row,0);
-            String productID = id.toString();
             
-            Object sl= model.getValueAt(row,3);
-            Object g= model.getValueAt(row,4);
-            int sL = ((Integer) sl).intValue();
-            int gia = ((Integer) g).intValue();
-            int giasp =sL*gia;
-            sum = sum+giasp;
-            tinhkm = Tinh(productID,sL,gia);
-            if (tinhkm<giasp)
-            {  s = s+ tinhkm;
-            
-                Object [] newFormRow = new Object[5];
-                newFormRow[0] = model.getValueAt(row,0);//masp
-                newFormRow[1] = model.getValueAt(row,4);//gia goc
-                promotion_detailBUS proBUS = new promotion_detailBUS();
-                try {
-                    newFormRow[2] = proBUS.promotion_percent(productID);
-                } catch (SQLException ex) {
-                    Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                 newFormRow[3] = model.getValueAt(row,3);//so luong
-                 Integer tinhkmObject = Integer.valueOf(tinhkm);
-                 newFormRow[4]= tinhkmObject;
-                 show.model1.addRow(newFormRow);
-                
-            }
-            
-        }
-        // showkm show = new showkm();
-      //   show.setVisible(true);
-        int tt = sum - s;
+//            int tinhkm = 0;
+//           DefaultTableModel modelShowKM = (DefaultTableModel) show.tblkm.getModel();
+//            Object id = model.getValueAt(row,0);
+//            String productID = id.toString();
+//            Object sl= model.getValueAt(row,3);
+//            Object g= model.getValueAt(row,4);
+//            int sL = ((Integer) sl).intValue();
+//            int gia = ((Integer) g).intValue();
+//            int giasp =sL*gia;
+//            sum = sum+giasp;
+//            tinhkm = Tinh(productID,sL,gia);
+//            float per = 0;
+//            if (tinhkm<giasp)
+//            {  s = s+ tinhkm;
+//            
+//                Object [] newFormRow = new Object[5];
+//                newFormRow[0] = model.getValueAt(row,0);//masp
+//                newFormRow[1] = model.getValueAt(row,4);//gia goc
+//                promotion_detailBUS proBUS = new promotion_detailBUS();
+//                try {
+//                  per= proBUS.promotion_percent(productID);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                Float perObject = Float.valueOf(per);
+//                 newFormRow[2]= Float.valueOf(per); 
+//                 newFormRow[3] = model.getValueAt(row,3);//so luong
+//                 Integer tinhkmObject = Integer.valueOf(tinhkm);
+//                 newFormRow[4]= tinhkmObject;
+//               
+//                  modelShowKM.addRow(newFormRow);
+//                
+            //}
+                    int tinhkm = 0;
+                    Object id = model.getValueAt(row, 0);
+                    String productID = id.toString();
+                    Object sl = model.getValueAt(row, 3);
+                    Object g = model.getValueAt(row, 4);
+                    int sL = ((Integer) sl).intValue();
+                    int gia = ((Integer) g).intValue();
+                    int giasp = sL * gia;
+                    sum = sum + giasp;
+                    tinhkm = Tinh(productID, sL, gia);
+                    //float per = 0;
+                    if (tinhkm < giasp) {
+                        s = s + tinhkm;
 
-        this.lbKm.setText("- " + Integer.toString(s));
-        lbTongtien.setText(Integer.toString(sum));
-        lbThanhtoan.setText(Integer.toString(tt));
+                    }
+
+                        }
+                     
+                        int tt = sum - s;
+
+                        this.lbKm.setText("- " + Integer.toString(s));
+                        lbTongtien.setText(Integer.toString(sum));
+                        lbThanhtoan.setText(Integer.toString(tt));
     }//GEN-LAST:event_btnXacnhanActionPerformed
 
     private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
@@ -936,9 +962,66 @@ public class sell extends javax.swing.JPanel {
         {
               showkm km = new showkm();
                km.setVisible(true);
+               int tinhkm = 0;
+               DefaultTableModel modelShowKM = (DefaultTableModel) km.tblkm.getModel();
+                for (int row = tblProduct.getRowCount()- 1; row >= 0; row--)
+                {   Object id = model.getValueAt(row, 0);
+                    String productID = id.toString();
+                    Object sl = model.getValueAt(row, 3);
+                     Object g = model.getValueAt(row, 4);
+                     int sL = ((Integer) sl).intValue();
+                     int gia = ((Integer) g).intValue();
+                     int giasp =sL*gia;
+                    tinhkm = Tinh(productID, sL, gia);
+                    if(tinhkm<giasp)
+                    {
+                            Object[] newFormRow = new Object[6];
+                            newFormRow[0] = id; // Mã sản phẩm
+                            newFormRow[1] = g; // Giá gốc
+                            float per =0;
+                            promotion_detailBUS proBUS = new promotion_detailBUS();
+                            try {
+                               per = proBUS.promotion_percent(productID);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                             Float perObject = Float.valueOf(per);
+                             newFormRow[2] = perObject; // Tỉ lệ khuyến mãi
+                             newFormRow[3] = sl; // Số lượng
+                             int tkm = giasp-tinhkm;
+                             Integer tinhkmObject = Integer.valueOf(tinhkm);
+                             Integer tienkmbject = Integer.valueOf(tkm);
+                             newFormRow[4] = tinhkmObject; // Số tiền được giảm giá
+                             newFormRow[5] =  tienkmbject; 
+                             modelShowKM.addRow(newFormRow);
+                            
+                    }
+                   
+   
+                }
         }
+       
       
     }//GEN-LAST:event_lbXemkmMouseClicked
+
+    private void txtSdtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSdtKeyReleased
+        // TODO add your handling code here:
+         this.customerBUS = new customerBUS ();
+        String sdt= this.txtSdt.getText();
+        if (sdt.length() == 10){
+            customerDTO cus = new customerDTO();
+            try {
+                cus = customerBUS.searchsdt(sdt);
+                this.lbMakh.setText(cus.getCusID());
+                this.lbTenkh.setText(cus.getFirstName() +" "+cus.getLastName());
+                this.lbTenkhach.setText(cus.getFirstName() +" "+cus.getLastName());
+            } catch (SQLException ex) {
+                Logger.getLogger(TestSell.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        
+    }//GEN-LAST:event_txtSdtKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
