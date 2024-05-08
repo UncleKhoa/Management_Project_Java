@@ -663,7 +663,7 @@ public class sell extends javax.swing.JPanel {
 
     private void btnAddkhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddkhActionPerformed
         // TODO add your handling code here:
-        addKh add = new addKh();
+        addKh add = new addKh(this);
         add.setVisible(true);
 
     }//GEN-LAST:event_btnAddkhActionPerformed
@@ -854,11 +854,11 @@ public class sell extends javax.swing.JPanel {
             }
           //double per = (double) percent;
           
-          System.out.println(percent);
-          System.out.println(sl);
-          System.out.println(dongia);
+//          System.out.println(percent);
+//          System.out.println(sl);
+//          System.out.println(dongia);
           km = percent*dongia;
-          System.out.println(km);
+//          System.out.println(km);
           double total = percent*dongia*sl;
           int totalInt = (int) total;
           return  totalInt;
@@ -878,13 +878,13 @@ public class sell extends javax.swing.JPanel {
         //object [] o;
         tblProduct.clearSelection();
         int s =0;
-        showkm show= new showkm();
+         showkm show= new showkm();
         for (int row = tblProduct.getRowCount()- 1; row >= 0; row--)
         {
+            
             int tinhkm = 0;
             Object id = model.getValueAt(row,0);
             String productID = id.toString();
-            
             Object sl= model.getValueAt(row,3);
             Object g= model.getValueAt(row,4);
             int sL = ((Integer) sl).intValue();
@@ -900,10 +900,12 @@ public class sell extends javax.swing.JPanel {
                 newFormRow[1] = model.getValueAt(row,4);//gia goc
                 promotion_detailBUS proBUS = new promotion_detailBUS();
                 try {
-                    newFormRow[2] = proBUS.promotion_percent(productID);
+                 float per= proBUS.promotion_percent(productID);
                 } catch (SQLException ex) {
                     Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
                 }
+               // Float perObject = Float.valueOf(per);
+              //  newFormRow[2] 
                  newFormRow[3] = model.getValueAt(row,3);//so luong
                  Integer tinhkmObject = Integer.valueOf(tinhkm);
                  newFormRow[4]= tinhkmObject;
