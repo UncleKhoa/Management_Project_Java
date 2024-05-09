@@ -909,65 +909,60 @@ public class sell extends javax.swing.JPanel {
     private void lbXemkmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbXemkmMouseClicked
         // TODO add your handling code here:
         String tienkm = this.lbKm.getText();
-        String text = tienkm.substring(2); 
+        String text = tienkm.substring(2);
         int value = Integer.parseInt(text);
-        if(value>0)
-        {
-              showkm km = new showkm();
-               km.setVisible(true);
-               int tinhkm = 0;
-               DefaultTableModel modelShowKM = (DefaultTableModel) km.tblkm.getModel();
-                for (int row = tblProduct.getRowCount()- 1; row >= 0; row--)
-                {   Object id = model.getValueAt(row, 0);
-                    String productID = id.toString();
-                    Object sl = model.getValueAt(row, 3);
-                     Object g = model.getValueAt(row, 4);
-                     int sL = ((Integer) sl).intValue();
-                     int gia = ((Integer) g).intValue();
-                     int giasp =sL*gia;
-                    tinhkm = Tinh(productID, sL, gia);
-                    if(tinhkm<giasp)
-                    {
-                            Object[] newFormRow = new Object[6];
-                            newFormRow[0] = id; // Mã sản phẩm
-                            newFormRow[1] = g; // Giá gốc
-                            float per =0;
-                            promotion_detailBUS proBUS = new promotion_detailBUS();
-                            try {
-                               per = proBUS.promotion_percent(productID);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                             Float perObject = Float.valueOf(per);
-                             newFormRow[2] = perObject; // Tỉ lệ khuyến mãi
-                             newFormRow[3] = sl; // Số lượng
-                             int tkm = giasp-tinhkm;
-                             Integer tinhkmObject = Integer.valueOf(tinhkm);
-                             Integer tienkmbject = Integer.valueOf(tkm);
-                             newFormRow[4] = tinhkmObject; // Số tiền được giảm giá
-                             newFormRow[5] =  tienkmbject; 
-                             modelShowKM.addRow(newFormRow);
-                            
+        if (value > 0) {
+            showkm km = new showkm();
+            km.setVisible(true);
+            int tinhkm = 0;
+            DefaultTableModel modelShowKM = (DefaultTableModel) km.tblkm.getModel();
+            for (int row = tblProduct.getRowCount() - 1; row >= 0; row--) {
+                Object id = model.getValueAt(row, 0);
+                String productID = id.toString();
+                Object sl = model.getValueAt(row, 3);
+                Object g = model.getValueAt(row, 4);
+                int sL = ((Integer) sl).intValue();
+                int gia = ((Integer) g).intValue();
+                int giasp = sL * gia;
+                tinhkm = Tinh(productID, sL, gia);
+                if (tinhkm < giasp) {
+                    Object[] newFormRow = new Object[6];
+                    newFormRow[0] = id; // Mã sản phẩm
+                    newFormRow[1] = g; // Giá gốc
+                    float per = 0;
+                    promotion_detailBUS proBUS = new promotion_detailBUS();
+                    try {
+                        per = proBUS.promotion_percent(productID);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                   
-   
+                    Float perObject = Float.valueOf(per);
+                    newFormRow[2] = perObject; // Tỉ lệ khuyến mãi
+                    newFormRow[3] = sl; // Số lượng
+                    int tkm = giasp - tinhkm;
+                    Integer tinhkmObject = Integer.valueOf(tinhkm);
+                    Integer tienkmbject = Integer.valueOf(tkm);
+                    newFormRow[4] = tinhkmObject; // Số tiền được giảm giá
+                    newFormRow[5] = tienkmbject;
+                    modelShowKM.addRow(newFormRow);
+
                 }
+
+            }
         }
-       
-      
     }//GEN-LAST:event_lbXemkmMouseClicked
 
     private void txtSdtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSdtKeyReleased
         // TODO add your handling code here:
-         this.customerBUS = new customerBUS ();
-        String sdt= this.txtSdt.getText();
-        if (sdt.length() == 10){
+        this.customerBUS = new customerBUS();
+        String sdt = this.txtSdt.getText();
+        if (sdt.length() == 10) {
             customerDTO cus = new customerDTO();
             try {
                 cus = customerBUS.searchsdt(sdt);
                 this.lbMakh.setText(cus.getCusID());
-                this.lbTenkh.setText(cus.getFirstName() +" "+cus.getLastName());
-                this.lbTenkhach.setText(cus.getFirstName() +" "+cus.getLastName());
+                this.lbTenkh.setText(cus.getFirstName() + " " + cus.getLastName());
+                this.lbTenkhach.setText(cus.getFirstName() + " " + cus.getLastName());
             } catch (SQLException ex) {
                 Logger.getLogger(TestSell.class.getName()).log(Level.SEVERE, null, ex);
             }
