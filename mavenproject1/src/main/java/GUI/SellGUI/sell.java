@@ -63,6 +63,7 @@ public class sell extends javax.swing.JPanel {
     productBUS productBUS;
     showkm showkm;
     receipt_DetailBUS receipt_DetailBUS;
+    private int tt;
     private ImageIcon scaleImage(String filename,int width, int height) {
         try {
             BufferedImage img = ImageIO.read(new File(relativePath+filename));
@@ -746,29 +747,6 @@ public class sell extends javax.swing.JPanel {
              Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
          }
          receptDetailDTO receiptDTO = new receptDetailDTO();
-//         for(int row = 1;row<=this.tblProduct.getRowCount();row ++)
-//         {
-//             receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
-//             int l = receiptDetailBUS.list_size();
-//             String receiptDetailID = receiptDetailBUS.createId(l, row);
-//             String receiptID = this.lbhd.getText();
-//             Object proID = model.getValueAt(row, 0);
-//             String productID = proID.toString();
-//             String PromotionID = "NORMAL";
-//             Object sl = model.getValueAt(row, 3);
-//             int quantity = ((Integer) sl).intValue();
-//             Object dongia = model.getValueAt(row, 4);
-//             double unitPrice = Double.parseDouble(dongia.toString());
-//             double subTotal = Double.parseDouble(this.lbThanhtoan.getText());
-//             receptDetailDTO dto = new receptDetailDTO(receiptDetailID,receiptID,PromotionID,productID,quantity,unitPrice,subTotal);
-//             receipt_DetailDAO dao = new receipt_DetailDAO();
-//            try {
-//                dao.add(dto);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//         }
-        // System.out.println(tblProduct.getRowCount());
         receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
          int l = receiptDetailBUS.list_size();
          l=l+1;
@@ -776,7 +754,6 @@ public class sell extends javax.swing.JPanel {
          for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
          
             String receiptDetailID = receiptDetailBUS.createId(l, row+1);
-          //  System.out.println(receiptDetailID);
             String receiptID = this.lbhd.getText();
             Object proID = model.getValueAt(row, 0);
             String productID = proID.toString();
@@ -788,18 +765,30 @@ public class sell extends javax.swing.JPanel {
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //String promotionID = "NORMAL"; // Changed variable name to lowercase for convention
             Object sl = model.getValueAt(row, 3);
             int quantity = sl instanceof Integer ? (int) sl : 0; // Safely cast to Integer
   
             Object dongia = model.getValueAt(row, 4);
             double unitPrice = 0.0; // Default value if parsing fails
             if (dongia instanceof Number) {
-                unitPrice = ((Number) dongia).doubleValue(); // Safely parse to double
+                unitPrice = ((Number) dongia).doubleValue()*quantity; // Safely parse to double
             }
            
             
-            double subTotal = Double.parseDouble(this.lbThanhtoan.getText());
+            double subTotal = 0;
+            float per =0;
+            try {
+                 per = proBUS.promotion_percent(productID);
+            } catch (SQLException ex) {
+                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(per!=0)
+              subTotal = Math.floor((1 - per) * quantity * unitPrice);
+              
+                
+            else 
+                subTotal = quantity*unitPrice;
+                ;
             productBUS product = new productBUS();
             receptDetailDTO dto = new receptDetailDTO(receiptDetailID, receiptID, promotionID, productID, quantity, unitPrice, subTotal);
          
@@ -859,11 +848,7 @@ public class sell extends javax.swing.JPanel {
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
             }
-          //double per = (double) percent;
-          
-//          System.out.println(percent);
-//          System.out.println(sl);
-//          System.out.println(dongia);
+
           km = percent*dongia;
 //          System.out.println(km);
           double total = percent*dongia*sl;
@@ -889,39 +874,7 @@ public class sell extends javax.swing.JPanel {
         for (int row = tblProduct.getRowCount()- 1; row >= 0; row--)
         {
             
-//            int tinhkm = 0;
-//           DefaultTableModel modelShowKM = (DefaultTableModel) show.tblkm.getModel();
-//            Object id = model.getValueAt(row,0);
-//            String productID = id.toString();
-//            Object sl= model.getValueAt(row,3);
-//            Object g= model.getValueAt(row,4);
-//            int sL = ((Integer) sl).intValue();
-//            int gia = ((Integer) g).intValue();
-//            int giasp =sL*gia;
-//            sum = sum+giasp;
-//            tinhkm = Tinh(productID,sL,gia);
-//            float per = 0;
-//            if (tinhkm<giasp)
-//            {  s = s+ tinhkm;
-//            
-//                Object [] newFormRow = new Object[5];
-//                newFormRow[0] = model.getValueAt(row,0);//masp
-//                newFormRow[1] = model.getValueAt(row,4);//gia goc
-//                promotion_detailBUS proBUS = new promotion_detailBUS();
-//                try {
-//                  per= proBUS.promotion_percent(productID);
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                Float perObject = Float.valueOf(per);
-//                 newFormRow[2]= Float.valueOf(per); 
-//                 newFormRow[3] = model.getValueAt(row,3);//so luong
-//                 Integer tinhkmObject = Integer.valueOf(tinhkm);
-//                 newFormRow[4]= tinhkmObject;
-//               
-//                  modelShowKM.addRow(newFormRow);
-//                
-            //}
+ 
                     int tinhkm = 0;
                     Object id = model.getValueAt(row, 0);
                     String productID = id.toString();
@@ -940,7 +893,7 @@ public class sell extends javax.swing.JPanel {
 
                         }
                      
-                        int tt = sum - s;
+                         tt = sum - s;
 
                         this.lbKm.setText("- " + Integer.toString(s));
                         lbTongtien.setText(Integer.toString(sum));

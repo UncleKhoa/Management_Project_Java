@@ -73,11 +73,6 @@ public class chonSP extends javax.swing.JFrame {
         tblSP.getColumnModel().getColumn(2).setPreferredWidth(110);
         tblSP.getColumnModel().getColumn(3).setPreferredWidth(90);
         removeData();
-         // Chỉnh kích thước của header
-        //JTableHeader headers = tblSP.getTableHeader();
-        //headers.setFont(new Font("Tahoma", Font.BOLD, 12)); // Font in đậm
-        //headers.setResizingAllowed(false); // Không cho phép thay đổi kích thước header bằng cách kéo thả
-        //JTableHeader header = tblSP.getTableHeader();
         
         for(productDTO product:list)
         {
@@ -224,26 +219,51 @@ public class chonSP extends javax.swing.JFrame {
    
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         // TODO add your handling code here:
-//        model1 = (DefaultTableModel)_testsell.tblProduct.getModel();
-//        addList(listsp);
-//        this.hide();
-//        for(productDTO product:listsp)
-//        {
-//             listsp.remove(product);
-//            
-//        }
+
+
         TableModel model2 = tblSP.getModel();
-        int [] select = tblSP.getSelectedRows();
+       int [] select = tblSP.getSelectedRows();
+       
          Object [] newFormRow = new Object[5];
-        for(int i =0; i<select.length;i++)
-       {
-           newFormRow[0] = model2.getValueAt(select[i],0);
-           newFormRow[1] = model2.getValueAt(select[i],1);
-           newFormRow[2] = model2.getValueAt(select[i],2);
-           newFormRow[3] = sl;
-           newFormRow[4] = model2.getValueAt(select[i],3);
-           _testsell.model.addRow(newFormRow);       }
-                // TODO add your handling code here:
+           
+                int check = 0;
+                int choose = tblSP.getSelectedRow();
+               // Object [] newFormRows = new Object[5];
+                newFormRow[0] = model2.getValueAt(choose,0);
+                for(int row = 0; row<_testsell.model.getRowCount();row++)
+           {
+               Object id = _testsell.model.getValueAt(row, 0);
+//            //   String productid = id.toString();
+                  if( newFormRow[0].equals(id))
+             {
+                 Object s= _testsell.model.getValueAt(row, 3);
+                 int quantity= (int)s;
+                  quantity = quantity +1;
+                  newFormRow[1] = model2.getValueAt(choose,1);
+                  newFormRow[2] = model2.getValueAt(choose,2);
+                  newFormRow[3] = quantity ;
+                 newFormRow[4] = model2.getValueAt(choose,3);                 
+                 _testsell.model.setValueAt(quantity , row, 3);        
+                 check = 1;
+             }
+               
+              }
+           
+           // newFormRow[0] = model2.getValueAt(select[i],0);
+           if(check == 0)
+           {
+                newFormRow[1] = model2.getValueAt(choose,1);
+                newFormRow[2] = model2.getValueAt(choose,2);
+                newFormRow[3] = sl;
+                newFormRow[4] = model2.getValueAt(choose,3);    
+                _testsell.model.addRow(newFormRow);  
+           }
+               
+       
+
+
+               
+                
     }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
