@@ -719,6 +719,7 @@ public class sell extends javax.swing.JPanel {
         this.btnSua.show();
         this.txtSp.show();
         this.lbsl.show();
+        this.btnAddkh.show();
         this.btnThanhtoan.hide();
     }//GEN-LAST:event_btnHuyActionPerformed
 
@@ -736,8 +737,8 @@ public class sell extends javax.swing.JPanel {
         String maKh = this.lbMakh.getText();
         String id = iD;
         Date create_day = java.sql.Date.valueOf(today);
-        String totalText = this.lbThanhtoan.getText();
-        double Total = Double.parseDouble(totalText);
+        //String totalText = this.lbThanhtoan.getText();
+        double Total = Double.valueOf(tt);
        
         receptDTO receipt = new receptDTO(maHd,maKh,id, create_day,Total);
         receptBUS bus = new receptBUS();
@@ -816,24 +817,31 @@ public class sell extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        int row = this.tblProduct.getSelectedRow();
-        Object ID = model.getValueAt(row, 0);
-        String id = ID.toString();
-        int sl = Integer.valueOf(txtSp.getText());
-        productBUS product = new  productBUS();
-         try {
-             if(product.compareQuantity(id, sl)==0)
-             {
-               //   MyMessageAlert alert = new MyMessageAlert(,"Giới tính sai định dạng. Vui lòng nhập lại");
-                   // alert.setVisible(true);
-                   JOptionPane.showMessageDialog(null, "Số lượng còn lại trong kho không đủ ", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-             else{
-                    model.setValueAt(sl, row, 3);
-             }
-              
-         } catch (SQLException ex) {
-             Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+        if(txtSp.getText().trim().isEmpty())
+        {
+            System.out.print(" lỗi");
+        }
+        else{
+             int row = this.tblProduct.getSelectedRow();
+                Object ID = model.getValueAt(row, 0);
+                String id = ID.toString();
+                int sl = Integer.valueOf(txtSp.getText());
+                productBUS product = new  productBUS();
+                 try {
+                     if(product.compareQuantity(id, sl)==0)
+                     {
+                       //   MyMessageAlert alert = new MyMessageAlert(,"Giới tính sai định dạng. Vui lòng nhập lại");
+                           // alert.setVisible(true);
+                           JOptionPane.showMessageDialog(null, "Số lượng còn lại trong kho không đủ ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                     else{
+                            model.setValueAt(sl, row, 3);
+                     }
+
+                 } catch (SQLException ex) {
+                     Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+                }
+       
          }
 
     }//GEN-LAST:event_btnSuaActionPerformed
@@ -858,6 +866,38 @@ public class sell extends javax.swing.JPanel {
     }
     private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
         // TODO add your handling code here:
+        String sdt = this.txtSdt.getText();
+        String makh = this.lbMakh.getText();
+      //  System.out.println(sdt);
+       // System.out.println(makh);
+        if(makh == null || makh.trim().isEmpty())
+        {
+             System.out.print(" a");
+        }
+        else
+        {
+            
+            productBUS product = new productBUS();
+            for (int row = 0; row<this.tblProduct.getRowCount(); row++)
+        {
+            Object ID = model.getValueAt(row,0);
+            String id = ID.toString();
+            Object SL = model.getValueAt(row,3);
+            int sl = (int)SL;
+                try {
+                    if(product.compareQuantity(id, sl)==0)
+                    {
+                        //   MyMessageAlert alert = new MyMessageAlert(,"Giới tính sai định dạng. Vui lòng nhập lại");
+                        // alert.setVisible(true);
+                        System.out.print("bb");
+                        return;
+                        
+                    }   
+                } catch (SQLException ex) {
+                    Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+              
         this.btnXacnhan.hide();
         this.btnHuy.show();
         this.lbXemkm.show();
@@ -867,10 +907,11 @@ public class sell extends javax.swing.JPanel {
         this.txtSp.hide();
         this.lbsl.hide();
         this.btnThanhtoan.show();
+        this.btnAddkh.hide();
         //object [] o;
         tblProduct.clearSelection();
         int s =0;
-         showkm show= new showkm();
+        
         for (int row = tblProduct.getRowCount()- 1; row >= 0; row--)
         {
             
@@ -898,11 +939,39 @@ public class sell extends javax.swing.JPanel {
                         this.lbKm.setText("- " + Integer.toString(s));
                         lbTongtien.setText(Integer.toString(sum));
                         lbThanhtoan.setText(Integer.toString(tt));
+        
+        }
+       
     }//GEN-LAST:event_btnXacnhanActionPerformed
 
     private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
         // TODO add your handling code here:
         this.lbKm.setVisible(false);
+        this.btnChon.setVisible(true);
+        this.btnXoa.setVisible(true);
+        this.btnSua.setVisible(true);
+        this.txtSp.setVisible(true);
+        this.btnXuathd.hide();
+        this.btnXacnhan.setVisible(true);
+        this.btnAddkh.setVisible(true);
+        this.txtSdt.setText(" ");
+        this.lbMakh.setText(" ");
+        this.lbKm.setText(" ");
+        this.lbXemkm.setText(" ");
+        this.lbTenkhach.setText(" ");
+        this.lbThanhtoan.setText(" ");
+        this.lbTongtien.setText(" ");
+        receptBUS  receipt = new receptBUS ();
+        String mhd =receipt.createId();
+        this.lbhd.setText(mhd);
+        this.lbTenkh.setText(" ");
+        this.txtTiennhan.setText(" ");
+       // this.txtTiennhan.
+       this.lbTienthua.setText(" ");
+       model.setRowCount(0);
+        
+        
+        
         
     }//GEN-LAST:event_btnLammoiActionPerformed
 
