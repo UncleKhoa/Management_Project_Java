@@ -23,10 +23,11 @@ public class showkm extends javax.swing.JFrame {
     public showkm() {
         initComponents();
         setLocationRelativeTo(null);
+         this.dispose();
         JTableHeader header = tblkm.getTableHeader();
         header.setFont(new Font("Tahoma", Font.BOLD, 14)); // Font in đậm
         header.setResizingAllowed(false);
-        ViewData();        
+        ViewData();
       
     }
      public void ViewData()
@@ -68,7 +69,6 @@ public class showkm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(509, 408));
@@ -143,7 +143,8 @@ public class showkm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntThoatActionPerformed
-        this.dispose();
+        // TODO add your handling code here:
+        this.hide();
     }//GEN-LAST:event_bntThoatActionPerformed
 
     /**
