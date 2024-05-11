@@ -50,6 +50,9 @@ import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
+import Model.CustomJasperViewer;
+import Model.CustomTableCellRenderer;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -158,7 +161,11 @@ public class sell extends javax.swing.JPanel {
         today = LocalDate.now();
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         formattedDate = today.format(formatter);
+        
         lbNgay.setText(formattedDate);
+        
+        JTableHeader header1 = tblProduct.getTableHeader();
+        header1.setDefaultRenderer(new CustomHeaderRenderer());
 
         convertBackgroundOfTable(tblProduct);
         String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Số lượng", "Giá"};
@@ -169,6 +176,12 @@ public class sell extends javax.swing.JPanel {
         tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
         tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
         tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
+        
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblProduct.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblProduct.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblProduct.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        
         removeData();
     }
 
@@ -878,7 +891,7 @@ public class sell extends javax.swing.JPanel {
             Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
         }
         printTableReceiptList(dataList);
-
+        btnThanhtoan.hide();
     }//GEN-LAST:event_btnThanhtoanActionPerformed
 
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
@@ -918,8 +931,8 @@ public class sell extends javax.swing.JPanel {
 
             }
 
-        }
-
+        }       
+        btnThanhtoan.hide();
     }//GEN-LAST:event_btnSuaActionPerformed
     private int Tinh(String productID, int sl, int dongia) {
         promotion_detailBUS proBUS = new promotion_detailBUS();
@@ -974,9 +987,9 @@ public class sell extends javax.swing.JPanel {
         parameters.put("tt", tt);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dataList);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-        //  CustomJasperViewer customViewer = new CustomJasperViewer(jasperPrint);
-        //   customViewer.setVisible(true);
-        JasperViewer.viewReport(jasperPrint, true);
+        
+        CustomJasperViewer customViewer = new CustomJasperViewer(jasperPrint); // Sử dụng CustomJasperViewer thay vì JasperViewer
+        customViewer.setVisible(true); // Hiển thị cửa sổ báo cáo
 
     }
 

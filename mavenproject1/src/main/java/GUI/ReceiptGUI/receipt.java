@@ -37,6 +37,7 @@ public class receipt extends javax.swing.JFrame {
     ArrayList<receptDTO> list_hd;
     ArrayList<importDTO> list_nh;
     int selectRow_hd;
+    int selectRow_nh;
 
     
 
