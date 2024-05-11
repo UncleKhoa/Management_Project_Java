@@ -662,8 +662,6 @@ public class sell extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
-        // TODO add your handling code here:
-
         int row = this.tblProduct.getSelectedRow();
         Object sl = model.getValueAt(row, 3);
         this.txtSp.setText(sl.toString());
