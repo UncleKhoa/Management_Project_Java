@@ -772,7 +772,7 @@ public class sell extends javax.swing.JPanel {
         Date create_day = java.sql.Date.valueOf(today);
         //String totalText = this.lbThanhtoan.getText();
         String tien = this.txtTiennhan.getText();
-        if (tien.matches(".*[^a-zA-Z0-9].*")) {
+        if (!Check_Number(tien)) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tiền nhận không hợp lệ");
             alert.setVisible(true);
             return;
@@ -781,6 +781,11 @@ public class sell extends javax.swing.JPanel {
                 int tn = Integer.parseInt(tien);
                 String tiennhan = formatMoney(tn);
                 this.txtTiennhan.setText(tiennhan);
+                if (tn < tt) {
+                    MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng nhập đủ số tiền");
+                    alert.setVisible(true);
+                    return;
+                }
                 int tienthua = tn - tt;
                 String thua = formatMoney(tienthua);
                 this.lbTienthua.setText(thua);
