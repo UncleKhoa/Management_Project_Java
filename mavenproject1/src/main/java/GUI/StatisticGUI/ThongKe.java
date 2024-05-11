@@ -621,6 +621,7 @@ public class ThongKe extends javax.swing.JPanel {
                 if (!Compare_Date(DateStart.getDate(), DateEnd.getDate())) {
                     MyMessageAlert alert = new MyMessageAlert(parentFrame, "Ngày chọn không hợp lệ");
                     alert.setVisible(true);
+                    return;
                 } else {
                     pannelTable.removeAll();
                     DT_TN = new ThongKeDT_TheoNgayTable(getDateStartChooser(), getDateEndChooser());
@@ -636,8 +637,7 @@ public class ThongKe extends javax.swing.JPanel {
                 }
             }
             
-            if(cbMethod.getSelectedItem().equals("Bán hàng") && cbType.getSelectedItem().equals("Khách hàng")){
-                System.out.print("OK");
+            if(cbMethod.getSelectedItem().equals("Bán hàng") && cbType.getSelectedItem().equals("Khách hàng")){               
                 pannelTable.removeAll();
                 BH_KH = new ThongKeBH_KhachHangTable();
                 BH_KH.setSize(426, 420);

@@ -26,7 +26,7 @@ public class receptDAO {
 
        ArrayList<receptDTO> receptlist = new ArrayList<>();
         try{
-            String sql = "select * from receipt";
+            String sql = "select * from receipt order by ReceiptID desc";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             
