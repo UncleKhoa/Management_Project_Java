@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.SellGUI;
+
 import BUS.customerBUS;
 import BUS.productBUS;
 import BUS.promotion_detailBUS;
@@ -60,13 +61,13 @@ public class sell extends javax.swing.JPanel {
      * Creates new form sell
      */
     JFrame parentFrame;
-     customerBUS customerBUS;
+    customerBUS customerBUS;
     File file = new File("");
     DefaultTableModel model;
     String currentDirectory = file.getAbsolutePath();
-    String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; 
-    String pdfpath = currentDirectory + "\\src\\main\\java\\pdf\\"; 
-    private  LocalDate today ;
+    String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\";
+    String pdfpath = currentDirectory + "\\src\\main\\java\\pdf\\";
+    private LocalDate today;
     private int sum;
     private int s;
     private DateTimeFormatter formatter;
@@ -78,9 +79,10 @@ public class sell extends javax.swing.JPanel {
     showkm showkm;
     receipt_DetailBUS receipt_DetailBUS;
     private int tt;
-    private ImageIcon scaleImage(String filename,int width, int height) {
+
+    private ImageIcon scaleImage(String filename, int width, int height) {
         try {
-            BufferedImage img = ImageIO.read(new File(relativePath+filename));
+            BufferedImage img = ImageIO.read(new File(relativePath + filename));
             Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
             return new ImageIcon(scaledImg);
         } catch (IOException e) {
@@ -88,101 +90,94 @@ public class sell extends javax.swing.JPanel {
         }
         return null;
     }
-   public sell(MainGUI main){
-           initComponents();
-    
 
-          ImageIcon  hoadon= scaleImage("bill.png", 83, 84);
-          lbHD.setIcon(hoadon);
-             
-          ImageIcon Sdt = scaleImage("bill.jpg",47, 45);
-          lbSdt.setIcon(Sdt);
-          
-           this.btnThanhtoan.hide();
-           this.btnXuathd.hide();
-           this.btnHuy.hide();
-           this.lbXemkm.hide();
-           this.txtTiennhan.setVisible(false);
-          customerBUS customer = new customerBUS();
-          maingui = main;
-          iD= maingui.id;
-          this.lbNhanvien.setText(maingui.name);
-          receptBUS  receipt = new receptBUS ();
-          String mhd =receipt.createId();
-          this.lbhd.setText(mhd);
-     
-           today = LocalDate.now();
-          formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-          formattedDate = today.format(formatter);
-          lbNgay.setText(formattedDate);
-          
-         convertBackgroundOfTable(tblProduct);
-            String[] header = {"Mã sản phẩm","Hãng","Tên sản phẩm","Số lượng","Giá"};
-            model = (DefaultTableModel) 
-            tblProduct.getModel();
-            model.setColumnIdentifiers(header);
-            tblProduct.getColumnModel().getColumn(0).setPreferredWidth(110);
-            tblProduct.getColumnModel().getColumn(1).setPreferredWidth(90);
-            tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
-            tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
-            tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
-            removeData();
-   }
-     public sell(MainGUI main,showkm show){
-           initComponents();
-    
-          
-          ImageIcon  hoadon= scaleImage("bill.png", 83, 84);
-          lbHD.setIcon(hoadon);
+    public sell(MainGUI main) {
+        initComponents();
+
+        ImageIcon hoadon = scaleImage("bill.png", 83, 84);
+        lbHD.setIcon(hoadon);
+
+        ImageIcon Sdt = scaleImage("bill.jpg", 47, 45);
+        lbSdt.setIcon(Sdt);
+
+        this.btnThanhtoan.hide();
+        this.btnXuathd.hide();
+        this.btnHuy.hide();
+        this.lbXemkm.hide();
+        this.txtTiennhan.setVisible(false);
+        customerBUS customer = new customerBUS();
+        maingui = main;
+        iD = maingui.id;
+        this.lbNhanvien.setText(maingui.name);
+        receptBUS receipt = new receptBUS();
+        String mhd = receipt.createId();
+        this.lbhd.setText(mhd);
+
+        today = LocalDate.now();
+        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        formattedDate = today.format(formatter);
+        lbNgay.setText(formattedDate);
+
+        convertBackgroundOfTable(tblProduct);
+        String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Số lượng", "Giá"};
+        model = (DefaultTableModel) tblProduct.getModel();
+        model.setColumnIdentifiers(header);
+        tblProduct.getColumnModel().getColumn(0).setPreferredWidth(110);
+        tblProduct.getColumnModel().getColumn(1).setPreferredWidth(90);
+        tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
+        tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
+        tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
+        removeData();
+    }
+
+    public sell(MainGUI main, showkm show) {
+        initComponents();
+
+        ImageIcon hoadon = scaleImage("bill.png", 83, 84);
+        lbHD.setIcon(hoadon);
         //  This.dispose()
-          ImageIcon Sdt = scaleImage("bill.jpg",47, 45);
-          lbSdt.setIcon(Sdt);
-           this.btnThanhtoan.hide();
-           this.btnXuathd.hide();
-           this.btnHuy.hide();
-           this.lbXemkm.hide();
-           this.lbkt.hide();
-           this.lbdt.hide();    
-           this.txtTiennhan.setVisible(false);
+        ImageIcon Sdt = scaleImage("bill.jpg", 47, 45);
+        lbSdt.setIcon(Sdt);
+        this.btnThanhtoan.hide();
+        this.btnXuathd.hide();
+        this.btnHuy.hide();
+        this.lbXemkm.hide();
+        this.lbkt.hide();
+        this.lbdt.hide();
+        this.txtTiennhan.setVisible(false);
         //object [] o;
-          customerBUS customer = new customerBUS();
-          showkm =show;
-          maingui = main;
-          iD= maingui.id;
-          this.lbNhanvien.setText(maingui.name);
-          receptBUS  receipt = new receptBUS ();
-          String mhd =receipt.createId();
-          this.lbhd.setText(mhd);
-     
-           today = LocalDate.now();
-          formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-          formattedDate = today.format(formatter);
-          lbNgay.setText(formattedDate);
-          
-         convertBackgroundOfTable(tblProduct);
-            String[] header = {"Mã sản phẩm","Hãng","Tên sản phẩm","Số lượng","Giá"};
-            model = (DefaultTableModel) 
-            tblProduct.getModel();
-            model.setColumnIdentifiers(header);
-            tblProduct.getColumnModel().getColumn(0).setPreferredWidth(110);
-            tblProduct.getColumnModel().getColumn(1).setPreferredWidth(90);
-            tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
-            tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
-            tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
-            removeData();
-   }
-   
-       public void removeData()
-    {
+        customerBUS customer = new customerBUS();
+        showkm = show;
+        maingui = main;
+        iD = maingui.id;
+        this.lbNhanvien.setText(maingui.name);
+        receptBUS receipt = new receptBUS();
+        String mhd = receipt.createId();
+        this.lbhd.setText(mhd);
+
+        today = LocalDate.now();
+        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        formattedDate = today.format(formatter);
+        lbNgay.setText(formattedDate);
+
+        convertBackgroundOfTable(tblProduct);
+        String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Số lượng", "Giá"};
+        model = (DefaultTableModel) tblProduct.getModel();
+        model.setColumnIdentifiers(header);
+        tblProduct.getColumnModel().getColumn(0).setPreferredWidth(110);
+        tblProduct.getColumnModel().getColumn(1).setPreferredWidth(90);
+        tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
+        tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
+        tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
+        removeData();
+    }
+
+    public void removeData() {
         int count = model.getRowCount();
-        for(int i= count-1;i>=0;i--)
-        {
+        for (int i = count - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
-        
-    
-     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -670,7 +665,7 @@ public class sell extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         int row = this.tblProduct.getSelectedRow();
-        Object sl =model.getValueAt(row,3);
+        Object sl = model.getValueAt(row, 3);
         this.txtSp.setText(sl.toString());
     }//GEN-LAST:event_tblProductMouseClicked
 
@@ -727,23 +722,20 @@ public class sell extends javax.swing.JPanel {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
-        try{
-          
-            int[] rows  = tblProduct.getSelectedRows();
-            for(int i = rows.length - 1; i >= 0; i--)
-            {
+        try {
+
+            int[] rows = tblProduct.getSelectedRows();
+            for (int i = rows.length - 1; i >= 0; i--) {
                 model.removeRow(rows[i]);
             }
-          //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
-        }
-        catch(Exception ex)
-        {
-           
+            //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
+        } catch (Exception ex) {
+
         }
 
     }//GEN-LAST:event_btnXoaActionPerformed
 
- public static void printTableReceiptList(List<table_receiptDTO> list) {
+    public static void printTableReceiptList(List<table_receiptDTO> list) {
         for (table_receiptDTO element : list) {
             System.out.println("Mã SP: " + element.getMaSp());
             System.out.println("Số lượng: " + element.getSl());
@@ -767,13 +759,13 @@ public class sell extends javax.swing.JPanel {
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void btnXuathdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuathdActionPerformed
-            
+
     }//GEN-LAST:event_btnXuathdActionPerformed
- 
+
     private void btnThanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhtoanActionPerformed
         // TODO add your handling code here:
- //       this.btnThanhtoan.hide();
-      //  this.btnXuathd.show();
+        //       this.btnThanhtoan.hide();
+        //  this.btnXuathd.show();
         this.btnHuy.hide();
         this.btnLammoi.show();
         String maHd = this.lbhd.getText();
@@ -781,84 +773,79 @@ public class sell extends javax.swing.JPanel {
         String id = iD;
         Date create_day = java.sql.Date.valueOf(today);
         //String totalText = this.lbThanhtoan.getText();
-          String tien = this.txtTiennhan.getText();
+        String tien = this.txtTiennhan.getText();
         if (tien.matches(".*[^a-zA-Z0-9].*")) {
-    MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tiền nhận không hợp lệ");
-    alert.setVisible(true);
-    return;
-} else {
-    try {
-        int tn = Integer.parseInt(tien);
-        String tiennhan =formatMoney(tn);
-        this.txtTiennhan.setText(tiennhan);
-        int tienthua = tn - tt;
-        String thua = formatMoney(tienthua);
-        this.lbTienthua.setText(thua);
-        // Sử dụng biến tn ở đây
-    } catch (NumberFormatException e) {
-       
-    }
-}
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tiền nhận không hợp lệ");
+            alert.setVisible(true);
+            return;
+        } else {
+            try {
+                int tn = Integer.parseInt(tien);
+                String tiennhan = formatMoney(tn);
+                this.txtTiennhan.setText(tiennhan);
+                int tienthua = tn - tt;
+                String thua = formatMoney(tienthua);
+                this.lbTienthua.setText(thua);
+                // Sử dụng biến tn ở đây
+            } catch (NumberFormatException e) {
+
+            }
+        }
         double Total = Double.valueOf(tt);
-       
-        receptDTO receipt = new receptDTO(maHd,maKh,id, create_day,Total);
+
+        receptDTO receipt = new receptDTO(maHd, maKh, id, create_day, Total);
         receptBUS bus = new receptBUS();
-         try {
-             bus.add(receipt);
-         } catch (SQLException ex) {
-             Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            bus.add(receipt);
+        } catch (SQLException ex) {
+            Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+        }
         receptDetailDTO receiptDTO = new receptDetailDTO();
         receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
-         int l = receiptDetailBUS.list_size();
-         l=l+1;
-         // List<table_for_receptDTO> dataList = new ArrayList<>();
-         List<table_receiptDTO> dataList = new ArrayList<>();
-         for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
-         
-            String receiptDetailID = receiptDetailBUS.createId(l, row+1);
+        int l = receiptDetailBUS.list_size();
+        l = l + 1;
+        // List<table_for_receptDTO> dataList = new ArrayList<>();
+        List<table_receiptDTO> dataList = new ArrayList<>();
+        for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
+
+            String receiptDetailID = receiptDetailBUS.createId(l, row + 1);
             String receiptID = this.lbhd.getText();
             Object proID = model.getValueAt(row, 0);
             String productID = proID.toString();
-            String promotionID =" ";
-           promotion_detailBUS proBUS = new promotion_detailBUS();
-           
+            String promotionID = " ";
+            promotion_detailBUS proBUS = new promotion_detailBUS();
+
             try {
-                promotionID =  proBUS.getPromotionID(productID);
+                promotionID = proBUS.getPromotionID(productID);
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
             }
             Object sl = model.getValueAt(row, 3);
             int quantity = sl instanceof Integer ? (int) sl : 0; // Safely cast to Integer
-  
+
             Object dongia = model.getValueAt(row, 4);
             double unitPrice = 0.0; // Default value if parsing fails
             if (dongia instanceof Number) {
-                unitPrice = ((Number) dongia).doubleValue()*quantity; // Safely parse to double
+                unitPrice = ((Number) dongia).doubleValue() * quantity; // Safely parse to double
             }
-           
-            
+
             double subTotal = 0;
             double sub = 0;
-            float per =0;
+            float per = 0;
             try {
-                 per = proBUS.promotion_percent(productID);
+                per = proBUS.promotion_percent(productID);
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if(per!=0)
-            {  sub = Math.floor((1 - per) * unitPrice);
-               subTotal = sub*quantity;}
-              //  subTotal = Math.floor((1 - per) * quantity * unitPrice);
-              
-                
-            else 
-            {  
-               subTotal = quantity*unitPrice;
-               sub = subTotal;
+            if (per != 0) {
+                sub = Math.floor((1 - per) * unitPrice);
+                subTotal = sub * quantity;
+            } //  subTotal = Math.floor((1 - per) * quantity * unitPrice);
+            else {
+                subTotal = quantity * unitPrice;
+                sub = subTotal;
             }
-                
-                
+
             productBUS product = new productBUS();
             receptDetailDTO dto = new receptDetailDTO(receiptDetailID, receiptID, promotionID, productID, quantity, unitPrice, subTotal);
             String soluong = Integer.toString(quantity);
@@ -868,13 +855,13 @@ public class sell extends javax.swing.JPanel {
             String giaban = formatMoney(s);
             int stt = ConvertDoubleToInt(subTotal);
             String tong = formatMoney(stt);
-            table_receiptDTO  table_receipt = new table_receiptDTO( productID,soluong,giagoc,giaban,tong);
+            table_receiptDTO table_receipt = new table_receiptDTO(productID, soluong, giagoc, giaban, tong);
             dataList.add(table_receipt);
             try {
-               receiptDetailBUS.add(dto);
+                receiptDetailBUS.add(dto);
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-     
+
             }
             try {
                 product.update_quantity(productID, quantity);
@@ -887,7 +874,7 @@ public class sell extends javax.swing.JPanel {
         } catch (JRException ex) {
             Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
         }
-         printTableReceiptList(dataList);
+        printTableReceiptList(dataList);
 
     }//GEN-LAST:event_btnThanhtoanActionPerformed
 
@@ -899,164 +886,145 @@ public class sell extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        if(txtSp.getText().trim().isEmpty())
-        {
-                 // alert.setVisible(true);
-                        MyMessageAlert alert1 = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm cần sửa");
-                        alert1.setVisible(true);
-        }
-        else{
-            
-             int row = this.tblProduct.getSelectedRow();
-                Object ID = model.getValueAt(row, 0);
-                String id = ID.toString();
-                int sl = Integer.valueOf(txtSp.getText());
-                if(sl==0)
-                {
-                      MyMessageAlert alert2 = new MyMessageAlert(parentFrame, "Số lượng cần sửa lớn hơn 0");
-                       alert2.setVisible(true);
-                }
-                else{
-                    productBUS product = new  productBUS();
-                 try {
-                     if(product.compareQuantity(id, sl)==0)
-                     {
-                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm "+id+" không đủ");
-                        alert.setVisible(true);
-                    }
-                     else{
-                            model.setValueAt(sl, row, 3);
-                     }
+        if (txtSp.getText().trim().isEmpty()) {
+            // alert.setVisible(true);
+            MyMessageAlert alert1 = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm cần sửa");
+            alert1.setVisible(true);
+        } else {
 
-                 } catch (SQLException ex) {
-                     Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+            int row = this.tblProduct.getSelectedRow();
+            Object ID = model.getValueAt(row, 0);
+            String id = ID.toString();
+            int sl = Integer.valueOf(txtSp.getText());
+            if (sl == 0) {
+                MyMessageAlert alert2 = new MyMessageAlert(parentFrame, "Số lượng cần sửa lớn hơn 0");
+                alert2.setVisible(true);
+            } else {
+                productBUS product = new productBUS();
+                try {
+                    if (product.compareQuantity(id, sl) == 0) {
+                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm " + id + " không đủ");
+                        alert.setVisible(true);
+                    } else {
+                        model.setValueAt(sl, row, 3);
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                 
-                }
-                
-       
-         }
+
+            }
+
+        }
 
     }//GEN-LAST:event_btnSuaActionPerformed
-    private int Tinh(String productID, int sl,int dongia)
-    {    
+    private int Tinh(String productID, int sl, int dongia) {
         promotion_detailBUS proBUS = new promotion_detailBUS();
         float km;
         //double quantity = sl;
-         float percent=0.0f;
-            try {
-                 percent = proBUS.promotion_percent(productID);
-            } catch (SQLException ex) {
-                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        float percent = 0.0f;
+        try {
+            percent = proBUS.promotion_percent(productID);
+        } catch (SQLException ex) {
+            Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-          km = percent*dongia;
-          double total = percent*dongia*sl;
-          int totalInt = (int) total;
-          return  totalInt;
-          
+        km = percent * dongia;
+        double total = percent * dongia * sl;
+        int totalInt = (int) total;
+        return totalInt;
+
     }
-       public void add_row_jasper(List <table_receiptDTO> dataList, JasperReport jasperReport,Map<String, Object> parameters) throws JRException
-    {
+
+    public void add_row_jasper(List<table_receiptDTO> dataList, JasperReport jasperReport, Map<String, Object> parameters) throws JRException {
 //         Map<String, Object> parameters = new HashMap<>();
 //         parameters.put("yourVariableName", "product_name");
 //         parameters.put("yourVariableName", "sl");
 //         parameters.put("gia", "sl");
-     //   JRBeanCollectionDataSource datasource = new  JRBeanCollectionDataSource();
+        //   JRBeanCollectionDataSource datasource = new  JRBeanCollectionDataSource();
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dataList);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,  parameters, dataSource);
-         
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+
     }
-    private void add_to_jasper(List <table_receiptDTO> dataList) throws JRException
-    {
-        String file_name= "hd.jrxml";
-        JasperReport jasperReport = JasperCompileManager.compileReport(pdfpath+file_name);
+
+    private void add_to_jasper(List<table_receiptDTO> dataList) throws JRException {
+        String file_name = "hd.jrxml";
+        JasperReport jasperReport = JasperCompileManager.compileReport(pdfpath + file_name);
         // Map parameters = new HashMap();
-         Map<String, Object> parameters = new HashMap<>();
-         String maHD= this.lbhd.getText();
-         String maKH = this.lbMakh.getText();
-         String tenKH = this.lbTenkhach.getText();
-         String nhanVien= this.lbNhanvien.getText();
-         String day = this.lbNgay.getText();
-         String tongTien = this.lbNgay.getText();
-         String tong = this.lbTongtien.getText();
-         String km = this.lbKm.getText();
-         String tt = this.lbThanhtoan.getText();
-           parameters.put("maHd", maHD);
-           parameters.put("maKh", maKH);
-           parameters.put("tenKh", tenKH);
-           parameters.put("tenNv", nhanVien);
-           parameters.put("ngay", day);
-           parameters.put("tc", tong);
-           parameters.put("km", km);
-           parameters.put("tt", tt);
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dataList);
-           JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters, dataSource);
-         //  CustomJasperViewer customViewer = new CustomJasperViewer(jasperPrint);
+        Map<String, Object> parameters = new HashMap<>();
+        String maHD = this.lbhd.getText();
+        String maKH = this.lbMakh.getText();
+        String tenKH = this.lbTenkhach.getText();
+        String nhanVien = this.lbNhanvien.getText();
+        String day = this.lbNgay.getText();
+        String tongTien = this.lbNgay.getText();
+        String tong = this.lbTongtien.getText();
+        String km = this.lbKm.getText();
+        String tt = this.lbThanhtoan.getText();
+        parameters.put("maHd", maHD);
+        parameters.put("maKh", maKH);
+        parameters.put("tenKh", tenKH);
+        parameters.put("tenNv", nhanVien);
+        parameters.put("ngay", day);
+        parameters.put("tc", tong);
+        parameters.put("km", km);
+        parameters.put("tt", tt);
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dataList);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+        //  CustomJasperViewer customViewer = new CustomJasperViewer(jasperPrint);
         //   customViewer.setVisible(true);
-           JasperViewer.viewReport( jasperPrint, true);
-       
-        
+        JasperViewer.viewReport(jasperPrint, true);
+
     }
 
     private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
         // TODO add your handling code here:
         String makh = this.lbMakh.getText();
-        
-        if(makh == null || makh.trim().isEmpty())
-        {
-               MyMessageAlert alert = new MyMessageAlert(parentFrame, "Chưa có thông tin khách hàng");
+
+        if (makh == null || makh.trim().isEmpty()) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Chưa có thông tin khách hàng");
+            alert.setVisible(true);
+        } else {
+            if (this.tblProduct.getRowCount() == 0) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
                 alert.setVisible(true);
-        }
-        else
-        {
-            if(this.tblProduct.getRowCount()==0)
-            {
-                 MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
-                 alert.setVisible(true);
-            }
-            else
-            {
-                 productBUS product = new productBUS();
-            for (int row = 0; row<this.tblProduct.getRowCount(); row++)
-        {
-            Object ID = model.getValueAt(row,0);
-            String id = ID.toString();
-            Object SL = model.getValueAt(row,3);
-            int sl = (int)SL;
-                try {
-                    if(product.compareQuantity(id, sl)==0)
-                    {
-                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm "+id+" không đủ");
-                        alert.setVisible(true);
-                        return;
-                        
-                    }   
-                } catch (SQLException ex) {
-                    Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                productBUS product = new productBUS();
+                for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
+                    Object ID = model.getValueAt(row, 0);
+                    String id = ID.toString();
+                    Object SL = model.getValueAt(row, 3);
+                    int sl = (int) SL;
+                    try {
+                        if (product.compareQuantity(id, sl) == 0) {
+                            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm " + id + " không đủ");
+                            alert.setVisible(true);
+                            return;
+
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-        }
-              
-        this.btnXacnhan.hide();
-        this.btnHuy.show();
-        this.lbXemkm.show();
-        this.btnChon.hide();
-        this.btnXoa.hide();
-        this.btnSua.hide();
-        this.txtSp.hide();
-        this.lbsl.hide();
-        this.btnThanhtoan.show();
-        this.btnAddkh.hide();
-       this.txtTiennhan.setVisible(true);
-        //object [] o;
-        tblProduct.clearSelection();
-        s =0;
-        sum = 0;
-        
-        for (int row = tblProduct.getRowCount()- 1; row >= 0; row--)
-        {
-            
- 
+
+                this.btnXacnhan.hide();
+                this.btnHuy.show();
+                this.lbXemkm.show();
+                this.btnChon.hide();
+                this.btnXoa.hide();
+                this.btnSua.hide();
+                this.txtSp.hide();
+                this.lbsl.hide();
+                this.btnThanhtoan.show();
+                this.btnAddkh.hide();
+                this.txtTiennhan.setVisible(true);
+                //object [] o;
+                tblProduct.clearSelection();
+                s = 0;
+                sum = 0;
+
+                for (int row = tblProduct.getRowCount() - 1; row >= 0; row--) {
+
                     int tinhkm = 0;
                     Object id = model.getValueAt(row, 0);
                     String productID = id.toString();
@@ -1074,25 +1042,25 @@ public class sell extends javax.swing.JPanel {
 
                     }
 
-                        }
-                     
-                         tt = sum - s;
-                        String ss = formatMoney(s);
-                        this.lbKm.setText(ss);
-                        String tongTien = formatMoney(sum);
-                        lbTongtien.setText(tongTien);
-                        String thanhToan = formatMoney(tt);
-                        lbThanhtoan.setText(thanhToan);
-        
-        }
-       
+                }
+
+                tt = sum - s;
+                String ss = formatMoney(s);
+                this.lbKm.setText(ss);
+                String tongTien = formatMoney(sum);
+                lbTongtien.setText(tongTien);
+                String thanhToan = formatMoney(tt);
+                lbThanhtoan.setText(thanhToan);
+
             }
-           
+
+        }
+
     }//GEN-LAST:event_btnXacnhanActionPerformed
 
     private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
         // TODO add your handling code here:
-       
+
         this.btnChon.setVisible(true);
         this.btnXoa.setVisible(true);
         this.btnSua.setVisible(true);
@@ -1108,112 +1076,93 @@ public class sell extends javax.swing.JPanel {
         this.lbThanhtoan.setText(" ");
         this.lbTongtien.setText(" ");
         this.lbKm.setText(" ");
-        receptBUS  receipt = new receptBUS ();
-        String mhd =receipt.createId();
+        receptBUS receipt = new receptBUS();
+        String mhd = receipt.createId();
         this.lbhd.setText(mhd);
         this.lbTenkh.setText(" ");
         this.txtTiennhan.setText(" ");
-       this.txtTiennhan.setVisible(false);
-       this.lbTienthua.setText(" ");
-       model.setRowCount(0);
-       this.btnThanhtoan.hide();
-       this.btnXacnhan.show();
-        
-        
-        
-        
+        this.txtTiennhan.setVisible(false);
+        this.lbTienthua.setText(" ");
+        model.setRowCount(0);
+        this.btnThanhtoan.hide();
+        this.btnXacnhan.show();
+
+
     }//GEN-LAST:event_btnLammoiActionPerformed
 
     private void lbXemkmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbXemkmMouseClicked
-        // TODO add your handling code here:
-        //String tienkm = this.lbKm.getText();
-       // String text = tienkm.substring(2); 
-       // int value = Integer.parseInt(text);
-       // if(s>0)
-       // {
-              showkm km = new showkm();
-               km.setVisible(true);
-               int tinhkm = 0;
-               DefaultTableModel modelShowKM = (DefaultTableModel) km.tblkm.getModel();
-                for (int row = tblProduct.getRowCount()- 1; row >= 0; row--)
-                {   Object id = model.getValueAt(row, 0);
-                    String productID = id.toString();
-                    Object sl = model.getValueAt(row, 3);
-                     Object g = model.getValueAt(row, 4);
-                     int sL = ((Integer) sl).intValue();
-                     int gia = ((Integer) g).intValue();
-                     int giasp =sL*gia;
-                    tinhkm = Tinh(productID, sL, gia);
-                  //  if(tinhkm<giasp)
-                    //{
-                            Object[] newFormRow = new Object[6];
-                            newFormRow[0] = id; // Mã sản phẩm
-                            newFormRow[1] = g; // Giá gốc
-                            float per =0;
-                            promotion_detailBUS proBUS = new promotion_detailBUS();
-                            try {
-                               per = proBUS.promotion_percent(productID);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                             Float perObject = Float.valueOf(per);
-                             newFormRow[2] = perObject; // Tỉ lệ khuyến mãi
-                             newFormRow[3] = sl; // Số lượng
-                             int tkm = giasp-tinhkm;
-                             Integer tinhkmObject = Integer.valueOf(tinhkm);
-                             Integer tienkmbject = Integer.valueOf(tkm);
-                             newFormRow[4] = tinhkmObject; // Số tiền được giảm giá
-                             newFormRow[5] =  tienkmbject; 
-                             modelShowKM.addRow(newFormRow);
-                            
-                    }
-                   
-   
-               // }
-       // }
-       
-      
+        showkm km = new showkm();
+        km.setVisible(true);
+        int tinhkm = 0;
+        DefaultTableModel modelShowKM = (DefaultTableModel) km.tblkm.getModel();
+        for (int row = tblProduct.getRowCount() - 1; row >= 0; row--) {
+            Object id = model.getValueAt(row, 0);
+            String productID = id.toString();
+            Object sl = model.getValueAt(row, 3);
+            Object g = model.getValueAt(row, 4);
+            int sL = ((Integer) sl).intValue();
+            int gia = ((Integer) g).intValue();
+            int giasp = sL * gia;
+            tinhkm = Tinh(productID, sL, gia);
+            //  if(tinhkm<giasp)
+            //{
+            Object[] newFormRow = new Object[6];
+            newFormRow[0] = id; // Mã sản phẩm
+            newFormRow[1] = g; // Giá gốc
+            float per = 0;
+            promotion_detailBUS proBUS = new promotion_detailBUS();
+            try {
+                per = proBUS.promotion_percent(productID);
+            } catch (SQLException ex) {
+                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Float perObject = Float.valueOf(per);
+            newFormRow[2] = perObject; // Tỉ lệ khuyến mãi
+            newFormRow[3] = sl; // Số lượng
+            int tkm = giasp - tinhkm;
+            Integer tinhkmObject = Integer.valueOf(tinhkm);
+            Integer tienkmbject = Integer.valueOf(tkm);
+            newFormRow[4] = tinhkmObject; // Số tiền được giảm giá
+            newFormRow[5] = tienkmbject;
+            modelShowKM.addRow(newFormRow);
+
+        }
+
     }//GEN-LAST:event_lbXemkmMouseClicked
 
     private void txtSdtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSdtKeyReleased
         // TODO add your handling code here:
-         this.customerBUS = new customerBUS ();
-        String sdt= this.txtSdt.getText();
+        this.customerBUS = new customerBUS();
+        String sdt = this.txtSdt.getText();
         int check = 0;
-        if (sdt.length() == 10){
+        if (sdt.length() == 10) {
             customerDTO cus = new customerDTO();
             try {
                 cus = customerBUS.searchsdt(sdt);
-                if(cus.getFirstName()!= null)
-                {
+                if (cus.getFirstName() != null) {
                     this.lbMakh.show();
                     this.lbTenkh.show();
                     this.lbMakh.setText(cus.getCusID());
-                    this.lbTenkh.setText(cus.getFirstName() +" "+cus.getLastName());
-                    this.lbTenkhach.setText(cus.getFirstName() +" "+cus.getLastName());
+                    this.lbTenkh.setText(cus.getFirstName() + " " + cus.getLastName());
+                    this.lbTenkhach.setText(cus.getFirstName() + " " + cus.getLastName());
                     this.lbtenk.show();
                     this.lbma.show();
                     this.lbdt.hide();
                     this.lbkt.hide();
+                } else {
+                    this.lbtenk.hide();
+                    this.lbTenkh.hide();
+                    this.lbMakh.hide();
+                    this.lbma.hide();
+                    this.lbdt.hide();
+                    this.lbkt.show();
                 }
-              else{
-                 this.lbtenk.hide();
-                 this.lbTenkh.hide();
-                 this.lbMakh.hide();
-                 this.lbma.hide();
-                 this.lbdt.hide();
-                 this.lbkt.show();
-            }
-             
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(TestSell.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
-          
 
-        }
-        else {
+        } else {
             this.lbtenk.hide();
             this.lbma.hide();
             this.lbTenkh.hide();
@@ -1221,7 +1170,7 @@ public class sell extends javax.swing.JPanel {
             this.lbkt.hide();
             this.lbdt.show();
         }
-        
+
     }//GEN-LAST:event_txtSdtKeyReleased
 
 
