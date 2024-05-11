@@ -26,7 +26,6 @@ public class addKh extends javax.swing.JFrame {
      public addKh() {}
     public addKh( sell testsell) {
         initComponents();
-         this.dispose();
         setLocationRelativeTo(null);
         customerBUS customer = new customerBUS();
         String id = customer.createId();
@@ -70,6 +69,7 @@ public class addKh extends javax.swing.JFrame {
         jLabel9.setText("jLabel9");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

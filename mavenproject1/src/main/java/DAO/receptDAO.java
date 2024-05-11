@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+
 import static DAO.DBConnect.getConnect;
 import DTO.receptDTO;
 import java.sql.Connection;
@@ -12,16 +13,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+
 /**
  *
  * @author MY PC
  */
 public class receptDAO {
+
     Connection conn = getConnect();
-public ArrayList<receptDTO> list() {
+
+    public ArrayList<receptDTO> list() {
+
        ArrayList<receptDTO> receptlist = new ArrayList<>();
         try{
-            String sql = "select * from receipt";
+            String sql = "select * from receipt order by ReceiptID desc";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             
@@ -54,5 +59,41 @@ public ArrayList<receptDTO> list() {
         
     }
 
-}   
+    public int TongDonHang(){
+        int s = 0;
+        try{
+            String sql = "SELECT COUNT(*) AS total_receipts from receipt";
+            PreparedStatement stmt_slhd = conn.prepareStatement(sql);
+            ResultSet rs = stmt_slhd.executeQuery();
+            
+            if(rs.next()){
+                s = rs.getInt("total_receipts");
+            }
+            
+        }
+        catch(SQLException ex){
+            System.out.print(ex);
+        }
+        return s;
+    }
+    
+    public double DoanhThu_BH(){
+        double s = 0;
+        try{
+            String sql = "select sum(Total) as income from receipt";
+            PreparedStatement stmt_income = conn.prepareStatement(sql);
+            ResultSet rs = stmt_income.executeQuery();
+            
+            if(rs.next()){
+                s = rs.getDouble("income");
+            }
+            
+        }
+        catch(SQLException ex){
+            System.out.print(ex);
+        }
+        return s;
+    }
+
+}
 

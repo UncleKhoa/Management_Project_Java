@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.SellGUI;
+
 import BUS.customerBUS;
 import BUS.productBUS;
 import BUS.promotion_detailBUS;
@@ -56,9 +57,11 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class sell extends javax.swing.JPanel {
 
+    JFrame parentframe;
     /**
      * Creates new form sell
      */
+
     JFrame parentFrame;
      customerBUS customerBUS;
     File file = new File("");
@@ -78,9 +81,10 @@ public class sell extends javax.swing.JPanel {
     showkm showkm;
     receipt_DetailBUS receipt_DetailBUS;
     private int tt;
-    private ImageIcon scaleImage(String filename,int width, int height) {
+
+    private ImageIcon scaleImage(String filename, int width, int height) {
         try {
-            BufferedImage img = ImageIO.read(new File(relativePath+filename));
+            BufferedImage img = ImageIO.read(new File(relativePath + filename));
             Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
             return new ImageIcon(scaledImg);
         } catch (IOException e) {
@@ -88,6 +92,7 @@ public class sell extends javax.swing.JPanel {
         }
         return null;
     }
+  
    public sell(MainGUI main){
            initComponents();
     
@@ -175,14 +180,10 @@ public class sell extends javax.swing.JPanel {
        public void removeData()
     {
         int count = model.getRowCount();
-        for(int i= count-1;i>=0;i--)
-        {
+        for (int i = count - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
-        
-    
-     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -670,7 +671,7 @@ public class sell extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         int row = this.tblProduct.getSelectedRow();
-        Object sl =model.getValueAt(row,3);
+        Object sl = model.getValueAt(row, 3);
         this.txtSp.setText(sl.toString());
     }//GEN-LAST:event_tblProductMouseClicked
 
@@ -727,18 +728,15 @@ public class sell extends javax.swing.JPanel {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
-        try{
-          
+        try{          
             int[] rows  = tblProduct.getSelectedRows();
             for(int i = rows.length - 1; i >= 0; i--)
             {
                 model.removeRow(rows[i]);
             }
-          //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
-        }
-        catch(Exception ex)
-        {
-           
+            //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
+        } catch (Exception ex) {
+
         }
 
     }//GEN-LAST:event_btnXoaActionPerformed
@@ -769,7 +767,7 @@ public class sell extends javax.swing.JPanel {
     private void btnXuathdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuathdActionPerformed
             
     }//GEN-LAST:event_btnXuathdActionPerformed
- 
+
     private void btnThanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhtoanActionPerformed
         // TODO add your handling code here:
  //       this.btnThanhtoan.hide();
@@ -800,8 +798,8 @@ public class sell extends javax.swing.JPanel {
     }
 }
         double Total = Double.valueOf(tt);
-       
-        receptDTO receipt = new receptDTO(maHd,maKh,id, create_day,Total);
+
+        receptDTO receipt = new receptDTO(maHd, maKh, id, create_day, Total);
         receptBUS bus = new receptBUS();
          try {
              bus.add(receipt);
@@ -820,32 +818,33 @@ public class sell extends javax.swing.JPanel {
             String receiptID = this.lbhd.getText();
             Object proID = model.getValueAt(row, 0);
             String productID = proID.toString();
-            String promotionID =" ";
-           promotion_detailBUS proBUS = new promotion_detailBUS();
-           
+            String promotionID = " ";
+            promotion_detailBUS proBUS = new promotion_detailBUS();
+
             try {
-                promotionID =  proBUS.getPromotionID(productID);
+                promotionID = proBUS.getPromotionID(productID);
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
             Object sl = model.getValueAt(row, 3);
             int quantity = sl instanceof Integer ? (int) sl : 0; // Safely cast to Integer
-  
+
             Object dongia = model.getValueAt(row, 4);
             double unitPrice = 0.0; // Default value if parsing fails
             if (dongia instanceof Number) {
-                unitPrice = ((Number) dongia).doubleValue()*quantity; // Safely parse to double
+                unitPrice = ((Number) dongia).doubleValue() * quantity; // Safely parse to double
             }
-           
-            
+
             double subTotal = 0;
             double sub = 0;
             float per =0;
             try {
-                 per = proBUS.promotion_percent(productID);
+                per = proBUS.promotion_percent(productID);
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
             }
+           
             if(per!=0)
             {  sub = Math.floor((1 - per) * unitPrice);
                subTotal = sub*quantity;}
@@ -870,11 +869,11 @@ public class sell extends javax.swing.JPanel {
             String tong = formatMoney(stt);
             table_receiptDTO  table_receipt = new table_receiptDTO( productID,soluong,giagoc,giaban,tong);
             dataList.add(table_receipt);
+
             try {
-               receiptDetailBUS.add(dto);
+                receiptDetailBUS.add(dto);
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-     
             }
             try {
                 product.update_quantity(productID, quantity);
@@ -938,24 +937,23 @@ public class sell extends javax.swing.JPanel {
          }
 
     }//GEN-LAST:event_btnSuaActionPerformed
-    private int Tinh(String productID, int sl,int dongia)
-    {    
+    private int Tinh(String productID, int sl, int dongia) {
         promotion_detailBUS proBUS = new promotion_detailBUS();
         float km;
         //double quantity = sl;
-         float percent=0.0f;
-            try {
-                 percent = proBUS.promotion_percent(productID);
-            } catch (SQLException ex) {
-                Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        float percent = 0.0f;
+        try {
+            percent = proBUS.promotion_percent(productID);
+        } catch (SQLException ex) {
+            Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
           km = percent*dongia;
           double total = percent*dongia*sl;
           int totalInt = (int) total;
           return  totalInt;
-          
     }
+  
        public void add_row_jasper(List <table_receiptDTO> dataList, JasperReport jasperReport,Map<String, Object> parameters) throws JRException
     {
 //         Map<String, Object> parameters = new HashMap<>();
@@ -1030,11 +1028,11 @@ public class sell extends javax.swing.JPanel {
                         MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm "+id+" không đủ");
                         alert.setVisible(true);
                         return;
-                        
-                    }   
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
         }
               
         this.btnXacnhan.hide();
@@ -1072,7 +1070,41 @@ public class sell extends javax.swing.JPanel {
                     if (tinhkm < giasp) {
                         s = s + tinhkm;
 
-                    }
+            this.btnXacnhan.hide();
+            this.btnHuy.show();
+            this.lbXemkm.show();
+            this.btnChon.hide();
+            this.btnXoa.hide();
+            this.btnSua.hide();
+            this.txtSp.hide();
+            this.lbsl.hide();
+            this.btnThanhtoan.show();
+            this.btnAddkh.hide();
+            //object [] o;
+            tblProduct.clearSelection();
+            int s = 0;
+
+            for (int row = tblProduct.getRowCount() - 1; row >= 0; row--) {
+
+                int tinhkm = 0;
+                Object id = model.getValueAt(row, 0);
+                String productID = id.toString();
+                Object sl = model.getValueAt(row, 3);
+                Object g = model.getValueAt(row, 4);
+                int sL = ((Integer) sl).intValue();
+                int gia = ((Integer) g).intValue();
+                int giasp = sL * gia;
+                sum = sum + giasp;
+                tinhkm = Tinh(productID, sL, gia);
+                //float per = 0;
+                if (tinhkm < giasp) {
+                    s = s + tinhkm;
+
+                }
+
+            }
+
+            tt = sum - s;
 
                         }
                      
@@ -1119,9 +1151,7 @@ public class sell extends javax.swing.JPanel {
        this.btnThanhtoan.hide();
        this.btnXacnhan.show();
         
-        
-        
-        
+
     }//GEN-LAST:event_btnLammoiActionPerformed
 
     private void lbXemkmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbXemkmMouseClicked
@@ -1171,8 +1201,7 @@ public class sell extends javax.swing.JPanel {
    
                // }
        // }
-       
-      
+            
     }//GEN-LAST:event_lbXemkmMouseClicked
 
     private void txtSdtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSdtKeyReleased
@@ -1221,7 +1250,7 @@ public class sell extends javax.swing.JPanel {
             this.lbkt.hide();
             this.lbdt.show();
         }
-        
+
     }//GEN-LAST:event_txtSdtKeyReleased
 
 

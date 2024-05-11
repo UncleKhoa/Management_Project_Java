@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -52,6 +54,16 @@ public class MyMessageAccept extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e){
                 dispose();
+            }
+        });
+        
+        // Thêm bộ lắng nghe sự kiện phím
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    dispose(); // Đóng cửa sổ khi nhấn phím Enter
+                }
             }
         });
         

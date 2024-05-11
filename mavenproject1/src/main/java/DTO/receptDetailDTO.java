@@ -83,10 +83,5 @@ public class receptDetailDTO {
     public void setSubTotal(double subTotal) {
         this.subTotal = subTotal;
     }
-    
 
-   
-
-   
-    
 }

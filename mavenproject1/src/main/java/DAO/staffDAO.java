@@ -102,4 +102,20 @@ public class staffDAO {
         stmt_add.executeUpdate();
     }
     
+    public int SL_NV(){
+        int s = 0;
+        try{
+            String sql = "select count(*) as total_staffs from staff";
+            PreparedStatement stmt_slnv = conn.prepareStatement(sql);
+            ResultSet rs = stmt_slnv.executeQuery();
+            if(rs.next()){
+                s = rs.getInt("total_staffs");
+            }
+        }
+        catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return s;
+    }
+    
 }
