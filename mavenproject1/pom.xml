@@ -34,7 +34,6 @@
             <version>1.4</version>
         </dependency>
         <dependency>
-
             <groupId>org.swinglabs</groupId>
             <artifactId>swingx</artifactId>
             <version>1.6.1</version>
@@ -42,9 +41,15 @@
         <dependency>
             <groupId>net.java.dev.timingframework</groupId>
             <artifactId>timingframework</artifactId>
+<<<<<<< HEAD
             <version>1.0</version>
         </dependency>
         <dependency>
+=======
+            <version>1.0</version>    
+        </dependency>
+        <dependency>   
+>>>>>>> main
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.0</version>
