@@ -25,7 +25,6 @@ import static Model.helpers.*;
 public class ThongKeDT_SanPhamTable extends javax.swing.JPanel {
     DefaultTableModel model;
     doanhthuBUS doanhthuBUS;
-    ThongKe tk;
     Font font = new Font("Segoe UI", Font.PLAIN, 14);
     private ArrayList<doanhthuDTO> ds_dtsp = new ArrayList<>();
     /**
@@ -33,55 +32,12 @@ public class ThongKeDT_SanPhamTable extends javax.swing.JPanel {
      */
     public ThongKeDT_SanPhamTable() {
         initComponents();
-        this.tk = tk;
         doanhthuBUS doanhthuBUS = new doanhthuBUS();
         JTableHeader header = tblDTSP.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         ds_dtsp = doanhthuBUS.getList_DTSP();
-        viewData(ds_dtsp);
+        doanhthuBUS.viewData(tblDTSP, ds_dtsp);
     }
-    
-    public void addLine(doanhthuDTO dt_sp){
-        model.addRow(new Object[]{
-            dt_sp.getProductName(), dt_sp.getSLBan(), formatMoney(ConvertDoubleToInt(dt_sp.getTiensauKM()))+"đ"
-        });
-        
-    }
-    
-    public void viewData(ArrayList<doanhthuDTO> list){
-        int s=0;
-        convertBackgroundOfTable(tblDTSP);
-        String[] headers = {"Tên sản phẩm", "Số lượng bán", "Doanh thu"}; // Đặt tiêu đề cột của bảng
-        model = new NonEditableTableModel(new Object[0][headers.length], headers);            
-        tblDTSP.setModel(model);
-        tblDTSP.setRowHeight(30);
-        tblDTSP.setFont(font);
-        
-        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
-        tblDTSP.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        tblDTSP.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        
-        removeData();
-        for(doanhthuDTO dt_sp:ds_dtsp){
-            addLine(dt_sp);
-            s+=dt_sp.getTiensauKM();
-        }       
-        model.addRow(new Object[]{
-            "","Tổng",formatMoney(s)+"đ"
-        });
-    }
-   
-    public void removeData(){
-        int rowCount = model.getRowCount();
-        for (int i=rowCount-1;i>=0;i--){
-            model.removeRow(i);
-        }
-    }
-    
-    public int getSelectedIndex() {
-        return tblDTSP.getSelectedRow();
-    }
-
 
     /**
      * This method is called from within the constructor to initialize the form.

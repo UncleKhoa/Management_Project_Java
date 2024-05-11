@@ -78,6 +78,18 @@ public class userBUS {
         return null;
     }
     
+    public boolean Check_Active(String user){
+        for(userDTO us:dsUS){
+            if(us.getUsername().equals(user)){
+                String active = us.getEnable();
+                if(active.equals("locked")){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     public userDTO Check_Password(String id, String password){
         for(userDTO us:dsUS){
             if(us.getStaffID().equals(id) &&us.getPassword().equals(password)){

@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Bon Nguyen
  */
 public class helpers {
+    
     static public void convertBackgroundOfTable(JTable table)
     {        
         Color ivory = new Color(255, 255, 255);
@@ -163,6 +164,10 @@ public class helpers {
         String date_start = Date_String(date);
         java.util.Date date1 = java.sql.Date.valueOf(date_start);
         return date1;
+    }
+    
+    static public boolean ComparePrice(int a, int b) {
+        return a <= b;
     }
     
 }

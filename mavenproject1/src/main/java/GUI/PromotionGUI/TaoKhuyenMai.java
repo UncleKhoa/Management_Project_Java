@@ -50,11 +50,17 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
     String titlePlaceHolder = "Nhập mô tả...";
     LocalDate currentDate;
     Reload_Event event;
+    String role;
     /**
      * Creates new form TaoKhuyenMai
      */
-    public TaoKhuyenMai() {
+    public TaoKhuyenMai(){
         initComponents();
+    }
+    
+    public TaoKhuyenMai(String role) {
+        initComponents();
+        this.role = role;
         setLocationRelativeTo(null);
         this.productBUS = new productBUS();
         list = productBUS.getList();
@@ -493,7 +499,7 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
                             MyMessageAccept accept = new MyMessageAccept(this, "Tạo mới khuyến mãi thành công!");
                             accept.setVisible(true);
 
-                            KhuyenMaiGUI khuyenmai = new KhuyenMaiGUI();
+                            KhuyenMaiGUI khuyenmai = new KhuyenMaiGUI(role);
                             khuyenmai.Load_Event(true);
                             this.dispose();
                         }
