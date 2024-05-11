@@ -1,32 +1,33 @@
+package Model;
+
 import javax.swing.*;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.view.*;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.swing.JRViewer;
 
 public class CustomJasperViewer extends JFrame {
-    private JasperViewer jasperViewer;
+
+    private JRViewer viewer;
 
     public CustomJasperViewer(JasperPrint jasperPrint) {
-        super("Custom JasperViewer");
-        jasperViewer = new JasperViewer(jasperPrint, false);
-        add(jasperViewer.getContentPane());
-        setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(950,650);
+        viewer = new JRViewer(jasperPrint);
+        getContentPane().add(viewer);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+        
     }
 
+    // Phương thức để tắt cửa sổ báo cáo
     public void closeViewer() {
-        // Đóng cửa sổ JasperViewer
-        jasperViewer.setVisible(false);
-        // Giải phóng tài nguyên liên quan đến JasperViewer
-        jasperViewer.dispose();
-        // Đóng cửa sổ tùy chỉnh
-       // dispose();
+        dispose(); // Đóng cửa sổ
     }
 
     public static void main(String[] args) {
-        // Code mẫu để hiển thị báo cáo
-        JasperPrint jasperPrint = null; // Thay thế bằng đối tượng JasperPrint thực tế của bạn
-        CustomJasperViewer customViewer = new CustomJasperViewer(jasperPrint);
-        customViewer.setVisible(true);
-        // Sau khi người dùng đóng cửa sổ tùy chỉnh, bạn có thể gọi customViewer.closeViewer() để đóng JasperViewer.
+        // Load your JasperPrint object here
+        JasperPrint jasperPrint = null; // Load your JasperPrint object
+
+        SwingUtilities.invokeLater(() -> new CustomJasperViewer(jasperPrint));
     }
 }
