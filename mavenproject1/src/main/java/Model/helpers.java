@@ -169,5 +169,5 @@ public class helpers {
     static public boolean ComparePrice(int a, int b) {
         return a <= b;
     }
-    
+
 }
