@@ -50,11 +50,17 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
     String titlePlaceHolder = "Nhập mô tả...";
     LocalDate currentDate;
     Reload_Event event;
+    String role;
     /**
      * Creates new form TaoKhuyenMai
      */
-    public TaoKhuyenMai() {
+    public TaoKhuyenMai(){
         initComponents();
+    }
+    
+    public TaoKhuyenMai(String role) {
+        initComponents();
+        this.role = role;
         setLocationRelativeTo(null);
         this.productBUS = new productBUS();
         list = productBUS.getList();
@@ -458,42 +464,45 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
                         MyMessageAlert alert2 = new MyMessageAlert(this, "Vui lòng chọn lại ngày kết thúc");
                         alert2.setVisible(true);
                     } else {
-                        Date end = endDate.getDate();
-                        String rs = promotionBUS.Date_String(end);
-                        String promoID = txtPromoID.getText();
-                        Float percent = Float.parseFloat(txtPercent.getText()) / 100;
-                        String des = txtDescribe.getText();
-                        Date from = java.sql.Date.valueOf(currentDate);
-                        Date end_date;
-                        promotionDTO promo;
-                        promotion_detailDTO promo_detail;
+                        if (promotionBUS.Check_Code(txtPromoID.getText())) {
+                            MyMessageAlert alert = new MyMessageAlert(this, "Mã khuyến mãi đã tồn tại");
+                            alert.setVisible(true);
+                        } else {
+                            Date end = endDate.getDate();
+                            String rs = promotionBUS.Date_String(end);
+                            String promoID = txtPromoID.getText();
+                            Float percent = Float.parseFloat(txtPercent.getText()) / 100;
+                            String des = txtDescribe.getText();
+                            Date from = java.sql.Date.valueOf(currentDate);
+                            Date end_date;
+                            promotionDTO promo;
+                            promotion_detailDTO promo_detail;
 
-                        //Lưu vào Promotion
-                        try {
-                            end_date = promotionBUS.Convert_date(rs);
-                            promo = new promotionDTO(promoID, from, end_date, des, percent, "active");
-                            promotionBUS.Add(promo);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(TaoKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+                            //Lưu vào Promotion
+                            try {
+                                end_date = promotionBUS.Convert_date(rs);
+                                promo = new promotionDTO(promoID, from, end_date, des, percent, "active");
+                                promotionBUS.Add(promo);
+                            } catch (ParseException ex) {
+                                Logger.getLogger(TaoKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            //Lưu vào PromotionDetail
+                            ArrayList<String> newl = new ArrayList<>();
+                            newl = new_ARR(0, newlist);
+                            for (String a : newl) {
+                                promo_detail = new promotion_detailDTO("", promoID, a, percent);
+                                System.out.println(promo_detail.toString());
+                                promotionBUS.Add_Detail(promo_detail);
+                            }
+
+                            MyMessageAccept accept = new MyMessageAccept(this, "Tạo mới khuyến mãi thành công!");
+                            accept.setVisible(true);
+
+                            KhuyenMaiGUI khuyenmai = new KhuyenMaiGUI(role);
+                            khuyenmai.Load_Event(true);
+                            this.dispose();
                         }
-
-                        //Lưu vào PromotionDetail
-                        ArrayList<String> newl = new ArrayList<>();
-                        newl = new_ARR(0, newlist);
-                        for (String a : newl) {
-//                System.out.println(a);
-                            promo_detail = new promotion_detailDTO("", promoID, a, percent);
-                            System.out.println(promo_detail.toString());
-                            promotionBUS.Add_Detail(promo_detail);
-                        }
-
-                        MyMessageAccept accept = new MyMessageAccept(this, "Tạo mới khuyến mãi thành công!");
-                        accept.setVisible(true);
-
-                        KhuyenMaiGUI khuyenmai = new KhuyenMaiGUI();
-                        khuyenmai.Load_Event(true);
-                        this.dispose();
-
                     }
                 }
             }

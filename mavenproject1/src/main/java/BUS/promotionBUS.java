@@ -10,6 +10,9 @@ import DAO.staffDAO;
 import DTO.promotionDTO;
 import DTO.promotion_detailDTO;
 import DTO.staffDTO;
+import Model.NonEditableTableModel;
+import static Model.helpers.convertBackgroundOfTable;
+import java.awt.Font;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +29,8 @@ import javax.swing.table.TableModel;
  * @author Bon Nguyen
  */
 public class promotionBUS {
+    Font font = new Font("Segoe UI", Font.PLAIN, 14);
+    DefaultTableModel model;
     private ArrayList<promotionDTO> dsPromo;
     private ArrayList<promotion_detailDTO> dsPromo_detail;
     private ArrayList<promotionDTO> dsPromo_search;
@@ -139,6 +144,53 @@ public class promotionBUS {
     public ArrayList<promotionDTO> getList_Search(String a) {     
         list_search(a);
         return dsPromo_search;
+    }
+    
+    public boolean Check_Code(String code){
+        ArrayList<promotionDTO> newlist = dsPromo;
+        for(promotionDTO promo:newlist){
+            if(promo.getPromotionID().equals(code)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void addLineData(promotionDTO promo)
+    {
+    model.addRow(new Object[]{
+           promo.getPromotionID(), promo.getDescription(), Date_String(promo.getFrom()), Date_String(promo.getTo()), String.format("%.1f", promo.getPromotionPercent()*100) + " %", promo.getStatus()
+        });
+    }   
+    
+    public void viewData(JTable tablePromotion, ArrayList<promotionDTO> list){
+        
+        convertBackgroundOfTable(tablePromotion);
+        
+        String[] headers = {"MÃ CODE", "MÔ TẢ", "TỪ NGÀY", "ĐẾN NGÀY", "PHẦN TRĂM", "TRẠNG THÁI"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);       
+        
+        tablePromotion.setModel(model);
+        
+        tablePromotion.getColumnModel().getColumn(0).setPreferredWidth(70);
+        tablePromotion.getColumnModel().getColumn(1).setPreferredWidth(110);
+        tablePromotion.getColumnModel().getColumn(2).setPreferredWidth(90);
+        tablePromotion.getColumnModel().getColumn(3).setPreferredWidth(90);
+        tablePromotion.getColumnModel().getColumn(4).setPreferredWidth(90);
+        tablePromotion.getColumnModel().getColumn(5).setPreferredWidth(98);
+        tablePromotion.setRowHeight(30);
+        tablePromotion.setFont(font);
+        removeData();
+        for(promotionDTO promo:list){
+            addLineData(promo);
+        }
+    }
+    
+    public void removeData(){
+        int rowCount = model.getRowCount();
+        for (int i=rowCount-1;i>=0;i--){
+            model.removeRow(i);
+        }
     }
     
 //    public int Calculate_Date(Date date_from, Date date_to){

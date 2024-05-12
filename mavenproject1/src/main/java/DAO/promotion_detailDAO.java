@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+import BUS.promotion_detailBUS;
 import DAO.DBConnect;
 import static DAO.DBConnect.getConnect;
 import java.sql.Connection;
@@ -101,6 +102,7 @@ public class promotion_detailDAO {
         
     }
     
+
     public String Get_Name(String id){
         String name = null;
         try{
@@ -119,5 +121,35 @@ public class promotion_detailDAO {
         
         return name;
     }
+    public String getIDbyProductID(String productID) throws SQLException
+    {
+        String id = null;
+        String sql = "SELECT PromotionID FROM promotiondetail WHERE ProductID = '"+ productID+"'";
+         PreparedStatement stmt_find = conn.prepareStatement(sql);
+           ResultSet rs = stmt_find.executeQuery(sql);
+            if (rs.next()) {
+              id = rs.getString("PromotionID");
+            }
+          
+           return id;
+    }
+     public float getPromotion_percent(String id) throws SQLException
+     {
+         String sql = "SELECT PromotionPercent FROM promotiondetail WHERE PromotionID = '"+ id+"'";
+          PreparedStatement stmt_find = conn.prepareStatement(sql);
+           ResultSet rs = stmt_find.executeQuery(sql);
+        float percent = 0;
+            if (rs.next()) {
+              percent = rs.getFloat("PromotionPercent");
+            }
+           return  percent;
+     }
     
 }
+
+        
+    
+   
+    
+
+

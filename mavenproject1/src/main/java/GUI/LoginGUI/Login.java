@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
+package GUI.LoginGUI;
 
 import BUS.staffBUS;
 import Model.MyButton;
@@ -13,6 +13,7 @@ import BUS.userBUS;
 import DTO.staffDTO;
 import DTO.userDTO;
 import GUI.LoginGUI.ForgetPassword;
+import GUI.MainGUI;
 import Model.MyMessageAccept;
 import Model.MyMessageAlert;
 import java.awt.event.ActionEvent;
@@ -24,12 +25,14 @@ import javax.swing.AbstractAction;
  * @author khoan
  */
 public class Login extends javax.swing.JFrame {
+
     private static userBUS userBUS = new userBUS();
     private static staffBUS staffBUS = new staffBUS();
-    
+
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
+
     /**
      * Creates new form Login
      */
@@ -37,24 +40,24 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.userBUS = new userBUS();
         setLocationRelativeTo(null);
-        
-        File image_background = new File(relativePath+"background.jpg");
+
+        File image_background = new File(relativePath + "background.jpg");
         // Tạo một ImageIcon từ một File
         ImageIcon background = new ImageIcon(image_background.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
         lblBackground.setIcon(background);
-        
+
         Exit();
     }
 
-    public void Exit(){
-        File image_close = new File(relativePath+"close_black.png");
+    public void Exit() {
+        File image_close = new File(relativePath + "close_black.png");
         // Tạo một ImageIcon từ một File
         ImageIcon close = new ImageIcon(image_close.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
         lblExit.setIcon(close);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -304,12 +307,44 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void LoginAction() {
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+
+        userDTO user = userBUS.Check(username, password);
+
+        if (user == null) {
+            MyMessageAlert alert = new MyMessageAlert(this, "Tài khoản hoặc mật khẩu không chính xác!");
+            alert.setVisible(true);
+//            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác!", "ERROR", JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            if (userBUS.Check_Active(username)) {
+                MyMessageAlert alert = new MyMessageAlert(this, "Tài khoản hiện đang bị khóa");
+                alert.setVisible(true);
+                return;
+            } else {
+                String id = user.getStaffID();
+                staffDTO staff = staffBUS.Get(id);
+                String name = staff.getLastname();
+                String role = staff.getRole();
+
+                MyMessageAccept accept = new MyMessageAccept(this, "Đăng nhập thành công, chào mừng " + name + "");
+                accept.setVisible(true);
+                MainGUI mfrm = new MainGUI(id, name, role);
+                mfrm.setVisible(true);
+                dispose(); //Phá hủy Jframeform
+            }
+
+        }
+    }
+
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
+        LoginAction();
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
@@ -317,7 +352,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExitMouseClicked
 
     private void lblExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseEntered
-        File image_close = new File(relativePath+"close_red.png");
+        File image_close = new File(relativePath + "close_red.png");
         // Tạo một ImageIcon từ một File
         ImageIcon close = new ImageIcon(image_close.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
@@ -329,35 +364,11 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExitMouseExited
 
     private void Login_InMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Login_InMouseClicked
-        String username = txtUsername.getText();
-        String password = txtPassword.getText();
-        
-        userDTO user = userBUS.Check(username, password);
-        
-        if(user == null){
-            MyMessageAlert alert = new MyMessageAlert(this, "Tài khoản hoặc mật khẩu không chính xác!");
-            alert.setVisible(true);
-//            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác!", "ERROR", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        else{
-            String id = user.getStaffID();
-            staffDTO staff = staffBUS.Get(id);
-            String name = staff.getFirstname();
-            String role = staff.getRole();
-            
-            MyMessageAccept accept = new MyMessageAccept(this, "Đăng nhập thành công, chào mừng "+ name +"");
-            accept.setVisible(true);
-            MainGUI mfrm = new MainGUI(id,name,role);
-            mfrm.setVisible(true);
-            dispose(); //Phá hủy Jframeform
-        }        
-        
+        LoginAction();
     }//GEN-LAST:event_Login_InMouseClicked
 
     private void Login_InActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_InActionPerformed
-        
+
     }//GEN-LAST:event_Login_InActionPerformed
 
     private void lblForgetPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgetPassMouseClicked
@@ -367,7 +378,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblForgetPassMouseClicked
 
     private void Login_InKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Login_InKeyPressed
-        
+
     }//GEN-LAST:event_Login_InKeyPressed
 
     /**
@@ -396,7 +407,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
