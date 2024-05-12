@@ -11,7 +11,7 @@ import java.util.Date;
  * @author Bon Nguyen
  */
 public class importDTO {
-    String imporID, SupplierID, StaffID;
+    String imporID, SupplierID, StaffID, staffName;
     Date CreatedDate;
     double Total;   
 
@@ -26,7 +26,20 @@ public class importDTO {
         this.CreatedDate = CreatedDate;
         this.Total = Total;
     }
+    
+    public importDTO(String importID, String staffName){
+        this.imporID = importID;
+        this.staffName = staffName;
+    }
 
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+    
     public String getImporID() {
         return imporID;
     }

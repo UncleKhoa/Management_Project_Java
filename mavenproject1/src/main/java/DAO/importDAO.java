@@ -52,4 +52,27 @@ public class importDAO {
         return importlist;
     }
     
+    public ArrayList<importDTO> list_name(){
+        ArrayList<importDTO> list = new ArrayList<>();
+        try{
+            String sql = "select nh.ImportID, nv.LastName "
+                    + "from import nh, staff nv "
+                    + "where nh.StaffID = nv.StaffID";
+            PreparedStatement stmt_get = conn.prepareStatement(sql);
+            ResultSet rs = stmt_get.executeQuery();
+            
+            while(rs.next()){
+                String importid = rs.getString("ImportID");
+                String stfname = rs.getString("LastName");
+                importDTO importDTO = new importDTO(importid, stfname);
+                list.add(importDTO);
+            }
+            
+        }
+        catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return list;
+    }       
+    
 }

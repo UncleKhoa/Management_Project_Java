@@ -26,9 +26,11 @@ public class receptBUS {
     DefaultTableModel model;
     private ArrayList<receptDTO> dshd;
     private ArrayList<receptDTO> listdata;
+    private ArrayList<receptDTO> listname;
 
     public receptBUS() {
         list();
+        listName();
     }
 
     public void list() {
@@ -69,6 +71,19 @@ public class receptBUS {
         return s;
     }
     
+    //Lọc hóa đơn theo mã
+    public ArrayList<receptDTO> timHoaDonTheoMa(String id) {
+        ArrayList<receptDTO> ketQua = new ArrayList<>();
+        ArrayList<receptDTO> list_old = dshd;
+        for (receptDTO hd : list_old) {
+            if (hd.getReceptID().toLowerCase().contains(id.toLowerCase())) {
+                ketQua.add(hd);
+            }
+        }
+        return ketQua;
+    }
+    
+    //Lọc hóa đơn theo giá tiền
     public ArrayList<receptDTO> getListPrice(int a, int b){
         ArrayList<receptDTO> newlist = new ArrayList<>();
         ArrayList<receptDTO> list_old = dshd;
@@ -80,6 +95,7 @@ public class receptBUS {
         return newlist;
     }
     
+    //Lọc hóa đơn theo ngày
     public ArrayList<receptDTO> getHoadon_NgayBan(Date dateStart, Date dateEnd) {
         listdata = getListReceipt();
         ArrayList<receptDTO> new_listdata = new ArrayList<>();
@@ -94,6 +110,30 @@ public class receptBUS {
             }
         }
         return new_listdata;
+    }
+    
+    //Lấy danh sách tên khách hàng và nhân viên ứng với từng hóa đơn
+    public void listName(){
+        receptDAO receptDAO = new receptDAO();
+        listname = new ArrayList<>();
+        listname = receptDAO.list_Name();
+    }
+    
+    public ArrayList<receptDTO> get_ListName(){
+        return listname;
+    }
+    
+    //Lấy tên khách hàng và nhân viên theo đúng với hóa đơn
+    public receptDTO get_Name_HD(receptDTO hd){
+        listname = get_ListName();
+        receptDTO get_obj = null;
+        for(receptDTO name:listname){
+            if(hd.getReceptID().equals(name.getReceptID())){
+                get_obj = new receptDTO(name.getReceptID(), name.getCusID(), name.getStaffID(), name.getCusName(), name.getStaffName());                
+                break;
+            }
+        }
+        return get_obj;
     }
     
     public Boolean compareDate(Date dateBanHang, Date dateStart, Date dateEnd) throws ParseException {

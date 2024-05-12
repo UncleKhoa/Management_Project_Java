@@ -1,33 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI.ReceiptGUI;
 
 import BUS.importBUS;
-import DTO.receptDTO;
 import BUS.receptBUS;
 import DTO.importDTO;
+import DTO.receptDTO;
 import Model.CustomHeaderRenderer;
-import Model.CustomTableCellRenderer;
 import Model.MyMessageAlert;
-import Model.NonEditableTableModel;
-import javax.swing.table.DefaultTableModel;
-import static Model.helpers.*;
-import java.awt.Font;
+import static Model.helpers.Convert_date;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import static Model.helpers.*;
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 
 /**
  *
  * @author Bon Nguyen
  */
-public class receipt extends javax.swing.JFrame {
+public class HoaDonGUI extends javax.swing.JPanel {
 
+    JFrame parentFrame;
     DefaultTableModel model_receipt;
     DefaultTableModel model_import;
     DefaultTableModel model;
@@ -38,13 +39,13 @@ public class receipt extends javax.swing.JFrame {
     ArrayList<importDTO> list_nh;
     int selectRow_hd;
     int selectRow_nh;
-
+    
     /**
-     * Creates new form receipt
+     * Creates new form HoaDonGUI
      */
-    public receipt() {
+    public HoaDonGUI() {
         initComponents();
-        setLocationRelativeTo(null);
+        parentFrame = new JFrame();
         JTableHeader header = tblReceipt.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         JTableHeader header1 = tblImport.getTableHeader();
@@ -63,7 +64,6 @@ public class receipt extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
@@ -118,8 +118,6 @@ public class receipt extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblImport = new javax.swing.JTable();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(950, 650));
@@ -403,8 +401,8 @@ public class receipt extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -417,8 +415,6 @@ public class receipt extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     public void OnOff(boolean a) {
@@ -519,7 +515,7 @@ public class receipt extends javax.swing.JFrame {
 
     public void CheckDate_Receipt() {
         if (DateStartReceipt.getDate() == null || DateEndReceipt.getDate() == null) {
-            MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng chọn đầy đủ ngày");
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn đầy đủ ngày");
             alert.setVisible(true);
             return;
         }
@@ -527,7 +523,7 @@ public class receipt extends javax.swing.JFrame {
 
     public void CheckDate_Import() {
         if (DateStartImport.getDate() == null || DateEndImport.getDate() == null) {
-            MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng chọn đầy đủ ngày");
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn đầy đủ ngày");
             alert.setVisible(true);
             return;
         }
@@ -536,11 +532,7 @@ public class receipt extends javax.swing.JFrame {
     public void viewInformation_HD(receptDTO hd) {
         System.out.println(hd.getReceptID());
     }
-
-    private void txtSearchReceiptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchReceiptActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchReceiptActionPerformed
-
+    
     private void btnacceptMethodHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnacceptMethodHDActionPerformed
         if (cbMethodReceipt.getSelectedItem().equals("Mã")) {
             OnOff_Receipt(true, false, false);
@@ -553,99 +545,26 @@ public class receipt extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnacceptMethodHDActionPerformed
 
-    private void btnAcceptMethodNHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptMethodNHActionPerformed
-        if (cbMethodImport.getSelectedItem().equals("Mã")) {
-            OnOff_Import(true, false, false);
-        }
-        if (cbMethodImport.getSelectedItem().equals("Khoảng thời gian")) {
-            OnOff_Import(false, true, false);
-        }
-        if (cbMethodImport.getSelectedItem().equals("Khoảng giá")) {
-            OnOff_Import(false, false, true);
-        }
-    }//GEN-LAST:event_btnAcceptMethodNHActionPerformed
-
-    private void txtPriceReceiptFrom_srcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceReceiptFrom_srcActionPerformed
+    private void txtSearchReceiptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchReceiptActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPriceReceiptFrom_srcActionPerformed
+    }//GEN-LAST:event_txtSearchReceiptActionPerformed
 
-    private void btnAcceptReceiptPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptReceiptPriceActionPerformed
-        receptBUS = new receptBUS();
-        String a = txtPriceReceiptFrom_src.getText();
-        String b = txtPriceReceiptTo_src.getText();
-        if (!Check_Number(a) || !Check_Number(b)) {
-            MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng chỉ nhập kí tự số");
-            alert.setVisible(true);
-            return;
-        } else {
-            int c = Integer.parseInt(a);
-            int d = Integer.parseInt(b);
-            if (!ComparePrice(c, d)) {
-                MyMessageAlert alert = new MyMessageAlert(this, "Nhập giá tiền sai");
-                alert.setVisible(true);
-                return;
-            } else {
-                ArrayList<receptDTO> newlist_receipt = new ArrayList<>();
-                newlist_receipt = receptBUS.getListPrice(c, d);
-                try {
-                    receptBUS.viewTableReceipt(tblReceipt, newlist_receipt);
-                } catch (ParseException ex) {
-                    Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+    private void txtSearchReceiptKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchReceiptKeyReleased
+        try {
+            receptBUS = new receptBUS();
+            ArrayList<receptDTO> newlist_receipt = new ArrayList<>();
+            newlist_receipt = receptBUS.timHoaDonTheoMa(txtSearchReceipt.getText());
+            receptBUS.viewTableReceipt(tblReceipt, newlist_receipt);
+        } catch (ParseException ex) {
+            Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }//GEN-LAST:event_btnAcceptReceiptPriceActionPerformed
-
-    private void btnAcceptImportPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptImportPriceActionPerformed
-        String a = txtPriceImportFrom_src.getText();
-        String b = txtPriceImportTo_src.getText();
-        if (Check_Number(a) || Check_Number(b)) {
-            MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng chỉ nhập kí tự số");
-            alert.setVisible(true);
-            return;
-        } else {
-            int c = Integer.parseInt(a);
-            int d = Integer.parseInt(b);
-            if (!ComparePrice(c, d)) {
-                MyMessageAlert alert = new MyMessageAlert(this, "Nhập giá tiền sai");
-                alert.setVisible(true);
-                return;
-            } else {
-                ArrayList<importDTO> newlist_import = new ArrayList<>();
-                newlist_import = importBUS.getListPrice(c, d);
-                try {
-                    importBUS.viewTableImport(tblImport, newlist_import);
-                } catch (ParseException ex) {
-                    Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }//GEN-LAST:event_btnAcceptImportPriceActionPerformed
-
-    private void btnAcceptImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptImportActionPerformed
-        CheckDate_Import();
-        importBUS = new importBUS();
-        if (!Compare_Date(DateStartImport.getDate(), DateEndImport.getDate())) {
-            MyMessageAlert alert = new MyMessageAlert(this, "Ngày chọn không hợp lệ");
-            alert.setVisible(true);
-            return;
-        } else {
-            try {
-                ArrayList<importDTO> newlist_import = new ArrayList<>();
-                newlist_import = importBUS.getPhieunhap_NgayBan(Convert_date(DateStartImport.getDate()), Convert_date(DateEndImport.getDate()));
-                importBUS.viewTableImport(tblImport, newlist_import);
-            } catch (ParseException ex) {
-                Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_btnAcceptImportActionPerformed
+    }//GEN-LAST:event_txtSearchReceiptKeyReleased
 
     private void btnAcceptReceiptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptReceiptActionPerformed
         CheckDate_Receipt();
         receptBUS = new receptBUS();
         if (!Compare_Date(DateStartReceipt.getDate(), DateEndReceipt.getDate())) {
-            MyMessageAlert alert = new MyMessageAlert(this, "Ngày chọn không hợp lệ");
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Ngày chọn không hợp lệ");
             alert.setVisible(true);
             return;
         } else {
@@ -659,6 +578,37 @@ public class receipt extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAcceptReceiptActionPerformed
 
+    private void txtPriceReceiptFrom_srcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceReceiptFrom_srcActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPriceReceiptFrom_srcActionPerformed
+
+    private void btnAcceptReceiptPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptReceiptPriceActionPerformed
+        receptBUS = new receptBUS();
+        String a = txtPriceReceiptFrom_src.getText();
+        String b = txtPriceReceiptTo_src.getText();
+        if (!Check_Number(a) || !Check_Number(b)) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chỉ nhập kí tự số");
+            alert.setVisible(true);
+            return;
+        } else {
+            int c = Integer.parseInt(a);
+            int d = Integer.parseInt(b);
+            if (!ComparePrice(c, d)) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Nhập giá tiền sai");
+                alert.setVisible(true);
+                return;
+            } else {
+                ArrayList<receptDTO> newlist_receipt = new ArrayList<>();
+                newlist_receipt = receptBUS.getListPrice(c, d);
+                try {
+                    receptBUS.viewTableReceipt(tblReceipt, newlist_receipt);
+                } catch (ParseException ex) {
+                    Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnAcceptReceiptPriceActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             receptBUS.viewTableReceipt(tblReceipt, list_hd);
@@ -666,6 +616,73 @@ public class receipt extends javax.swing.JFrame {
             Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtSearchImportKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchImportKeyReleased
+        try {
+            importBUS = new importBUS();
+            ArrayList<importDTO> newlist_receipt = new ArrayList<>();
+            newlist_receipt = importBUS.getList_MaPN(txtSearchImport.getText());
+            importBUS.viewTableImport(tblImport, newlist_receipt);
+        } catch (ParseException ex) {
+            Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtSearchImportKeyReleased
+
+    private void btnAcceptMethodNHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptMethodNHActionPerformed
+        if (cbMethodImport.getSelectedItem().equals("Mã")) {
+            OnOff_Import(true, false, false);
+        }
+        if (cbMethodImport.getSelectedItem().equals("Khoảng thời gian")) {
+            OnOff_Import(false, true, false);
+        }
+        if (cbMethodImport.getSelectedItem().equals("Khoảng giá")) {
+            OnOff_Import(false, false, true);
+        }
+    }//GEN-LAST:event_btnAcceptMethodNHActionPerformed
+
+    private void btnAcceptImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptImportActionPerformed
+        CheckDate_Import();
+        importBUS = new importBUS();
+        if (!Compare_Date(DateStartImport.getDate(), DateEndImport.getDate())) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Ngày chọn không hợp lệ");
+            alert.setVisible(true);
+            return;
+        } else {
+            try {
+                ArrayList<importDTO> newlist_import = new ArrayList<>();
+                newlist_import = importBUS.getPhieunhap_NgayBan(Convert_date(DateStartImport.getDate()), Convert_date(DateEndImport.getDate()));
+                importBUS.viewTableImport(tblImport, newlist_import);
+            } catch (ParseException ex) {
+                Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnAcceptImportActionPerformed
+
+    private void btnAcceptImportPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptImportPriceActionPerformed
+        String a = txtPriceImportFrom_src.getText();
+        String b = txtPriceImportTo_src.getText();
+        if (Check_Number(a) || Check_Number(b)) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chỉ nhập kí tự số");
+            alert.setVisible(true);
+            return;
+        } else {
+            int c = Integer.parseInt(a);
+            int d = Integer.parseInt(b);
+            if (!ComparePrice(c, d)) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Nhập giá tiền sai");
+                alert.setVisible(true);
+                return;
+            } else {
+                ArrayList<importDTO> newlist_import = new ArrayList<>();
+                newlist_import = importBUS.getListPrice(c, d);
+                try {
+                    importBUS.viewTableImport(tblImport, newlist_import);
+                } catch (ParseException ex) {
+                    Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnAcceptImportPriceActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
@@ -687,28 +704,6 @@ public class receipt extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblReceiptMouseClicked
 
-    private void txtSearchReceiptKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchReceiptKeyReleased
-        try {
-            receptBUS = new receptBUS();
-            ArrayList<receptDTO> newlist_receipt = new ArrayList<>();
-            newlist_receipt = receptBUS.timHoaDonTheoMa(txtSearchReceipt.getText());
-            receptBUS.viewTableReceipt(tblReceipt, newlist_receipt);
-        } catch (ParseException ex) {
-            Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_txtSearchReceiptKeyReleased
-
-    private void txtSearchImportKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchImportKeyReleased
-        try {
-            importBUS = new importBUS();
-            ArrayList<importDTO> newlist_receipt = new ArrayList<>();
-            newlist_receipt = importBUS.getList_MaPN(txtSearchImport.getText());
-            importBUS.viewTableImport(tblImport, newlist_receipt);
-        } catch (ParseException ex) {
-            Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_txtSearchImportKeyReleased
-
     private void tblImportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblImportMouseClicked
         if (evt.getClickCount() == 2) {
             selectRow_nh = tblImport.getSelectedRow();
@@ -723,40 +718,6 @@ public class receipt extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblImportMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(receipt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(receipt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(receipt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(receipt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new receipt().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateEndImport;

@@ -4,12 +4,14 @@
  */
 package DTO;
 
+import java.util.Date;
+
 /**
  *
  * @author MY PC
  */
 public class receptDetailDTO {
-    String detailReceiptID,receptID,promotionID,productID;
+    String detailReceiptID,receptID,promotionID,productID,productName;
     int quantity;
     double unitPrice,subTotal;
 
@@ -26,11 +28,18 @@ public class receptDetailDTO {
     public receptDetailDTO() {
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+    
     public String getDetailReceiptID() {
         return detailReceiptID;
     }
     
-
     public String getReceptID() {
         return receptID;
     }
