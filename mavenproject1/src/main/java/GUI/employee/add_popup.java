@@ -20,7 +20,6 @@ public class add_popup extends javax.swing.JFrame {
      */
     public add_popup() {
         initComponents();
-        setLocationRelativeTo(null);
     }
     /**
      * This method is called from within the constructor to initialize the form.

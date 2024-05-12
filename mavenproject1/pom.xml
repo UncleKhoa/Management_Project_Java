@@ -55,19 +55,9 @@
         <dependency>
             <groupId>net.java.dev.timingframework</groupId>
             <artifactId>timingframework</artifactId>
-<<<<<<< HEAD
-<<<<<<< HEAD
             <version>1.0</version>
-        </dependency>
-        <dependency>
-=======
-            <version>1.0</version>    
-=======
-            <version>1.0</version>
->>>>>>> main
         </dependency>
         <dependency>   
->>>>>>> main
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.0</version>
