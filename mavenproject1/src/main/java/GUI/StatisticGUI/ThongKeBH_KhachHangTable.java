@@ -17,6 +17,7 @@ import Model.NonEditableTableModel;
 import static Model.helpers.convertBackgroundOfTable;
 import static Model.helpers.formatMoney;
 import static Model.helpers.*;
+import javax.swing.JTable;
 /**
  *
  * @author Bon Nguyen
@@ -86,6 +87,9 @@ public class ThongKeBH_KhachHangTable extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public JTable getTable_BHKH(){
+        return tblBHKH;
+    }
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import static Model.helpers.*;
 import java.text.ParseException;
+import javax.swing.JTable;
 /**
  *
  * @author Bon Nguyen
@@ -91,6 +92,9 @@ public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public JTable getList_DTTN(){
+        return tblDTTheoNgay;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;

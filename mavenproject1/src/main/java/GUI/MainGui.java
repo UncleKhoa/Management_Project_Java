@@ -7,11 +7,9 @@ package GUI;
 import GUI.DoiThongTinGUI;
 import static DAO.DBConnect.getConnect;
 import GUI.LoginGUI.Login;
-import GUI.PromotionGUI.KhuyenMaiGUI;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.sql.Connection;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,6 +21,7 @@ import GUI.employee.employeeGUI;
 import GUI.SellGUI.sell;
 import GUI.SellGUI.showkm;
 import GUI.StatisticGUI.ThongKe;
+import GUI.ReceiptGUI.HoaDonGUI;
 
 /**
  *
@@ -45,6 +44,7 @@ public class MainGUI extends javax.swing.JFrame {
     //Mở panel riêng
     private KhuyenMaiGUI khuyenmai;
     private ThongKe thongke;
+    private HoaDonGUI hoadon;
 
     public String id, name, role;
 
@@ -757,6 +757,31 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.add(nhanvien);
                 jmain.updateUI();
                 break;
+            // case 4:
+//                lblConnguoi.setEnabled(true);
+//                jmain.removeAll();
+//                nguoidung = new customerGUI();
+//                nguoidung.setSize(950,650);
+//                jmain.add(nguoidung);
+//                jmain.updateUI();
+//                break;
+            //  case 8:
+//                lblNhanvien.setEnabled(true);
+//                jmain.removeAll();
+//                nhanvien = new employeeGUI();
+//                nhanvien.setSize(950,650);
+//                jmain.add(nhanvien);
+//                jmain.updateUI();
+//                break;
+            case 5:
+                lblHoadon.setEnabled(true);
+                jmain.removeAll();
+                hoadon = new HoaDonGUI();
+                hoadon.setSize(950, 650);
+                jmain.add(hoadon);
+                jmain.updateUI();
+                break;
+                
             case 7:
                 lblThongke.setEnabled(true);
                 jmain.removeAll();
@@ -801,6 +826,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelHDMouseClicked
         set_color_pannel(5);
+        Open_GUI(5);
     }//GEN-LAST:event_pannelHDMouseClicked
 
     private void pannelKMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelKMMouseClicked
