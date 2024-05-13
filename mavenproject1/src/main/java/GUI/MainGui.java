@@ -32,6 +32,8 @@ public class MainGUI extends javax.swing.JFrame {
 
     private sell sell;
     private showkm showkm;
+    private employeeGUI nhanvien;
+    private customerGUI nguoidung;
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
@@ -739,22 +741,22 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.updateUI();
                 break;
 
-            // case 4:
-//                lblConnguoi.setEnabled(true);
-//                jmain.removeAll();
-//                nguoidung = new customerGUI();
-//                nguoidung.setSize(950,650);
-//                jmain.add(nguoidung);
-//                jmain.updateUI();
-//                break;
-            //  case 8:
-//                lblNhanvien.setEnabled(true);
-//                jmain.removeAll();
-//                nhanvien = new employeeGUI();
-//                nhanvien.setSize(950,650);
-//                jmain.add(nhanvien);
-//                jmain.updateUI();
-//                break;
+            case 4:
+                lblConnguoi.setEnabled(true);
+                jmain.removeAll();
+                nguoidung = new customerGUI();
+                nguoidung.setSize(950,650);
+                jmain.add(nguoidung);
+                jmain.updateUI();
+                break;
+            case 8:
+                lblNhanvien.setEnabled(true);
+                jmain.removeAll();
+                nhanvien = new employeeGUI();
+                nhanvien.setSize(950,650);
+                jmain.add(nhanvien);
+                jmain.updateUI();
+                break;
             case 7:
                 lblThongke.setEnabled(true);
                 jmain.removeAll();

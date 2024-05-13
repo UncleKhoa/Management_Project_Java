@@ -734,8 +734,8 @@ public class employee extends javax.swing.JFrame {
         address.setText(staff.getAddress());
             File file = new File("");
     String currentDirectory = file.getAbsolutePath();
-    String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
-        ImageIcon imageIcon = new ImageIcon(relativePath+staff.getImg());
+    String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\IMG_STAFF\\"; // Đường dẫn tương đối
+        ImageIcon imageIcon = new ImageIcon(relativePath+staff.getStaffID()+"png");
         avt.setIcon(imageIcon);
         
         
