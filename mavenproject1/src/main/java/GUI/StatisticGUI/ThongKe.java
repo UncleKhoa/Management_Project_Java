@@ -99,6 +99,8 @@ public class ThongKe extends javax.swing.JPanel {
         int b = staffBUS.Get_SLNV();
         lblNBStf.setText(""+b);
         
+        cbMethod.setLabeText("Chọn hình thức");
+        cbType.setLabeText("Chọn dạng");
         cbMethod.addItem("Doanh thu");
         cbMethod.addItem("Bán hàng");
         

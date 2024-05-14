@@ -9,7 +9,7 @@ package DTO;
  * @author Bon Nguyen
  */
 public class productDTO {
-    String ProducctID, BrandID, ProductName, IMG;
+    String ProducctID, BrandID, ProductName, IMG, active;
     double UnitPrice;
     int Quantity;
 

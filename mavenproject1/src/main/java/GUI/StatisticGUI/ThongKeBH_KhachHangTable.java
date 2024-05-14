@@ -18,6 +18,7 @@ import static Model.helpers.convertBackgroundOfTable;
 import static Model.helpers.formatMoney;
 import static Model.helpers.*;
 import javax.swing.JTable;
+import Model.MyScrollBar;
 /**
  *
  * @author Bon Nguyen
@@ -30,6 +31,7 @@ public class ThongKeBH_KhachHangTable extends javax.swing.JPanel {
      */
     public ThongKeBH_KhachHangTable() {
         initComponents();
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         JTableHeader header = tblBHKH.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         banhangBUS banhangBUS = new banhangBUS();

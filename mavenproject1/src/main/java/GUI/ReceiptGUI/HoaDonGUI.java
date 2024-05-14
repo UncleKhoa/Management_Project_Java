@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import static Model.helpers.*;
+import Model.MyScrollBar;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -45,6 +46,8 @@ public class HoaDonGUI extends javax.swing.JPanel {
      */
     public HoaDonGUI() {
         initComponents();
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
+        jScrollPane2.setVerticalScrollBar(new MyScrollBar());
         parentFrame = new JFrame();
         JTableHeader header = tblReceipt.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
@@ -452,12 +455,14 @@ public class HoaDonGUI extends javax.swing.JPanel {
     }
 
     public void AddLine_cbRectipt() {
+        cbMethodReceipt.setLabeText("Hình thức");
         cbMethodReceipt.addItem("Mã");
         cbMethodReceipt.addItem("Khoảng thời gian");
         cbMethodReceipt.addItem("Khoảng giá");
     }
 
     public void Addline_cbImport() {
+        cbMethodImport.setLabeText("Hình thức");
         cbMethodImport.addItem("Mã");
         cbMethodImport.addItem("Khoảng thời gian");
         cbMethodImport.addItem("Khoảng giá");
