@@ -53,7 +53,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import Model.CustomJasperViewer;
 import Model.CustomTableCellRenderer;
 import javax.swing.table.JTableHeader;
-
+import static Model.helpers.addTextChanged;
 /**
  *
  * @author MY PC
@@ -97,6 +97,7 @@ public class sell extends javax.swing.JPanel {
     public sell(MainGUI main) {
         initComponents();
 
+        addTextChanged(txtTiennhan);
         ImageIcon hoadon = scaleImage("bill.png", 83, 84);
         lbHD.setIcon(hoadon);
 
@@ -136,6 +137,7 @@ public class sell extends javax.swing.JPanel {
     public sell(MainGUI main, showkm show) {
         initComponents();
 
+        addTextChanged(txtTiennhan);
         ImageIcon hoadon = scaleImage("bill.png", 83, 84);
         lbHD.setIcon(hoadon);
         //  This.dispose()
@@ -783,8 +785,8 @@ public class sell extends javax.swing.JPanel {
         String maKh = this.lbMakh.getText();
         String id = iD;
         Date create_day = java.sql.Date.valueOf(today);
+        String tien = this.txtTiennhan.getText().replace(".", "");
         //String totalText = this.lbThanhtoan.getText();
-        String tien = this.txtTiennhan.getText();
         if (!Check_Number(tien)) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tiền nhận không hợp lệ");
             alert.setVisible(true);
@@ -1016,7 +1018,6 @@ public class sell extends javax.swing.JPanel {
                             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm " + id + " không đủ");
                             alert.setVisible(true);
                             return;
-
                         }
                     } catch (SQLException ex) {
                         Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
