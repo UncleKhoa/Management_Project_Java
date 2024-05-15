@@ -94,47 +94,47 @@ public class sell extends javax.swing.JPanel {
         return null;
     }
 
+//    public sell(MainGUI main) {
+//        initComponents();
+//
+//        ImageIcon hoadon = scaleImage("bill.png", 83, 84);
+//        lbHD.setIcon(hoadon);
+//
+//        ImageIcon Sdt = scaleImage("bill.jpg", 47, 45);
+//        lbSdt.setIcon(Sdt);
+//
+//        this.btnThanhtoan.hide();
+//        this.btnXuathd.hide();
+//        this.btnHuy.hide();
+//        this.lbXemkm.hide();
+//        this.txtTiennhan.setVisible(false);
+//        customerBUS customer = new customerBUS();
+//        maingui = main;
+//        iD = maingui.id;
+//        this.lbNhanvien.setText(maingui.name);
+//        receptBUS receipt = new receptBUS();
+//        String mhd = receipt.createId();
+//        this.lbhd.setText(mhd);
+//
+//        today = LocalDate.now();
+//        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        formattedDate = today.format(formatter);
+//        lbNgay.setText(formattedDate);
+//
+//        convertBackgroundOfTable(tblProduct);
+//        String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Số lượng", "Giá"};
+//        model = (DefaultTableModel) tblProduct.getModel();
+//        model.setColumnIdentifiers(header);
+//        tblProduct.getColumnModel().getColumn(0).setPreferredWidth(110);
+//        tblProduct.getColumnModel().getColumn(1).setPreferredWidth(90);
+//        tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
+//        tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
+//        tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
+//        removeData();
+//    }
+
+
     public sell(MainGUI main) {
-        initComponents();
-
-        addTextChanged(txtTiennhan);
-        ImageIcon hoadon = scaleImage("bill.png", 83, 84);
-        lbHD.setIcon(hoadon);
-
-        ImageIcon Sdt = scaleImage("bill.jpg", 47, 45);
-        lbSdt.setIcon(Sdt);
-
-        this.btnThanhtoan.hide();
-        this.btnXuathd.hide();
-        this.btnHuy.hide();
-        this.lbXemkm.hide();
-        this.txtTiennhan.setVisible(false);
-        customerBUS customer = new customerBUS();
-        maingui = main;
-        iD = maingui.id;
-        this.lbNhanvien.setText(maingui.name);
-        receptBUS receipt = new receptBUS();
-        String mhd = receipt.createId();
-        this.lbhd.setText(mhd);
-
-        today = LocalDate.now();
-        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        formattedDate = today.format(formatter);
-        lbNgay.setText(formattedDate);
-
-        convertBackgroundOfTable(tblProduct);
-        String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Số lượng", "Giá"};
-        model = (DefaultTableModel) tblProduct.getModel();
-        model.setColumnIdentifiers(header);
-        tblProduct.getColumnModel().getColumn(0).setPreferredWidth(110);
-        tblProduct.getColumnModel().getColumn(1).setPreferredWidth(90);
-        tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
-        tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
-        tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
-        removeData();
-    }
-
-    public sell(MainGUI main, showkm show) {
         initComponents();
 
         addTextChanged(txtTiennhan);
@@ -152,7 +152,7 @@ public class sell extends javax.swing.JPanel {
         this.txtTiennhan.setVisible(false);
         //object [] o;
         customerBUS customer = new customerBUS();
-        showkm = show;
+       // showkm = show;
         maingui = main;
         iD = maingui.id;
         this.lbNhanvien.setText(maingui.name);
@@ -734,7 +734,12 @@ public class sell extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSdtActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
+          // TODO add your handling code here:
+            if (this.tblProduct.getRowCount() == 0) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
+                alert.setVisible(true);
+                return;
+         }
         try {
 
             int[] rows = tblProduct.getSelectedRows();
@@ -779,6 +784,12 @@ public class sell extends javax.swing.JPanel {
         // TODO add your handling code here:
         //       this.btnThanhtoan.hide();
         //  this.btnXuathd.show();
+        if(this.txtTiennhan.getText().trim().isEmpty())
+        {
+             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Chưa nhập tiền nhận");
+             alert.setVisible(true);
+             return;
+        }
         this.btnHuy.hide();
         this.btnLammoi.show();
         String maHd = this.lbhd.getText();
@@ -786,8 +797,9 @@ public class sell extends javax.swing.JPanel {
         String id = iD;
         Date create_day = java.sql.Date.valueOf(today);
         String tien = this.txtTiennhan.getText().replace(".", "");
-        //String totalText = this.lbThanhtoan.getText();
-        if (!Check_Number(tien)) {
+
+        String tien = this.txtTiennhan.getText();
+        if (containsLetter(tien)) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tiền nhận không hợp lệ");
             alert.setVisible(true);
             return;
@@ -844,7 +856,9 @@ public class sell extends javax.swing.JPanel {
             Object dongia = model.getValueAt(row, 4);
             double unitPrice = 0.0; // Default value if parsing fails
             if (dongia instanceof Number) {
-                unitPrice = ((Number) dongia).doubleValue() * quantity; // Safely parse to double
+             //   unitPrice = ((Number) dongia).doubleValue() * quantity;
+             // Safely parse to double
+             unitPrice = ((Number) dongia).doubleValue();
             }
 
             double subTotal = 0;
@@ -861,19 +875,22 @@ public class sell extends javax.swing.JPanel {
             } //  subTotal = Math.floor((1 - per) * quantity * unitPrice);
             else {
                 subTotal = quantity * unitPrice;
-                sub = subTotal;
+                sub = unitPrice;
             }
 
             productBUS product = new productBUS();
             receptDetailDTO dto = new receptDetailDTO(receiptDetailID, receiptID, promotionID, productID, quantity, unitPrice, subTotal);
             String soluong = Integer.toString(quantity);
+            Object tenSP = model.getValueAt(row, 2);
+            String ten = tenSP.toString();
+          //  int u = ConvertDoubleToInt(unitPrice);
             int u = ConvertDoubleToInt(unitPrice);
             String giagoc = formatMoney(u);
             int s = ConvertDoubleToInt(sub);
             String giaban = formatMoney(s);
             int stt = ConvertDoubleToInt(subTotal);
             String tong = formatMoney(stt);
-            table_receiptDTO table_receipt = new table_receiptDTO(productID, soluong, giagoc, giaban, tong);
+            table_receiptDTO table_receipt = new table_receiptDTO(ten, soluong, giagoc, giaban, tong);
             dataList.add(table_receipt);
             try {
                 receiptDetailBUS.add(dto);
@@ -892,7 +909,6 @@ public class sell extends javax.swing.JPanel {
         } catch (JRException ex) {
             Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
         }
-        printTableReceiptList(dataList);
         btnThanhtoan.hide();
     }//GEN-LAST:event_btnThanhtoanActionPerformed
 
@@ -904,6 +920,12 @@ public class sell extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
+   //     if(this.tblProduct)
+         if (this.tblProduct.getRowCount() == 0) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
+                alert.setVisible(true);
+                return;
+         }
         if (txtSp.getText().trim().isEmpty()) {
             // alert.setVisible(true);
             MyMessageAlert alert1 = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm cần sửa");
@@ -925,6 +947,10 @@ public class sell extends javax.swing.JPanel {
                         alert.setVisible(true);
                     } else {
                         model.setValueAt(sl, row, 3);
+                       if(this.tblProduct.getRowCount()==0)
+                       {
+                           this.txtSp.setText("");
+                       }
                     }
 
                 } catch (SQLException ex) {
@@ -1156,7 +1182,7 @@ public class sell extends javax.swing.JPanel {
             customerDTO cus = new customerDTO();
             try {
                 cus = customerBUS.searchsdt(sdt);
-                if (cus.getFirstName() != null) {
+                if (cus != null) {
                     this.lbMakh.show();
                     this.lbTenkh.show();
                     this.lbMakh.setText(cus.getCusID());

@@ -70,5 +70,15 @@ public class productDAO {
         pstmt.setString(2, productID);
         pstmt.executeUpdate();
     }
+     public void sub_quantity(String productID, int sl) throws SQLException {
+        productDTO product = new productDTO();
+        int quantity = getQuantity(productID);
+        int updateQuantity = quantity + sl;
+        String sql = "UPDATE product SET Quantity = ? WHERE productID = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, updateQuantity);
+        pstmt.setString(2, productID);
+        pstmt.executeUpdate();
+    }
 
 }

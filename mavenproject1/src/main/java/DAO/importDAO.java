@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -50,6 +51,17 @@ public class importDAO {
             }
         }
         return importlist;
+    }
+    public void add(importDTO s) throws SQLException
+    {
+        String sql = "INSERT INTO import VALUES ('"+ s.getImporID()+"',"+
+        "'"+s.getSupplierID()+"',"+
+        "'"+s.getStaffID()+"',"+
+        "'"+s.getTotal()+"',"+
+        "'"+s.getCreatedDate()+"'"
+        +")";
+        PreparedStatement p = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        p.executeUpdate();
     }
     
     public ArrayList<importDTO> list_name(){
