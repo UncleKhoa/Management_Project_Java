@@ -116,7 +116,6 @@ public class doanhthuBUS {
         model.addRow(new Object[]{
             dt_sp.getProductName(), dt_sp.getSLBan(), formatMoney(ConvertDoubleToInt(dt_sp.getTiensauKM())) + "đ"
         });
-
     }
 
     public void viewData(JTable tblDTSP, ArrayList<doanhthuDTO> list) {

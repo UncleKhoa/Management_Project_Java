@@ -89,6 +89,7 @@ public class import_detailBUS {
             model.removeRow(i);
         }
     }
+
        public int list_size()
      {
         import_detailDAO dao = new  import_detailDAO ();
@@ -116,4 +117,5 @@ public class import_detailBUS {
         import_detailDAO dao = new import_detailDAO();
         dao.add(a);
     }
+
 }

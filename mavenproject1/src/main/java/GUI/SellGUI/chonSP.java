@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI.SellGUI;
+
 import DTO.productDTO;
 import BUS.productBUS;
 import DTO.table_receiptDTO;
@@ -16,11 +17,13 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
+import Model.MyScrollBar;
+
 /**
  *
  * @author MY PC
- * 
- * 
+ *
+ *
  */
 
 public class chonSP extends javax.swing.JFrame {
@@ -28,50 +31,49 @@ public class chonSP extends javax.swing.JFrame {
     /**
      * Creates new form chonSP
      */
-     private ArrayList<productDTO> list = new ArrayList<>();
-     private ArrayList<productDTO> listsp = new ArrayList<>();
-     public static int pos =0;
-      productBUS productBUS;
-      private int sl =1;
-      DefaultTableModel model;
-      DefaultTableModel model1;
-      //TableModel model;
-      TableModel model2;
-      sell _testsell;
-  
-      productDTO x;
-      
-      public chonSP()
-      {
-          initComponents();
-      }
+    private ArrayList<productDTO> list = new ArrayList<>();
+    private ArrayList<productDTO> listsp = new ArrayList<>();
+    public static int pos = 0;
+    productBUS productBUS;
+    private int sl = 1;
+    DefaultTableModel model;
+    DefaultTableModel model1;
+    //TableModel model;
+    TableModel model2;
+    sell _testsell;
+    
+    productDTO x;
+    
+    public chonSP() {
+        initComponents();
+    }
+
     public chonSP(sell testsell) {
         initComponents();
-         setLocationRelativeTo(null);
-         
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
+        setLocationRelativeTo(null);
+        this.dispose();
         this.productBUS = new productBUS();
         list = productBUS.getList();
-        _testsell=testsell;
+        _testsell = testsell;
 //        CustomTableCellRenderer cellRenderer = new CustomTableCellRenderer();
 //        tblSP.setDefaultRenderer(Object.class, cellRenderer);
         JTableHeader header = tblSP.getTableHeader();
         header.setFont(new Font("Tahoma", Font.BOLD, 16)); // Font in đậm
         header.setResizingAllowed(false);
-       // header.setDefaultRenderer(new CustomHeaderRenderer());
+        // header.setDefaultRenderer(new CustomHeaderRenderer());
         //JTableHeader header1 = tblSP.getTableHeader();
-       // header1.setDefaultRenderer(new CustomHeaderRenderer());
+        // header1.setDefaultRenderer(new CustomHeaderRenderer());
         ViewData(list);
-       
-        
-        
         
     }
-    public void ViewData(ArrayList<productDTO> list)
-    {
+
+    public void ViewData(ArrayList<productDTO> list) {
         convertBackgroundOfTable(tblSP);
-        String[] header = {"Mã sản phẩm ","Hãng","Tên sản phẩm","Giá"};
-        model = (DefaultTableModel) 
-        tblSP.getModel();
+
+        String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Giá"};
+        model = (DefaultTableModel) tblSP.getModel();
+
         model.setColumnIdentifiers(header);
         tblSP.getColumnModel().getColumn(0).setPreferredWidth(90);
         tblSP.getColumnModel().getColumn(1).setPreferredWidth(90);
@@ -79,13 +81,13 @@ public class chonSP extends javax.swing.JFrame {
         tblSP.getColumnModel().getColumn(3).setPreferredWidth(90);
         removeData();
         
-        for(productDTO product:list)
-        {
-             addData(product);
+        for (productDTO product : list) {
+            addData(product);
             
         }
-       
+        
     }
+  
 //    public void addList(ArrayList<productDTO> listsp){
 //         for(productDTO product:listsp)
 //        {
@@ -109,8 +111,7 @@ public class chonSP extends javax.swing.JFrame {
     public void removeData()
     {
         int count = model.getRowCount();
-        for(int i= count-1;i>=0;i--)
-        {
+        for (int i = count - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
@@ -133,6 +134,7 @@ public class chonSP extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -233,15 +235,15 @@ public class chonSP extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {                                   
-
-         
+  
     }                                  
   
+
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         // TODO add your handling code here:
 
-
         TableModel model2 = tblSP.getModel();
+
        //int [] select = tblSP.getSelectedRows();
        
          Object [] newFormRow = new Object[5];
@@ -257,36 +259,30 @@ public class chonSP extends javax.swing.JFrame {
            {
                Object id = _testsell.model.getValueAt(row, 0);
 //            //   String productid = id.toString();
-                  if( newFormRow[0].equals(id))
-             {
-                 Object s= _testsell.model.getValueAt(row, 3);
-                 int quantity= (int)s;
-                  quantity = quantity +1;
-                  newFormRow[1] = model2.getValueAt(choose,1);
-                  newFormRow[2] = model2.getValueAt(choose,2);
-                  newFormRow[3] = quantity ;
-                 newFormRow[4] = model2.getValueAt(choose,3);                 
-                 _testsell.model.setValueAt(quantity , row, 3);        
-                 check = 1;
-             }
-               
-              }
-           
-           // newFormRow[0] = model2.getValueAt(select[i],0);
-           if(check == 0)
-           {
-                newFormRow[1] = model2.getValueAt(choose,1);
-                newFormRow[2] = model2.getValueAt(choose,2);
-                newFormRow[3] = sl;
-                newFormRow[4] = model2.getValueAt(choose,3);    
-                _testsell.model.addRow(newFormRow);  
-           }
-               
-       
+            if (newFormRow[0].equals(id)) {
+                Object s = _testsell.model.getValueAt(row, 3);
+                int quantity = (int) s;
+                quantity = quantity + 1;
+                newFormRow[1] = model2.getValueAt(choose, 1);
+                newFormRow[2] = model2.getValueAt(choose, 2);
+                newFormRow[3] = quantity;
+                newFormRow[4] = model2.getValueAt(choose, 3);                
+                _testsell.model.setValueAt(quantity, row, 3);                
+                check = 1;
+            }
+            
+        }
 
+        // newFormRow[0] = model2.getValueAt(select[i],0);
+        if (check == 0) {
+            newFormRow[1] = model2.getValueAt(choose, 1);
+            newFormRow[2] = model2.getValueAt(choose, 2);
+            newFormRow[3] = sl;
+            newFormRow[4] = model2.getValueAt(choose, 3);            
+            _testsell.model.addRow(newFormRow);            
+        }
+        
 
-               
-                
     }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed

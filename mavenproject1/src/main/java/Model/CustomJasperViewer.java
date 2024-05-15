@@ -10,10 +10,10 @@ public class CustomJasperViewer extends JFrame {
 
     public CustomJasperViewer(JasperPrint jasperPrint) {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(950,650);
+        this.setSize(950,650);
         viewer = new JRViewer(jasperPrint);
         getContentPane().add(viewer);
-        pack();
+//        pack();
         setLocationRelativeTo(null);
         setVisible(true);
         

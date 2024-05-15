@@ -28,9 +28,11 @@ public class importBUS {
     DefaultTableModel model;
     ArrayList<importDTO> ds_nh;
     ArrayList<importDTO> listdata;
+    ArrayList<importDTO> listName;
     
     public importBUS(){
         list_NH();
+        ListName_PN();
     }
     
     public void list_NH(){
@@ -43,6 +45,20 @@ public class importBUS {
         return ds_nh;
     }
     
+    //Lọc phiếu nhập theo mã
+    public ArrayList<importDTO> getList_MaPN(String id){
+        ArrayList<importDTO> newlist = new ArrayList<>();
+        ArrayList<importDTO> list_old = ds_nh;
+        
+        for(importDTO pn:list_old){
+            if (pn.getImporID().toLowerCase().contains(id.toLowerCase())){
+                newlist.add(pn);
+            }
+        }
+        return newlist;
+    }
+    
+    //Lọc phiếu nhập theo giá
     public ArrayList<importDTO> getListPrice(int a, int b){
         ArrayList<importDTO> newlist = new ArrayList<>();
         ArrayList<importDTO> list_old = ds_nh;
@@ -54,6 +70,7 @@ public class importBUS {
         return newlist;
     }
     
+    //Lọc phiếu nhập theo ngày bán
     public ArrayList<importDTO> getPhieunhap_NgayBan(Date dateStart, Date dateEnd) {
         listdata = getListImport();
         ArrayList<importDTO> new_listdata = new ArrayList<>();
@@ -68,6 +85,27 @@ public class importBUS {
             }
         }
         return new_listdata;
+    }
+    
+    //Xem chi tiết phiếu nhập
+    public void ListName_PN(){
+        importDAO importDAO = new importDAO();
+        listName = new ArrayList<>();
+        listName = importDAO.list_name();
+    }
+    
+    public ArrayList<importDTO> getListName_PN(){
+        return listName;
+    }
+    
+    public importDTO get_Name_PN(importDTO nh){        
+        importDTO get_obj = null;
+        for(importDTO pn:listName){
+            if(pn.getImporID().equals(nh.getImporID())){
+                get_obj = new importDTO(pn.getImporID(), pn.getStaffName());
+            }
+        }
+        return get_obj;
     }
     
     public Boolean compareDate(Date dateBanHang, Date dateStart, Date dateEnd) throws ParseException {
@@ -87,8 +125,6 @@ public class importBUS {
             nh.getImporID(), nh.getSupplierID(), nh.getStaffID(), Convert_date(nh.getCreatedDate()), formatMoney(ConvertDoubleToInt(nh.getTotal())) + "đ"
         });
     }
-
-    
 
     public void viewTableImport(JTable tblImport, ArrayList<importDTO> list) throws ParseException {
         convertBackgroundOfTable(tblImport);

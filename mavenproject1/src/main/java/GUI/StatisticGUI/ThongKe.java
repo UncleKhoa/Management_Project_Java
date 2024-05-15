@@ -22,6 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import static Model.helpers.*;
 
 /**
  *
@@ -42,6 +44,11 @@ public class ThongKe extends javax.swing.JPanel {
     ThongKeBH_KhachHangTable BH_KH;
     ThongKeBH_KhachHangBarChart BH_KH_Chart;
     private ArrayList<doanhthuDTO> ds_DTSP = new ArrayList<>();
+    
+    JTable table_dtsp;
+    JTable table_dttn;
+    JTable table_bhkh;
+    int flag = 0;
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
@@ -92,6 +99,8 @@ public class ThongKe extends javax.swing.JPanel {
         int b = staffBUS.Get_SLNV();
         lblNBStf.setText(""+b);
         
+        cbMethod.setLabeText("Chọn hình thức");
+        cbType.setLabeText("Chọn dạng");
         cbMethod.addItem("Doanh thu");
         cbMethod.addItem("Bán hàng");
         
@@ -608,6 +617,8 @@ public class ThongKe extends javax.swing.JPanel {
                 DT_SP.setSize(426, 420);
                 pannelTable.add(DT_SP);
                 pannelTable.updateUI();
+                flag = 1;
+                table_dtsp = DT_SP.getTable();
                 
                 pannelChart.removeAll();
                 DT_SP_Chart = new ThongKeDT_SanPhamBarChart();
@@ -628,6 +639,8 @@ public class ThongKe extends javax.swing.JPanel {
                     DT_TN.setSize(426, 420);
                     pannelTable.add(DT_TN);
                     pannelTable.updateUI();
+                    flag = 2;
+                    table_dttn = DT_TN.getList_DTTN();
 
                     pannelChart.removeAll();
                     DT_TN_Chart = new ThongKeDT_TheoNgayBarChart(getDateStartChooser(), getDateEndChooser());
@@ -642,7 +655,9 @@ public class ThongKe extends javax.swing.JPanel {
                 BH_KH = new ThongKeBH_KhachHangTable();
                 BH_KH.setSize(426, 420);
                 pannelTable.add(BH_KH);
-                pannelTable.updateUI();                
+                pannelTable.updateUI();   
+                flag = 2;
+                table_bhkh = BH_KH.getTable_BHKH();
                 
                 pannelChart.removeAll();
                 BH_KH_Chart = new ThongKeBH_KhachHangBarChart();
@@ -656,6 +671,18 @@ public class ThongKe extends javax.swing.JPanel {
         else{
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn đầy đủ");
             alert.setVisible(true);
+        }
+    }
+    
+    public void printExcel(){
+        if(flag == 1){
+            Export_Excell(table_dtsp);
+        }
+        if(flag == 2){
+            Export_Excell(table_dttn);
+        }
+        if(flag == 3){
+            Export_Excell(table_bhkh);
         }
     }
     
@@ -700,7 +727,7 @@ public class ThongKe extends javax.swing.JPanel {
     }//GEN-LAST:event_btnShowActionPerformed
 
     private void btnExportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportExcelActionPerformed
-        // TODO add your handling code here:
+        printExcel();
     }//GEN-LAST:event_btnExportExcelActionPerformed
 
     private void btnDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailActionPerformed

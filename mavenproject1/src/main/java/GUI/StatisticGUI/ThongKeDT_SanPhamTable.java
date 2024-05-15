@@ -13,6 +13,8 @@ import BUS.doanhthuBUS;
 import java.awt.Font;
 import Model.CustomTableCellRenderer;
 import static Model.helpers.*;
+import javax.swing.JTable;
+import Model.MyScrollBar;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
@@ -32,11 +34,17 @@ public class ThongKeDT_SanPhamTable extends javax.swing.JPanel {
      */
     public ThongKeDT_SanPhamTable() {
         initComponents();
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         doanhthuBUS doanhthuBUS = new doanhthuBUS();
         JTableHeader header = tblDTSP.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         ds_dtsp = doanhthuBUS.getList_DTSP();
         doanhthuBUS.viewData(tblDTSP, ds_dtsp);
+        
+    }
+    
+    public JTable getTable(){
+        return tblDTSP;
     }
 
     /**

@@ -46,6 +46,7 @@ public class import_detailDAO {
         }
         return list;
     }
+
     public void add(import_detailDTO a) throws SQLException
     {
         String sql = "INSERT INTO importdetail VALUES ('"+ a.getImportDTID() +"',"+
@@ -59,4 +60,5 @@ public class import_detailDAO {
         p.executeUpdate();
         
     }
+
 }

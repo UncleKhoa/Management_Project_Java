@@ -12,6 +12,7 @@ public class import_detailDTO {
     String importDTID, importID, productID, productName;
     int quantity;
     double unitPrice, subTotal;
+
 public import_detailDTO(String importDTID, String importID, String productID, int quantity, double unitPrice, double subTotal,boolean flag) {
         this.importDTID = importDTID;
         this.importID = importID;
@@ -36,6 +37,7 @@ public import_detailDTO(String importDTID, String importID, String productID, in
         
     }
     
+
 
     public void setImportDTID(String importDTID) {
         this.importDTID = importDTID;
