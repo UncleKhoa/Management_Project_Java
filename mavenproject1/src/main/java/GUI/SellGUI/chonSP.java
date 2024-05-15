@@ -25,7 +25,6 @@ import Model.MyScrollBar;
  *
  *
  */
-
 public class chonSP extends javax.swing.JFrame {
 
     /**
@@ -41,9 +40,9 @@ public class chonSP extends javax.swing.JFrame {
     //TableModel model;
     TableModel model2;
     sell _testsell;
-    
+
     productDTO x;
-    
+
     public chonSP() {
         initComponents();
     }
@@ -56,16 +55,11 @@ public class chonSP extends javax.swing.JFrame {
         this.productBUS = new productBUS();
         list = productBUS.getList();
         _testsell = testsell;
-//        CustomTableCellRenderer cellRenderer = new CustomTableCellRenderer();
-//        tblSP.setDefaultRenderer(Object.class, cellRenderer);
         JTableHeader header = tblSP.getTableHeader();
-        header.setFont(new Font("Tahoma", Font.BOLD, 16)); // Font in đậm
+        header.setFont(new Font("Tahoma", Font.BOLD, 16));
         header.setResizingAllowed(false);
-        // header.setDefaultRenderer(new CustomHeaderRenderer());
-        //JTableHeader header1 = tblSP.getTableHeader();
-        // header1.setDefaultRenderer(new CustomHeaderRenderer());
         ViewData(list);
-        
+
     }
 
     public void ViewData(ArrayList<productDTO> list) {
@@ -80,36 +74,21 @@ public class chonSP extends javax.swing.JFrame {
         tblSP.getColumnModel().getColumn(2).setPreferredWidth(110);
         tblSP.getColumnModel().getColumn(3).setPreferredWidth(90);
         removeData();
-        
+
         for (productDTO product : list) {
             addData(product);
-            
+
         }
-        
+
     }
-  
-//    public void addList(ArrayList<productDTO> listsp){
-//         for(productDTO product:listsp)
-//        {
-//             addData1(product);
-//            
-//        }
-//        
-//    }
-    public void addData(productDTO product)
-    {
+
+    public void addData(productDTO product) {
         model.addRow(new Object[]{
-            product.getProducctID(), product.getBrandID(),product.getProductName(),ConvertDoubleToInt(product.getUnitPrice())
+            product.getProducctID(), product.getBrandID(), product.getProductName(), ConvertDoubleToInt(product.getUnitPrice())
         });
     }
-//     public void addData1(productDTO product)
-//    {
-//        model1.addRow(new Object[]{
-//            product.getProducctID(), product.getBrandID(),product.getProductName(),sl,productBUS.ConvertDoubleToInt(product.getUnitPrice())
-//        });
-//    }
-    public void removeData()
-    {
+
+    public void removeData() {
         int count = model.getRowCount();
         for (int i = count - 1; i >= 0; i--) {
             model.removeRow(i);
@@ -234,31 +213,21 @@ public class chonSP extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {                                   
-  
-    }                                  
-  
+    private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {
+
+    }
+
 
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
-        // TODO add your handling code here:
-
         TableModel model2 = tblSP.getModel();
 
-       //int [] select = tblSP.getSelectedRows();
-       
-         Object [] newFormRow = new Object[5];
-           
-                int check = 0;
-                int choose = tblSP.getSelectedRow();
-               // Object [] newFormRows = new Object[5];
-                newFormRow[0] = model2.getValueAt(choose,0);
-                // Object id = model2.getValueAt(choose,0);
-                //String id = id.toString();
-             //  form.txtid.setText(id);
-                for(int row = 0; row<_testsell.model.getRowCount();row++)
-           {
-               Object id = _testsell.model.getValueAt(row, 0);
-//            //   String productid = id.toString();
+        Object[] newFormRow = new Object[5];
+
+        int check = 0;
+        int choose = tblSP.getSelectedRow();
+        newFormRow[0] = model2.getValueAt(choose, 0);
+        for (int row = 0; row < _testsell.model.getRowCount(); row++) {
+            Object id = _testsell.model.getValueAt(row, 0);
             if (newFormRow[0].equals(id)) {
                 Object s = _testsell.model.getValueAt(row, 3);
                 int quantity = (int) s;
@@ -266,27 +235,23 @@ public class chonSP extends javax.swing.JFrame {
                 newFormRow[1] = model2.getValueAt(choose, 1);
                 newFormRow[2] = model2.getValueAt(choose, 2);
                 newFormRow[3] = quantity;
-                newFormRow[4] = model2.getValueAt(choose, 3);                
-                _testsell.model.setValueAt(quantity, row, 3);                
+                newFormRow[4] = model2.getValueAt(choose, 3);
+                _testsell.model.setValueAt(quantity, row, 3);
                 check = 1;
             }
-            
+
         }
 
-        // newFormRow[0] = model2.getValueAt(select[i],0);
         if (check == 0) {
             newFormRow[1] = model2.getValueAt(choose, 1);
             newFormRow[2] = model2.getValueAt(choose, 2);
             newFormRow[3] = sl;
-            newFormRow[4] = model2.getValueAt(choose, 3);            
-            _testsell.model.addRow(newFormRow);            
+            newFormRow[4] = model2.getValueAt(choose, 3);
+            _testsell.model.addRow(newFormRow);
         }
-        
-
     }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
         this.hide();
         _testsell.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed

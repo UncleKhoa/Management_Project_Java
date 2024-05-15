@@ -34,6 +34,7 @@ import GUI.PromotionGUI.KhuyenMaiGUI;
 import Model.NonEditableTableModel;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
+import static Model.helpers.*;
 
 /**
  *
@@ -388,7 +389,7 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
     
     public void addLineData(productDTO product){
         model.addRow(new Object[]{
-            product.getProducctID(), product.getBrandID(), product.getProductName(), productBUS.ConvertDoubleToInt(product.getUnitPrice())
+            product.getProducctID(), product.getBrandID(), product.getProductName(), ConvertDoubleToInt(product.getUnitPrice())
         });
     }
     

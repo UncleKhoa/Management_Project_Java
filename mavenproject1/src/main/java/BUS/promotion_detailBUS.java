@@ -13,31 +13,32 @@ import java.sql.SQLException;
  */
 public class promotion_detailBUS {
 
+    public String getPromotionID(String productID) throws SQLException {
+        String id = "NORMAL";
+        promotion_detailDAO promotion_detail = new promotion_detailDAO();
+        String promotionID = promotion_detail.getIDbyProductID(productID);
+        String status = getStatus(promotionID);
+        if (promotionID != null && !promotionID.equals(id) && status.equals("active")) {
+            return promotionID;
+        }
+        return id;
+    }
+
     public float promotion_percent(String productID) throws SQLException {
         String id = "NORMAL";
         float percent = 0;
         promotion_detailDAO promotion_detail = new promotion_detailDAO();
         String promotionID = promotion_detail.getIDbyProductID(productID);
-        if (promotionID != null && !promotionID.equals(id)) {
+        String status = getStatus(promotionID);
+        if (promotionID != null && !promotionID.equals(id) && status.equals("active")) {
             percent = promotion_detail.getPromotion_percent(promotionID);
         }
         return percent;
     }
 
-    public String getPromotionID(String productID) throws SQLException {
-        String id = "NORMAL";
+    public String getStatus(String promotionID) throws SQLException {
         promotion_detailDAO promotion_detail = new promotion_detailDAO();
-        String promotionID = promotion_detail.getIDbyProductID(productID);
-        if (promotionID != null && !promotionID.equals(id)) {
-            return promotionID;
-        }
-//                  else {
-//                      if(promotionID==null)
-//                          System.out.println("null");
-//                      if(promotionID.equals(id))
-//                          System.out.println("ID");
-//                  }
-        return id;
-    }       
-    
+        return promotion_detail.getStatus(promotionID);
+    }
+
 }

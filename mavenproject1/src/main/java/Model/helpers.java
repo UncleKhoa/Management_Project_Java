@@ -216,7 +216,8 @@ public class helpers {
     static public boolean ComparePrice(int a, int b) {
         return a <= b;
     }
- public static boolean containsDigit(String inputString) {
+
+    public static boolean containsDigit(String inputString) {
         for (char c : inputString.toCharArray()) {
             if (Character.isDigit(c)) {
                 return true;
@@ -224,7 +225,8 @@ public class helpers {
         }
         return false;
     }
-  public static boolean containsLetter(String inputString) {
+
+    public static boolean containsLetter(String inputString) {
         for (char c : inputString.toCharArray()) {
             if (Character.isLetter(c)) {
                 return true;
