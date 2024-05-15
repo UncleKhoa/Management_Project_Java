@@ -12,6 +12,7 @@ import Model.NonEditableTableModel;
 import java.util.ArrayList;
 import static Model.helpers.*;
 import java.awt.Font;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -117,6 +118,28 @@ public class importBUS {
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
+    }
+    public void add(importDTO i) throws SQLException
+    {
+        importDAO dao =new importDAO();
+        dao.add(i);
+    }
+      public String createId()
+    {
+        importDAO dao = new importDAO();
+        String maKh;
+        ds_nh = new ArrayList<>();
+        ds_nh= dao.list();
+        int l = ds_nh.size();
+        l = l + 1;
+        if (l < 10) {
+            maKh = "PN0" + String.valueOf(l);
+        } else {
+            maKh = "PN" + String.valueOf(l);
+        }
+
+        return maKh;
+
     }
     
 }
