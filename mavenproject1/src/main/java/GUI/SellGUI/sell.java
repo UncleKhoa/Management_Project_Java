@@ -54,6 +54,7 @@ import Model.CustomJasperViewer;
 import Model.CustomTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import static Model.helpers.addTextChanged;
+
 /**
  *
  * @author MY PC
@@ -94,46 +95,6 @@ public class sell extends javax.swing.JPanel {
         return null;
     }
 
-//    public sell(MainGUI main) {
-//        initComponents();
-//
-//        ImageIcon hoadon = scaleImage("bill.png", 83, 84);
-//        lbHD.setIcon(hoadon);
-//
-//        ImageIcon Sdt = scaleImage("bill.jpg", 47, 45);
-//        lbSdt.setIcon(Sdt);
-//
-//        this.btnThanhtoan.hide();
-//        this.btnXuathd.hide();
-//        this.btnHuy.hide();
-//        this.lbXemkm.hide();
-//        this.txtTiennhan.setVisible(false);
-//        customerBUS customer = new customerBUS();
-//        maingui = main;
-//        iD = maingui.id;
-//        this.lbNhanvien.setText(maingui.name);
-//        receptBUS receipt = new receptBUS();
-//        String mhd = receipt.createId();
-//        this.lbhd.setText(mhd);
-//
-//        today = LocalDate.now();
-//        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//        formattedDate = today.format(formatter);
-//        lbNgay.setText(formattedDate);
-//
-//        convertBackgroundOfTable(tblProduct);
-//        String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Số lượng", "Giá"};
-//        model = (DefaultTableModel) tblProduct.getModel();
-//        model.setColumnIdentifiers(header);
-//        tblProduct.getColumnModel().getColumn(0).setPreferredWidth(110);
-//        tblProduct.getColumnModel().getColumn(1).setPreferredWidth(90);
-//        tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
-//        tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
-//        tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
-//        removeData();
-//    }
-
-
     public sell(MainGUI main) {
         initComponents();
 
@@ -152,7 +113,7 @@ public class sell extends javax.swing.JPanel {
         this.txtTiennhan.setVisible(false);
         //object [] o;
         customerBUS customer = new customerBUS();
-       // showkm = show;
+        // showkm = show;
         maingui = main;
         iD = maingui.id;
         this.lbNhanvien.setText(maingui.name);
@@ -163,9 +124,9 @@ public class sell extends javax.swing.JPanel {
         today = LocalDate.now();
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         formattedDate = today.format(formatter);
-        
+
         lbNgay.setText(formattedDate);
-        
+
         JTableHeader header1 = tblProduct.getTableHeader();
         header1.setDefaultRenderer(new CustomHeaderRenderer());
 
@@ -178,12 +139,12 @@ public class sell extends javax.swing.JPanel {
         tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
         tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
         tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
-        
+
         CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
         tblProduct.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         tblProduct.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         tblProduct.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        
+
         removeData();
     }
 
@@ -734,12 +695,12 @@ public class sell extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSdtActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-          // TODO add your handling code here:
-            if (this.tblProduct.getRowCount() == 0) {
-                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
-                alert.setVisible(true);
-                return;
-         }
+        // TODO add your handling code here:
+        if (this.tblProduct.getRowCount() == 0) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
+            alert.setVisible(true);
+            return;
+        }
         try {
 
             int[] rows = tblProduct.getSelectedRows();
@@ -784,11 +745,10 @@ public class sell extends javax.swing.JPanel {
         // TODO add your handling code here:
         //       this.btnThanhtoan.hide();
         //  this.btnXuathd.show();
-        if(this.txtTiennhan.getText().trim().isEmpty())
-        {
-             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Chưa nhập tiền nhận");
-             alert.setVisible(true);
-             return;
+        if (this.txtTiennhan.getText().trim().isEmpty()) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Chưa nhập tiền nhận");
+            alert.setVisible(true);
+            return;
         }
         this.btnHuy.hide();
         this.btnLammoi.show();
@@ -798,28 +758,20 @@ public class sell extends javax.swing.JPanel {
         Date create_day = java.sql.Date.valueOf(today);
         String tien = this.txtTiennhan.getText().replace(".", "");
 
-        String tien = this.txtTiennhan.getText();
-        if (containsLetter(tien)) {
-            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tiền nhận không hợp lệ");
-            alert.setVisible(true);
-            return;
-        } else {
-            try {
-                int tn = Integer.parseInt(tien);
-                String tiennhan = formatMoney(tn);
-                this.txtTiennhan.setText(tiennhan);
-                if (tn < tt) {
-                    MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng nhập đủ số tiền");
-                    alert.setVisible(true);
-                    return;
-                }
-                int tienthua = tn - tt;
-                String thua = formatMoney(tienthua);
-                this.lbTienthua.setText(thua);
-                // Sử dụng biến tn ở đây
-            } catch (NumberFormatException e) {
-
+        try {
+            int tn = Integer.parseInt(tien);
+            String tiennhan = formatMoney(tn);
+            this.txtTiennhan.setText(tiennhan);
+            if (tn < tt) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng nhập đủ số tiền");
+                alert.setVisible(true);
+                return;
             }
+            int tienthua = tn - tt;
+            String thua = formatMoney(tienthua);
+            this.lbTienthua.setText(thua);
+        } catch (NumberFormatException e) {
+
         }
         double Total = Double.valueOf(tt);
 
@@ -834,7 +786,6 @@ public class sell extends javax.swing.JPanel {
         receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
         int l = receiptDetailBUS.list_size();
         l = l + 1;
-        // List<table_for_receptDTO> dataList = new ArrayList<>();
         List<table_receiptDTO> dataList = new ArrayList<>();
         for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
 
@@ -851,14 +802,12 @@ public class sell extends javax.swing.JPanel {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
             }
             Object sl = model.getValueAt(row, 3);
-            int quantity = sl instanceof Integer ? (int) sl : 0; // Safely cast to Integer
+            int quantity = sl instanceof Integer ? (int) sl : 0;
 
             Object dongia = model.getValueAt(row, 4);
-            double unitPrice = 0.0; // Default value if parsing fails
+            double unitPrice = 0.0;
             if (dongia instanceof Number) {
-             //   unitPrice = ((Number) dongia).doubleValue() * quantity;
-             // Safely parse to double
-             unitPrice = ((Number) dongia).doubleValue();
+                unitPrice = ((Number) dongia).doubleValue();
             }
 
             double subTotal = 0;
@@ -883,7 +832,6 @@ public class sell extends javax.swing.JPanel {
             String soluong = Integer.toString(quantity);
             Object tenSP = model.getValueAt(row, 2);
             String ten = tenSP.toString();
-          //  int u = ConvertDoubleToInt(unitPrice);
             int u = ConvertDoubleToInt(unitPrice);
             String giagoc = formatMoney(u);
             int s = ConvertDoubleToInt(sub);
@@ -913,21 +861,17 @@ public class sell extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThanhtoanActionPerformed
 
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
-        // TODO add your handling code here:
         chonSP choose = new chonSP(this);
         choose.setVisible(true);
     }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
-   //     if(this.tblProduct)
-         if (this.tblProduct.getRowCount() == 0) {
-                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
-                alert.setVisible(true);
-                return;
-         }
+        if (this.tblProduct.getRowCount() == 0) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
+            alert.setVisible(true);
+            return;
+        }
         if (txtSp.getText().trim().isEmpty()) {
-            // alert.setVisible(true);
             MyMessageAlert alert1 = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm cần sửa");
             alert1.setVisible(true);
         } else {
@@ -947,10 +891,9 @@ public class sell extends javax.swing.JPanel {
                         alert.setVisible(true);
                     } else {
                         model.setValueAt(sl, row, 3);
-                       if(this.tblProduct.getRowCount()==0)
-                       {
-                           this.txtSp.setText("");
-                       }
+                        if (this.tblProduct.getRowCount() == 0) {
+                            this.txtSp.setText("");
+                        }
                     }
 
                 } catch (SQLException ex) {
@@ -959,7 +902,7 @@ public class sell extends javax.swing.JPanel {
 
             }
 
-        }       
+        }
         btnThanhtoan.hide();
     }//GEN-LAST:event_btnSuaActionPerformed
     private int Tinh(String productID, int sl, int dongia) {
@@ -1015,7 +958,7 @@ public class sell extends javax.swing.JPanel {
         parameters.put("tt", tt);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dataList);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-        
+
         CustomJasperViewer customViewer = new CustomJasperViewer(jasperPrint); // Sử dụng CustomJasperViewer thay vì JasperViewer
         customViewer.setVisible(true); // Hiển thị cửa sổ báo cáo
 
@@ -1147,8 +1090,6 @@ public class sell extends javax.swing.JPanel {
             int gia = ((Integer) g).intValue();
             int giasp = sL * gia;
             tinhkm = Tinh(productID, sL, gia);
-            //  if(tinhkm<giasp)
-            //{
             Object[] newFormRow = new Object[6];
             newFormRow[0] = id; // Mã sản phẩm
             newFormRow[1] = g; // Giá gốc

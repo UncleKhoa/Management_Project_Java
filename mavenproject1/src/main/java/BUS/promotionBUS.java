@@ -33,7 +33,6 @@ public class promotionBUS {
     DefaultTableModel model;
     private ArrayList<promotionDTO> dsPromo;
     private ArrayList<promotion_detailDTO> dsPromo_detail;
-    private ArrayList<promotionDTO> dsPromo_search;
     private promotionDAO promotionDAO;
     private promotion_detailDAO promotion_detailDAO;
 
@@ -135,15 +134,15 @@ public class promotionBUS {
 
     }
     
-    public void list_search(String a){
-        promotionDAO promotionDAO = new promotionDAO();
-        dsPromo_search = new ArrayList<>();
-        dsPromo_search = promotionDAO.Search(a);
-    }
-    
-    public ArrayList<promotionDTO> getList_Search(String a) {     
-        list_search(a);
-        return dsPromo_search;
+    public ArrayList<promotionDTO> getList_Search(String a) {    
+        ArrayList<promotionDTO> oldlist = dsPromo;
+        ArrayList<promotionDTO> newList = new ArrayList<>();
+        for(promotionDTO promo:oldlist){
+            if(promo.getPromotionID().toLowerCase().contains(a.toLowerCase())){
+                newList.add(promo);
+            }
+        }
+        return newList;
     }
     
     public boolean Check_Code(String code){

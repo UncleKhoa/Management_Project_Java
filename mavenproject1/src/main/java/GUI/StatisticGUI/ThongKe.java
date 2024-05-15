@@ -578,8 +578,7 @@ public class ThongKe extends javax.swing.JPanel {
     }
 
     public void Method() {
-        Object selectedItem = cbMethod.getSelectedItem();
-        System.err.println(selectedItem);
+        Object selectedItem = cbMethod.getSelectedItem();        
         if (selectedItem != null) {
             if (selectedItem.equals("Doanh thu")) {
                 cbType.addItem("Sản phẩm");

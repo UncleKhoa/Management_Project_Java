@@ -252,7 +252,7 @@ public class receipt extends javax.swing.JFrame {
                 btnAcceptMethodNHActionPerformed(evt);
             }
         });
-        jPanel4.add(btnAcceptMethodNH, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, -1, -1));
+        jPanel4.add(btnAcceptMethodNH, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 80, -1));
 
         btnAcceptImport.setText("Xác nhận");
         btnAcceptImport.addActionListener(new java.awt.event.ActionListener() {

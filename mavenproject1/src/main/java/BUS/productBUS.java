@@ -28,10 +28,6 @@ public class productBUS {
         return dsProduct;
     }
 
-    public int ConvertDoubleToInt(double price) {
-        return (int) price;
-    }
-
     public int getQuantity(String productID) throws SQLException {
         productDAO dao = new productDAO();
         return dao.getQuantity(productID);
@@ -46,19 +42,21 @@ public class productBUS {
         productDAO dao = new productDAO();
         dao.update_quantity(productID, sl);
     }
+
     public void sub_quantity(String productID, int sl) throws SQLException {
         productDAO dao = new productDAO();
         dao.sub_quantity(productID, sl);
     }
+
     public ArrayList<productDTO> searchByIđAnName(String s) {
         ArrayList<productDTO> list = new ArrayList<>();
-        for (productDTO product: list) {
+        for (productDTO product : list) {
             if (product.getProducctID().toLowerCase().contains(s.toLowerCase())
-             &&product.getProductName().toLowerCase().contains(s.toLowerCase()) ) {
+                    && product.getProductName().toLowerCase().contains(s.toLowerCase())) {
                 list.add(product);
             }
         }
-        return  list;
+        return list;
     }
 
 }

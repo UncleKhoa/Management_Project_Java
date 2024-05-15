@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
+import Model.MyScrollBar;
 /**
  *
  * @author MY PC
@@ -37,9 +37,9 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
        JFrame parentFrame;
        private ArrayList<supplierDTO> listncc;
     public NhaCungCapGUI() {
-      
-     
         initComponents();
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
+        jScrollPane2.setVerticalScrollBar(new MyScrollBar());
         this.txtMancc.setEditable(false);
         On(false);
         onButton(false,true);
