@@ -13,18 +13,31 @@ public class import_detailDTO {
     int quantity;
     double unitPrice, subTotal;
 
-    public import_detailDTO(String importDTID, String importID, String productName, int quantity, double unitPrice, double subTotal) {
+public import_detailDTO(String importDTID, String importID, String productID, int quantity, double unitPrice, double subTotal,boolean flag) {
         this.importDTID = importDTID;
         this.importID = importID;
-        this.productName = productName;
+        this.productID = productID;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.subTotal = subTotal;
     }
     
+    public import_detailDTO(String importDTID, String importID, String productName, int quantity, double unitPrice, double subTotal) {
+       this.importDTID = importDTID;
+       this.importID = importID;
+       this.productName = productName;
+      this.quantity = quantity;
+       this.unitPrice = unitPrice;
+      this.subTotal = subTotal;
+   }
+    
+
+    
     public import_detailDTO(){
         
     }
+    
+
 
     public void setImportDTID(String importDTID) {
         this.importDTID = importDTID;
