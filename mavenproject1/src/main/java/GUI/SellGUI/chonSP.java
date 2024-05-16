@@ -3,8 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI.SellGUI;
+
 import DTO.productDTO;
 import BUS.productBUS;
+import DTO.table_receiptDTO;
+import static Model.helpers.ConvertDoubleToInt;
 //import Model.CustomHeaderRenderer;
 //import Model.CustomTableCellRenderer;
 import static Model.helpers.convertBackgroundOfTable;
@@ -14,101 +17,80 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
+import Model.MyScrollBar;
+
 /**
  *
  * @author MY PC
- * 
- * 
+ *
+ *
  */
-
 public class chonSP extends javax.swing.JFrame {
 
     /**
      * Creates new form chonSP
      */
-     private ArrayList<productDTO> list = new ArrayList<>();
-     private ArrayList<productDTO> listsp = new ArrayList<>();
-     public static int pos =0;
-      productBUS productBUS;
-      private int sl =1;
-      DefaultTableModel model;
-      DefaultTableModel model1;
-      //TableModel model;
-      TableModel model2;
-      sell _testsell;
-  
-      productDTO x;
-      
-      public chonSP()
-      {
-          initComponents();
-      }
+    private ArrayList<productDTO> list = new ArrayList<>();
+    private ArrayList<productDTO> listsp = new ArrayList<>();
+    public static int pos = 0;
+    productBUS productBUS;
+    private int sl = 1;
+    DefaultTableModel model;
+    DefaultTableModel model1;
+    //TableModel model;
+    TableModel model2;
+    sell _testsell;
+
+    productDTO x;
+
+    public chonSP() {
+        initComponents();
+    }
+
     public chonSP(sell testsell) {
         initComponents();
-         setLocationRelativeTo(null);
-         this.dispose();
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
+        setLocationRelativeTo(null);
+        this.dispose();
         this.productBUS = new productBUS();
         list = productBUS.getList();
-        _testsell=testsell;
-//        CustomTableCellRenderer cellRenderer = new CustomTableCellRenderer();
-//        tblSP.setDefaultRenderer(Object.class, cellRenderer);
+        _testsell = testsell;
         JTableHeader header = tblSP.getTableHeader();
-        header.setFont(new Font("Tahoma", Font.BOLD, 16)); // Font in đậm
+        header.setFont(new Font("Tahoma", Font.BOLD, 16));
         header.setResizingAllowed(false);
-       // header.setDefaultRenderer(new CustomHeaderRenderer());
-        //JTableHeader header1 = tblSP.getTableHeader();
-       // header1.setDefaultRenderer(new CustomHeaderRenderer());
         ViewData(list);
-       
-        
-        
-        
+
     }
-    public void ViewData(ArrayList<productDTO> list)
-    {
+
+    public void ViewData(ArrayList<productDTO> list) {
         convertBackgroundOfTable(tblSP);
-        String[] header = {"Mã sản phẩm","Hãng","Tên sản phẩm","Giá"};
-        model = (DefaultTableModel) 
-        tblSP.getModel();
+
+        String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Giá"};
+        model = (DefaultTableModel) tblSP.getModel();
+
         model.setColumnIdentifiers(header);
-        tblSP.getColumnModel().getColumn(0).setPreferredWidth(70);
+        tblSP.getColumnModel().getColumn(0).setPreferredWidth(90);
         tblSP.getColumnModel().getColumn(1).setPreferredWidth(90);
         tblSP.getColumnModel().getColumn(2).setPreferredWidth(110);
         tblSP.getColumnModel().getColumn(3).setPreferredWidth(90);
         removeData();
-        
-        for(productDTO product:list)
-        {
-             addData(product);
-            
+
+        for (productDTO product : list) {
+            addData(product);
+
         }
-       
+
     }
-    public void addList(ArrayList<productDTO> listsp){
-         for(productDTO product:listsp)
-        {
-             addData1(product);
-            
-        }
-        
-    }
-    public void addData(productDTO product)
-    {
+
+    public void addData(productDTO product) {
         model.addRow(new Object[]{
-            product.getProducctID(), product.getBrandID(),product.getProductName(),productBUS.ConvertDoubleToInt(product.getUnitPrice())
+            product.getProducctID(), product.getBrandID(), product.getProductName(), ConvertDoubleToInt(product.getUnitPrice())
         });
     }
-     public void addData1(productDTO product)
-    {
-        model1.addRow(new Object[]{
-            product.getProducctID(), product.getBrandID(),product.getProductName(),sl,productBUS.ConvertDoubleToInt(product.getUnitPrice())
-        });
-    }
-    public void removeData()
-    {
+
+    public void removeData() {
         int count = model.getRowCount();
-        for(int i= count-1;i>=0;i--)
-        {
+        for (int i = count - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
@@ -131,6 +113,7 @@ public class chonSP extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -185,28 +168,35 @@ public class chonSP extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(202, 202, 202))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 17, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(202, 202, 202))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
                 .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
 
@@ -223,62 +213,45 @@ public class chonSP extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPMouseClicked
+    private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {
 
-         
-    }//GEN-LAST:event_tblSPMouseClicked
-  
+    }
+
+
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
-        // TODO add your handling code here:
-
-
         TableModel model2 = tblSP.getModel();
-       int [] select = tblSP.getSelectedRows();
-       
-         Object [] newFormRow = new Object[5];
-           
-                int check = 0;
-                int choose = tblSP.getSelectedRow();
-               // Object [] newFormRows = new Object[5];
-                newFormRow[0] = model2.getValueAt(choose,0);
-                for(int row = 0; row<_testsell.model.getRowCount();row++)
-           {
-               Object id = _testsell.model.getValueAt(row, 0);
-//            //   String productid = id.toString();
-                  if( newFormRow[0].equals(id))
-             {
-                 Object s= _testsell.model.getValueAt(row, 3);
-                 int quantity= (int)s;
-                  quantity = quantity +1;
-                  newFormRow[1] = model2.getValueAt(choose,1);
-                  newFormRow[2] = model2.getValueAt(choose,2);
-                  newFormRow[3] = quantity ;
-                 newFormRow[4] = model2.getValueAt(choose,3);                 
-                 _testsell.model.setValueAt(quantity , row, 3);        
-                 check = 1;
-             }
-               
-              }
-           
-           // newFormRow[0] = model2.getValueAt(select[i],0);
-           if(check == 0)
-           {
-                newFormRow[1] = model2.getValueAt(choose,1);
-                newFormRow[2] = model2.getValueAt(choose,2);
-                newFormRow[3] = sl;
-                newFormRow[4] = model2.getValueAt(choose,3);    
-                _testsell.model.addRow(newFormRow);  
-           }
-               
-       
 
+        Object[] newFormRow = new Object[5];
 
-               
-                
+        int check = 0;
+        int choose = tblSP.getSelectedRow();
+        newFormRow[0] = model2.getValueAt(choose, 0);
+        for (int row = 0; row < _testsell.model.getRowCount(); row++) {
+            Object id = _testsell.model.getValueAt(row, 0);
+            if (newFormRow[0].equals(id)) {
+                Object s = _testsell.model.getValueAt(row, 3);
+                int quantity = (int) s;
+                quantity = quantity + 1;
+                newFormRow[1] = model2.getValueAt(choose, 1);
+                newFormRow[2] = model2.getValueAt(choose, 2);
+                newFormRow[3] = quantity;
+                newFormRow[4] = model2.getValueAt(choose, 3);
+                _testsell.model.setValueAt(quantity, row, 3);
+                check = 1;
+            }
+
+        }
+
+        if (check == 0) {
+            newFormRow[1] = model2.getValueAt(choose, 1);
+            newFormRow[2] = model2.getValueAt(choose, 2);
+            newFormRow[3] = sl;
+            newFormRow[4] = model2.getValueAt(choose, 3);
+            _testsell.model.addRow(newFormRow);
+        }
     }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
         this.hide();
         _testsell.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed

@@ -8,6 +8,9 @@ import BUS.customerBUS;
 import DTO.customerDTO;
 import Model.MyMessageAccept;
 import Model.MyMessageAlert;
+import static Model.helpers.Check_Number;
+import static Model.helpers.containsDigit;
+import static Model.helpers.containsLetter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -172,33 +175,31 @@ public class addKh extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(35, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(69, 69, 69)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtGioitinh, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                .addComponent(txtMakh, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                .addComponent(txtTen, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                .addComponent(txtHo, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(84, 84, 84)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtDiachi, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(69, 69, 69)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtGioitinh, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                    .addComponent(txtMakh, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                    .addComponent(txtTen, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                    .addComponent(txtHo, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(84, 84, 84)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDiachi, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(216, 216, 216))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(123, 123, 123)))))
+                                    .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
@@ -271,7 +272,14 @@ public class addKh extends javax.swing.JFrame {
     private void txtMakhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMakhActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMakhActionPerformed
-
+// public static boolean containsDigit(String inputString) {
+//        for (char c : inputString.toCharArray()) {
+//            if (Character.isDigit(c)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
         customerBUS cus= new customerBUS();
@@ -284,26 +292,105 @@ public class addKh extends javax.swing.JFrame {
         String phone = this.txtSdt.getText();
         String mail = this.txtGmail.getText();
         String diachi=this.txtDiachi.getText();
+        if(containsDigit(firstName))
+        {
+              MyMessageAlert alert = new MyMessageAlert(this, "Họ sai định dạng");
+              alert.setVisible(true);
+              return;
+        }
+          if(containsDigit(lastName))
+        {
+              MyMessageAlert alert = new MyMessageAlert(this, "Tên sai định dạng");
+              alert.setVisible(true);
+              return;
+        }
+              if(containsDigit(gender))
+        {
+              MyMessageAlert alert = new MyMessageAlert(this, "Giới tính sai định dạng");
+              alert.setVisible(true);
+              return;
+        }
+                    if(containsLetter(phone))
+        {
+              MyMessageAlert alert = new MyMessageAlert(this, "Số điện thoại sai định dạng");
+              alert.setVisible(true);
+              return;
+        }
+                if (this.txtHo.getText().trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng nhập họ ");
+                alert.setVisible(true);
+                return;
+         }
+                     if (this.txtTen.getText().trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng nhập tên ");
+                alert.setVisible(true);
+                return;
+         }
+                   if (this.txtDiachi.getText().trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng nhập giới tính ");
+                alert.setVisible(true);
+                return;
+         }
+                  if (this.txtSdt.getText().trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng nhập số điện thoại ");
+                alert.setVisible(true);
+                return;
+         }
+                   if (this.txtGmail.getText().trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng nhập gmail ");
+                alert.setVisible(true);
+                return;
+         }
+            
+                   if (this.txtDiachi.getText().trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(this, "Vui lòng nhập địa chỉ");
+                alert.setVisible(true);
+                return;
+         }
+               customerBUS bus = new customerBUS();
+               customerDTO c = new customerDTO();
+        try {
+            c =bus.searchsdt(phone);
+            if(c!=null)
+            {
+                MyMessageAlert alert = new MyMessageAlert(this, "Số điện thoại đã tồn tại");
+                alert.setVisible(true);
+                return;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(addKh.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(phone.length()!=10)
+        {
+            MyMessageAlert alert = new MyMessageAlert(this, "Số điện thoại sai định dạng. Vui lòng nhập lại");
+            alert.setVisible(true);
+            return;
+        }
+        if(!gender.toLowerCase().equals("nữ")&& !gender.toLowerCase().equals("nam"))
+                {
+                    MyMessageAlert alert = new MyMessageAlert(this, "Giới tính sai định dạng. Vui lòng nhập lại");
+                    alert.setVisible(true);
+                     return;
+                }
+               
         customerDTO cusDTO = new customerDTO(maKH,firstName,lastName,gender,phone,mail,diachi);
         try {
-            int check = cus.add(cusDTO);
-            if(check==0){
-                MyMessageAlert alert = new MyMessageAlert(this, "Số điện thoại sai định dạng. Vui lòng nhập lại");
-            alert.setVisible(true);
-            }
-            else {
-                if(check ==-1){
-                     MyMessageAlert alert = new MyMessageAlert(this, "Giới tính sai định dạng. Vui lòng nhập lại");
-                    alert.setVisible(true);
-                }
-                else{
+             cus.add(cusDTO);
+            //if(check==0){
+             
+           // }
+           // else {
+              //  if(check ==-1){
+                     
+              //  }
+               // else{
                       MyMessageAccept accept = new MyMessageAccept(this, "Tạo mới khách hàng thành công!");
                        accept.setVisible(true);
                        testSell.lbMakh.setText(cusDTO.getCusID());
                        testSell.lbTenkh.setText(cusDTO.getFirstName() +" "+cusDTO.getLastName());
                        this.hide();
-                }
-            }
+                //}
+           // }
         } catch (SQLException ex) {
             Logger.getLogger(addKh.class.getName()).log(Level.SEVERE, null, ex);
         }

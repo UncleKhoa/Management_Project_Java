@@ -40,7 +40,7 @@ public class ThongKeBH_KhachHangBarChart extends javax.swing.JPanel {
         for (customerDTO bh_kh : bh_kh_chart) {
             String cusid = bh_kh.getCusID();
             double revenue = bh_kh.getTongtien();
-            dataset.setValue(revenue, "Doanh thu", cusid);
+            dataset.setValue(revenue, "Số tiền đã mua", cusid);
         }
         
         JFreeChart chart = ChartFactory.createBarChart("Top 5 khách hàng có tổng tiền mua cao", "", "Số tiền", dataset, PlotOrientation.VERTICAL, false, true, false);

@@ -10,6 +10,7 @@ import static DAO.DBConnect.getConnect;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 /**
  *
@@ -45,5 +46,19 @@ public class import_detailDAO {
         }
         return list;
     }
-    
+
+    public void add(import_detailDTO a) throws SQLException
+    {
+        String sql = "INSERT INTO importdetail VALUES ('"+ a.getImportDTID() +"',"+
+                "'"+a.getImportID()+"',"+
+                "'"+a.getProductID()+"',"+
+                "'"+a.getQuantity()+"',"+
+                "'"+a.getUnitPrice()+"',"+
+                "'"+a.getSubTotal()+"'"+
+        ")";
+        PreparedStatement p = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        p.executeUpdate();
+        
+    }
+
 }

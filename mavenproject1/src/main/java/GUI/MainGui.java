@@ -6,6 +6,7 @@ package GUI;
 
 import GUI.DoiThongTinGUI;
 import static DAO.DBConnect.getConnect;
+import GUI.ImportGUI.TaoPhieuNhapGUI;
 import GUI.LoginGUI.Login;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -21,6 +22,8 @@ import GUI.employee.employeeGUI;
 import GUI.SellGUI.sell;
 import GUI.SellGUI.showkm;
 import GUI.StatisticGUI.ThongKe;
+import GUI.SupplierGUI.NhaCungCapGUI;
+import GUI.employee.employee;
 import GUI.ReceiptGUI.HoaDonGUI;
 
 /**
@@ -33,6 +36,10 @@ public class MainGUI extends javax.swing.JFrame {
     private showkm showkm;
     private employeeGUI nhanvien;
     private customerGUI nguoidung;
+    private employeeGUI nhanvien;
+    private TaoPhieuNhapGUI taophieunhap;
+    private NhaCungCapGUI nhacungcap;
+    private showkm showkm; 
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
@@ -735,7 +742,7 @@ public class MainGUI extends javax.swing.JFrame {
             case 1:
 //                lblBanhang.setEnabled(true);
                 jmain.removeAll();
-                sell = new sell(this, showkm);
+                sell = new sell(this);
                 sell.setSize(950, 650);
                 jmain.add(sell);
                 jmain.updateUI();
@@ -765,6 +772,22 @@ public class MainGUI extends javax.swing.JFrame {
 //                jmain.add(nguoidung);
 //                jmain.updateUI();
 //                break;
+              case 3:
+                this.lblNhacungcap.setEnabled(true);
+                jmain.removeAll();
+                nhacungcap = new NhaCungCapGUI();
+                nhacungcap.setSize(950,650);
+                jmain.add(nhacungcap);
+                jmain.updateUI();
+                break;
+              case 8:
+                lblNhanvien.setEnabled(true);
+                jmain.removeAll();
+                nhanvien = new employeeGUI();
+                nhanvien.setSize(950,650);
+                jmain.add(nhanvien);
+                jmain.updateUI();
+                break;
             //  case 8:
 //                lblNhanvien.setEnabled(true);
 //                jmain.removeAll();
@@ -781,7 +804,6 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.add(hoadon);
                 jmain.updateUI();
                 break;
-                
             case 7:
                 lblThongke.setEnabled(true);
                 jmain.removeAll();
@@ -790,6 +812,16 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.add(thongke);
                 jmain.updateUI();
                 break;
+             case 9:
+                this.lblNhaphang.setEnabled(true);
+                jmain.removeAll();
+                taophieunhap= new TaoPhieuNhapGUI(this);
+                taophieunhap.setSize(950, 650);
+                jmain.add( taophieunhap);
+                jmain.updateUI();
+                break;
+
+
 
             case 10:
                 lblKhuyenmai.setEnabled(true);
@@ -818,10 +850,12 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelNCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelNCCMouseClicked
         set_color_pannel(3);
+         Open_GUI(3);
     }//GEN-LAST:event_pannelNCCMouseClicked
 
     private void pannelNHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelNHMouseClicked
         set_color_pannel(9);
+         Open_GUI(9);
     }//GEN-LAST:event_pannelNHMouseClicked
 
     private void pannelHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelHDMouseClicked

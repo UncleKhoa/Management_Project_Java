@@ -42,6 +42,12 @@ public class table_receiptDTO {
         this.giaban = giaban;
         this.tong = tong;
     }
+     public table_receiptDTO(String MaSp, String sl, String giagoc, String tong) {
+        this.MaSp = MaSp;
+        this.sl = sl;
+        this.giagoc = giagoc;
+        this.tong = tong;
+    }
 
     public void setMaSp(String MaSp) {
         this.MaSp = MaSp;

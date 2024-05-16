@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import static Model.helpers.*;
+import java.sql.SQLException;
 /**
  *
  * @author Bon Nguyen
@@ -88,5 +89,33 @@ public class import_detailBUS {
             model.removeRow(i);
         }
     }
+
+       public int list_size()
+     {
+        import_detailDAO dao = new  import_detailDAO ();
+        list = new ArrayList<>();
+        list = dao.list();
+        int l =  list.size();
+        return l;
+     }
     
+        public String createId(int l,int row)
+    {
+        //row = row+1;
+        l=l+row;
+        String mapn;
+        if(l<10){ mapn = "CPN0" + String.valueOf(l);}
+        else{
+           mapn  = "CPN" + String.valueOf(l);
+        }
+        
+        return mapn ;   
+    }  
+    
+    public void add(import_detailDTO a) throws SQLException
+    {
+        import_detailDAO dao = new import_detailDAO();
+        dao.add(a);
+    }
+
 }

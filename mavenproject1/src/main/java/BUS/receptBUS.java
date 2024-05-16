@@ -156,7 +156,7 @@ public class receptBUS {
 
     public void viewTableReceipt(JTable tblReceipt, ArrayList<receptDTO> list) throws ParseException {
         convertBackgroundOfTable(tblReceipt);
-        String[] headers = {"Mã đơn", "Mã khách", "Mã nhân viên", "Ngày tạo đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
+        String[] headers = {"Mã đơn", "Mã nhân viên", "Mã khách", "Ngày tạo đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
         model = new NonEditableTableModel(new Object[0][headers.length], headers);
         tblReceipt.setModel(model);
         tblReceipt.setRowHeight(30);
@@ -169,7 +169,7 @@ public class receptBUS {
         tblReceipt.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 
         tblReceipt.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tblReceipt.getColumnModel().getColumn(1).setPreferredWidth(50);
+        tblReceipt.getColumnModel().getColumn(2).setPreferredWidth(50);
 
         removeData();
         for (receptDTO hd : list) {

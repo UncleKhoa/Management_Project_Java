@@ -72,7 +72,7 @@ public class receipt_DetailDAO {
                 String detailReceiptID = rs.getString("DetailReceiptID");
                 String receiptID = rs.getString("ReceiptID");
                 String promotionID = rs.getString("PromotionID");
-                String productname = rs.getString("ProductName");                
+                String productname = rs.getString("ProductName");             
                 int quantity = rs.getInt("Quantity");
                 double unitPrice = rs.getDouble("UnitPrice");
                 double subTotal = rs.getDouble("SubTotal");

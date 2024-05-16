@@ -19,6 +19,7 @@ import javax.swing.table.JTableHeader;
 import static Model.helpers.*;
 import java.text.ParseException;
 import javax.swing.JTable;
+import Model.MyScrollBar;
 /**
  *
  * @author Bon Nguyen
@@ -34,6 +35,7 @@ public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
      */
     public ThongKeDT_TheoNgayTable(Date from, Date to) throws ParseException {
         initComponents();
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         doanhthuBUS doanhthuBUS = new doanhthuBUS();
         this.start = from;
         this.end = to;        

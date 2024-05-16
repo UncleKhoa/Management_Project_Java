@@ -26,11 +26,13 @@ import javax.swing.JFrame;
 import Model.CustomConfirmDialog;
 import GUI.PromotionGUI.XemChiTietKMGUI;
 import Model.NonEditableTableModel;
+
 /**
  *
  * @author Bon Nguyen
  */
 public class KhuyenMaiGUI extends javax.swing.JPanel {
+
     JFrame parentFrame;
     private ArrayList<promotionDTO> list = new ArrayList<>();
     private ArrayList<promotionDTO> list_search = new ArrayList<>();
@@ -41,6 +43,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
     Reload_Event event;
     int selectRow;
     String role;
+
     /**
      * Creates new form Hello
      */
@@ -49,7 +52,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         this.role = role;
         parentFrame = new JFrame();
         this.promotionBUS = new promotionBUS();
-        list =  promotionBUS.getList();
+        list = promotionBUS.getList();
         JTableHeader header = tablePromotion.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         promotionBUS.viewData(tablePromotion, list);
@@ -341,12 +344,12 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void OnOff_TaoMoi(){
-        if(role.equals("staff")){
+    public void OnOff_TaoMoi() {
+        if (role.equals("staff")) {
             btnCreateKM.setVisible(false);
         }
     }
-    
+
     public void viewInformation(promotionDTO promo) throws ParseException {
         this.promoDTO = promo;
         Date from = promo.getFrom();
@@ -354,21 +357,21 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         FromDate.setDate(from);
         ToDate.setDate(to);
         txtDescribe.setText(promo.getDescription());
-        txtPromoID.setText(promo.getPromotionID());        
+        txtPromoID.setText(promo.getPromotionID());
     }
-    
-    public void Load_Event(boolean a){
-        if(a){
+
+    public void Load_Event(boolean a) {
+        if (a) {
             promotionBUS.viewData(tablePromotion, list);
         }
-    }      
+    }
 
     private void btnCreateKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateKMActionPerformed
         TaoKhuyenMai new_promo = new TaoKhuyenMai(role);
-        new_promo.addReloadEvent( new Reload_Event() {
+        new_promo.addReloadEvent(new Reload_Event() {
             @Override
-            public void load(){
-                list =  promotionBUS.getList();
+            public void load() {
+                list = promotionBUS.getList();
                 promotionBUS.viewData(tablePromotion, list);
             }
         }
@@ -392,52 +395,55 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
     private void ActivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActivateActionPerformed
         String id = txtPromoID.getText();
         promotionBUS promotionBUS = new promotionBUS();
-        if(id.equals("")){
+        if (id.equals("")) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn 1 mã");
             alert.setVisible(true);
-        }
-        else{       
+        } else {
             promotionDTO promo = list.get(selectRow);
-            String act, act_VN;
-            if(promo.getStatus().equals("active")){
-                act = "inactive";
-                act_VN = "ngừng kích hoạt";
+            if (promo.getPromotionID().equals("NORMAL")) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không thể sửa trạng thái mã mặc định");
+                alert.setVisible(true);
+                return;
+            } else {
+                String act, act_VN;
+                if (promo.getStatus().equals("active")) {
+                    act = "inactive";
+                    act_VN = "ngừng kích hoạt";
+                } else {
+                    act = "active";
+                    act_VN = "kích hoạt";
+                }
+
+                CustomConfirmDialog confirm = new CustomConfirmDialog(parentFrame, "Xác nhận", "Bạn có muốn " + act_VN + " mã này?", "question.png");
+                confirm.setVisible(true);
+
+                if (confirm.getSelected()) {
+                    promotionBUS.Up_Active(id, act);
+                    list = promotionBUS.getList();
+                    promotionBUS.viewData(tablePromotion, list);
+                }
             }
-            else{
-                act = "active";
-                act_VN = "kích hoạt";
-            }
-            
-            CustomConfirmDialog confirm = new CustomConfirmDialog(parentFrame,"Xác nhận","Bạn có muốn " + act_VN + " mã này?","question.png");
-            confirm.setVisible(true);
-            
-            if (confirm.getSelected()) {
-                promotionBUS.Up_Active(id, act);
-                list = promotionBUS.getList();
-                promotionBUS.viewData(tablePromotion, list);
-            }
+
         }
     }//GEN-LAST:event_ActivateActionPerformed
 
     private void Activate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Activate1ActionPerformed
         String id = txtPromoID.getText();
         list.get(selectRow);
-        if(id.equals("")){
+        if (id.equals("")) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn 1 mã cần xem");
             alert.setVisible(true);
-        }
-        else{
+        } else {
             XemChiTietKMGUI xem = new XemChiTietKMGUI(id, promoDTO);
             xem.setVisible(true);
-        }        
+        }
     }//GEN-LAST:event_Activate1ActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        if(txtSearch.getText().equals("")){
+        if (txtSearch.getText().equals("")) {
             promotionBUS.viewData(tablePromotion, list);
-        }
-        else{
-            list_search =  promotionBUS.getList_Search(txtSearch.getText());
+        } else {
+            list_search = promotionBUS.getList_Search(txtSearch.getText());
             promotionBUS.viewData(tablePromotion, list_search);
         }
     }//GEN-LAST:event_txtSearchKeyReleased
