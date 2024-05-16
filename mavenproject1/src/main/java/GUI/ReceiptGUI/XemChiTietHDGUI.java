@@ -8,14 +8,21 @@ import DTO.receptDetailDTO;
 import BUS.receipt_DetailBUS;
 import BUS.receptBUS;
 import Model.CustomHeaderRenderer;
+import Model.CustomTableCellRenderer;
+import Model.NonEditableTableModel;
 import static Model.helpers.*;
+import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 /**
  *
  * @author Bon Nguyen
  */
 public class XemChiTietHDGUI extends javax.swing.JFrame {
+    DefaultTableModel model;
+    Font font = new Font("Segoe UI", Font.PLAIN, 14);
     receptDTO hd;
     receptDTO name;
     receipt_DetailBUS receit_DetailBUS;
@@ -37,7 +44,7 @@ public class XemChiTietHDGUI extends javax.swing.JFrame {
         receit_DetailBUS = new receipt_DetailBUS();
         receptBUS = new receptBUS();
         dsct_hd = receit_DetailBUS.XemChiTietHD(hd);
-        receit_DetailBUS.viewData(tblReceiptDetail, dsct_hd);       
+        viewData(tblReceiptDetail, dsct_hd);       
         name = receptBUS.get_Name_HD(hd);
         viewInfo();
     }
@@ -175,6 +182,41 @@ public class XemChiTietHDGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void addLine_TN(receptDetailDTO xem_cthd) {
+        model.addRow(new Object[]{
+            xem_cthd.getPromotionID(), xem_cthd.getProductID(), xem_cthd.getQuantity(), formatMoney(ConvertDoubleToInt(xem_cthd.getUnitPrice()))+"đ", formatMoney(ConvertDoubleToInt(xem_cthd.getSubTotal()))+"đ"
+        });
+    }
+    
+    public void viewData(JTable table, ArrayList<receptDetailDTO> list){
+        int s = 0;
+        convertBackgroundOfTable(table);
+        String[] headers = {"Mã khuyến mãi", "Tên sản phẩm", "Số lượng", "Giá thực", "Giá sau KM"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        table.setModel(model);
+        table.setRowHeight(30);
+        table.setFont(font);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();        
+        table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+
+        for (receptDetailDTO xem : list) {
+            addLine_TN(xem);
+        }
+//        model.addRow(new Object[]{
+//            "", "", "Tổng", formatMoney(s) + "đ"
+//        });
+    }
+    
+    public void removeData() {
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
+    
     public void viewInfo(){
         txtReceiptID.setText(hd.getReceptID());
         txtCreatedDate.setText(Date_String(hd.getCreatedTime()));

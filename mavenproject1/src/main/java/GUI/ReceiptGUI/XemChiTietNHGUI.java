@@ -8,8 +8,13 @@ import BUS.import_detailBUS;
 import DTO.importDTO;
 import DTO.import_detailDTO;
 import Model.CustomHeaderRenderer;
+import Model.CustomTableCellRenderer;
+import Model.NonEditableTableModel;
 import static Model.helpers.*;
+import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -17,6 +22,8 @@ import javax.swing.table.JTableHeader;
  * @author Bon Nguyen
  */
 public class XemChiTietNHGUI extends javax.swing.JFrame {
+    DefaultTableModel model;
+    Font font = new Font("Segoe UI", Font.PLAIN, 14);
     importDTO nh;
     import_detailBUS imBUS;
     String staffName;
@@ -39,7 +46,7 @@ public class XemChiTietNHGUI extends javax.swing.JFrame {
         list = new ArrayList<>();
         list = imBUS.XemChiTietNH(nh);
         viewInfo();
-        imBUS.viewData(tblImportDetail, list);
+        viewData(tblImportDetail, list);
     }
 
     /**
@@ -174,6 +181,41 @@ public class XemChiTietNHGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void addLine_PN(import_detailDTO pn) {
+        model.addRow(new Object[]{  
+            pn.getProductName(), pn.getQuantity(), formatMoney(ConvertDoubleToInt(pn.getUnitPrice()))+"đ", formatMoney(ConvertDoubleToInt(pn.getSubTotal()))+"đ"
+        });
+    }
+    
+    public void viewData(JTable table, ArrayList<import_detailDTO> list){
+        int s = 0;
+        convertBackgroundOfTable(table);
+        String[] headers = {"Tên sản phẩm", "Số lượng", "Giá nhập", "Giá tạm tính"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        table.setModel(model);
+        table.setRowHeight(30);
+        table.setFont(font);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        for (import_detailDTO pn : list) {
+            addLine_PN(pn);
+        }
+//        model.addRow(new Object[]{
+//            "", "", "Tổng", formatMoney(s) + "đ"
+//        });
+    }
+    
+    public void removeData() {
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
+    
     public void viewInfo(){
         lblMaNCC.setText(nh.getSupplierID());
         lblStaffName.setText(staffName);
