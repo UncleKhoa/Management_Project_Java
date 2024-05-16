@@ -193,6 +193,7 @@ public class Login extends javax.swing.JFrame {
         lblForgetPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblForgetPass.setForeground(new java.awt.Color(0, 102, 204));
         lblForgetPass.setText("Click here");
+        lblForgetPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblForgetPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblForgetPassMouseClicked(evt);

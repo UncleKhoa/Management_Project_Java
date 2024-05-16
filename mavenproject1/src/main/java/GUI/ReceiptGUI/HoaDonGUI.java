@@ -600,10 +600,6 @@ public class HoaDonGUI extends javax.swing.JPanel {
         }
     }
 
-    public void viewInformation_HD(receptDTO hd) {
-        System.out.println(hd.getReceptID());
-    }
-
     private void btnacceptMethodHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnacceptMethodHDActionPerformed
         if (cbMethodReceipt.getSelectedItem().equals("Mã")) {
             OnOff_Receipt(true, false, false);
@@ -775,7 +771,6 @@ public class HoaDonGUI extends javax.swing.JPanel {
             selectRow_hd = tblReceipt.getSelectedRow();
             if (selectRow_hd >= 0 && selectRow_hd < list_hd.size()) {
                 receptDTO hd = list_hd.get(selectRow_hd);
-                viewInformation_HD(hd);
                 XemChiTietHDGUI xem_hd = new XemChiTietHDGUI(hd);
                 xem_hd.setVisible(true);
             }

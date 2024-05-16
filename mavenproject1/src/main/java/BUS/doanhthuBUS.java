@@ -103,13 +103,12 @@ public class doanhthuBUS {
     }
 
     public Boolean compareDate(Date dateBanHang, Date dateStart, Date dateEnd) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         String datestart2 = sdf.format(dateStart);
         String dateEnd2 = sdf.format(dateEnd);
-        Date datestart22 = formatter.parse(datestart2);
-        Date dateEnd22 = formatter.parse(dateEnd2);
+        Date datestart22 = sdf.parse(datestart2);
+        Date dateEnd22 = sdf.parse(dateEnd2);
 
         return (dateBanHang.compareTo(datestart22) >= 0 && dateBanHang.compareTo(dateEnd22) <= 0);
     }
