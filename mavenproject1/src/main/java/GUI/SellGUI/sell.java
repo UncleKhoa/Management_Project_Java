@@ -580,6 +580,12 @@ public class sell extends javax.swing.JPanel {
             }
         });
         jPanel4.add(btnChon, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 580, 90, 33));
+
+        txtSp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSpActionPerformed(evt);
+            }
+        });
         jPanel4.add(txtSp, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 580, 79, 29));
 
         btnSua.setBackground(new java.awt.Color(93, 14, 65));
@@ -785,6 +791,7 @@ public class sell extends javax.swing.JPanel {
         receptDetailDTO receiptDTO = new receptDetailDTO();
         receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
         int l = receiptDetailBUS.list_size();
+        System.out.println("size: "+l);
         l = l + 1;
         List<table_receiptDTO> dataList = new ArrayList<>();
         for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
@@ -866,6 +873,12 @@ public class sell extends javax.swing.JPanel {
     }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+       
+          if (containsLetter(txtSp.getText())) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng nhập đúng định dạng");
+            alert.setVisible(true);
+            return;
+        }
         if (this.tblProduct.getRowCount() == 0) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
             alert.setVisible(true);
@@ -1156,6 +1169,10 @@ public class sell extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_txtSdtKeyReleased
+
+    private void txtSpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSpActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
