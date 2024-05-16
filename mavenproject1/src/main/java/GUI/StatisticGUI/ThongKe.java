@@ -42,6 +42,7 @@ public class ThongKe extends javax.swing.JPanel {
     ThongKeDT_TheoNgayTable DT_TN;
     ThongKeDT_TheoNgayBarChart DT_TN_Chart;
     ThongKeDT_LoiNhuanTable DT_TQ;
+    ThongKeDT_LoiNhuanBarChart DT_TQ_Chart;
     ThongKeBH_KhachHangTable BH_KH;
     ThongKeBH_KhachHangBarChart BH_KH_Chart;
     private ArrayList<doanhthuDTO> ds_DTSP = new ArrayList<>();
@@ -651,6 +652,13 @@ public class ThongKe extends javax.swing.JPanel {
                 DT_TQ.setVisible(true);
                 pannelTable.add(DT_TQ);
                 pannelTable.updateUI();
+                
+                pannelChart.removeAll();
+                DT_TQ_Chart =  new ThongKeDT_LoiNhuanBarChart();
+                DT_TQ_Chart.setSize(513, 410);
+                DT_TQ_Chart.setVisible(true);
+                pannelChart.add(DT_TQ_Chart);
+                pannelChart.updateUI();
             }
             
         }

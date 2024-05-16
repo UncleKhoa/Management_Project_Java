@@ -141,7 +141,7 @@ public class DoanhThuDAO {
                     + "from receipt hd, import nh "
                     + "where YEAR(hd.CreatedTime) = YEAR(nh.Created_Time) AND QUARTER(hd.CreatedTime) = QUARTER(nh.Created_Time) "
                     + "GROUP BY YEAR(hd.CreatedTime), CEILING(MONTH(hd.CreatedTime) / 3), YEAR(nh.Created_Time), CEILING(MONTH(nh.Created_Time) / 3) "
-                    + "ORDER BY Year_hd, Quarter_hd";
+                    + "ORDER BY Year_hd, Quarter_hd ASC";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
