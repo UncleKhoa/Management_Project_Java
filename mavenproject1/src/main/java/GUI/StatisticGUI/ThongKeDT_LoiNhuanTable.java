@@ -13,6 +13,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import static Model.helpers.*;
 import java.awt.Font;
+import java.util.Collection;
+import java.util.Collections;
 import javax.swing.table.JTableHeader;
 /**
  *
@@ -32,7 +34,9 @@ public class ThongKeDT_LoiNhuanTable extends javax.swing.JPanel {
         JTableHeader header1 = tblLoiNhuan.getTableHeader();
         header1.setDefaultRenderer(new CustomHeaderRenderer());
         doanhthuBUS = new doanhthuBUS();
-        ds_dttq = doanhthuBUS.GetList_DTTQ();       
+        ds_dttq = doanhthuBUS.GetList_DTTQ();        
+        ds_dttq = new ArrayList<>(ds_dttq);
+        Collections.reverse(ds_dttq);
         viewData(tblLoiNhuan, ds_dttq);
     }
     
