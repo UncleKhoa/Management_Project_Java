@@ -129,4 +129,35 @@ public class DoanhThuDAO {
         return ds_dttn;
     }
     
+    public ArrayList<doanhthuDTO> getList_LoiNhuanQuy() {
+        ArrayList<doanhthuDTO> doanhthu = new ArrayList<>();
+        try {
+            String sql = "select YEAR(hd.CreatedTime) as Year_hd, "
+                    + "CEILING(MONTH(hd.CreatedTime) / 3) as Quarter_hd, "
+                    + "SUM(hd.Total) as Total_hd, "
+                    + "YEAR(nh.Created_Time) as Year_nh, "
+                    + "CEILING(MONTH(nh.Created_Time) / 3) as Quarter_nh, "
+                    + "SUM(nh.Total) as Total_nh "
+                    + "from receipt hd, import nh "
+                    + "where YEAR(hd.CreatedTime) = YEAR(nh.Created_Time) AND QUARTER(hd.CreatedTime) = QUARTER(nh.Created_Time) "
+                    + "GROUP BY YEAR(hd.CreatedTime), CEILING(MONTH(hd.CreatedTime) / 3), YEAR(nh.Created_Time), CEILING(MONTH(nh.Created_Time) / 3) "
+                    + "ORDER BY Year_hd, Quarter_hd";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int year = rs.getInt("Year_hd");
+                int quarter = rs.getInt("Quarter_hd");
+                double tienvon = rs.getDouble("Total_nh");
+                double tienban = rs.getDouble("Total_hd");
+                double loinhuan = tienban - tienvon;
+                doanhthuDTO doanhthuDTO = new doanhthuDTO(tienvon, loinhuan, tienban, year, quarter);
+                doanhthu.add(doanhthuDTO);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return doanhthu;
+    }
+    
 }

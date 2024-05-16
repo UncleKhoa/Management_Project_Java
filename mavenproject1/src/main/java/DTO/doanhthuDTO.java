@@ -15,6 +15,8 @@ public class doanhthuDTO {
     private int SLBan, SLdon, SLSP;
     private double tienvon, tienlai, tiensauKM, tongtien;
     private Date ngayban;
+    private int year, quarter;
+    
     
     public doanhthuDTO(){
         
@@ -32,10 +34,35 @@ public class doanhthuDTO {
     public doanhthuDTO(int SLdon, int SLSP, double tongtien, Date ngayban) {
         this.SLdon = SLdon;
         this.SLSP = SLSP;
-        this.tienvon = tienvon;
         this.tongtien = tongtien;
         this.ngayban = ngayban;
     }
+
+    public doanhthuDTO(double tienvon, double tienlai, double tiensauKM, int year, int quarter) {
+        this.tienvon = tienvon;
+        this.tienlai = tienlai;
+        this.tiensauKM = tiensauKM;
+        this.year = year;
+        this.quarter = quarter;
+    }    
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setQuarter(int quarter) {
+        this.quarter = quarter;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getQuarter() {
+        return quarter;
+    }
+    
+    
 
     public int getSLdon() {
         return SLdon;
