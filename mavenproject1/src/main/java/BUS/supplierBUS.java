@@ -66,4 +66,43 @@ public class supplierBUS {
         }
         return ketQua;
     }
+     public ArrayList<supplierDTO> SearchByName(String a1, String a2, ArrayList<supplierDTO> list)
+     {
+         ArrayList<supplierDTO> result = new ArrayList<>();
+         char kitu1 = 0, kitu2 = 0;
+         boolean empty1 = false,empty2 = false;
+         if(a1.trim().isEmpty())
+         {
+             empty1 = true;
+             kitu2 = a2.charAt(0);
+             kitu2 = Character.toLowerCase( kitu2);
+             
+             
+         }
+           if(a2.trim().isEmpty())
+         {
+             empty2 = true;
+             kitu1 = a1.charAt(0);
+             kitu1 = Character.toLowerCase( kitu1);
+             
+         }
+            if(!a1.trim().isEmpty()&&!a2.trim().isEmpty())
+            {
+                 kitu1 = Character.toLowerCase(a1.charAt(0));
+                  kitu2 = Character.toLowerCase(a2.charAt(0));
+            }
+        for (supplierDTO supplier : list) {
+            char firstChar = supplier.getSupplierName().charAt(0);
+            char firstCharLower = Character.toLowerCase(firstChar);
+
+            if (empty1 && firstCharLower == kitu2) {
+                result.add(supplier);
+            } else if (empty2 && firstCharLower == kitu1) {
+                result.add(supplier);
+            } else if (!empty1 && !empty2 && (firstCharLower == kitu1 || firstCharLower == kitu2)) {
+                result.add(supplier);
+            }
+        }
+         return result;
+     }
 }
