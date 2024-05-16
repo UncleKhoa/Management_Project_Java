@@ -46,6 +46,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
         supplierBUS bus = new supplierBUS();
         listncc = bus.list();
         ViewData(listncc);
+        On_to_search(false,true);
        JTableHeader header = tblNc.getTableHeader();
        header.setDefaultRenderer(new CustomHeaderRenderer());
     }
@@ -113,12 +114,22 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnLuu = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
+        lbQuayve = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btnXuat = new javax.swing.JButton();
         btnNhap = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
+        lbHoac = new javax.swing.JLabel();
+        lbLoc = new javax.swing.JLabel();
+        txtKitu1 = new javax.swing.JTextField();
+        txtKitu2 = new javax.swing.JTextField();
+        lbKitu1 = new javax.swing.JLabel();
+        lbTimkiem = new javax.swing.JLabel();
+        lbTenncc = new javax.swing.JLabel();
+        lbKitu2 = new javax.swing.JLabel();
+        lbTim = new javax.swing.JLabel();
+        lbLammoi = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(950, 650));
@@ -183,7 +194,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
         jPanel1.add(txtMancc, new org.netbeans.lib.awtextra.AbsoluteConstraints(678, 151, 186, 37));
         jPanel1.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(678, 220, 186, 37));
 
-        btnXoa.setBackground(new java.awt.Color(73, 36, 62));
+        btnXoa.setBackground(new java.awt.Color(21, 52, 72));
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setText("Xóa");
@@ -194,7 +205,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
         });
         jPanel1.add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 490, 90, 33));
 
-        btnThem.setBackground(new java.awt.Color(73, 36, 62));
+        btnThem.setBackground(new java.awt.Color(18, 20, 129));
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("Thêm");
@@ -216,7 +227,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
         });
         jPanel1.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 490, 90, 33));
 
-        btnLuu.setBackground(new java.awt.Color(73, 36, 62));
+        btnLuu.setBackground(new java.awt.Color(14, 41, 84));
         btnLuu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setText("Lưu");
@@ -227,9 +238,15 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
         });
         jPanel1.add(btnLuu, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 490, 90, 33));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setText("Tìm kiếm");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 89, 68, -1));
+        lbQuayve.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbQuayve.setForeground(new java.awt.Color(122, 178, 178));
+        lbQuayve.setText("Quay về");
+        lbQuayve.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbQuayveMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lbQuayve, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 70, -1));
 
         txtSearch.setPreferredSize(new java.awt.Dimension(350, 35));
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -265,7 +282,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
         });
         jPanel1.add(btnNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 21, 103, 28));
 
-        btnHuy.setBackground(new java.awt.Color(73, 36, 62));
+        btnHuy.setBackground(new java.awt.Color(15, 14, 14));
         btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setText("Hủy bỏ");
@@ -275,6 +292,58 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, 90, 33));
+
+        lbHoac.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbHoac.setText("Hoặc");
+        jPanel1.add(lbHoac, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 85, 40, -1));
+
+        lbLoc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbLoc.setForeground(new java.awt.Color(122, 178, 178));
+        lbLoc.setText("Lọc");
+        lbLoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbLocMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lbLoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, 30, -1));
+        jPanel1.add(txtKitu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 80, 90, 30));
+        jPanel1.add(txtKitu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 80, 90, 30));
+
+        lbKitu1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbKitu1.setText("Chữ cái bắt đầu");
+        jPanel1.add(lbKitu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 100, -1));
+
+        lbTimkiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbTimkiem.setText("Tìm kiếm");
+        jPanel1.add(lbTimkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 68, -1));
+
+        lbTenncc.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbTenncc.setText("Tên nhà cung cấp ");
+        jPanel1.add(lbTenncc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 120, -1));
+
+        lbKitu2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbKitu2.setText("Chữ cái bắt đầu");
+        jPanel1.add(lbKitu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 100, -1));
+
+        lbTim.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbTim.setForeground(new java.awt.Color(255, 144, 188));
+        lbTim.setText("Tìm kiếm");
+        lbTim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbTimMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lbTim, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 90, 70, -1));
+
+        lbLammoi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbLammoi.setForeground(new java.awt.Color(159, 115, 171));
+        lbLammoi.setText("Làm mới");
+        lbLammoi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbLammoiMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lbLammoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 68, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -324,6 +393,21 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
             }
     }//GEN-LAST:event_btnXoaActionPerformed
 
+    private void On_to_search(boolean a,boolean b)
+    {
+        this.lbLoc.setVisible(b);
+        this.lbTimkiem.setVisible(b);
+        this.txtSearch.setVisible(b);
+        this.lbKitu1.setVisible(a);
+        this.lbKitu2.setVisible(a);
+        this.lbQuayve.setVisible(a);
+        this.txtKitu1.setVisible(a);
+        this.txtKitu2.setVisible(a);
+        this.lbHoac.setVisible(a);
+        this.lbTenncc.setVisible(a);
+        this.lbTim.setVisible(a);
+        this.lbLammoi.setVisible(a);
+    }
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
         this.txtTen.setText("");
@@ -354,6 +438,10 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
     }
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
+         CustomConfirmDialog confirm = new CustomConfirmDialog(parentFrame,"Xác nhận","Bạn có muốn lưu thay đổi?","question.png");
+            confirm.setVisible(true);
+            
+            if (confirm.getSelected()) {
         boolean c = notice();
         if(c)
             return;
@@ -372,6 +460,10 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
                MyMessageAccept accept = new MyMessageAccept(parentFrame, "Đã thêm nhà cung cấp thành công!");
                accept.setVisible(true);
                 load();
+                this.txtMancc.setText("");
+                this.txtTen.setText("");
+                this.txtSdt.setText("");
+                this.txtDiachi.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(NhaCungCapGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -394,6 +486,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
         }
         On(false);
         onButton(false,true);
+       }
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private boolean notice()
@@ -498,6 +591,72 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
               
     }//GEN-LAST:event_tblNcMouseClicked
 
+    private void lbQuayveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbQuayveMouseClicked
+        // TODO add your handling code here:
+        On_to_search(false,true);
+        this.txtKitu1.setText("");
+        this.txtKitu2.setText("");
+        ViewData(listncc);
+    }//GEN-LAST:event_lbQuayveMouseClicked
+
+    private void lbLocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbLocMouseClicked
+        // TODO add your handling code here:
+         On_to_search(true,false);
+    }//GEN-LAST:event_lbLocMouseClicked
+
+    private void lbTimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTimMouseClicked
+        // TODO add your handling code here:
+         if(this.txtKitu1.getText().trim().isEmpty()&&this.txtKitu2.getText().trim().isEmpty())
+         {
+              MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không được để trống cả 2 ô nhập");
+              alert.setVisible(true);
+              return;
+         }
+        
+        if(containsDigit(txtKitu1.getText())||containsDigit(txtKitu2.getText()))
+        {
+             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không chấp nhận kí tự số");
+              alert.setVisible(true);
+              return;
+        }
+        if(this.txtKitu1.getText().length()>1)
+        {
+             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Lưu ý chỉ nhập 1 chữ cái trong ô đầu tiên");
+              alert.setVisible(true);
+              return;
+        }
+         if(this.txtKitu2.getText().length()>1)
+        {
+             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Lưu ý chỉ nhập 1 chữ cái trong ô thứ hai");
+              alert.setVisible(true);
+              return;
+        }
+         String a1 = this.txtKitu1.getText();
+      
+         String a2 = this.txtKitu2.getText();
+         supplierBUS bus = new supplierBUS();
+         ArrayList<supplierDTO> listds = new ArrayList<>();
+
+          listds= bus.SearchByName(a1, a2, listncc);
+          if(listds!= null)
+          {
+               ViewData( listds);
+          }
+          else
+          {
+               MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không tìm thấy nhà cung cấp thỏa điều kiện");
+              alert.setVisible(true);
+          }
+         
+    }//GEN-LAST:event_lbTimMouseClicked
+
+    private void lbLammoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbLammoiMouseClicked
+        // TODO add your handling code here:
+        this.txtKitu1.setText("");
+        this.txtKitu2.setText("");
+        ViewData(listncc);
+    }//GEN-LAST:event_lbLammoiMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;
@@ -513,12 +672,22 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbHoac;
+    private javax.swing.JLabel lbKitu1;
+    private javax.swing.JLabel lbKitu2;
+    private javax.swing.JLabel lbLammoi;
+    private javax.swing.JLabel lbLoc;
+    private javax.swing.JLabel lbQuayve;
+    private javax.swing.JLabel lbTenncc;
+    private javax.swing.JLabel lbTim;
+    private javax.swing.JLabel lbTimkiem;
     private javax.swing.JTable tblNc;
     private javax.swing.JTextArea txtDiachi;
+    private javax.swing.JTextField txtKitu1;
+    private javax.swing.JTextField txtKitu2;
     private javax.swing.JTextField txtMancc;
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txtSearch;

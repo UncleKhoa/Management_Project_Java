@@ -54,11 +54,6 @@ public class customerBUS {
 
     public customerDTO searchsdt(String sdt)throws SQLException
     {
-      // customerDTO cusDTO = new customerDTO();
-        //customerDAO cus = new customerDAO();
-       // cus_list = new ArrayList<>();
-       // cusDTO = cus.searchsdt(sdt);
-      //  return cusDTO;
          customerDAO dao = new customerDAO();
          ArrayList<customerDTO> list = dao.list();
          for(customerDTO cus:list)
@@ -68,24 +63,6 @@ public class customerBUS {
          }
         return null;
     }
-//    public int add(customerDTO cus) throws SQLException{
-//        if(cus.getPhoneNumber().length()!=10)
-//        {
-//            return 0;
-//        }
-//        else {
-//            if(!cus.getGender().equals("Nam") && !cus.getGender().equals("Nữ"))
-//            {    
-//                return -1;
-//            }
-//            else {
-//                   customerDAO customer = new customerDAO();
-//                    customer.add(cus);
-//                    return 1;
-//            }
-//        }
-//     
-//    }
 
     public void add(customerDTO cus)throws SQLException{
         customerDAO customer = new customerDAO();
