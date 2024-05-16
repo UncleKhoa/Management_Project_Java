@@ -25,6 +25,9 @@ import GUI.StatisticGUI.ThongKe;
 import GUI.SupplierGUI.NhaCungCapGUI;
 import GUI.employee.employee;
 import GUI.ReceiptGUI.HoaDonGUI;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -780,11 +783,18 @@ public class MainGUI extends javax.swing.JFrame {
             case 5:
                 lblHoadon.setEnabled(true);
                 jmain.removeAll();
-                hoadon = new HoaDonGUI();
+            {
+                try {
+                    hoadon = new HoaDonGUI();
+                } catch (ParseException ex) {
+                    Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
                 hoadon.setSize(950, 650);
                 jmain.add(hoadon);
                 jmain.updateUI();
                 break;
+
             case 7:
                 lblThongke.setEnabled(true);
                 jmain.removeAll();

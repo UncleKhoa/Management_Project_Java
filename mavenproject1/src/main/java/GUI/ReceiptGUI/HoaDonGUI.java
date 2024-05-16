@@ -5,6 +5,7 @@ import BUS.receptBUS;
 import DTO.importDTO;
 import DTO.receptDTO;
 import Model.CustomHeaderRenderer;
+import Model.CustomTableCellRenderer;
 import Model.MyMessageAlert;
 import static Model.helpers.Convert_date;
 import java.text.ParseException;
@@ -17,18 +18,21 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import static Model.helpers.*;
 import Model.MyScrollBar;
+import Model.NonEditableTableModel;
+import java.awt.Font;
+import javax.swing.JTable;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-
 /**
  *
  * @author Bon Nguyen
  */
 public class HoaDonGUI extends javax.swing.JPanel {
 
+    Font font = new Font("Segoe UI", Font.PLAIN, 14);
     JFrame parentFrame;
     DefaultTableModel model_receipt;
     DefaultTableModel model_import;
@@ -40,11 +44,11 @@ public class HoaDonGUI extends javax.swing.JPanel {
     ArrayList<importDTO> list_nh;
     int selectRow_hd;
     int selectRow_nh;
-    
+
     /**
      * Creates new form HoaDonGUI
      */
-    public HoaDonGUI() {
+    public HoaDonGUI() throws ParseException {
         initComponents();
         jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         jScrollPane2.setVerticalScrollBar(new MyScrollBar());
@@ -61,12 +65,8 @@ public class HoaDonGUI extends javax.swing.JPanel {
         Addline_cbImport();
         OnOff(false);
 
-        try {
-            receptBUS.viewTableReceipt(tblReceipt, list_hd);
-            importBUS.viewTableImport(tblImport, list_nh);
-        } catch (ParseException ex) {
-            Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        viewTableReceipt(tblReceipt, list_hd);
+        viewTableImport(tblImport, list_nh);
     }
 
     /**
@@ -420,6 +420,72 @@ public class HoaDonGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void addLine_Receipt(receptDTO hd) throws ParseException {
+        model.addRow(new Object[]{
+            hd.getReceptID(), hd.getStaffID(), hd.getCusID(), Convert_date(hd.getCreatedTime()), formatMoney(ConvertDoubleToInt(hd.getTotal())) + "đ"
+        });
+    }
+
+    public void viewTableReceipt(JTable tblReceipt, ArrayList<receptDTO> list) throws ParseException {
+        convertBackgroundOfTable(tblReceipt);
+        String[] headers = {"Mã đơn", "Mã nhân viên", "Mã khách", "Ngày tạo đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        tblReceipt.setModel(model);
+        tblReceipt.setRowHeight(30);
+        tblReceipt.setFont(font);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblReceipt.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblReceipt.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblReceipt.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblReceipt.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        tblReceipt.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblReceipt.getColumnModel().getColumn(2).setPreferredWidth(50);
+
+        removeData();
+        for (receptDTO hd : list) {
+            addLine_Receipt(hd);
+        }
+
+    }
+
+    public void removeData() {
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
+
+    public void addLine_Import(importDTO nh) throws ParseException {
+        model.addRow(new Object[]{
+            nh.getImporID(), nh.getSupplierID(), nh.getStaffID(), Convert_date(nh.getCreatedDate()), formatMoney(ConvertDoubleToInt(nh.getTotal())) + "đ"
+        });
+    }
+
+    public void viewTableImport(JTable tblImport, ArrayList<importDTO> list) throws ParseException {
+        convertBackgroundOfTable(tblImport);
+        String[] headers = {"Mã đơn", "Mã NCC", "Mã nhân viên", "Ngày tạo đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        tblImport.setModel(model);
+        tblImport.setRowHeight(30);
+        tblImport.setFont(font);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblImport.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblImport.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblImport.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblImport.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        tblImport.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblImport.getColumnModel().getColumn(1).setPreferredWidth(50);
+
+        removeData();
+        for (importDTO nh : list) {
+            addLine_Import(nh);
+        }
+    }
+
     public void OnOff(boolean a) {
         //Hóa đơn
         txtSearchReceipt_label.show(a);
@@ -537,7 +603,7 @@ public class HoaDonGUI extends javax.swing.JPanel {
     public void viewInformation_HD(receptDTO hd) {
         System.out.println(hd.getReceptID());
     }
-    
+
     private void btnacceptMethodHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnacceptMethodHDActionPerformed
         if (cbMethodReceipt.getSelectedItem().equals("Mã")) {
             OnOff_Receipt(true, false, false);
@@ -555,13 +621,14 @@ public class HoaDonGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchReceiptActionPerformed
 
     private void txtSearchReceiptKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchReceiptKeyReleased
+
         try {
             receptBUS = new receptBUS();
             ArrayList<receptDTO> newlist_receipt = new ArrayList<>();
             newlist_receipt = receptBUS.timHoaDonTheoMa(txtSearchReceipt.getText());
-            receptBUS.viewTableReceipt(tblReceipt, newlist_receipt);
+            viewTableReceipt(tblReceipt, newlist_receipt);
         } catch (ParseException ex) {
-            Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDonGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_txtSearchReceiptKeyReleased
 
@@ -576,9 +643,9 @@ public class HoaDonGUI extends javax.swing.JPanel {
             try {
                 ArrayList<receptDTO> newlist_recept = new ArrayList<>();
                 newlist_recept = receptBUS.getHoadon_NgayBan(Convert_date(DateStartReceipt.getDate()), Convert_date(DateEndReceipt.getDate()));
-                receptBUS.viewTableReceipt(tblReceipt, newlist_recept);
+                viewTableReceipt(tblReceipt, newlist_recept);
             } catch (ParseException ex) {
-                Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(HoaDonGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnAcceptReceiptActionPerformed
@@ -603,12 +670,13 @@ public class HoaDonGUI extends javax.swing.JPanel {
                 alert.setVisible(true);
                 return;
             } else {
-                ArrayList<receptDTO> newlist_receipt = new ArrayList<>();
-                newlist_receipt = receptBUS.getListPrice(c, d);
                 try {
-                    receptBUS.viewTableReceipt(tblReceipt, newlist_receipt);
+                    ArrayList<receptDTO> newlist_receipt = new ArrayList<>();
+                    newlist_receipt = receptBUS.getListPrice(c, d);
+
+                    viewTableReceipt(tblReceipt, newlist_receipt);
                 } catch (ParseException ex) {
-                    Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HoaDonGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -616,21 +684,23 @@ public class HoaDonGUI extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            receptBUS.viewTableReceipt(tblReceipt, list_hd);
+            viewTableReceipt(tblReceipt, list_hd);
         } catch (ParseException ex) {
-            Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDonGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtSearchImportKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchImportKeyReleased
+
         try {
             importBUS = new importBUS();
             ArrayList<importDTO> newlist_receipt = new ArrayList<>();
             newlist_receipt = importBUS.getList_MaPN(txtSearchImport.getText());
-            importBUS.viewTableImport(tblImport, newlist_receipt);
+            viewTableImport(tblImport, newlist_receipt);
         } catch (ParseException ex) {
-            Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDonGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_txtSearchImportKeyReleased
 
     private void btnAcceptMethodNHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptMethodNHActionPerformed
@@ -653,12 +723,13 @@ public class HoaDonGUI extends javax.swing.JPanel {
             alert.setVisible(true);
             return;
         } else {
+
             try {
                 ArrayList<importDTO> newlist_import = new ArrayList<>();
                 newlist_import = importBUS.getPhieunhap_NgayBan(Convert_date(DateStartImport.getDate()), Convert_date(DateEndImport.getDate()));
-                importBUS.viewTableImport(tblImport, newlist_import);
+                viewTableImport(tblImport, newlist_import);
             } catch (ParseException ex) {
-                Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(HoaDonGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnAcceptImportActionPerformed
@@ -678,22 +749,24 @@ public class HoaDonGUI extends javax.swing.JPanel {
                 alert.setVisible(true);
                 return;
             } else {
-                ArrayList<importDTO> newlist_import = new ArrayList<>();
-                newlist_import = importBUS.getListPrice(c, d);
                 try {
-                    importBUS.viewTableImport(tblImport, newlist_import);
+                    ArrayList<importDTO> newlist_import = new ArrayList<>();
+                    newlist_import = importBUS.getListPrice(c, d);
+                    
+                    viewTableImport(tblImport, newlist_import);
                 } catch (ParseException ex) {
-                    Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HoaDonGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
     }//GEN-LAST:event_btnAcceptImportPriceActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
         try {
-            importBUS.viewTableImport(tblImport, list_nh);
+            viewTableImport(tblImport, list_nh);
         } catch (ParseException ex) {
-            Logger.getLogger(receipt.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDonGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -717,7 +790,7 @@ public class HoaDonGUI extends javax.swing.JPanel {
                 importDTO pn = list_nh.get(selectRow_nh);
                 importDTO pn1 = importBUS.get_Name_PN(pn);
                 String name = pn1.getStaffName();
-                XemChiTietNHGUI xem_nh = new XemChiTietNHGUI(pn,name);
+                XemChiTietNHGUI xem_nh = new XemChiTietNHGUI(pn, name);
                 xem_nh.setVisible(true);
             }
         }

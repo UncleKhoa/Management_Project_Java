@@ -13,6 +13,8 @@ import java.sql.SQLException;
  */
 public class promotion_detailBUS {
 
+    
+    
     public String getPromotionID(String productID) throws SQLException {
         String id = "NORMAL";
         promotion_detailDAO promotion_detail = new promotion_detailDAO();

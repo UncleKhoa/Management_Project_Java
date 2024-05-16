@@ -42,7 +42,7 @@ public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
         ds_dttn = doanhthuBUS.getLoiNhuanBanHang_NgayBan(start, end);
         JTableHeader header = tblDTTheoNgay.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
-        doanhthuBUS.viewData_TN(tblDTTheoNgay, ds_dttn);
+        viewData_TN(tblDTTheoNgay, ds_dttn);
     }   
 
     /**
@@ -94,6 +94,43 @@ public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void addLine_TN(doanhthuDTO dt_tn) {
+        model.addRow(new Object[]{
+            dt_tn.getNgayban(), dt_tn.getSLdon(), dt_tn.getSLSP(), formatMoney(ConvertDoubleToInt(dt_tn.getTongtien())) + "đ"
+        });
+    }
+
+    public void viewData_TN(JTable tblDTTheoNgay, ArrayList<doanhthuDTO> list) {
+        int s = 0;
+        convertBackgroundOfTable(tblDTTheoNgay);
+        String[] headers = {"Ngày bán", "Số lượng đơn", "Số lượng SP", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        tblDTTheoNgay.setModel(model);
+        tblDTTheoNgay.setRowHeight(30);
+        tblDTTheoNgay.setFont(font);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblDTTheoNgay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblDTTheoNgay.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblDTTheoNgay.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        for (doanhthuDTO dttn : list) {
+            addLine_TN(dttn);
+            s += dttn.getTongtien();
+        }
+        model.addRow(new Object[]{
+            "", "", "Tổng", formatMoney(s) + "đ"
+        });
+
+    }
+
+    public void removeData() {
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
+    
     public JTable getList_DTTN(){
         return tblDTTheoNgay;
     }

@@ -1,6 +1,5 @@
 package GUI.StatisticGUI;
 
-
 import DTO.doanhthuDTO;
 import Model.CustomHeaderRenderer;
 import Model.NonEditableTableModel;
@@ -15,6 +14,7 @@ import Model.CustomTableCellRenderer;
 import static Model.helpers.*;
 import javax.swing.JTable;
 import Model.MyScrollBar;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
@@ -25,10 +25,12 @@ import Model.MyScrollBar;
  * @author Bon Nguyen
  */
 public class ThongKeDT_SanPhamTable extends javax.swing.JPanel {
+
     DefaultTableModel model;
     doanhthuBUS doanhthuBUS;
     Font font = new Font("Segoe UI", Font.PLAIN, 14);
     private ArrayList<doanhthuDTO> ds_dtsp = new ArrayList<>();
+
     /**
      * Creates new form ThongKeDT_SanPhamTable
      */
@@ -39,11 +41,47 @@ public class ThongKeDT_SanPhamTable extends javax.swing.JPanel {
         JTableHeader header = tblDTSP.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         ds_dtsp = doanhthuBUS.getList_DTSP();
-        doanhthuBUS.viewData(tblDTSP, ds_dtsp);
-        
+        viewData(tblDTSP, ds_dtsp);
+
     }
-    
-    public JTable getTable(){
+
+    public void addLine(doanhthuDTO dt_sp) {
+        model.addRow(new Object[]{
+            dt_sp.getProductName(), dt_sp.getSLBan(), formatMoney(ConvertDoubleToInt(dt_sp.getTiensauKM())) + "đ"
+        });
+    }
+
+    public void viewData(JTable tblDTSP, ArrayList<doanhthuDTO> list) {
+        int s = 0;
+        convertBackgroundOfTable(tblDTSP);
+        String[] headers = {"Tên sản phẩm", "Số lượng bán", "Doanh thu"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        tblDTSP.setModel(model);
+        tblDTSP.setRowHeight(30);
+        tblDTSP.setFont(font);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblDTSP.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblDTSP.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+
+        removeData();
+        for (doanhthuDTO dt_sp : list) {
+            addLine(dt_sp);
+            s += dt_sp.getTiensauKM();
+        }
+        model.addRow(new Object[]{
+            "", "Tổng", formatMoney(s) + "đ"
+        });
+    }
+
+    public void removeData() {
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
+
+    public JTable getTable() {
         return tblDTSP;
     }
 
