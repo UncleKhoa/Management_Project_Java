@@ -24,7 +24,17 @@ public class receptDetailDTO {
         this.unitPrice = unitPrice;
         this.subTotal = subTotal;
     }
-
+      public receptDetailDTO(String receptID, String promotionID, String productID, int quantity, double unitPrice, double subTotal) {
+       
+        this.receptID = receptID;
+        this.promotionID = promotionID;
+        this.productID = productID;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.subTotal = subTotal;
+    }
+    
+    
     public receptDetailDTO() {
     }
 

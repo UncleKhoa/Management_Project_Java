@@ -105,4 +105,18 @@ public class supplierBUS {
         }
          return result;
      }
+     public boolean checkId(String id,ArrayList<supplierDTO> list)
+     {
+         String haiKyTuDau = id.substring(0, 3);
+         if(!haiKyTuDau.equals("SUP"))
+         {
+             return true;
+         }
+         for (supplierDTO supplier : list) {
+              if(supplier.getSupplierID().equals("id"))
+                  return true;
+          }
+          return false;
+     }
+     
 }
