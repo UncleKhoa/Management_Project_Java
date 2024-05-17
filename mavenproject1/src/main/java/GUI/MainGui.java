@@ -853,7 +853,7 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.updateUI();
                 break;
         }
-
+    }
     private void pannelBHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelBHMouseClicked
         set_color_pannel(1);
         Open_GUI(1);
@@ -861,7 +861,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelSPMouseClicked
         set_color_pannel(2);
-        Open_GUI1(2);
+        Open_GUI(2);
     }//GEN-LAST:event_pannelSPMouseClicked
 
     private void pannelKHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelKHMouseClicked
@@ -896,7 +896,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelTKMouseClicked
         set_color_pannel(6);
-        Open_GUI2(6);
+        Open_GUI(6);
     }//GEN-LAST:event_pannelTKMouseClicked
 
     private void pannelThKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelThKMouseClicked

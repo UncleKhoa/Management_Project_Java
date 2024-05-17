@@ -3,94 +3,70 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+
 import static DAO.DBConnect.getConnect;
-import DTO.SupplierDTO;
-import DTO.productDTO;
+import DTO.supplierDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
 /**
  *
- * @author ADMIN
+ * @author MY PC
  */
-public class SupplierDAO {
-    
-    
-     Connection conn = getConnect();
-    
-    public ArrayList <SupplierDTO> list(){
-        ArrayList< SupplierDTO> supplierlist = new ArrayList<>();
-        try{
-            String sql = "select * from supplier";
-            PreparedStatement stmt_getlist = conn.prepareStatement(sql);
-            ResultSet rs = stmt_getlist.executeQuery();
-            
-            while(rs.next()){
-                String supplierid = rs.getString("SupplierID");
-                String suppliername = rs.getString("SupplierName");
-                int phonenumber = rs.getInt("PhoneNumber");
+public class supplierDAO {
+
+    Connection conn = getConnect();
+
+    public ArrayList<supplierDTO> list() {
+        ArrayList<supplierDTO> list = new ArrayList<>();
+        try {
+            String sql = "SELECT* FROM supplier ";
+            PreparedStatement s = conn.prepareStatement(sql);
+            ResultSet rs = s.executeQuery();
+            while (rs.next()) {
+                String supplierID = rs.getString("SupplierID");
+                String supname = rs.getString("SupplierName");
+                String phone = rs.getString("PhoneNumber");
                 String address = rs.getString("Address");
-                
-                
-                SupplierDTO supplier = new SupplierDTO(supplierid, suppliername,  phonenumber,address);
-                supplierlist.add(supplier); 
+                supplierDTO supplier = new supplierDTO(supplierID, supname, phone, address);
+                list.add(supplier);
             }
-        }
-        catch(SQLException ex){
+
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
-        return supplierlist;
+        return list;
     }
-     public void add(SupplierDTO nc) throws SQLException {
-              Connection connection = DBConnect.getConnect();
-              String sql = "INSERT INTO supplier (SupplierID, SupplierName, ProductName, PhoneNumber, Address) VALUES (?, ?, ?, ?)";
-              PreparedStatement pst = connection.prepareStatement(sql);
 
-              pst.setString(1, nc.getId());
-              pst.setString(2, nc.getName());
-              pst.setInt(3, nc.getPhonenumber());
-              pst.setString(4, nc.getAddress());
-            
-              pst.executeUpdate();
+    public void add(supplierDTO supplier) throws SQLException {
+        String sql = "INSERT INTO supplier VALUES ('" + supplier.getSupplierID() + "',"
+                + "'" + supplier.getSupplierName() + "',"
+                + "'" + supplier.getPhoneNumber() + "',"
+                + "'" + supplier.getAddress() + "'"
+                + ")";
+        PreparedStatement p = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        p.executeUpdate();
+    }
 
-              pst.close();
-          }
-            public void update(SupplierDTO nc) {
-		try {
-			    Connection connection = DBConnect.getConnect();
-			
-			PreparedStatement pst = connection.prepareStatement("UPDATE account SET SupplierID=?, SupplierName=?,  PhoneNumber=?, Address=?");
-                            pst.setString(1, nc.getId());
-                            pst.setString(2, nc.getName());
-                            pst.setInt(3, nc.getPhonenumber());
-                            pst.setString(4, nc.getAddress());
-			 System.out.println("update thành công");
-			pst.close();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-                public void delete(String sp) {
-                        try {
-                              Connection connection = DBConnect.getConnect();
+    public void update(supplierDTO supplier) throws SQLException {
+        String sql = "UPDATE supplier SET "
+                + "SupplierName = '"+supplier.getSupplierName()+"', "
+                + "PhoneNumber = '"+supplier.getPhoneNumber()+"', "
+                + "Address = '"+supplier.getAddress()+"' "
+                + "WHERE SupplierID = '"+supplier.getSupplierID()+"'";
+        
+        PreparedStatement stmt_up = conn.prepareStatement(sql);
+        stmt_up.executeUpdate();
+    }
 
-                            PreparedStatement pst = connection.prepareStatement("DELETE FROM supplier WHERE SupplierID = ?");
-                            pst.setString(1, sp);
-                            pst.executeUpdate();
-
-                            System.out.println("Xóa thành công");
-                            pst.close();
-                            connection.close();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-    
-    
-    
-    
+    public void delete(supplierDTO supplier) throws SQLException {
+        String sql = "DELETE FROM supplier WHERE SupplierID = '" + supplier.getSupplierID() + "'";
+        PreparedStatement p = conn.prepareStatement(sql);
+        p.executeUpdate();
+        conn.close();
+    }
 }

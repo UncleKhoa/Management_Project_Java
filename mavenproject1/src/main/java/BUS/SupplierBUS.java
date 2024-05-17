@@ -4,42 +4,105 @@
  */
 package BUS;
 
-import DAO.SupplierDAO;
-import DAO.productDAO;
-import DTO.SupplierDTO;
-import DTO.productDTO;
+import DAO.supplierDAO;
+import DTO.supplierDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  *
- * @author ADMIN
+ * @author MY PC
  */
-public class SupplierBUS {
-    private ArrayList<SupplierDTO> dssupplier;
-    private SupplierDAO supplierDAO;
-    SupplierDAO ncDAO=new SupplierDAO();
-
-    public SupplierBUS() {
+public class supplierBUS {
+    supplierDAO dao;
+    private ArrayList <supplierDTO>list;
+     public supplierBUS() {
         list();
     }
-    public void list(){
-        SupplierDTO supplier = new SupplierDTO();
-        dssupplier = new ArrayList<>();
-        dssupplier = supplierDAO.list();
+
+    public ArrayList<supplierDTO> list() 
+    {
+        supplierDAO dao = new supplierDAO();
+        return dao.list();
     }
-    
-    public ArrayList<SupplierDTO> getList(){
-        return dssupplier;
+    public void add(supplierDTO supplier) throws SQLException
+    {
+        supplierDAO dao = new supplierDAO();
+        dao.add(supplier);
     }
-    
-     public void add(SupplierDTO nc) throws SQLException {
-          ncDAO.add(nc);
-      }
-    public void update(SupplierDTO nc) throws SQLException {
-              ncDAO.update(nc);
-          }
-    public void delete(String ncID) throws SQLException {
-              ncDAO.delete(ncID);
-          }
+    public void update(supplierDTO supplier) throws SQLException
+    {
+        supplierDAO dao = new supplierDAO();
+        dao.update(supplier);
+    }     
+    public void delete(supplierDTO supplier) throws SQLException
+    {
+        supplierDAO dao = new supplierDAO();
+        dao.delete(supplier);
+    }
+     public String createId()
+    {
+        supplierDAO dao = new supplierDAO();
+        String maNcc;
+        list = new ArrayList<>();
+        list = dao.list();
+        int l = list.size();
+        l = l + 1;
+        if (l < 10) {
+            maNcc = "SUP0" + String.valueOf(l);
+        } else {
+            maNcc = "SUP" + String.valueOf(l);
+        }
+
+        return maNcc;
+
+    }
+     public ArrayList<supplierDTO> SeardByIdAndName(String s, ArrayList<supplierDTO> list) {
+        ArrayList<supplierDTO > ketQua = new ArrayList<>();
+        for (supplierDTO supplier : list) {
+            if (supplier.getSupplierID().toLowerCase().contains(s.toLowerCase())||supplier.getSupplierName().toLowerCase().contains(s.toLowerCase())) {
+                ketQua.add(supplier);
+            }
+        }
+        return ketQua;
+    }
+     public ArrayList<supplierDTO> SearchByName(String a1, String a2, ArrayList<supplierDTO> list)
+     {
+         ArrayList<supplierDTO> result = new ArrayList<>();
+         char kitu1 = 0, kitu2 = 0;
+         boolean empty1 = false,empty2 = false;
+         if(a1.trim().isEmpty())
+         {
+             empty1 = true;
+             kitu2 = a2.charAt(0);
+             kitu2 = Character.toLowerCase( kitu2);
+             
+             
+         }
+           if(a2.trim().isEmpty())
+         {
+             empty2 = true;
+             kitu1 = a1.charAt(0);
+             kitu1 = Character.toLowerCase( kitu1);
+             
+         }
+            if(!a1.trim().isEmpty()&&!a2.trim().isEmpty())
+            {
+                 kitu1 = Character.toLowerCase(a1.charAt(0));
+                  kitu2 = Character.toLowerCase(a2.charAt(0));
+            }
+        for (supplierDTO supplier : list) {
+            char firstChar = supplier.getSupplierName().charAt(0);
+            char firstCharLower = Character.toLowerCase(firstChar);
+
+            if (empty1 && firstCharLower == kitu2) {
+                result.add(supplier);
+            } else if (empty2 && firstCharLower == kitu1) {
+                result.add(supplier);
+            } else if (!empty1 && !empty2 && (firstCharLower == kitu1 || firstCharLower == kitu2)) {
+                result.add(supplier);
+            }
+        }
+         return result;
+     }
 }

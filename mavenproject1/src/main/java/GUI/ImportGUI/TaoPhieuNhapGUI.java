@@ -595,7 +595,7 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
            }
            try {
                 add_to_jasper(datalist);
-            } catch (JRException ex) {
+            } catch ( JRException ex) {
                 Logger.getLogger(TaoPhieuNhapGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
                  this.btnThanhtoan.setVisible(false);

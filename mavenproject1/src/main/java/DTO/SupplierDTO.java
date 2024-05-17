@@ -6,54 +6,51 @@ package DTO;
 
 /**
  *
- * @author ADMIN
+ * @author MY PC
  */
-public class SupplierDTO {
-    String id,name,address;
-    int phonenumber;
+public class supplierDTO {
+     String supplierID, supplierName, phoneNumber, address;
 
-    public SupplierDTO() {
+    public supplierDTO() {
     }
 
-    public SupplierDTO(String id, String name, int phonenumber, String address ) {
-        this.id = id;
-        this.name = name;
+    public supplierDTO(String supplierID, String supplierName, String phoneNumber, String address) {
+        this.supplierID = supplierID;
+        this.supplierName = supplierName;
+        this.phoneNumber = phoneNumber;
         this.address = address;
-        this.phonenumber = phonenumber;
     }
 
-    public String getId() {
-        return id;
+    public String getSupplierID() {
+        return supplierID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getAddress() {
         return address;
     }
 
+    public void setSupplierID(String supplierID) {
+        this.supplierID = supplierID;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
-
-    public int getPhonenumber() {
-        return phonenumber;
-    }
-
-    public void setPhonenumber(int phonenumber) {
-        this.phonenumber = phonenumber;
-    }
-    
-    
     
 }

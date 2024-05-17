@@ -82,20 +82,7 @@ public class productBUS {
     
 
 
-    public int getQuantity(String productID) throws SQLException {
-        productDAO dao = new productDAO();
-        return dao.getQuantity(productID);
-    }
 
-    public int compareQuantity(String productID, int sl) throws SQLException {
-        productDAO dao = new productDAO();
-        return dao.compareQuantity(productID, sl);
-    }
-
-    public void update_quantity(String productID, int sl) throws SQLException {
-        productDAO dao = new productDAO();
-        dao.update_quantity(productID, sl);
-    }
 
     public void sub_quantity(String productID, int sl) throws SQLException {
         productDAO dao = new productDAO();

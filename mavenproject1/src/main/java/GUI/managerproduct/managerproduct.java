@@ -60,6 +60,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.plaf.basic.BasicSpinnerUI;
+import Model.MyScrollBar;
 
 // Định dạng số
 
@@ -204,6 +205,7 @@ static public void Export_Excell(JTable jTable1){
     public managerproduct() {
        JScrollPane scrollPane = new JScrollPane(jTable1);
         initComponents(); 
+        jScrollPane2.setVerticalScrollBar(new MyScrollBar());
         DefaultEditor editor = (DefaultEditor) jSpinner1.getEditor();
         editor.getTextField().setEditable(false);
         Component[] components = jSpinner1.getComponents();
