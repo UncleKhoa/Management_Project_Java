@@ -29,7 +29,7 @@ import javax.mail.internet.MimeMessage;
  */
 public class userBUS {
     private userDAO userDAO;
-    
+    userDAO usDAO = new userDAO();
     private ArrayList<userDTO> dsUS;
     
     public userBUS(){
@@ -44,12 +44,35 @@ public class userBUS {
         userDAO usDAO = new userDAO();
         dsUS = new ArrayList<>();
         dsUS = usDAO.list();
+      
     }
     
     public void add(){
         userDAO usDao = new userDAO();
         
     }
+    public void addbus(userDTO staff) throws SQLException {
+          usDAO.add(staff);
+          
+      }
+    public void update(userDTO staff) throws SQLException {
+              usDAO.update(staff);
+          
+          }
+     public void delete(String  staffId) throws SQLException {
+              usDAO.delete(staffId);
+          }
+      public ArrayList<userDTO> getlist(){
+        if(dsUS ==null){
+            list();
+        }
+        return dsUS;
+    }
+      
+      
+
+      
+      
     
     public userDTO Get(String id){
         for(userDTO us:dsUS){

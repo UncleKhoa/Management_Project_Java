@@ -17,7 +17,7 @@ public class productDTO {
         
     }
     
-    public productDTO(String ProducctID, String BrandID, String ProductName, String IMG, double UnitPrice, int Quantity) {
+    public productDTO(String ProducctID, String BrandID, String ProductName,  double UnitPrice, int Quantity,String IMG) {
         this.ProducctID = ProducctID;
         this.BrandID = BrandID;
         this.ProductName = ProductName;

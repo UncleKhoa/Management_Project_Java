@@ -1,5 +1,6 @@
 package BUS;
 
+import DAO.customerDAO;
 import DAO.productDAO;
 import DTO.productDTO;
 import java.sql.SQLException;
@@ -14,7 +15,10 @@ public class productBUS {
     private ArrayList<productDTO> dsProduct;
     private productDAO productDAO;
 
-    public productBUS() {
+    productDAO spDAO=new productDAO(); 
+    
+    public productBUS(){
+
         list();
     }
 
@@ -28,20 +32,57 @@ public class productBUS {
         return dsProduct;
     }
 
-    public int getQuantity(String productID) throws SQLException {
-        productDAO dao = new productDAO();
-        return dao.getQuantity(productID);
+    
+     public void add(productDTO SP) throws SQLException {
+          spDAO.add(SP);
+    
+      }
+    public void update(productDTO SP) throws SQLException {
+              spDAO.update(SP);
+              
+          }
+    public void delete(String sp) throws SQLException {
+              spDAO.delete(sp);
+              
+          }
+    public int ConvertDoubleToInt(double price){
+        return (int) price;
     }
+     public int getQuantity(String productID) throws SQLException
+     {
+           productDAO dao = new productDAO();
+           return dao.getQuantity(productID);
+     }
+     public int compareQuantity(String productID,int sl) throws SQLException
+     {
+         productDAO dao = new productDAO();
+         return dao.compareQuantity(productID, sl);
+     }
+       public void update_quantity(String productID,int sl) throws SQLException
+       {
+             productDAO dao = new productDAO();
+             dao.update_quantity(productID, sl);
+       }
+      public String createId()
+    {
+        productDAO dao = new productDAO();
+        String maSP;
+        dsProduct = new ArrayList<>();
+        dsProduct = dao.list();
+        int l = dsProduct.size();
+        l = l + 1;
+        if (l < 10) {
+            maSP = "SP0" + String.valueOf(l);
+        } else {
+            maSP = "SP" + String.valueOf(l);
+        }
 
-    public int compareQuantity(String productID, int sl) throws SQLException {
-        productDAO dao = new productDAO();
-        return dao.compareQuantity(productID, sl);
+        return maSP;
     }
+    
 
-    public void update_quantity(String productID, int sl) throws SQLException {
-        productDAO dao = new productDAO();
-        dao.update_quantity(productID, sl);
-    }
+
+
 
     public void sub_quantity(String productID, int sl) throws SQLException {
         productDAO dao = new productDAO();
@@ -58,5 +99,6 @@ public class productBUS {
         }
         return list;
     }
+
 
 }

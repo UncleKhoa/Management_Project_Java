@@ -32,7 +32,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 import Model.ScrollBarCustom;
-
+import javax.swing.JFrame;
 public class Combobox<E> extends JComboBox<E> {
 
     public String getLabeText() {
@@ -253,6 +253,8 @@ public class Combobox<E> extends JComboBox<E> {
             }
         }
 
+        
+        
         private void showing(boolean action) {
             if (animator.isRunning()) {
                 animator.stop();
