@@ -4,9 +4,12 @@
  */
 package GUI;
 
+import GUI.manageraccount.manageraccount;
+import GUI.managerproduct.managerproduct;
 import GUI.DoiThongTinGUI;
 import GUI.ImportGUI.TaoPhieuNhapGUI;
 import GUI.LoginGUI.Login;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -49,8 +52,15 @@ public class MainGUI extends javax.swing.JFrame {
 
     //Mở panel riêng
     private KhuyenMaiGUI khuyenmai;
+
+    private manageraccount MNaccount;
+    private managerproduct MNproduct;
+
+   
+
     private ThongKe thongke;
     private HoaDonGUI hoadon;
+
 
     public String id, name, role;
 
@@ -747,7 +757,25 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.updateUI();
                 break;
 
-            // case 4:
+                
+                 case 2:
+                MNproduct = new managerproduct();
+                MNproduct.setEnabled(true);
+                jmain.removeAll();             
+                MNproduct.setSize(950, 650);
+                jmain.add(MNproduct);
+                jmain.updateUI();
+                break;
+          case 6:
+                MNaccount = new manageraccount();
+                MNaccount.setEnabled(true);
+                jmain.removeAll();             
+                MNaccount.setSize(980, 685);
+                jmain.add(MNaccount.getContentPane());
+                jmain.updateUI();
+                break;
+           // case 4:
+
 //                lblConnguoi.setEnabled(true);
 //                jmain.removeAll();
 //                nguoidung = new customerGUI();
@@ -823,7 +851,6 @@ public class MainGUI extends javax.swing.JFrame {
                 break;
         }
     }
-
     private void pannelBHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelBHMouseClicked
         set_color_pannel(1);
         Open_GUI(1);
@@ -831,6 +858,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelSPMouseClicked
         set_color_pannel(2);
+        Open_GUI(2);
     }//GEN-LAST:event_pannelSPMouseClicked
 
     private void pannelKHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelKHMouseClicked
@@ -865,6 +893,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelTKMouseClicked
         set_color_pannel(6);
+        Open_GUI(6);
     }//GEN-LAST:event_pannelTKMouseClicked
 
     private void pannelThKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelThKMouseClicked
