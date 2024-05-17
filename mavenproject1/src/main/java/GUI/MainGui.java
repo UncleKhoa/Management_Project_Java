@@ -4,8 +4,11 @@
  */
 package GUI;
 
+import GUI.manageraccount.manageraccount;
+import GUI.managerproduct.managerproduct;
 import GUI.DoiThongTinGUI;
 import static DAO.DBConnect.getConnect;
+import GUI.LoginGUI.Login;
 import GUI.PromotionGUI.KhuyenMaiGUI;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -42,7 +45,8 @@ public class MainGUI extends javax.swing.JFrame {
     
     //Mở panel riêng
     private KhuyenMaiGUI khuyenmai;
-
+    private manageraccount MNaccount;
+    private managerproduct MNproduct;
 
    
 
@@ -731,7 +735,23 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.add(sell);
                 jmain.updateUI();
                 break;
-
+                
+                 case 2:
+                MNproduct = new managerproduct();
+                MNproduct.setEnabled(true);
+                jmain.removeAll();             
+                MNproduct.setSize(950, 650);
+                jmain.add(MNproduct);
+                jmain.updateUI();
+                break;
+          case 6:
+                MNaccount = new manageraccount();
+                MNaccount.setEnabled(true);
+                jmain.removeAll();             
+                MNaccount.setSize(980, 685);
+                jmain.add(MNaccount.getContentPane());
+                jmain.updateUI();
+                break;
            // case 4:
 //                lblConnguoi.setEnabled(true);
 //                jmain.removeAll();
@@ -758,6 +778,33 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.updateUI();
         }
     }    
+     private void Open_GUI1(int a){
+        switch(a){
+          
+                
+                 case 2:
+                MNproduct = new managerproduct();
+                MNproduct.setEnabled(true);
+                jmain.removeAll();             
+                MNproduct.setSize(950, 650);
+                jmain.add(MNproduct);
+                jmain.updateUI();
+                break;
+          
+        }
+    }    
+     private void Open_GUI2(int a){
+        switch(a){               
+               case 6:
+                MNaccount = new manageraccount();
+                MNaccount.setEnabled(true);
+                jmain.removeAll();             
+                MNaccount.setSize(980, 685);
+                jmain.add(MNaccount.getContentPane());
+                jmain.updateUI();
+                break;   
+        }
+    }    
     
     private void pannelBHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelBHMouseClicked
         set_color_pannel(1);
@@ -766,6 +813,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelSPMouseClicked
         set_color_pannel(2);
+        Open_GUI1(2);
     }//GEN-LAST:event_pannelSPMouseClicked
 
     private void pannelKHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelKHMouseClicked
@@ -797,6 +845,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelTKMouseClicked
         set_color_pannel(6);
+        Open_GUI2(6);
     }//GEN-LAST:event_pannelTKMouseClicked
 
     private void pannelThKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelThKMouseClicked

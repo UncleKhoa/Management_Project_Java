@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Bon Nguyen
@@ -29,7 +31,7 @@ public class productDAO {
                 int Quantity = rs.getInt("Quantity");
                 String IMG = rs.getString("IMG");
                 
-                productDTO product = new productDTO(ProductID, BrandID, ProductName, IMG, UnitPrice, Quantity);
+                productDTO product = new productDTO(ProductID, BrandID, ProductName,  UnitPrice, Quantity,IMG);
                 productlist.add(product); 
             }
         }
@@ -38,6 +40,62 @@ public class productDAO {
         }
         return productlist;
     }
+ 
+     public void add(productDTO sp) throws SQLException {
+              Connection connection = DBConnect.getConnect();
+              String sql = "INSERT INTO product (ProductID, BrandID, ProductName, UnitPrice, Quantity, IMG) VALUES (?, ?, ?, ?, ?, ?)";
+              PreparedStatement pst = connection.prepareStatement(sql);
+
+              pst.setString(1, sp.getProducctID());
+              pst.setString(2, sp.getBrandID());
+              pst.setString(3, sp.getProductName());
+              pst.setDouble(4, sp.getUnitPrice());
+              pst.setInt(5, sp.getQuantity());
+              pst.setString(6, sp.getIMG());
+
+              pst.executeUpdate();
+
+              pst.close();
+          }
+            public void update(productDTO sp) {
+		try {
+			    Connection connection = DBConnect.getConnect();
+			
+			PreparedStatement pst = connection.prepareStatement("UPDATE account SET ProductID=?, BrandID=?, ProductName=?, UnitPrice=?,  Quantity?, IMG=?");
+                          pst.setString(1, sp.getProducctID());
+                            pst.setString(2, sp.getBrandID());
+                            pst.setString(3, sp.getProductName());
+                            pst.setDouble(4, sp.getUnitPrice());
+                            pst.setInt(5, sp.getQuantity());
+                            pst.setString(6, sp.getIMG());
+                            System.out.println("update thành công");
+                           pst.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+                public void delete(String sp) {
+                        try {
+                              Connection connection = DBConnect.getConnect();
+
+                            PreparedStatement pst = connection.prepareStatement("DELETE FROM account WHERE StaffID = ?");
+                            pst.setString(1, sp);
+                            pst.executeUpdate();
+
+                            System.out.println("Xóa thành công");
+                            pst.close();
+                            connection.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+    
+    
+    
+    
+    
     public int getQuantity(String productID) throws SQLException
     {
            int quantity = 0;

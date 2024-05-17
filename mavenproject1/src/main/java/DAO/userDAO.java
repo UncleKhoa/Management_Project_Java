@@ -7,7 +7,6 @@ package DAO;
 import static DAO.DBConnect.getConnect;
 import DTO.userDTO;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,10 +50,10 @@ public class userDAO {
         }
         return userlist;    
     }
-    
+  
     public void add(userDTO user){
         try {
-            String sql = "INSERT INTO acount VALUES('" + user.getStaffID() + "', "
+            String sql = "INSERT INTO account VALUES('" + user.getStaffID() + "', "
                     + "'" + user.getUsername() + "', "
                     + "('" + user.getPassword() + "'), "
                     + "'" + user.getGmail() + "', "
@@ -69,7 +68,7 @@ public class userDAO {
     public void update(userDTO user) {
         try {
             // Câu truy vấn SQL để cập nhật thông tin người dùng
-            String sql = "UPDATE account SET Username = ?, Password = ?, Gmail = ?, Enable = ? WHERE AccountID = ?";
+            String sql = "UPDATE account SET Username = ?, Password = ?, Gmail = ?, Enable = ? WHERE StaffID = ?";
 
             // Tạo một đối tượng PreparedStatement với câu truy vấn SQL
             PreparedStatement stmt_update = conn.prepareStatement(sql);
@@ -99,7 +98,7 @@ public class userDAO {
     
     public void delete(String staffID){
         try {
-            String sql = "DELETE FROM USER WHERE StaffID = '" + staffID + "'";
+            String sql = "DELETE FROM account WHERE StaffID = '" + staffID + "'";
             PreparedStatement stmt_add = conn.prepareStatement(sql);
             stmt_add.executeUpdate();
         } catch (SQLException ex) {
