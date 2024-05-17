@@ -1,6 +1,5 @@
 package GUI.StatisticGUI;
 
-
 import DTO.doanhthuDTO;
 import Model.CustomHeaderRenderer;
 import Model.NonEditableTableModel;
@@ -13,6 +12,9 @@ import BUS.doanhthuBUS;
 import java.awt.Font;
 import Model.CustomTableCellRenderer;
 import static Model.helpers.*;
+import javax.swing.JTable;
+import Model.MyScrollBar;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
@@ -23,65 +25,65 @@ import static Model.helpers.*;
  * @author Bon Nguyen
  */
 public class ThongKeDT_SanPhamTable extends javax.swing.JPanel {
+
     DefaultTableModel model;
     doanhthuBUS doanhthuBUS;
-    ThongKeGUI tk;
     Font font = new Font("Segoe UI", Font.PLAIN, 14);
     private ArrayList<doanhthuDTO> ds_dtsp = new ArrayList<>();
+
     /**
      * Creates new form ThongKeDT_SanPhamTable
      */
-    public ThongKeDT_SanPhamTable(ThongKeGUI tk) {
+    public ThongKeDT_SanPhamTable() {
         initComponents();
-        this.tk = tk;
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         doanhthuBUS doanhthuBUS = new doanhthuBUS();
         JTableHeader header = tblDTSP.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         ds_dtsp = doanhthuBUS.getList_DTSP();
-        viewData(ds_dtsp);
+        viewData(tblDTSP, ds_dtsp);
+
     }
-    
-    public void addLine(doanhthuDTO dt_sp){
+
+    public void addLine(doanhthuDTO dt_sp) {
         model.addRow(new Object[]{
-            dt_sp.getProductName(), dt_sp.getSLBan(), formatMoney(ConvertDoubleToInt(dt_sp.getTiensauKM()))+"đ"
+            dt_sp.getProductName(), dt_sp.getSLBan(), formatMoney(ConvertDoubleToInt(dt_sp.getTiensauKM())) + "đ"
         });
-        
     }
-    
-    public void viewData(ArrayList<doanhthuDTO> list){
-        int s=0;
+
+    public void viewData(JTable tblDTSP, ArrayList<doanhthuDTO> list) {
+        int s = 0;
         convertBackgroundOfTable(tblDTSP);
         String[] headers = {"Tên sản phẩm", "Số lượng bán", "Doanh thu"}; // Đặt tiêu đề cột của bảng
-        model = new NonEditableTableModel(new Object[0][headers.length], headers);            
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
         tblDTSP.setModel(model);
         tblDTSP.setRowHeight(30);
         tblDTSP.setFont(font);
-        
+
         CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
         tblDTSP.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         tblDTSP.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        
+
         removeData();
-        for(doanhthuDTO dt_sp:ds_dtsp){
+        for (doanhthuDTO dt_sp : list) {
             addLine(dt_sp);
-            s+=dt_sp.getTiensauKM();
-        }       
+            s += dt_sp.getTiensauKM();
+        }
         model.addRow(new Object[]{
-            "","Tổng",formatMoney(s)+"đ"
+            "", "Tổng", formatMoney(s) + "đ"
         });
     }
-   
-    public void removeData(){
+
+    public void removeData() {
         int rowCount = model.getRowCount();
-        for (int i=rowCount-1;i>=0;i--){
+        for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
-    
-    public int getSelectedIndex() {
-        return tblDTSP.getSelectedRow();
-    }
 
+    public JTable getTable() {
+        return tblDTSP;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,11 +140,7 @@ public class ThongKeDT_SanPhamTable extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblDTSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDTSPMouseClicked
-           tk.selected = getSelectedIndex();
-           tk.showUpBtnDetail();
-           tk.doanhthuDTO = ds_dtsp.get(tk.selected);
 
-        // TODO add your handling code here:
     }//GEN-LAST:event_tblDTSPMouseClicked
 
 

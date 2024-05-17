@@ -10,6 +10,9 @@ import DAO.staffDAO;
 import DTO.promotionDTO;
 import DTO.promotion_detailDTO;
 import DTO.staffDTO;
+import Model.NonEditableTableModel;
+import static Model.helpers.convertBackgroundOfTable;
+import java.awt.Font;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,9 +29,9 @@ import javax.swing.table.TableModel;
  * @author Bon Nguyen
  */
 public class promotionBUS {
+    DefaultTableModel model;
     private ArrayList<promotionDTO> dsPromo;
     private ArrayList<promotion_detailDTO> dsPromo_detail;
-    private ArrayList<promotionDTO> dsPromo_search;
     private promotionDAO promotionDAO;
     private promotion_detailDAO promotion_detailDAO;
 
@@ -130,15 +133,25 @@ public class promotionBUS {
 
     }
     
-    public void list_search(String a){
-        promotionDAO promotionDAO = new promotionDAO();
-        dsPromo_search = new ArrayList<>();
-        dsPromo_search = promotionDAO.Search(a);
+    public ArrayList<promotionDTO> getList_Search(String a) {    
+        ArrayList<promotionDTO> oldlist = dsPromo;
+        ArrayList<promotionDTO> newList = new ArrayList<>();
+        for(promotionDTO promo:oldlist){
+            if(promo.getPromotionID().toLowerCase().contains(a.toLowerCase())){
+                newList.add(promo);
+            }
+        }
+        return newList;
     }
     
-    public ArrayList<promotionDTO> getList_Search(String a) {     
-        list_search(a);
-        return dsPromo_search;
+    public boolean Check_Code(String code){
+        ArrayList<promotionDTO> newlist = dsPromo;
+        for(promotionDTO promo:newlist){
+            if(promo.getPromotionID().equals(code)){
+                return true;
+            }
+        }
+        return false;
     }
     
 //    public int Calculate_Date(Date date_from, Date date_to){

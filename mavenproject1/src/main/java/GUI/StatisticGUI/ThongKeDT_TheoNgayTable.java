@@ -18,67 +18,32 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import static Model.helpers.*;
 import java.text.ParseException;
+import javax.swing.JTable;
+import Model.MyScrollBar;
 /**
  *
  * @author Bon Nguyen
  */
 public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
     DefaultTableModel model;    
-    private ThongKeGUI tk;
+    Date start;
+    Date end;
     private ArrayList<doanhthuDTO> ds_dttn;
     Font font = new Font("Segoe UI", Font.PLAIN, 14);
     /**
      * Creates new form ThongKeDT_TheoNgay
      */
-    public ThongKeDT_TheoNgayTable(ThongKeGUI tk) throws ParseException {
-        this.tk = tk;
+    public ThongKeDT_TheoNgayTable(Date from, Date to) throws ParseException {
         initComponents();
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         doanhthuBUS doanhthuBUS = new doanhthuBUS();
-        Date start = tk.getDateStartChooser();
-        Date end = tk.getDateEndChooser();
+        this.start = from;
+        this.end = to;        
         ds_dttn = doanhthuBUS.getLoiNhuanBanHang_NgayBan(start, end);
         JTableHeader header = tblDTTheoNgay.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
-        viewData(ds_dttn);
-    }
-    
-    public void addLine(doanhthuDTO dt_tn){
-        model.addRow(new Object[]{
-            dt_tn.getNgayban(), dt_tn.getSLdon(), dt_tn.getSLSP(), formatMoney(ConvertDoubleToInt(dt_tn.getTongtien())) + "đ"
-        });
-    }
-    
-    public void viewData(ArrayList<doanhthuDTO> list){
-        int s=0;
-        convertBackgroundOfTable(tblDTTheoNgay);
-        String[] headers = {"Ngày bán", "Số lượng đơn", "Số lượng SP", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
-        model = new NonEditableTableModel(new Object[0][headers.length], headers);            
-        tblDTTheoNgay.setModel(model);
-        tblDTTheoNgay.setRowHeight(30);
-        tblDTTheoNgay.setFont(font);
-        
-        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
-        tblDTTheoNgay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        tblDTTheoNgay.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        tblDTTheoNgay.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        
-        for(doanhthuDTO dttn:ds_dttn){
-            addLine(dttn);
-            s += dttn.getTongtien();
-        }
-        model.addRow(new Object[]{
-            "","","Tổng",formatMoney(s) + "đ"
-        });
-        
-    }
-    
-    public void removeData() {
-        int rowCount = model.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            model.removeRow(i);
-        }
-    }
-    
+        viewData_TN(tblDTTheoNgay, ds_dttn);
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -129,6 +94,46 @@ public class ThongKeDT_TheoNgayTable extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void addLine_TN(doanhthuDTO dt_tn) {
+        model.addRow(new Object[]{
+            dt_tn.getNgayban(), dt_tn.getSLdon(), dt_tn.getSLSP(), formatMoney(ConvertDoubleToInt(dt_tn.getTongtien())) + "đ"
+        });
+    }
+
+    public void viewData_TN(JTable tblDTTheoNgay, ArrayList<doanhthuDTO> list) {
+        int s = 0;
+        convertBackgroundOfTable(tblDTTheoNgay);
+        String[] headers = {"Ngày bán", "Số lượng đơn", "Số lượng SP", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        tblDTTheoNgay.setModel(model);
+        tblDTTheoNgay.setRowHeight(30);
+        tblDTTheoNgay.setFont(font);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblDTTheoNgay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblDTTheoNgay.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblDTTheoNgay.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        for (doanhthuDTO dttn : list) {
+            addLine_TN(dttn);
+            s += dttn.getTongtien();
+        }
+        model.addRow(new Object[]{
+            "", "", "Tổng", formatMoney(s) + "đ"
+        });
+
+    }
+
+    public void removeData() {
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
+    
+    public JTable getList_DTTN(){
+        return tblDTTheoNgay;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;

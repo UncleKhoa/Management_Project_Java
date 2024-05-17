@@ -29,18 +29,17 @@ public class ThongKeDT_TheoNgayBarChart extends javax.swing.JPanel {
     Font font = new Font("Segoe UI", Font.BOLD, 16);
     private ArrayList<doanhthuDTO> dt_tn_chart;
     doanhthuBUS doanhthuBUS;
-    private ThongKeGUI tk;
+    Date start;
+    Date end;
     /**
      * Creates new form ThongKeDT_TheoNgayBarChart
      */
-    public ThongKeDT_TheoNgayBarChart(ThongKeGUI tk) throws ParseException {
-        this.tk = tk;
+    public ThongKeDT_TheoNgayBarChart(Date from, Date to) throws ParseException {
         initComponents();
         doanhthuBUS doanhthuBUS = new doanhthuBUS();
-        Date start = tk.getDateStartChooser();
-        Date end = tk.getDateEndChooser();        
+        this.start = from;
+        this.end = to;
         dt_tn_chart = doanhthuBUS.getLoiNhuanBanHang_NgayBan_Chart(start, end); 
-        System.out.println(dt_tn_chart);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (doanhthuDTO dttn : dt_tn_chart) {
             Date date = dttn.getNgayban();

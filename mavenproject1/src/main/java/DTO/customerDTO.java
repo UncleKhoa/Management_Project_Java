@@ -2,6 +2,8 @@ package DTO;
 
 public class customerDTO {
     private String cusID, firstName, lastName, gender, phoneNumber, gmail, address;
+    private int sldon;
+    private double tongtien;
     
     public customerDTO() {
         
@@ -16,6 +18,31 @@ public class customerDTO {
         this.gmail = gmail;
         this.address = address;
     }
+
+    public customerDTO(String cusID, String lastName, int sldon, double tongtien) {
+        this.cusID = cusID;
+        this.lastName = lastName;
+        this.sldon = sldon;
+        this.tongtien = tongtien;
+    }
+
+    public int getSldon() {
+        return sldon;
+    }
+
+    public double getTongtien() {
+        return tongtien;
+    }
+
+    public void setSldon(int sldon) {
+        this.sldon = sldon;
+    }
+
+    public void setTongtien(double tongtien) {
+        this.tongtien = tongtien;
+    }
+    
+    
     
     public String getCusID() {
         return cusID;

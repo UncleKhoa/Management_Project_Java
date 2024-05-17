@@ -26,11 +26,15 @@ import javax.swing.JFrame;
 import Model.CustomConfirmDialog;
 import GUI.PromotionGUI.XemChiTietKMGUI;
 import Model.NonEditableTableModel;
+import javax.swing.JTable;
+
 /**
  *
  * @author Bon Nguyen
  */
 public class KhuyenMaiGUI extends javax.swing.JPanel {
+
+    Font font = new Font("Segoe UI", Font.PLAIN, 14);
     JFrame parentFrame;
     private ArrayList<promotionDTO> list = new ArrayList<>();
     private ArrayList<promotionDTO> list_search = new ArrayList<>();
@@ -38,21 +42,23 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
     DefaultTableModel model_info;
     public promotionDTO promoDTO;
     private static promotionBUS promotionBUS = new promotionBUS();
-    Font font = new Font("Segoe UI", Font.PLAIN, 14);
     Reload_Event event;
     int selectRow;
+    String role;
+
     /**
      * Creates new form Hello
      */
-    public KhuyenMaiGUI() {
+    public KhuyenMaiGUI(String role) {
         initComponents();
+        this.role = role;
         parentFrame = new JFrame();
         this.promotionBUS = new promotionBUS();
-        list =  promotionBUS.getList();
+        list = promotionBUS.getList();
         JTableHeader header = tablePromotion.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
-        viewData(list);
-        
+        viewData(tablePromotion, list);
+        OnOff_TaoMoi();
     }
 
     /**
@@ -67,7 +73,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        myButton1 = new Model.MyButton();
+        btnCreateKM = new Model.MyButton();
         jPanel3 = new javax.swing.JPanel();
         txtSearch = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -94,15 +100,15 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Chương trình khuyến mãi");
 
-        myButton1.setBackground(new java.awt.Color(51, 204, 0));
-        myButton1.setForeground(new java.awt.Color(255, 255, 255));
-        myButton1.setText("Tạo khuyến mãi");
-        myButton1.setColor(new java.awt.Color(51, 204, 0));
-        myButton1.setColorOver(new java.awt.Color(51, 204, 0));
-        myButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        myButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCreateKM.setBackground(new java.awt.Color(51, 204, 0));
+        btnCreateKM.setForeground(new java.awt.Color(255, 255, 255));
+        btnCreateKM.setText("Tạo khuyến mãi");
+        btnCreateKM.setColor(new java.awt.Color(51, 204, 0));
+        btnCreateKM.setColorOver(new java.awt.Color(51, 204, 0));
+        btnCreateKM.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCreateKM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButton1ActionPerformed(evt);
+                btnCreateKMActionPerformed(evt);
             }
         });
 
@@ -114,7 +120,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(myButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCreateKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
         );
         jPanel2Layout.setVerticalGroup(
@@ -125,7 +131,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
                 .addContainerGap(12, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(myButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCreateKM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -340,22 +346,21 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void addLineData(promotionDTO promo)
-    {
-    model.addRow(new Object[]{
-           promo.getPromotionID(), promo.getDescription(), promotionBUS.Date_String(promo.getFrom()), promotionBUS.Date_String(promo.getTo()), String.format("%.1f", promo.getPromotionPercent()*100) + " %", promo.getStatus()
+    public void addLineData(promotionDTO promo) {
+        model.addRow(new Object[]{
+            promo.getPromotionID(), promo.getDescription(), Date_String(promo.getFrom()), Date_String(promo.getTo()), String.format("%.1f", promo.getPromotionPercent() * 100) + " %", promo.getStatus()
         });
-    }   
-    
-    public void viewData(ArrayList<promotionDTO> list){
-        
+    }
+
+    public void viewData(JTable tablePromotion, ArrayList<promotionDTO> list) {
+
         convertBackgroundOfTable(tablePromotion);
-        
+
         String[] headers = {"MÃ CODE", "MÔ TẢ", "TỪ NGÀY", "ĐẾN NGÀY", "PHẦN TRĂM", "TRẠNG THÁI"}; // Đặt tiêu đề cột của bảng
-        model = new NonEditableTableModel(new Object[0][headers.length], headers);       
-        
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+
         tablePromotion.setModel(model);
-        
+
         tablePromotion.getColumnModel().getColumn(0).setPreferredWidth(70);
         tablePromotion.getColumnModel().getColumn(1).setPreferredWidth(110);
         tablePromotion.getColumnModel().getColumn(2).setPreferredWidth(90);
@@ -365,18 +370,24 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         tablePromotion.setRowHeight(30);
         tablePromotion.setFont(font);
         removeData();
-        for(promotionDTO promo:list){
+        for (promotionDTO promo : list) {
             addLineData(promo);
         }
     }
-    
-    public void removeData(){
+
+    public void removeData() {
         int rowCount = model.getRowCount();
-        for (int i=rowCount-1;i>=0;i--){
+        for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
-    
+
+    public void OnOff_TaoMoi() {
+        if (role.equals("staff")) {
+            btnCreateKM.setVisible(false);
+        }
+    }
+
     public void viewInformation(promotionDTO promo) throws ParseException {
         this.promoDTO = promo;
         Date from = promo.getFrom();
@@ -384,27 +395,27 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         FromDate.setDate(from);
         ToDate.setDate(to);
         txtDescribe.setText(promo.getDescription());
-        txtPromoID.setText(promo.getPromotionID());        
+        txtPromoID.setText(promo.getPromotionID());
     }
-    
-    public void Load_Event(boolean a){
-        if(a){
-            viewData(list);
-        }
-    }      
 
-    private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
-        TaoKhuyenMai new_promo = new TaoKhuyenMai();
-        new_promo.addReloadEvent( new Reload_Event() {
+    public void Load_Event(boolean a) {
+        if (a) {
+            viewData(tablePromotion, list);
+        }
+    }
+
+    private void btnCreateKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateKMActionPerformed
+        TaoKhuyenMai new_promo = new TaoKhuyenMai(role);
+        new_promo.addReloadEvent(new Reload_Event() {
             @Override
-            public void load(){
-                list =  promotionBUS.getList();
-                viewData(list);
+            public void load() {
+                list = promotionBUS.getList();
+                viewData(tablePromotion, list);
             }
         }
         );
         new_promo.setVisible(true);
-    }//GEN-LAST:event_myButton1ActionPerformed
+    }//GEN-LAST:event_btnCreateKMActionPerformed
 
     private void tablePromotionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePromotionMouseClicked
         try {
@@ -421,53 +432,57 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
 
     private void ActivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActivateActionPerformed
         String id = txtPromoID.getText();
-        if(id.equals("")){
+        promotionBUS promotionBUS = new promotionBUS();
+        if (id.equals("")) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn 1 mã");
             alert.setVisible(true);
-        }
-        else{       
+        } else {
             promotionDTO promo = list.get(selectRow);
-            String act, act_VN;
-            if(promo.getStatus().equals("active")){
-                act = "inactive";
-                act_VN = "ngừng kích hoạt";
+            if (promo.getPromotionID().equals("NORMAL")) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không thể sửa trạng thái mã mặc định");
+                alert.setVisible(true);
+                return;
+            } else {
+                String act, act_VN;
+                if (promo.getStatus().equals("active")) {
+                    act = "inactive";
+                    act_VN = "ngừng kích hoạt";
+                } else {
+                    act = "active";
+                    act_VN = "kích hoạt";
+                }
+
+                CustomConfirmDialog confirm = new CustomConfirmDialog(parentFrame, "Xác nhận", "Bạn có muốn " + act_VN + " mã này?", "question.png");
+                confirm.setVisible(true);
+
+                if (confirm.getSelected()) {
+                    promotionBUS.Up_Active(id, act);
+                    list = promotionBUS.getList();
+                    viewData(tablePromotion, list);
+                }
             }
-            else{
-                act = "active";
-                act_VN = "kích hoạt";
-            }
-            
-            CustomConfirmDialog confirm = new CustomConfirmDialog(parentFrame,"Xác nhận","Bạn có muốn " + act_VN + " mã này?","question.png");
-            confirm.setVisible(true);
-            
-            if (confirm.getSelected()) {
-                promotionBUS.Up_Active(id, act);
-                list = promotionBUS.getList();
-                viewData(list);
-            }
+
         }
     }//GEN-LAST:event_ActivateActionPerformed
 
     private void Activate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Activate1ActionPerformed
         String id = txtPromoID.getText();
         list.get(selectRow);
-        if(id.equals("")){
+        if (id.equals("")) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn 1 mã cần xem");
             alert.setVisible(true);
-        }
-        else{
+        } else {
             XemChiTietKMGUI xem = new XemChiTietKMGUI(id, promoDTO);
             xem.setVisible(true);
-        }        
+        }
     }//GEN-LAST:event_Activate1ActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        if(txtSearch.getText().equals("")){
-            viewData(list);
-        }
-        else{
-            list_search =  promotionBUS.getList_Search(txtSearch.getText());
-            viewData(list_search);
+        if (txtSearch.getText().equals("")) {
+            viewData(tablePromotion, list);
+        } else {
+            list_search = promotionBUS.getList_Search(txtSearch.getText());
+            viewData(tablePromotion, list_search);
         }
     }//GEN-LAST:event_txtSearchKeyReleased
 
@@ -477,6 +492,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
     private javax.swing.JButton Activate1;
     private com.toedter.calendar.JDateChooser FromDate;
     private com.toedter.calendar.JDateChooser ToDate;
+    private Model.MyButton btnCreateKM;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -489,7 +505,6 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private Model.MyButton myButton1;
     private javax.swing.JTable tablePromotion;
     private javax.swing.JTextArea txtDescribe;
     private javax.swing.JTextField txtPromoID;

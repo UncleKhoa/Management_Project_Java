@@ -7,34 +7,44 @@ package GUI;
 import GUI.manageraccount.manageraccount;
 import GUI.managerproduct.managerproduct;
 import GUI.DoiThongTinGUI;
-import static DAO.DBConnect.getConnect;
+
+
+
+import GUI.ImportGUI.TaoPhieuNhapGUI;
 import GUI.LoginGUI.Login;
-import GUI.PromotionGUI.KhuyenMaiGUI;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.sql.Connection;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Model.CustomConfirmDialog;
 import GUI.PromotionGUI.KhuyenMaiGUI;
 import GUI.SellGUI.sell;
-
 import GUI.customer.customerGUI;
 import GUI.employee.employeeGUI;
-
 import GUI.SellGUI.sell;
 import GUI.SellGUI.showkm;
-
+import GUI.StatisticGUI.ThongKe;
+import GUI.SupplierGUI.NhaCungCapGUI;
+import GUI.employee.employee;
+import GUI.ReceiptGUI.HoaDonGUI;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author khoan
  */
 public class MainGUI extends javax.swing.JFrame {
+
     private sell sell;
-    private showkm showkm;
+    private employeeGUI nhanvien;
+    private TaoPhieuNhapGUI taophieunhap;
+    private NhaCungCapGUI nhacungcap;
+    private showkm showkm; 
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
@@ -42,21 +52,26 @@ public class MainGUI extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
-    
+
     //Mở panel riêng
     private KhuyenMaiGUI khuyenmai;
+
     private manageraccount MNaccount;
     private managerproduct MNproduct;
 
    
 
+    private ThongKe thongke;
+    private HoaDonGUI hoadon;
+
+
     public String id, name, role;
-    
-    public MainGUI(){
+
+    public MainGUI() {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+
     public MainGUI(String id, String name, String role) {
         this.id = id;
         this.name = name;
@@ -65,21 +80,23 @@ public class MainGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         //User Sign
-        File image_logo = new File(relativePath+"Employee.png");
+        File image_logo = new File(relativePath + "Employee.png");
         // Tạo một ImageIcon từ một File
         ImageIcon icon = new ImageIcon(image_logo.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
         lblLogo.setIcon(icon);
-        
-        File image_exit = new File(relativePath+"exit.png");
+
+        File image_exit = new File(relativePath + "exit.png");
         ImageIcon icon_exit = new ImageIcon(image_exit.getAbsolutePath());
         lblExit.setIcon(icon_exit);
-        
+
         lblName.setText(name);
         lblRole.setText(role);
-        
         Open_GUI(1);
         
+        if(role.equals("staff")){
+            Role_OnOff(true, false);
+        }
     }
 
     /**
@@ -619,19 +636,23 @@ public class MainGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
-        System.exit(0);
+        CustomConfirmDialog confirm = new CustomConfirmDialog(this, "Xác nhận thoát", "Bạn có muốn thoát?", "close_red.png");
+        confirm.setVisible(true);
+        if (confirm.getSelected()) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_lblExitMouseClicked
 
     private void lblExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseEntered
-        File image_exit_hover = new File(relativePath+"exit_hover.png");
+        File image_exit_hover = new File(relativePath + "exit_hover.png");
         ImageIcon icon_exit_hover = new ImageIcon(image_exit_hover.getAbsolutePath());
         lblExit.setIcon(icon_exit_hover);
     }//GEN-LAST:event_lblExitMouseEntered
 
     private void lblExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseExited
-        File image_exit = new File(relativePath+"exit.png");
+        File image_exit = new File(relativePath + "exit.png");
         ImageIcon icon_exit = new ImageIcon(image_exit.getAbsolutePath());
         lblExit.setIcon(icon_exit);
     }//GEN-LAST:event_lblExitMouseExited
@@ -644,7 +665,23 @@ public class MainGUI extends javax.swing.JFrame {
         lblDoithongtin.setForeground(Color.black);
     }//GEN-LAST:event_lblDoithongtinMouseExited
 
-    private void set_color_pannel(int a) {                                      
+    private void Role_OnOff(boolean a, boolean b){
+        //nhân viên
+        pannelBH.show(a);
+        pannelSP.show(a);
+        pannelKH.show(a);
+        pannelNCC.show(a);
+        pannelKM.show(a);
+        
+        //admin và quản lý
+        pannelHD.show(b);
+        pannelNV.show(b);
+        pannelTK.show(b);
+        pannelThK.show(b);
+        pannelNH.show(b);
+    }
+    
+    private void set_color_pannel(int a) {
         pannelBH.setBackground(new java.awt.Color(255, 255, 255));
         pannelSP.setBackground(new java.awt.Color(255, 255, 255));
         pannelNCC.setBackground(new java.awt.Color(255, 255, 255));
@@ -655,36 +692,23 @@ public class MainGUI extends javax.swing.JFrame {
         pannelNV.setBackground(new java.awt.Color(255, 255, 255));
         pannelNH.setBackground(new java.awt.Color(255, 255, 255));
         pannelKM.setBackground(new java.awt.Color(255, 255, 255));
-        
-        lblSanpham.setForeground(new java.awt.Color(0,0,0));
-        lblBanhang.setForeground(new java.awt.Color(0,0,0));
-        lblConnguoi.setForeground(new java.awt.Color(0,0,0));
-        lblNhacungcap.setForeground(new java.awt.Color(0,0,0));
-        lblNhaphang.setForeground(new java.awt.Color(0,0,0));
-        lblHoadon.setForeground(new java.awt.Color(0,0,0));
-        lblKhuyenmai.setForeground(new java.awt.Color(0,0,0));
-        lblNhanvien.setForeground(new java.awt.Color(0,0,0));
-        lblTaikhoan.setForeground(new java.awt.Color(0,0,0));
-        lblThongke.setForeground(new java.awt.Color(0,0,0));
-        
+
+        lblSanpham.setForeground(new java.awt.Color(0, 0, 0));
+        lblBanhang.setForeground(new java.awt.Color(0, 0, 0));
+        lblConnguoi.setForeground(new java.awt.Color(0, 0, 0));
+        lblNhacungcap.setForeground(new java.awt.Color(0, 0, 0));
+        lblNhaphang.setForeground(new java.awt.Color(0, 0, 0));
+        lblHoadon.setForeground(new java.awt.Color(0, 0, 0));
+        lblKhuyenmai.setForeground(new java.awt.Color(0, 0, 0));
+        lblNhanvien.setForeground(new java.awt.Color(0, 0, 0));
+        lblTaikhoan.setForeground(new java.awt.Color(0, 0, 0));
+        lblThongke.setForeground(new java.awt.Color(0, 0, 0));
+
         switch (a) {
             case 1:
                 pannelBH.setBackground(new java.awt.Color(0, 51, 204));
                 lblBanhang.setForeground(new java.awt.Color(255, 255, 255));
-
-//                B2.setEnabled(true);
-//                JMain.removeAll();
-//                bai2 = new Bai2();
-//                bai2.setSize(900, 700);
-//                JMain.add(bai2);
-//                JMain.updateUI();
-//                lblBanhang.setEnabled(true);
-//                jmain.removeAll();
-//                sell = new sell(this);
-//                sell.setSize(950, 650);
-//                jmain.add(sell);
-//                jmain.updateUI();
-                 break;
+                break;
             case 2:
                 pannelSP.setBackground(new java.awt.Color(0, 51, 204));
                 lblSanpham.setForeground(new java.awt.Color(255, 255, 255));
@@ -722,19 +746,20 @@ public class MainGUI extends javax.swing.JFrame {
                 lblKhuyenmai.setForeground(new java.awt.Color(255, 255, 255));
                 break;
         }
-                    
-    }  
-    
-    private void Open_GUI(int a){
-        switch(a){
-           case 1:
+
+    }
+
+    private void Open_GUI(int a) {
+        switch (a) {
+            case 1:
 //                lblBanhang.setEnabled(true);
                 jmain.removeAll();
-                sell = new sell(this, showkm);
+                sell = new sell(this);
                 sell.setSize(950, 650);
                 jmain.add(sell);
                 jmain.updateUI();
                 break;
+
                 
                  case 2:
                 MNproduct = new managerproduct();
@@ -753,6 +778,7 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.updateUI();
                 break;
            // case 4:
+
 //                lblConnguoi.setEnabled(true);
 //                jmain.removeAll();
 //                nguoidung = new customerGUI();
@@ -760,7 +786,23 @@ public class MainGUI extends javax.swing.JFrame {
 //                jmain.add(nguoidung);
 //                jmain.updateUI();
 //                break;
-          //  case 8:
+              case 3:
+                this.lblNhacungcap.setEnabled(true);
+                jmain.removeAll();
+                nhacungcap = new NhaCungCapGUI();
+                nhacungcap.setSize(950,650);
+                jmain.add(nhacungcap);
+                jmain.updateUI();
+                break;
+              case 8:
+                lblNhanvien.setEnabled(true);
+                jmain.removeAll();
+                nhanvien = new employeeGUI();
+                nhanvien.setSize(950,650);
+                jmain.add(nhanvien);
+                jmain.updateUI();
+                break;
+            //  case 8:
 //                lblNhanvien.setEnabled(true);
 //                jmain.removeAll();
 //                nhanvien = new employeeGUI();
@@ -768,44 +810,50 @@ public class MainGUI extends javax.swing.JFrame {
 //                jmain.add(nhanvien);
 //                jmain.updateUI();
 //                break;
+            case 5:
+                lblHoadon.setEnabled(true);
+                jmain.removeAll();
+            {
+                try {
+                    hoadon = new HoaDonGUI();
+                } catch (ParseException ex) {
+                    Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+                hoadon.setSize(950, 650);
+                jmain.add(hoadon);
+                jmain.updateUI();
+                break;
+
+            case 7:
+                lblThongke.setEnabled(true);
+                jmain.removeAll();
+                thongke = new ThongKe();
+                thongke.setSize(950, 650);
+                jmain.add(thongke);
+                jmain.updateUI();
+                break;
+             case 9:
+                this.lblNhaphang.setEnabled(true);
+                jmain.removeAll();
+                taophieunhap= new TaoPhieuNhapGUI(this);
+                taophieunhap.setSize(950, 650);
+                jmain.add( taophieunhap);
+                jmain.updateUI();
+                break;
+
+
 
             case 10:
                 lblKhuyenmai.setEnabled(true);
                 jmain.removeAll();
-                khuyenmai = new KhuyenMaiGUI();
+                khuyenmai = new KhuyenMaiGUI(role);
                 khuyenmai.setSize(950, 650);
                 jmain.add(khuyenmai);
                 jmain.updateUI();
-        }
-    }    
-     private void Open_GUI1(int a){
-        switch(a){
-          
-                
-                 case 2:
-                MNproduct = new managerproduct();
-                MNproduct.setEnabled(true);
-                jmain.removeAll();             
-                MNproduct.setSize(950, 650);
-                jmain.add(MNproduct);
-                jmain.updateUI();
                 break;
-          
         }
-    }    
-     private void Open_GUI2(int a){
-        switch(a){               
-               case 6:
-                MNaccount = new manageraccount();
-                MNaccount.setEnabled(true);
-                jmain.removeAll();             
-                MNaccount.setSize(980, 685);
-                jmain.add(MNaccount.getContentPane());
-                jmain.updateUI();
-                break;   
-        }
-    }    
-    
+
     private void pannelBHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelBHMouseClicked
         set_color_pannel(1);
         Open_GUI(1);
@@ -823,14 +871,17 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelNCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelNCCMouseClicked
         set_color_pannel(3);
+         Open_GUI(3);
     }//GEN-LAST:event_pannelNCCMouseClicked
 
     private void pannelNHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelNHMouseClicked
         set_color_pannel(9);
+         Open_GUI(9);
     }//GEN-LAST:event_pannelNHMouseClicked
 
     private void pannelHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelHDMouseClicked
         set_color_pannel(5);
+        Open_GUI(5);
     }//GEN-LAST:event_pannelHDMouseClicked
 
     private void pannelKMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelKMMouseClicked
@@ -850,10 +901,11 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelThKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelThKMouseClicked
         set_color_pannel(7);
+        Open_GUI(7);
     }//GEN-LAST:event_pannelThKMouseClicked
-    
+
     private void pannelSPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelSPMouseEntered
-        
+
     }//GEN-LAST:event_pannelSPMouseEntered
 
     private void pannelKHMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelKHMouseEntered
@@ -878,12 +930,12 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblLogoutMouseExited
 
     private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
-        File image_exit = new File(relativePath+"exit.png");
+        File image_exit = new File(relativePath + "exit.png");
         ImageIcon icon_exit = new ImageIcon(image_exit.getAbsolutePath());
         lblExit.setIcon(icon_exit);
-        CustomConfirmDialog logout = new CustomConfirmDialog(this,"Xác nhận đăng xuất","Bạn có muốn đăng xuất?","close_red.png");
+        CustomConfirmDialog logout = new CustomConfirmDialog(this, "Xác nhận đăng xuất", "Bạn có muốn đăng xuất?", "close_red.png");
         logout.setVisible(true);
-        if(logout.getSelected()){
+        if (logout.getSelected()) {
             Login login = new Login();
             login.setVisible(true);
             this.dispose();

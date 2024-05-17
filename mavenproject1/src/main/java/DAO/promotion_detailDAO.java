@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+
 import BUS.promotion_detailBUS;
 import DAO.DBConnect;
 import static DAO.DBConnect.getConnect;
@@ -17,38 +18,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /**
  *
  * @author Bon Nguyen
  */
 public class promotion_detailDAO {
-    
-    Connection conn = getConnect(); 
-    
-    public ArrayList<promotion_detailDTO> list(String promotionID){
+
+    Connection conn = getConnect();
+
+    public ArrayList<promotion_detailDTO> list(String promotionID) {
         ArrayList<promotion_detailDTO> promotion_detail_list = new ArrayList<>();
-        try {            
-            
-            String sql = "select * from promotiondetail where PromotionID = '"+promotionID+"'";
+        try {
+
+            String sql = "select * from promotiondetail where PromotionID = '" + promotionID + "'";
             PreparedStatement stmt_getlist = conn.prepareStatement(sql);
             ResultSet rs = stmt_getlist.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 String promotionDTID = rs.getString("PromotionDTID");
                 String productid = rs.getString("ProductID");
                 float promotionpercent = rs.getFloat("PromotionPercent");
-                
+
                 promotion_detailDTO promotionDT = new promotion_detailDTO(promotionDTID, promotionID, productid, promotionpercent);
                 promotion_detail_list.add(promotionDT);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(promotion_detailDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return promotion_detail_list;   
+        return promotion_detail_list;
     }
-    
-    public int GET_promotiondetail_ID(){
+
+    public int GET_promotiondetail_ID() {
         int t = 0;
         try {
             String sql = "select promotionDTID from promotiondetail order by promotionDTID desc limit 1";
@@ -81,75 +83,77 @@ public class promotion_detailDAO {
         }
         return t;
     }
-    
-    public void add(promotion_detailDTO promo_detail){
+
+    public void add(promotion_detailDTO promo_detail) {
         try {
             int t = GET_promotiondetail_ID();
-            int s_ = t+1;
-            String s = "Detail"+s_;
-            String sql = "insert into promotiondetail values ('"+s+"',"
-                    + "'"+promo_detail.getPromotionID()+"',"
-                    + "'"+promo_detail.getProductID()+"',"
-                    + "'"+promo_detail.getPromotionPercent()+"'"
+            int s_ = t + 1;
+            String s = "Detail" + s_;
+            String sql = "insert into promotiondetail values ('" + s + "',"
+                    + "'" + promo_detail.getPromotionID() + "',"
+                    + "'" + promo_detail.getProductID() + "',"
+                    + "'" + promo_detail.getPromotionPercent() + "'"
                     + ")";
             PreparedStatement stmt_add = conn.prepareStatement(sql);
             stmt_add.executeUpdate();
-            
-        }
-        catch(SQLException ex){
+
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
-        
-    }
-    
 
-    public String Get_Name(String id){
+    }
+
+    public String Get_Name(String id) {
         String name = null;
-        try{
-            String sql = "select ProductName from product where ProductID = '"+ id +"'";
+        try {
+            String sql = "select ProductName from product where ProductID = '" + id + "'";
             PreparedStatement stmt_name = conn.prepareStatement(sql);
-            ResultSet rs= stmt_name.executeQuery();
-            
-            if(rs.next()){
+            ResultSet rs = stmt_name.executeQuery();
+
+            if (rs.next()) {
                 name = rs.getString("ProductName");
             }
-            
-        }
-        catch(SQLException ex){
+
+        } catch (SQLException ex) {
             System.out.print(ex);
         }
-        
+
         return name;
     }
-    public String getIDbyProductID(String productID) throws SQLException
-    {
+
+    public String getIDbyProductID(String productID) throws SQLException {
         String id = null;
-        String sql = "SELECT PromotionID FROM promotiondetail WHERE ProductID = '"+ productID+"'";
-         PreparedStatement stmt_find = conn.prepareStatement(sql);
-           ResultSet rs = stmt_find.executeQuery(sql);
-            if (rs.next()) {
-              id = rs.getString("PromotionID");
-            }
-          
-           return id;
+        String sql = "SELECT PromotionID FROM promotiondetail WHERE ProductID = '" + productID + "'";
+        PreparedStatement stmt_find = conn.prepareStatement(sql);
+        ResultSet rs = stmt_find.executeQuery(sql);
+        if (rs.next()) {
+            id = rs.getString("PromotionID");
+        }
+
+        return id;
     }
-     public float getPromotion_percent(String id) throws SQLException
-     {
-         String sql = "SELECT PromotionPercent FROM promotiondetail WHERE PromotionID = '"+ id+"'";
-          PreparedStatement stmt_find = conn.prepareStatement(sql);
-           ResultSet rs = stmt_find.executeQuery(sql);
+
+    public float getPromotion_percent(String id) throws SQLException {
+        String sql = "SELECT PromotionPercent FROM promotiondetail WHERE PromotionID = '" + id + "'";
+        PreparedStatement stmt_find = conn.prepareStatement(sql);
+        ResultSet rs = stmt_find.executeQuery(sql);
         float percent = 0;
-            if (rs.next()) {
-              percent = rs.getFloat("PromotionPercent");
-            }
-           return  percent;
-     }
-    
+        if (rs.next()) {
+            percent = rs.getFloat("PromotionPercent");
+        }
+        return percent;
+    }
+
+    public String getStatus(String promotionID) throws SQLException {
+        String id = null;
+        String sql = "SELECT Status FROM promotion WHERE PromotionID = '" + promotionID + "'";
+        PreparedStatement stmt_find = conn.prepareStatement(sql);
+        ResultSet rs = stmt_find.executeQuery(sql);
+        if (rs.next()) {
+            id = rs.getString("Status");
+        }
+
+        return id;
+    }
+
 }
-
-        
-    
-   
-    
-
-

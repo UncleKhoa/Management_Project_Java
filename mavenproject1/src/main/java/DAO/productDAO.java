@@ -1,4 +1,5 @@
 package DAO;
+
 import static DAO.DBConnect.getConnect;
 import DTO.productDTO;
 import java.sql.Connection;
@@ -6,40 +7,44 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Bon Nguyen
  */
 public class productDAO {
-    
+
     Connection conn = getConnect();
-    
-    public ArrayList<productDTO> list(){
+
+    public ArrayList<productDTO> list() {
         ArrayList<productDTO> productlist = new ArrayList<>();
-        try{
+        try {
             String sql = "select * from product";
             PreparedStatement stmt_getlist = conn.prepareStatement(sql);
             ResultSet rs = stmt_getlist.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 String ProductID = rs.getString("ProductID");
                 String BrandID = rs.getString("BrandID");
                 String ProductName = rs.getString("ProductName");
                 double UnitPrice = rs.getDouble("UnitPrice");
                 int Quantity = rs.getInt("Quantity");
                 String IMG = rs.getString("IMG");
+
                 
                 productDTO product = new productDTO(ProductID, BrandID, ProductName,  UnitPrice, Quantity,IMG);
                 productlist.add(product); 
+
             }
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
         return productlist;
     }
+
  
      public void add(productDTO sp) throws SQLException {
               Connection connection = DBConnect.getConnect();
@@ -106,28 +111,38 @@ public class productDAO {
                quantity = rs.getInt("Quantity");
             }
            return quantity;
+
     }
-    
-    public int compareQuantity(String productID,int sl) throws SQLException
-    {
-         int quantity = getQuantity(productID);
-         if(quantity<sl)
-             return 0;
-         return 1;
-         
+
+    public int compareQuantity(String productID, int sl) throws SQLException {
+        int quantity = getQuantity(productID);
+        if (quantity < sl) {
+            return 0;
+        }
+        return 1;
+
     }
- 
-    public void update_quantity(String productID,int sl) throws SQLException
-    {
+
+    public void update_quantity(String productID, int sl) throws SQLException {
         productDTO product = new productDTO();
         int quantity = getQuantity(productID);
-        int updateQuantity =  quantity - sl;
+        int updateQuantity = quantity - sl;
         String sql = "UPDATE product SET Quantity = ? WHERE productID = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, updateQuantity);
         pstmt.setString(2, productID);
         pstmt.executeUpdate();
     }
-        
+
+    public void sub_quantity(String productID, int sl) throws SQLException {
+        productDTO product = new productDTO();
+        int quantity = getQuantity(productID);
+        int updateQuantity = quantity + sl;
+        String sql = "UPDATE product SET Quantity = ? WHERE productID = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, updateQuantity);
+        pstmt.setString(2, productID);
+        pstmt.executeUpdate();
     }
-    
+
+}

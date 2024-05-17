@@ -26,7 +26,7 @@ public class receptDAO {
 
        ArrayList<receptDTO> receptlist = new ArrayList<>();
         try{
-            String sql = "select * from receipt";
+            String sql = "select * from receipt order by ReceiptID desc";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             
@@ -93,6 +93,32 @@ public class receptDAO {
             System.out.print(ex);
         }
         return s;
+    }
+    
+    public ArrayList<receptDTO> list_Name(){
+        ArrayList<receptDTO> receptlist_name = new ArrayList<>();
+        try{
+            String sql = "select distinct hd.ReceiptID, hd.CusID, hd.StaffID, kh.LastName, nv.LastName "
+                    + "from receipt hd, customer kh, staff nv "
+                    + "where hd.CusID = kh.CusID and hd.StaffID = nv.StaffID";
+            PreparedStatement stmt_get = conn.prepareStatement(sql);
+            ResultSet rs = stmt_get.executeQuery();
+            
+            while(rs.next()){
+                String receiptID = rs.getString("ReceiptID");
+                String cusID = rs.getString("CusID");
+                String staffID = rs.getString("StaffID");
+                String cus_LastName = rs.getString("kh.LastName");
+                String stff_LastName = rs.getString("nv.LastName");
+                receptDTO receptDTO = new receptDTO(receiptID, cusID, staffID, cus_LastName, stff_LastName);
+                receptlist_name.add(receptDTO);
+            }
+            
+        }
+        catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return receptlist_name;
     }
 
 }

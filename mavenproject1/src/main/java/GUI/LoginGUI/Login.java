@@ -25,12 +25,14 @@ import javax.swing.AbstractAction;
  * @author khoan
  */
 public class Login extends javax.swing.JFrame {
+
     private static userBUS userBUS = new userBUS();
     private static staffBUS staffBUS = new staffBUS();
-    
+
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
+
     /**
      * Creates new form Login
      */
@@ -38,24 +40,24 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.userBUS = new userBUS();
         setLocationRelativeTo(null);
-        
-        File image_background = new File(relativePath+"background.jpg");
+
+        File image_background = new File(relativePath + "background.jpg");
         // Tạo một ImageIcon từ một File
         ImageIcon background = new ImageIcon(image_background.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
         lblBackground.setIcon(background);
-        
+
         Exit();
     }
 
-    public void Exit(){
-        File image_close = new File(relativePath+"close_black.png");
+    public void Exit() {
+        File image_close = new File(relativePath + "close_black.png");
         // Tạo một ImageIcon từ một File
         ImageIcon close = new ImageIcon(image_close.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
         lblExit.setIcon(close);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -191,6 +193,7 @@ public class Login extends javax.swing.JFrame {
         lblForgetPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblForgetPass.setForeground(new java.awt.Color(0, 102, 204));
         lblForgetPass.setText("Click here");
+        lblForgetPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblForgetPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblForgetPassMouseClicked(evt);
@@ -317,19 +320,26 @@ public class Login extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác!", "ERROR", JOptionPane.WARNING_MESSAGE);
             return;
         } else {
-            String id = user.getStaffID();
-            staffDTO staff = staffBUS.Get(id);
-            String name = staff.getFirstname();
-            String role = staff.getRole();
+            if (userBUS.Check_Active(username)) {
+                MyMessageAlert alert = new MyMessageAlert(this, "Tài khoản hiện đang bị khóa");
+                alert.setVisible(true);
+                return;
+            } else {
+                String id = user.getStaffID();
+                staffDTO staff = staffBUS.Get(id);
+                String name = staff.getLastname();
+                String role = staff.getRole();
 
-            MyMessageAccept accept = new MyMessageAccept(this, "Đăng nhập thành công, chào mừng " + name + "");
-            accept.setVisible(true);
-            MainGUI mfrm = new MainGUI(id, name, role);
-            mfrm.setVisible(true);
-            dispose(); //Phá hủy Jframeform
+                MyMessageAccept accept = new MyMessageAccept(this, "Đăng nhập thành công, chào mừng " + name + "");
+                accept.setVisible(true);
+                MainGUI mfrm = new MainGUI(id, name, role);
+                mfrm.setVisible(true);
+                dispose(); //Phá hủy Jframeform
+            }
+
         }
     }
-    
+
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
@@ -343,7 +353,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExitMouseClicked
 
     private void lblExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseEntered
-        File image_close = new File(relativePath+"close_red.png");
+        File image_close = new File(relativePath + "close_red.png");
         // Tạo một ImageIcon từ một File
         ImageIcon close = new ImageIcon(image_close.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
@@ -359,7 +369,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_Login_InMouseClicked
 
     private void Login_InActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_InActionPerformed
-        
+
     }//GEN-LAST:event_Login_InActionPerformed
 
     private void lblForgetPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgetPassMouseClicked
@@ -369,7 +379,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblForgetPassMouseClicked
 
     private void Login_InKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Login_InKeyPressed
-        
+
     }//GEN-LAST:event_Login_InKeyPressed
 
     /**
@@ -398,7 +408,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

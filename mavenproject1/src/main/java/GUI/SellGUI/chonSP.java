@@ -3,115 +3,94 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI.SellGUI;
+
 import DTO.productDTO;
 import BUS.productBUS;
+import DTO.table_receiptDTO;
+import static Model.helpers.ConvertDoubleToInt;
 //import Model.CustomHeaderRenderer;
 //import Model.CustomTableCellRenderer;
 import static Model.helpers.convertBackgroundOfTable;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
+import Model.MyScrollBar;
+
 /**
  *
  * @author MY PC
- * 
- * 
+ *
+ *
  */
-
 public class chonSP extends javax.swing.JFrame {
 
     /**
      * Creates new form chonSP
      */
-     private ArrayList<productDTO> list = new ArrayList<>();
-     private ArrayList<productDTO> listsp = new ArrayList<>();
-     public static int pos =0;
-      productBUS productBUS;
-      private int sl =1;
-      DefaultTableModel model;
-      DefaultTableModel model1;
-      //TableModel model;
-      TableModel model2;
-      sell _testsell;
-  
-      productDTO x;
-      
-      public chonSP()
-      {
-          initComponents();
-      }
+    private ArrayList<productDTO> list = new ArrayList<>();
+    private ArrayList<productDTO> listsp = new ArrayList<>();
+    public static int pos = 0;
+    productBUS productBUS;
+    private int sl = 1;
+    DefaultTableModel model;
+    DefaultTableModel model1;
+    //TableModel model;
+    TableModel model2;
+    sell _testsell;
+
+    productDTO x;
+
+    public chonSP() {
+        initComponents();
+    }
+
     public chonSP(sell testsell) {
         initComponents();
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         setLocationRelativeTo(null);
+        this.dispose();
         this.productBUS = new productBUS();
         list = productBUS.getList();
-        _testsell=testsell;
-//        CustomTableCellRenderer cellRenderer = new CustomTableCellRenderer();
-//        tblSP.setDefaultRenderer(Object.class, cellRenderer);
+        _testsell = testsell;
         JTableHeader header = tblSP.getTableHeader();
-        header.setFont(new Font("Tahoma", Font.BOLD, 16)); // Font in đậm
+        header.setFont(new Font("Tahoma", Font.BOLD, 16));
         header.setResizingAllowed(false);
-       // header.setDefaultRenderer(new CustomHeaderRenderer());
-        //JTableHeader header1 = tblSP.getTableHeader();
-       // header1.setDefaultRenderer(new CustomHeaderRenderer());
         ViewData(list);
-       
-        
-        
-        
+
     }
-    public void ViewData(ArrayList<productDTO> list)
-    {
+
+    public void ViewData(ArrayList<productDTO> list) {
         convertBackgroundOfTable(tblSP);
-        String[] header = {"Mã sản phẩm","Hãng","Tên sản phẩm","Giá"};
-        model = (DefaultTableModel) 
-        tblSP.getModel();
+
+        String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Giá"};
+        model = (DefaultTableModel) tblSP.getModel();
+
         model.setColumnIdentifiers(header);
-        tblSP.getColumnModel().getColumn(0).setPreferredWidth(70);
+        tblSP.getColumnModel().getColumn(0).setPreferredWidth(90);
         tblSP.getColumnModel().getColumn(1).setPreferredWidth(90);
         tblSP.getColumnModel().getColumn(2).setPreferredWidth(110);
         tblSP.getColumnModel().getColumn(3).setPreferredWidth(90);
         removeData();
-         // Chỉnh kích thước của header
-        //JTableHeader headers = tblSP.getTableHeader();
-        //headers.setFont(new Font("Tahoma", Font.BOLD, 12)); // Font in đậm
-        //headers.setResizingAllowed(false); // Không cho phép thay đổi kích thước header bằng cách kéo thả
-        //JTableHeader header = tblSP.getTableHeader();
-        
-        for(productDTO product:list)
-        {
-             addData(product);
-            
+
+        for (productDTO product : list) {
+            addData(product);
+
         }
-       
+
     }
-    public void addList(ArrayList<productDTO> listsp){
-         for(productDTO product:listsp)
-        {
-             addData1(product);
-            
-        }
-        
-    }
-    public void addData(productDTO product)
-    {
+
+    public void addData(productDTO product) {
         model.addRow(new Object[]{
-            product.getProducctID(), product.getBrandID(),product.getProductName(),productBUS.ConvertDoubleToInt(product.getUnitPrice())
+            product.getProducctID(), product.getBrandID(), product.getProductName(), ConvertDoubleToInt(product.getUnitPrice())
         });
     }
-     public void addData1(productDTO product)
-    {
-        model1.addRow(new Object[]{
-            product.getProducctID(), product.getBrandID(),product.getProductName(),sl,productBUS.ConvertDoubleToInt(product.getUnitPrice())
-        });
-    }
-    public void removeData()
-    {
+
+    public void removeData() {
         int count = model.getRowCount();
-        for(int i= count-1;i>=0;i--)
-        {
+        for (int i = count - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
@@ -128,10 +107,9 @@ public class chonSP extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSP = new javax.swing.JTable();
-        btnXacnhan = new java.awt.Button();
-        btnXacnhan1 = new java.awt.Button();
         btnBack = new javax.swing.JButton();
         btnChon = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -139,18 +117,20 @@ public class chonSP extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 380));
+
         tblSP.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ));
-        tblSP.setRowHeight(30);
+        tblSP.setRowHeight(40);
         tblSP.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tblSP.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tblSP.setShowGrid(true);
@@ -161,21 +141,9 @@ public class chonSP extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblSP);
 
-        btnXacnhan.setLabel("Xác nhận");
-        btnXacnhan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXacnhanActionPerformed(evt);
-            }
-        });
-
-        btnXacnhan1.setActionCommand("Chọn");
-        btnXacnhan1.setLabel("Xác nhận");
-        btnXacnhan1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXacnhan1ActionPerformed(evt);
-            }
-        });
-
+        btnBack.setBackground(new java.awt.Color(73, 36, 62));
+        btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Quay về");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,6 +151,9 @@ public class chonSP extends javax.swing.JFrame {
             }
         });
 
+        btnChon.setBackground(new java.awt.Color(45, 67, 86));
+        btnChon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnChon.setForeground(new java.awt.Color(255, 255, 255));
         btnChon.setText("Chọn");
         btnChon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,38 +161,44 @@ public class chonSP extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel1.setText("Chọn sản phẩm");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(btnXacnhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(btnXacnhan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(btnBack)
-                .addGap(28, 28, 28)
-                .addComponent(btnChon)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 17, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(202, 202, 202))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnXacnhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnXacnhan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBack)
-                        .addComponent(btnChon)))
-                .addGap(11, 11, 11))
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
-
-        btnXacnhan1.getAccessibleContext().setAccessibleName("Chọn");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -231,85 +208,57 @@ public class chonSP extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//private CustomTableCellRenderer cellRenderer = new CustomTableCellRenderer();
-    private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPMouseClicked
-        // TODO add your handling code here:
-        
-//         int pos= tblSP.getSelectedRow();
-//         x = list.get(pos);
-//         listsp.add(x);
-//             // Cập nhật chỉ số hàng được chọn và cập nhật lại renderer
-//        cellRenderer.setSelectedRow(pos);
-//    for (int i = 0; i < tblSP.getColumnCount(); i++) {
-//        tblSP.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
-//    }
-         
-    }//GEN-LAST:event_tblSPMouseClicked
-   
-    private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
-        // TODO add your handling code here:
-//        model1 = (DefaultTableModel)_testsell.tblProduct.getModel();
-//        addList(listsp);
-//        this.hide();
-//        for(productDTO product:listsp)
-//        {
-//             listsp.remove(product);
-//            
-//        }
-        TableModel model2 = tblSP.getModel();
-        int [] select = tblSP.getSelectedRows();
-         Object [] newFormRow = new Object[4];
-        for(int i =0; i<select.length;i++)
-       {
-           newFormRow[0] = model2.getValueAt(select[i],0);
-           newFormRow[1] = model2.getValueAt(select[i],1);
-           newFormRow[2] = model2.getValueAt(select[i],2);
-           newFormRow[3] = model2.getValueAt(select[i],3);
-           _testsell.model.addRow(newFormRow);       }
-        
-        
-    }//GEN-LAST:event_btnXacnhanActionPerformed
+    private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {
 
-    private void btnXacnhan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhan1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnXacnhan1ActionPerformed
+    }
+
 
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
-        // TODO add your handling code here:
-//        model1 = (DefaultTableModel)_testsell.tblProduct.getModel();
-//        addList(listsp);
-//        this.hide();
-//        for(productDTO product:listsp)
-//        {
-//             listsp.remove(product);
-//            
-//        }
         TableModel model2 = tblSP.getModel();
-        int [] select = tblSP.getSelectedRows();
-         Object [] newFormRow = new Object[5];
-        for(int i =0; i<select.length;i++)
-       {
-           newFormRow[0] = model2.getValueAt(select[i],0);
-           newFormRow[1] = model2.getValueAt(select[i],1);
-           newFormRow[2] = model2.getValueAt(select[i],2);
-           newFormRow[3] = sl;
-           newFormRow[4] = model2.getValueAt(select[i],3);
-           _testsell.model.addRow(newFormRow);       }
-                // TODO add your handling code here:
+
+        Object[] newFormRow = new Object[5];
+
+        int check = 0;
+        int choose = tblSP.getSelectedRow();
+        newFormRow[0] = model2.getValueAt(choose, 0);
+        for (int row = 0; row < _testsell.model.getRowCount(); row++) {
+            Object id = _testsell.model.getValueAt(row, 0);
+            if (newFormRow[0].equals(id)) {
+                Object s = _testsell.model.getValueAt(row, 3);
+                int quantity = (int) s;
+                quantity = quantity + 1;
+                newFormRow[1] = model2.getValueAt(choose, 1);
+                newFormRow[2] = model2.getValueAt(choose, 2);
+                newFormRow[3] = quantity;
+                newFormRow[4] = model2.getValueAt(choose, 3);
+                _testsell.model.setValueAt(quantity, row, 3);
+                check = 1;
+            }
+
+        }
+
+        if (check == 0) {
+            newFormRow[1] = model2.getValueAt(choose, 1);
+            newFormRow[2] = model2.getValueAt(choose, 2);
+            newFormRow[3] = sl;
+            newFormRow[4] = model2.getValueAt(choose, 3);
+            _testsell.model.addRow(newFormRow);
+        }
     }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
         this.hide();
         _testsell.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+//GEN-FIRST:event_tblSPMouseClicked
+ 
+//GEN-LAST:event_tblSPMouseClicked
 
     /**
      * @param args the command line arguments
@@ -349,8 +298,7 @@ public class chonSP extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnChon;
-    private java.awt.Button btnXacnhan;
-    private java.awt.Button btnXacnhan1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tblSP;
