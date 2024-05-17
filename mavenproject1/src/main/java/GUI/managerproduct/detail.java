@@ -90,10 +90,10 @@ public void setjTextField1(String value) {
         jTextField11 = new javax.swing.JTextField();
         themchitiet = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jPanel2.setBackground(new java.awt.Color(51, 153, 0));
+        jPanel2.setBackground(new java.awt.Color(66, 100, 220));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
