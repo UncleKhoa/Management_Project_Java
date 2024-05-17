@@ -5,7 +5,6 @@
 package GUI;
 
 import GUI.DoiThongTinGUI;
-import static DAO.DBConnect.getConnect;
 import GUI.ImportGUI.TaoPhieuNhapGUI;
 import GUI.LoginGUI.Login;
 import java.awt.Color;
