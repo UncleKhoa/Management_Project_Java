@@ -41,7 +41,7 @@ public class MainGUI extends javax.swing.JFrame {
     private employeeGUI nhanvien;
     private TaoPhieuNhapGUI taophieunhap;
     private NhaCungCapGUI nhacungcap;
-    private showkm showkm; 
+    private showkm showkm;
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
@@ -56,11 +56,8 @@ public class MainGUI extends javax.swing.JFrame {
     private manageraccount MNaccount;
     private managerproduct MNproduct;
 
-   
-
     private ThongKe thongke;
     private HoaDonGUI hoadon;
-
 
     public String id, name, role;
 
@@ -90,8 +87,8 @@ public class MainGUI extends javax.swing.JFrame {
         lblName.setText(name);
         lblRole.setText(role);
         Open_GUI(1);
-        
-        if(role.equals("staff")){
+
+        if (role.equals("staff")) {
             Role_OnOff(true, false);
         }
     }
@@ -662,14 +659,14 @@ public class MainGUI extends javax.swing.JFrame {
         lblDoithongtin.setForeground(Color.black);
     }//GEN-LAST:event_lblDoithongtinMouseExited
 
-    private void Role_OnOff(boolean a, boolean b){
+    private void Role_OnOff(boolean a, boolean b) {
         //nhân viên
         pannelBH.show(a);
         pannelSP.show(a);
         pannelKH.show(a);
         pannelNCC.show(a);
         pannelKM.show(a);
-        
+
         //admin và quản lý
         pannelHD.show(b);
         pannelNV.show(b);
@@ -677,7 +674,7 @@ public class MainGUI extends javax.swing.JFrame {
         pannelThK.show(b);
         pannelNH.show(b);
     }
-    
+
     private void set_color_pannel(int a) {
         pannelBH.setBackground(new java.awt.Color(255, 255, 255));
         pannelSP.setBackground(new java.awt.Color(255, 255, 255));
@@ -757,24 +754,15 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.updateUI();
                 break;
 
-                
-                 case 2:
+            case 2:
                 MNproduct = new managerproduct();
                 MNproduct.setEnabled(true);
-                jmain.removeAll();             
+                jmain.removeAll();
                 MNproduct.setSize(950, 650);
                 jmain.add(MNproduct);
                 jmain.updateUI();
                 break;
-          case 6:
-                MNaccount = new manageraccount();
-                MNaccount.setEnabled(true);
-                jmain.removeAll();             
-                MNaccount.setSize(980, 685);
-                jmain.add(MNaccount.getContentPane());
-                jmain.updateUI();
-                break;
-           // case 4:
+            // case 4:
 
 //                lblConnguoi.setEnabled(true);
 //                jmain.removeAll();
@@ -783,42 +771,36 @@ public class MainGUI extends javax.swing.JFrame {
 //                jmain.add(nguoidung);
 //                jmain.updateUI();
 //                break;
-              case 3:
+            case 3:
                 this.lblNhacungcap.setEnabled(true);
                 jmain.removeAll();
                 nhacungcap = new NhaCungCapGUI();
-                nhacungcap.setSize(950,650);
+                nhacungcap.setSize(950, 650);
                 jmain.add(nhacungcap);
                 jmain.updateUI();
                 break;
-              case 8:
-                lblNhanvien.setEnabled(true);
-                jmain.removeAll();
-                nhanvien = new employeeGUI();
-                nhanvien.setSize(950,650);
-                jmain.add(nhanvien);
-                jmain.updateUI();
-                break;
-            //  case 8:
-//                lblNhanvien.setEnabled(true);
-//                jmain.removeAll();
-//                nhanvien = new employeeGUI();
-//                nhanvien.setSize(950,650);
-//                jmain.add(nhanvien);
-//                jmain.updateUI();
-//                break;
+
             case 5:
                 lblHoadon.setEnabled(true);
                 jmain.removeAll();
-            {
-                try {
-                    hoadon = new HoaDonGUI();
-                } catch (ParseException ex) {
-                    Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+                 {
+                    try {
+                        hoadon = new HoaDonGUI();
+                    } catch (ParseException ex) {
+                        Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
                 hoadon.setSize(950, 650);
                 jmain.add(hoadon);
+                jmain.updateUI();
+                break;
+
+            case 6:
+                MNaccount = new manageraccount();
+                MNaccount.setEnabled(true);
+                jmain.removeAll();
+                MNaccount.setSize(950, 650);
+                jmain.add(MNaccount.getContentPane());
                 jmain.updateUI();
                 break;
 
@@ -830,16 +812,24 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.add(thongke);
                 jmain.updateUI();
                 break;
-             case 9:
-                this.lblNhaphang.setEnabled(true);
+
+            case 8:
+                lblNhanvien.setEnabled(true);
                 jmain.removeAll();
-                taophieunhap= new TaoPhieuNhapGUI(this);
-                taophieunhap.setSize(950, 650);
-                jmain.add( taophieunhap);
+                nhanvien = new employeeGUI();
+                nhanvien.setSize(950, 650);
+                jmain.add(nhanvien);
                 jmain.updateUI();
                 break;
 
-
+            case 9:
+                this.lblNhaphang.setEnabled(true);
+                jmain.removeAll();
+                taophieunhap = new TaoPhieuNhapGUI(this);
+                taophieunhap.setSize(950, 650);
+                jmain.add(taophieunhap);
+                jmain.updateUI();
+                break;
 
             case 10:
                 lblKhuyenmai.setEnabled(true);
@@ -868,12 +858,12 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void pannelNCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelNCCMouseClicked
         set_color_pannel(3);
-         Open_GUI(3);
+        Open_GUI(3);
     }//GEN-LAST:event_pannelNCCMouseClicked
 
     private void pannelNHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelNHMouseClicked
         set_color_pannel(9);
-         Open_GUI(9);
+        Open_GUI(9);
     }//GEN-LAST:event_pannelNHMouseClicked
 
     private void pannelHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelHDMouseClicked
