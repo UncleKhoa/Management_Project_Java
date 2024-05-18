@@ -27,6 +27,7 @@ public class export_popup extends javax.swing.JFrame {
      * Creates new form export_popup
      */
     public export_popup() {
+        setLocationRelativeTo(null);
         initComponents();
     }
     public export_popup(String s){

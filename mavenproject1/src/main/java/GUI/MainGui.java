@@ -25,7 +25,6 @@ import GUI.SellGUI.sell;
 import GUI.SellGUI.showkm;
 import GUI.StatisticGUI.ThongKe;
 import GUI.SupplierGUI.NhaCungCapGUI;
-import GUI.employee.employee;
 import GUI.ReceiptGUI.HoaDonGUI;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -38,7 +37,9 @@ import java.util.logging.Logger;
 public class MainGUI extends javax.swing.JFrame {
 
     private sell sell;
+    private showkm showkm;
     private employeeGUI nhanvien;
+    private customerGUI nguoidung;
     private TaoPhieuNhapGUI taophieunhap;
     private NhaCungCapGUI nhacungcap;
     private showkm showkm;
@@ -754,6 +755,21 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.updateUI();
                 break;
 
+
+            case 4:
+                lblConnguoi.setEnabled(true);
+                jmain.removeAll();
+                nguoidung = new customerGUI();
+                nguoidung.setSize(950,650);
+                jmain.add(nguoidung);
+                jmain.updateUI();
+                break;
+            case 8:
+                lblNhanvien.setEnabled(true);
+                jmain.removeAll();
+                nhanvien = new employeeGUI();
+                nhanvien.setSize(950,650);
+                jmain.add(nhanvien);
             case 2:
                 MNproduct = new managerproduct();
                 MNproduct.setEnabled(true);
@@ -779,6 +795,22 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.add(nhacungcap);
                 jmain.updateUI();
                 break;
+//              case 8:
+//                lblNhanvien.setEnabled(true);
+//                jmain.removeAll();
+//                nhanvien = new employeeGUI();
+//                nhanvien.setSize(950,650);
+//                jmain.add(nhanvien);
+//                jmain.updateUI();
+//                break;
+            //  case 8:
+//                lblNhanvien.setEnabled(true);
+//                jmain.removeAll();
+//                nhanvien = new employeeGUI();
+//                nhanvien.setSize(950,650);
+//                jmain.add(nhanvien);
+//                jmain.updateUI();
+//                break;
 
             case 5:
                 lblHoadon.setEnabled(true);

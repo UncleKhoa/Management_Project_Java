@@ -24,9 +24,11 @@ public class export_popup extends javax.swing.JFrame {
      */
     public export_popup() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     public export_popup(String s){
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -70,23 +72,27 @@ public class export_popup extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setText("Export to EXCEL file");
+        jPanel3.setBackground(new java.awt.Color(51, 153, 0));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Xuất định dạng Excel");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(63, 63, 63))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -105,9 +111,9 @@ public class export_popup extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("File name");
+        jLabel3.setText("Tên file");
 
-        jLabel4.setText("Path");
+        jLabel4.setText("Đường dẫn");
 
         confirm.setText("Xác nhận");
         confirm.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +140,7 @@ public class export_popup extends javax.swing.JFrame {
             jPanel4Layout.setHorizontalGroup(
                 jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addContainerGap(57, Short.MAX_VALUE)
+                    .addContainerGap(42, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                             .addComponent(cancel)
@@ -171,7 +177,7 @@ public class export_popup extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addGap(18, 18, 18)
                     .addComponent(jLabel6)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(confirm)
                         .addComponent(cancel))

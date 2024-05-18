@@ -643,21 +643,6 @@ public class sell extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
-        int row = this.tblProduct.getSelectedRow();
-        Object sl = model.getValueAt(row, 3);
-        this.txtSp.setText(sl.toString());
-    }//GEN-LAST:event_tblProductMouseClicked
-
-    private void tblProductInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_tblProductInputMethodTextChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tblProductInputMethodTextChanged
-
-    private void tblProductKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProductKeyPressed
-        // TODO add your handling code here:
-        // int cellValue = (int) tlbProduct.getValueAt(1, 3)
-    }//GEN-LAST:event_tblProductKeyPressed
-
     private void txtTiennhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiennhanActionPerformed
         // TODO add your handling code here:
 //        String tien = this.txtTiennhan.getText();
@@ -874,7 +859,8 @@ public class sell extends javax.swing.JPanel {
     }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        
+
+        if (this.tblProduct.getRowCount() == 0) {
         if (containsLetter(txtSp.getText())) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chỉ nhập số");
             alert.setVisible(true);
@@ -1174,9 +1160,24 @@ public class sell extends javax.swing.JPanel {
 
     }//GEN-LAST:event_txtSdtKeyReleased
 
+    private void tblProductKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProductKeyPressed
+        // TODO add your handling code here:
+        // int cellValue = (int) tlbProduct.getValueAt(1, 3)
+    }//GEN-LAST:event_tblProductKeyPressed
+
+    private void tblProductInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_tblProductInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblProductInputMethodTextChanged
+
+    private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
+        int row = this.tblProduct.getSelectedRow();
+        Object sl = model.getValueAt(row, 3);
+        this.txtSp.setText(sl.toString());
+    }//GEN-LAST:event_tblProductMouseClicked
     private void txtSpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSpActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSpActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1224,7 +1225,7 @@ public class sell extends javax.swing.JPanel {
     private javax.swing.JLabel lbma;
     private javax.swing.JLabel lbsl;
     private javax.swing.JLabel lbtenk;
-    public javax.swing.JTable tblProduct;
+    private javax.swing.JTable tblProduct;
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txtSp;
     private javax.swing.JTextField txtTiennhan;
