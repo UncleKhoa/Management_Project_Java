@@ -906,7 +906,7 @@ public class sell extends javax.swing.JPanel {
             }
             btnThanhtoan.hide();
         }
-
+        }
     }//GEN-LAST:event_btnSuaActionPerformed
     private int Tinh(String productID, int sl, int dongia) {
         promotion_detailBUS proBUS = new promotion_detailBUS();
