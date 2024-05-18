@@ -23,8 +23,7 @@ import javax.swing.JTable;
 public class receipt_DetailBUS {
     DefaultTableModel model;
     private ArrayList<receptDetailDTO> cthd;
-    private ArrayList<receptDetailDTO> xemcthd;
-    Font font = new Font("Segoe UI", Font.PLAIN, 14);
+    private ArrayList<receptDetailDTO> xemcthd;    
 
     public receipt_DetailBUS() {
         list();
@@ -82,43 +81,6 @@ public class receipt_DetailBUS {
             }
         }
         return list_new;
-    }
-    
-    public void addLine_TN(receptDetailDTO xem_cthd) {
-        model.addRow(new Object[]{
-            xem_cthd.getDetailReceiptID(), xem_cthd.getPromotionID(), xem_cthd.getProductID(), xem_cthd.getQuantity(), formatMoney(ConvertDoubleToInt(xem_cthd.getUnitPrice()))+"đ", formatMoney(ConvertDoubleToInt(xem_cthd.getSubTotal()))+"đ"
-        });
-    }
-    
-    public void viewData(JTable table, ArrayList<receptDetailDTO> list){
-        int s = 0;
-        convertBackgroundOfTable(table);
-        String[] headers = {"Mã chi tiết", "Mã khuyến mãi", "Tên sản phẩm", "Số lượng", "Giá thực", "Giá sau KM"}; // Đặt tiêu đề cột của bảng
-        model = new NonEditableTableModel(new Object[0][headers.length], headers);
-        table.setModel(model);
-        table.setRowHeight(30);
-        table.setFont(font);
-
-        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
-        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-        table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
-
-        for (receptDetailDTO xem : list) {
-            addLine_TN(xem);
-        }
-//        model.addRow(new Object[]{
-//            "", "", "Tổng", formatMoney(s) + "đ"
-//        });
-    }
-    
-    public void removeData() {
-        int rowCount = model.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            model.removeRow(i);
-        }
-    }
+    }    
 
 }

@@ -22,7 +22,6 @@ import javax.swing.table.DefaultTableModel;
  * @author MY PC
  */
 public class receptBUS {
-    Font font = new Font("Segoe UI", Font.PLAIN, 14);
     DefaultTableModel model;
     private ArrayList<receptDTO> dshd;
     private ArrayList<receptDTO> listdata;
@@ -148,6 +147,7 @@ public class receptBUS {
         return (dateBanHang.compareTo(datestart22) >= 0 && dateBanHang.compareTo(dateEnd22) <= 0);
     }
     
+
     public void addLine_Receipt(receptDTO hd) throws ParseException {
         model.addRow(new Object[]{
             hd.getReceptID(), hd.getStaffID(), hd.getCusID(), Convert_date(hd.getCreatedTime()), formatMoney(ConvertDoubleToInt(hd.getTotal())) + "đ"

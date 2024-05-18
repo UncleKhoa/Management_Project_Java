@@ -187,6 +187,16 @@ public class helpers {
     static public int ConvertDoubleToInt(double a) {
         return (int) a;
     }
+    
+    static public long ConvertDoubleToLong(double a) {
+        return (long) a;
+    }
+    
+    public static String formatMoneyLong(long amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedAmount = formatter.format(amount);
+        return formattedAmount.replace(",", ".");
+    }
 
     static public boolean Compare_Date(Date date_from, Date date_to) {
         if (date_to.after(date_from) == true) {

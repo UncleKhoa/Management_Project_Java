@@ -119,42 +119,7 @@ public class importBUS {
 
         return (dateBanHang.compareTo(datestart22) >= 0 && dateBanHang.compareTo(dateEnd22) <= 0);
     }
-    
-    public void addLine_Import(importDTO nh) throws ParseException {
-        model.addRow(new Object[]{
-            nh.getImporID(), nh.getSupplierID(), nh.getStaffID(), Convert_date(nh.getCreatedDate()), formatMoney(ConvertDoubleToInt(nh.getTotal())) + "đ"
-        });
-    }
-
-    public void viewTableImport(JTable tblImport, ArrayList<importDTO> list) throws ParseException {
-        convertBackgroundOfTable(tblImport);
-        String[] headers = {"Mã đơn", "Mã NCC", "Mã nhân viên", "Ngày tạo đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
-        model = new NonEditableTableModel(new Object[0][headers.length], headers);
-        tblImport.setModel(model);
-        tblImport.setRowHeight(30);
-        tblImport.setFont(font);
-
-        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
-        tblImport.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        tblImport.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        tblImport.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        tblImport.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-
-        tblImport.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tblImport.getColumnModel().getColumn(1).setPreferredWidth(50);
-
-        removeData();
-        for (importDTO nh : list) {
-            addLine_Import(nh);
-        }
-    }
-    
-    public void removeData() {
-        int rowCount = model.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            model.removeRow(i);
-        }
-    }
+            
     public void add(importDTO i) throws SQLException
     {
         importDAO dao =new importDAO();

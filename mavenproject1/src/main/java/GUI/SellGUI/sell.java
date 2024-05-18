@@ -580,6 +580,12 @@ public class sell extends javax.swing.JPanel {
             }
         });
         jPanel4.add(btnChon, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 580, 90, 33));
+
+        txtSp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSpActionPerformed(evt);
+            }
+        });
         jPanel4.add(txtSp, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 580, 79, 29));
 
         btnSua.setBackground(new java.awt.Color(93, 14, 65));
@@ -770,6 +776,7 @@ public class sell extends javax.swing.JPanel {
         receptDetailDTO receiptDTO = new receptDetailDTO();
         receipt_DetailBUS receiptDetailBUS = new receipt_DetailBUS();
         int l = receiptDetailBUS.list_size();
+        System.out.println("size: "+l);
         l = l + 1;
         List<table_receiptDTO> dataList = new ArrayList<>();
         for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
@@ -852,41 +859,52 @@ public class sell extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         if (this.tblProduct.getRowCount() == 0) {
+        if (containsLetter(txtSp.getText())) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chỉ nhập số");
+            alert.setVisible(true);
             return;
-        }
-        if (txtSp.getText().trim().isEmpty()) {
-            MyMessageAlert alert1 = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm cần sửa");
-            alert1.setVisible(true);
         } else {
-
-            int row = this.tblProduct.getSelectedRow();
-            Object ID = model.getValueAt(row, 0);
-            String id = ID.toString();
-            int sl = Integer.valueOf(txtSp.getText());
-            if (sl == 0) {
-                MyMessageAlert alert2 = new MyMessageAlert(parentFrame, "Số lượng cần sửa lớn hơn 0");
-                alert2.setVisible(true);
+            if (this.tblProduct.getRowCount() == 0) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
+                alert.setVisible(true);
+                return;
+            }
+            if (txtSp.getText().trim().isEmpty()) {
+                MyMessageAlert alert1 = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm cần sửa");
+                alert1.setVisible(true);
+                return;
             } else {
-                productBUS product = new productBUS();
-                try {
-                    if (product.compareQuantity(id, sl) == 0) {
-                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm " + id + " không đủ");
-                        alert.setVisible(true);
-                    } else {
-                        model.setValueAt(sl, row, 3);
-                        if (this.tblProduct.getRowCount() == 0) {
-                            this.txtSp.setText("");
+
+                int row = this.tblProduct.getSelectedRow();
+                Object ID = model.getValueAt(row, 0);
+                String id = ID.toString();
+                int sl = Integer.valueOf(txtSp.getText());
+                if (sl == 0) {
+                    MyMessageAlert alert2 = new MyMessageAlert(parentFrame, "Số lượng cần sửa lớn hơn 0");
+                    alert2.setVisible(true);
+                } else {
+                    productBUS product = new productBUS();
+                    try {
+                        if (product.compareQuantity(id, sl) == 0) {
+                            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm " + id + " không đủ");
+                            alert.setVisible(true);
+                        } else {
+                            model.setValueAt(sl, row, 3);
+                            if (this.tblProduct.getRowCount() == 0) {
+                                this.txtSp.setText("");
+                            }
                         }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                } catch (SQLException ex) {
-                    Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
-
+            btnThanhtoan.hide();
         }
-        btnThanhtoan.hide();
+
     }//GEN-LAST:event_btnSuaActionPerformed
     private int Tinh(String productID, int sl, int dongia) {
         promotion_detailBUS proBUS = new promotion_detailBUS();
@@ -1154,6 +1172,10 @@ public class sell extends javax.swing.JPanel {
         Object sl = model.getValueAt(row, 3);
         this.txtSp.setText(sl.toString());
     }//GEN-LAST:event_tblProductMouseClicked
+    private void txtSpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSpActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

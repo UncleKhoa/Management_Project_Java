@@ -26,6 +26,7 @@ import javax.swing.JFrame;
 import Model.CustomConfirmDialog;
 import GUI.PromotionGUI.XemChiTietKMGUI;
 import Model.NonEditableTableModel;
+import javax.swing.JTable;
 
 /**
  *
@@ -33,6 +34,7 @@ import Model.NonEditableTableModel;
  */
 public class KhuyenMaiGUI extends javax.swing.JPanel {
 
+    Font font = new Font("Segoe UI", Font.PLAIN, 14);
     JFrame parentFrame;
     private ArrayList<promotionDTO> list = new ArrayList<>();
     private ArrayList<promotionDTO> list_search = new ArrayList<>();
@@ -55,7 +57,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         list = promotionBUS.getList();
         JTableHeader header = tablePromotion.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
-        promotionBUS.viewData(tablePromotion, list);
+        viewData(tablePromotion, list);
         OnOff_TaoMoi();
     }
 
@@ -344,6 +346,42 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void addLineData(promotionDTO promo) {
+        model.addRow(new Object[]{
+            promo.getPromotionID(), promo.getDescription(), Date_String(promo.getFrom()), Date_String(promo.getTo()), String.format("%.1f", promo.getPromotionPercent() * 100) + " %", promo.getStatus()
+        });
+    }
+
+    public void viewData(JTable tablePromotion, ArrayList<promotionDTO> list) {
+
+        convertBackgroundOfTable(tablePromotion);
+
+        String[] headers = {"MÃ CODE", "MÔ TẢ", "TỪ NGÀY", "ĐẾN NGÀY", "PHẦN TRĂM", "TRẠNG THÁI"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+
+        tablePromotion.setModel(model);
+
+        tablePromotion.getColumnModel().getColumn(0).setPreferredWidth(70);
+        tablePromotion.getColumnModel().getColumn(1).setPreferredWidth(110);
+        tablePromotion.getColumnModel().getColumn(2).setPreferredWidth(90);
+        tablePromotion.getColumnModel().getColumn(3).setPreferredWidth(90);
+        tablePromotion.getColumnModel().getColumn(4).setPreferredWidth(90);
+        tablePromotion.getColumnModel().getColumn(5).setPreferredWidth(98);
+        tablePromotion.setRowHeight(30);
+        tablePromotion.setFont(font);
+        removeData();
+        for (promotionDTO promo : list) {
+            addLineData(promo);
+        }
+    }
+
+    public void removeData() {
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
+
     public void OnOff_TaoMoi() {
         if (role.equals("staff")) {
             btnCreateKM.setVisible(false);
@@ -362,7 +400,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
 
     public void Load_Event(boolean a) {
         if (a) {
-            promotionBUS.viewData(tablePromotion, list);
+            viewData(tablePromotion, list);
         }
     }
 
@@ -372,7 +410,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
             @Override
             public void load() {
                 list = promotionBUS.getList();
-                promotionBUS.viewData(tablePromotion, list);
+                viewData(tablePromotion, list);
             }
         }
         );
@@ -420,7 +458,7 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
                 if (confirm.getSelected()) {
                     promotionBUS.Up_Active(id, act);
                     list = promotionBUS.getList();
-                    promotionBUS.viewData(tablePromotion, list);
+                    viewData(tablePromotion, list);
                 }
             }
 
@@ -441,10 +479,10 @@ public class KhuyenMaiGUI extends javax.swing.JPanel {
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         if (txtSearch.getText().equals("")) {
-            promotionBUS.viewData(tablePromotion, list);
+            viewData(tablePromotion, list);
         } else {
             list_search = promotionBUS.getList_Search(txtSearch.getText());
-            promotionBUS.viewData(tablePromotion, list_search);
+            viewData(tablePromotion, list_search);
         }
     }//GEN-LAST:event_txtSearchKeyReleased
 
