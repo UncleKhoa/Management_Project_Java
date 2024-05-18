@@ -69,6 +69,50 @@ public class ProductDetailDAO {
 
               pst.close();
           }
+     public void update(productDetailDTO sp) throws SQLException {
+    String sql = "UPDATE productdetail SET CPU=?, RAM=?, HasKDisk=?, Screen=?, Webcam=?, Pin=?, OperatingSys=?, Weight=?, Color=?, Size=? WHERE ProductID=?";
+    PreparedStatement stmt_update = conn.prepareStatement(sql);
+
+    stmt_update.setString(1, sp.getCpu());
+    stmt_update.setString(2, sp.getRam());
+    stmt_update.setString(3, sp.getHardDisk());
+    stmt_update.setString(4, sp.getScreen());
+    stmt_update.setString(5, sp.getWebCam());
+    stmt_update.setString(6, sp.getPin());
+    stmt_update.setString(7, sp.getOperatingSys());
+    stmt_update.setString(8, sp.getWeight());
+    stmt_update.setString(9, sp.getColor());
+    stmt_update.setString(10, sp.getSize());
+    stmt_update.setString(11, sp.getProductID());
+
+    stmt_update.executeUpdate();
+    stmt_update.close();
+}
+     
+//     
+//         public void update(userDTO user) {
+//        try {
+//            // Câu truy vấn SQL để cập nhật thông tin người dùng
+//            String sql = "UPDATE account SET Username = ?, Password = ?, Gmail = ?, Enable = ? WHERE StaffID = ?";
+//
+//            // Tạo một đối tượng PreparedStatement với câu truy vấn SQL
+//            PreparedStatement stmt_update = conn.prepareStatement(sql);
+//
+//            // Thiết lập các tham số cho câu truy vấn SQL
+//            stmt_update.setString(1, user.getUsername());
+//            stmt_update.setString(2, user.getPassword());
+//            stmt_update.setString(3, user.getGmail());
+//            stmt_update.setString(4, user.getEnable());
+//            stmt_update.setString(5, user.getStaffID());
+//
+//            // Thực thi truy vấn SQL
+//            stmt_update.executeUpdate();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(userDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+     
+     
     
     public static void main(String[] args) {
     ProductDetailDAO productDetailDAO = new ProductDetailDAO();
