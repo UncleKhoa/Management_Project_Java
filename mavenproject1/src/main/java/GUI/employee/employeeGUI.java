@@ -6,15 +6,21 @@ package GUI.employee;
 import BUS.staffBUS;
 import DAO.staffDAO;
 import DTO.staffDTO;
+import Model.CustomConfirmDialog;
 import Model.CustomHeaderRenderer;
+import Model.MyMessageAlert;
+import static Model.helpers.ConvertDoubleToInt;
+import static Model.helpers.Export_Excell;
+import static Model.helpers.convertBackgroundOfTable;
+import static Model.helpers.formatMoney;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.table.JTableHeader;
 /**
 /**
@@ -24,21 +30,43 @@ import javax.swing.table.JTableHeader;
 public class employeeGUI extends javax.swing.JPanel {
 
 private ArrayList<staffDTO> list = new ArrayList<>();
-    DefaultTableModel model;
+    private DefaultTableModel model;
+    private JFrame parentFrame;
     /**
      * Creates new form employee
      */
-    private static staffBUS staffBUS = new staffBUS();
+    private staffBUS staffBUS = new staffBUS();
     public employeeGUI() {
         initComponents();
+        //staff list
         this.staffBUS = new staffBUS();
         list = staffBUS.getList();
+        
+        // staff table
         model = (DefaultTableModel) staffTable.getModel();
         JTableHeader header = staffTable.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
+        convertBackgroundOfTable(staffTable);
+        
+        //view 
         viewData(list);
-        /*setLocationRelativeTo(null);*/
+        viewIcon();
 
+    }
+    
+    
+    public void viewIcon(){
+    //search icon
+        File file = new File("");
+        String currentDirectory = file.getAbsolutePath();
+        String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
+        ImageIcon imageIcon = new ImageIcon(relativePath+"search.png");
+        searchIcon.setIcon(imageIcon);
+        
+    //combo box
+        sapxep.setLabeText("Sắp xếp");
+        sapxep.addItem("Năm sinh");
+        sapxep.addItem("Tên");
     }
     public void viewInformation(staffDTO staff){
         id.setText(staff.getStaffID());
@@ -48,28 +76,29 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         year.setText(String.valueOf(staff.getYearofbirth()));
         phonenumber.setText(staff.getPhonenumber());
         role.setText(staff.getRole());
-        salary.setText(String.valueOf(staff.getSalary()));
+        int salary = ConvertDoubleToInt(staff.getSalary());
+        String temp= formatMoney(salary); 
+        txtSalary.setText(temp);
         address.setText(staff.getAddress());
-            File file = new File("");
-    String currentDirectory = file.getAbsolutePath();
-    String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
+        File file = new File("");
+        String currentDirectory = file.getAbsolutePath();
+        String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\IMG_STAFF\\"; // Đường dẫn tương đối
         ImageIcon imageIcon = new ImageIcon(relativePath+staff.getImg());
         avt.setIcon(imageIcon);
-        
-        
     }
     public void addLineData(staffDTO i)
     {
      model.addRow(new Object[]{
-           i.getStaffID(),i.getFirstname(),i.getLastname(),i.getYearofbirth(),i.getGender(),i.getPhonenumber(),i.getAddress(),i.getSalary(),i.getRole(),i.getImg()
+           i.getStaffID(),i.getFirstname(),i.getLastname(),i.getYearofbirth(),i.getGender(),i.getPhonenumber(),i.getAddress(),ConvertDoubleToInt(i.getSalary()),i.getRole(),i.getImg()
         });
     }
     public void viewData(ArrayList<staffDTO> list){
+        // view table
         removeData();
         for (staffDTO i:list){
             addLineData(i); 
         }
-        headline.setText("Nhân viên ("+list.size()+")");
+        headline.setText("Quản lý nhân viên ("+list.size()+")");
         
       }
     public void removeData(){
@@ -90,11 +119,10 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
         jPanel2 = new javax.swing.JPanel();
         headline = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        excelExport = new javax.swing.JButton();
         searchField = new javax.swing.JFormattedTextField();
-        search = new javax.swing.JButton();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        searchIcon = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         staffTable = new javax.swing.JTable();
@@ -117,31 +145,36 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         lname = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         year = new javax.swing.JTextField();
-        salary = new javax.swing.JTextField();
+        txtSalary = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         role = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         avt = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         addButton = new javax.swing.JButton();
         remove = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
         reset = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        boxOfSort = new javax.swing.JComboBox<>();
+        sapxep = new Model.Combobox();
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(241, 241, 241));
         jPanel2.setForeground(new java.awt.Color(204, 204, 204));
         jPanel2.setFocusable(false);
 
-        headline.setFont(new java.awt.Font("Segoe UI Historic", 0, 16)); // NOI18N
-        headline.setText("Nhân viên");
+        headline.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
+        headline.setText("Quản lý Nhân viên");
 
-        jButton1.setText("Xuất");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        excelExport.setBackground(new java.awt.Color(0, 102, 102));
+        excelExport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        excelExport.setForeground(new java.awt.Color(255, 255, 255));
+        excelExport.setText("Xuất Excel");
+        excelExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                excelExportActionPerformed(evt);
             }
         });
 
@@ -158,14 +191,11 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             }
         });
 
-        search.setText("O..");
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
+        searchIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchIconMouseClicked(evt);
             }
         });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Excel" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -173,15 +203,13 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(headline, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(headline, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(excelExport, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,19 +217,21 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(headline)
-                    .addComponent(jButton1)
-                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(headline)
+                            .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(excelExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
-        jPanel4.setBackground(new java.awt.Color(234, 234, 234));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -211,10 +241,11 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
             },
             new String [] {
-                "ID", "Tên", "Họ", " Năm sinh", "Giới tính", "Số điện thoại", "Địa chỉ", "Hệ số lương", "Chức vụ"
+                "Mã NV", "Tên", "Họ", " Năm sinh", "Giới tính", "Số điện thoại", "Địa chỉ", "Hệ số lương", "Chức vụ"
             }
         ));
         staffTable.setGridColor(new java.awt.Color(255, 255, 255));
+        staffTable.setRowHeight(30);
         staffTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 staffTableMouseClicked(evt);
@@ -252,10 +283,13 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
+        gender.setFocusable(false);
         gender.setPreferredSize(new java.awt.Dimension(250, 35));
 
+        phonenumber.setFocusable(false);
         phonenumber.setPreferredSize(new java.awt.Dimension(250, 35));
 
+        address.setFocusable(false);
         address.setPreferredSize(new java.awt.Dimension(250, 35));
         address.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,10 +305,12 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
         jLabel7.setText("Năm sinh");
 
+        id.setFocusable(false);
         id.setPreferredSize(new java.awt.Dimension(250, 35));
 
         jLabel8.setText("Giới tính");
 
+        fname.setFocusable(false);
         fname.setPreferredSize(new java.awt.Dimension(250, 35));
         fname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,16 +320,20 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
         jLabel9.setText("Số điện thoại");
 
+        lname.setFocusable(false);
         lname.setPreferredSize(new java.awt.Dimension(250, 35));
 
         jLabel10.setText("Địa chỉ");
 
+        year.setFocusable(false);
         year.setPreferredSize(new java.awt.Dimension(250, 35));
 
-        salary.setPreferredSize(new java.awt.Dimension(250, 35));
+        txtSalary.setFocusable(false);
+        txtSalary.setPreferredSize(new java.awt.Dimension(250, 35));
 
         jLabel11.setText("Hệ số lương");
 
+        role.setFocusable(false);
         role.setPreferredSize(new java.awt.Dimension(250, 35));
         role.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,18 +343,28 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
         jLabel12.setText("Chức vụ");
 
-        jPanel9.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+
+        avt.setBackground(new java.awt.Color(255, 255, 255));
+        avt.setPreferredSize(new java.awt.Dimension(151, 151));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(avt, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addComponent(avt, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(avt, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(avt, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel1.setText("Mã NV");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -322,16 +372,21 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(194, 194, 194)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(87, 87, 87))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)))
+                        .addGap(197, 197, 197))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(169, 169, 169)
+                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(157, 157, 157)
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(87, 87, 87)))
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel12)
@@ -370,20 +425,18 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(salary, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel8Layout.createSequentialGroup()
@@ -414,14 +467,15 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(salary, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel11)))
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(role, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12))))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel4))))))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -432,7 +486,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(759, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,7 +506,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 16, Short.MAX_VALUE)
+                .addGap(0, 8, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -464,7 +518,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 947, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -477,7 +531,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        addButton.setBackground(new java.awt.Color(51, 153, 255));
+        addButton.setBackground(new java.awt.Color(102, 102, 0));
         addButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         addButton.setForeground(new java.awt.Color(255, 255, 255));
         addButton.setText("Thêm");
@@ -488,7 +542,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             }
         });
 
-        remove.setBackground(new java.awt.Color(51, 153, 255));
+        remove.setBackground(new java.awt.Color(0, 102, 0));
         remove.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         remove.setForeground(new java.awt.Color(255, 255, 255));
         remove.setText("Xóa");
@@ -499,18 +553,18 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(51, 153, 255));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Sửa");
-        jButton4.setPreferredSize(new java.awt.Dimension(130, 30));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnSua.setBackground(new java.awt.Color(0, 102, 102));
+        btnSua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSua.setForeground(new java.awt.Color(255, 255, 255));
+        btnSua.setText("Sửa");
+        btnSua.setPreferredSize(new java.awt.Dimension(130, 30));
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnSuaActionPerformed(evt);
             }
         });
 
-        reset.setBackground(new java.awt.Color(51, 153, 255));
+        reset.setBackground(new java.awt.Color(204, 102, 0));
         reset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         reset.setForeground(new java.awt.Color(255, 255, 255));
         reset.setText("Tạo mới");
@@ -521,12 +575,9 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             }
         });
 
-        jLabel1.setText("Sắp xếp");
-
-        boxOfSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Năm sinh", "Tên" }));
-        boxOfSort.addActionListener(new java.awt.event.ActionListener() {
+        sapxep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxOfSortActionPerformed(evt);
+                sapxepActionPerformed(evt);
             }
         });
 
@@ -540,31 +591,27 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                 .addGap(18, 18, 18)
                 .addComponent(remove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boxOfSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sapxep, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(remove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(boxOfSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(remove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28))
+                    .addComponent(sapxep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -582,20 +629,19 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void excelExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excelExportActionPerformed
         // TODO add your handling code here:
-        //kiem tra goi exel
-        new export_popup("a").setVisible(true);
+        Export_Excell(staffTable);
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_excelExportActionPerformed
 
     private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
         // TODO add your handling code here:
@@ -606,24 +652,6 @@ private ArrayList<staffDTO> list = new ArrayList<>();
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchFieldActionPerformed
-
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        // TODO add your handling code here:
-        if (searchField.getText().equals("")){
-            viewData(list);
-        }else{
-            ArrayList <staffDTO> list2 = staffBUS.search(searchField.getText());
-            if (list2.size()==0 ){
-                JOptionPane.showMessageDialog(null, "Không tìm thấy!", "Lỗi tìm kiếm", JOptionPane.ERROR_MESSAGE);
-            }
-            else{
-                removeData();
-
-                this.list= list2;
-                viewData(list2);
-
-            }}
-    }//GEN-LAST:event_searchActionPerformed
 
     private void staffTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_staffTableMouseClicked
         // TODO add your handling code here:
@@ -646,54 +674,50 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-        add_popup a = new add_popup();
+        add_popup a = new add_popup(list.size());
         a.setVisible(true);
 
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
-        // TODO add your handling code here:
+
         int selectColumn = staffTable.getSelectedRow();
         if (selectColumn == -1){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn STAFF để xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);;
-
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn nhân viên ");
+            alert.setVisible(true);
         }else{
-
             String id = list.get(selectColumn).getStaffID();
-            {
-                int choice = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa nhân viên ID "+id +" ?", "Xác nhận", JOptionPane.OK_CANCEL_OPTION);
-                if (choice == JOptionPane.OK_OPTION){
+            CustomConfirmDialog confirm = new CustomConfirmDialog(parentFrame, "Xác nhận xóa", "Bạn có muốn xóa nhân viên " + id, "close_red.png");
+            confirm.setVisible(true);
+            if (confirm.getSelected()) {
                     list.remove(selectColumn);
                     viewData(list);
                     staffDAO a = new staffDAO();
                     try {
                         a.delete(id);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(employee.class.getName()).log(Level.SEVERE, null, ex);
+                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Xóa thành công! ");
+                        alert.setVisible(true);
                     }
+                    catch (SQLException ex) {
+                        Logger.getLogger(employeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
 
-                }
-                else if (choice == JOptionPane.CANCEL_OPTION){
-
-                }
             }
-
-        }
-
+            }
     }//GEN-LAST:event_removeActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
         int selectRow = staffTable.getSelectedRow();
         if (selectRow == -1){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn STAFF để sửa!", "Lỗi", JOptionPane.ERROR_MESSAGE);;
-
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn nhân viên ");
+            alert.setVisible(true);
         }else{
             edit_popup edit = new edit_popup(list.get(selectRow));
             edit.setVisible(true);
         }
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnSuaActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         // TODO add your handling code here:
@@ -703,9 +727,9 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         viewData(list);
     }//GEN-LAST:event_resetActionPerformed
 
-    private void boxOfSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxOfSortActionPerformed
+    private void sapxepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sapxepActionPerformed
         // TODO add your handling code here:
-        int index = boxOfSort.getSelectedIndex();
+        int index = sapxep.getSelectedIndex();
         if (index == 0){
             removeData();
             this.list= staffBUS.sortByBirth();
@@ -716,21 +740,36 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             this.list = staffBUS.sortByName();
             viewData((list));
         }
-    }//GEN-LAST:event_boxOfSortActionPerformed
+    }//GEN-LAST:event_sapxepActionPerformed
+
+    private void searchIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchIconMouseClicked
+        // TODO add your handling code here:
+         if (searchField.getText().equals("")){
+            viewData(list);
+        }else{
+            ArrayList <staffDTO> list2 = staffBUS.search(searchField.getText());
+            if (list2.size()==0 ){
+                           MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không tìm thấy nhân viên ");
+            alert.setVisible(true);}
+            else{
+                removeData();
+                this.list= list2;
+                viewData(list2);
+
+            }}
+    }//GEN-LAST:event_searchIconMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JTextField address;
     private javax.swing.JLabel avt;
-    private javax.swing.JComboBox<String> boxOfSort;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton excelExport;
     private javax.swing.JTextField fname;
     private javax.swing.JTextField gender;
     private javax.swing.JLabel headline;
     private javax.swing.JTextField id;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -757,10 +796,11 @@ private ArrayList<staffDTO> list = new ArrayList<>();
     private javax.swing.JButton remove;
     private javax.swing.JButton reset;
     private javax.swing.JTextField role;
-    private javax.swing.JTextField salary;
-    private javax.swing.JButton search;
+    private Model.Combobox sapxep;
     private javax.swing.JFormattedTextField searchField;
+    private javax.swing.JLabel searchIcon;
     private javax.swing.JTable staffTable;
+    private javax.swing.JTextField txtSalary;
     private javax.swing.JTextField year;
     // End of variables declaration//GEN-END:variables
 }

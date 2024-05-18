@@ -4,17 +4,75 @@
  */
 package GUI.managerproduct;
 
+import BUS.ProductDetailBUS;
+import DTO.productDTO;
+import DTO.productDetailDTO;
+import GUI.manageraccount.kt;
+import Model.MyMessageAccept;
+import Model.MyMessageAlert;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author ADMIN
  */
 public class editdetai extends javax.swing.JPanel {
+     private ProductDetailBUS detailBUS =new ProductDetailBUS();
+    String detailID;
+    private  JFrame parentFrame;   
+    public JTextField getjTextField1() {
+        return jTextField1;
+    }
 
     /**
      * Creates new form editdetai
      */
-    public editdetai() {
+   public void setjTextField1(String value) {
+    jTextField1.setText(value); // Thay "jTextField" bằng tên đúng của JTextField trong detail
+}
+
+    public JButton getDong() {
+        return dong;
+    }
+
+  
+  
+    public void infomation(){
+       String ss=jTextField1.getText();
+      System.out.print(ss);
+     ArrayList<productDetailDTO> list = detailBUS.getList();
+     
+     for (productDetailDTO product : list) {
+    // Kiểm tra nếu ID sản phẩm khớp với ID hiện tại
+    if (product.getProductID().equals(detailID)) {
+        // Gán các giá trị vào các JTextField tương ứng
+        jTextField1.setText(product.getProductID());
+        jTextField2.setText(product.getCpu());
+        jTextField3.setText(product.getRam());
+        jTextField4.setText(product.getHardDisk());
+        jTextField5.setText(product.getScreen());
+        jTextField6.setText(product.getWebCam());
+        jTextField7.setText(product.getPin());
+        jTextField8.setText(product.getOperatingSys());
+        jTextField9.setText(product.getWeight());
+        jTextField10.setText(product.getColor());
+        jTextField11.setText(product.getSize());      
+        break;
+    }
+}
+    }
+    public editdetai(String detailID){
         initComponents();
+        parentFrame = new JFrame();
+        this.detailID = detailID;
+        jTextField1.setEditable(false);
+        infomation();
+      
     }
 
     /**
@@ -53,10 +111,10 @@ public class editdetai extends javax.swing.JPanel {
         jTextField11 = new javax.swing.JTextField();
         themchitiet = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jPanel2.setBackground(new java.awt.Color(51, 153, 0));
+        jPanel2.setBackground(new java.awt.Color(66, 100, 220));
 
         dong.setText("Đóng");
 
@@ -78,7 +136,7 @@ public class editdetai extends javax.swing.JPanel {
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("productID");
+        jLabel1.setText("Mã");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("cpu");
@@ -87,10 +145,10 @@ public class editdetai extends javax.swing.JPanel {
         jLabel3.setText("Ram ");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("hardDisk");
+        jLabel4.setText("Đĩa cứng");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("screen");
+        jLabel5.setText("Màn hình");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("webCam");
@@ -99,16 +157,16 @@ public class editdetai extends javax.swing.JPanel {
         jLabel7.setText("pin");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setText("operatingSys");
+        jLabel8.setText("Hệ thống");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("weight");
+        jLabel9.setText("Cân nặng");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setText("color");
+        jLabel10.setText("Màu");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel11.setText("size");
+        jLabel11.setText("Kích cỡ");
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,45 +195,42 @@ public class editdetai extends javax.swing.JPanel {
                         .addComponent(themchitiet, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1)))
+                                .addGap(58, 58, 58)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextField1)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(87, 87, 87)
-                                .addComponent(jTextField7))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel11))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField9)
-                                    .addComponent(jTextField10)
-                                    .addComponent(jTextField11)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))))
+                            .addComponent(jTextField7)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextField9)
+                                .addComponent(jTextField10)
+                                .addComponent(jTextField11)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))))))
                 .addGap(64, 64, 64))
         );
         jPanel1Layout.setVerticalGroup(
@@ -229,7 +284,7 @@ public class editdetai extends javax.swing.JPanel {
             .addGap(0, 763, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 25, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
@@ -247,52 +302,51 @@ public class editdetai extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void themchitietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themchitietActionPerformed
-//        kt ktt = new kt();
-//        String weight=jTextField9.getText();
-//        try {
-//            String id = jTextField1.getText();
-//            String cpu = jTextField2.getText();
-//            String ram = jTextField3.getText();
-//            String harddisk = jTextField4.getText();
-//            String screen = jTextField5.getText();
-//            String webcam = jTextField6.getText();
-//            String pin = jTextField7.getText();
-//            String sys = jTextField8.getText();
-//            String we = jTextField9.getText();
-//            String color = jTextField10.getText();
-//            String size = jTextField11.getText();
-//
-//            if (jTextField1.getText().isEmpty() ||
-//                jTextField2.getText().isEmpty() ||
-//                jTextField3.getText().isEmpty() ||
-//                jTextField4.getText().isEmpty() ||
-//                jTextField5.getText().isEmpty() ||
-//                jTextField6.getText().isEmpty() ||
-//                jTextField7.getText().isEmpty() ||
-//                jTextField8.getText().isEmpty() ||
-//                jTextField9.getText().isEmpty() ||
-//                jTextField10.getText().isEmpty()||
-//                jTextField11.getText().isEmpty()
-//            ) {
-//                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng nhập đủ thông tin");
-//                alert.setVisible(true);
-//                return;
-//            }
-//            if (ktt.kiemtragia(weight)) {
-//                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Nhập cân nặng không hợp lệ");
-//                alert.setVisible(true);
-//                return;
-//            }
-//            productDetailDTO object = new productDetailDTO(id, cpu, ram, harddisk , screen , webcam, pin ,sys ,we ,color ,size);
-//
-//            stbus.add(object);
-//            MyMessageAccept accept = new MyMessageAccept(parentFrame, "thêm thành công");
-//            accept.setVisible(true);
-//            SwingUtilities.getWindowAncestor(detail.this).dispose();
-//            //         SwingUtilities.getWindowAncestor(close).dispose();
-//        } catch (SQLException ex) {
-//            ex.printStackTrace(); // Hoặc xử lý ngoại lệ theo nhu cầu của bạn
-//        }
+      kt ktt = new kt();
+    String weight = jTextField9.getText();
+    try {
+        String id = jTextField1.getText();
+        String cpu = jTextField2.getText();
+        String ram = jTextField3.getText();
+        String harddisk = jTextField4.getText();
+        String screen = jTextField5.getText();
+        String webcam = jTextField6.getText();
+        String pin = jTextField7.getText();
+        String sys = jTextField8.getText();
+        String we = jTextField9.getText();
+        String color = jTextField10.getText();
+        String size = jTextField11.getText();
+
+        if (jTextField1.getText().isEmpty() ||
+            jTextField2.getText().isEmpty() ||
+            jTextField3.getText().isEmpty() ||
+            jTextField4.getText().isEmpty() ||
+            jTextField5.getText().isEmpty() ||
+            jTextField6.getText().isEmpty() ||
+            jTextField7.getText().isEmpty() ||
+            jTextField8.getText().isEmpty() ||
+            jTextField9.getText().isEmpty() ||
+            jTextField10.getText().isEmpty() ||
+            jTextField11.getText().isEmpty()) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng nhập đủ thông tin");
+            alert.setVisible(true);
+            return;
+        }
+
+        if (ktt.kiemtragia(weight)) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Nhập cân nặng không hợp lệ");
+            alert.setVisible(true);
+            return;
+        }
+
+        productDetailDTO object = new productDetailDTO(id, cpu, ram, harddisk, screen, webcam, pin, sys, we, color, size);
+        detailBUS.update(object);
+        MyMessageAccept accept = new MyMessageAccept(parentFrame, "Cập nhật thành công");
+        accept.setVisible(true);
+        SwingUtilities.getWindowAncestor(editdetai.this).dispose();
+    } catch (SQLException ex) {
+        ex.printStackTrace(); // Hoặc xử lý ngoại lệ theo nhu cầu của bạn
+    }
     }//GEN-LAST:event_themchitietActionPerformed
 
 

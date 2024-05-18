@@ -147,4 +147,71 @@ public class receptBUS {
         return (dateBanHang.compareTo(datestart22) >= 0 && dateBanHang.compareTo(dateEnd22) <= 0);
     }
     
+
+    public void addLine_Receipt(receptDTO hd) throws ParseException {
+        model.addRow(new Object[]{
+            hd.getReceptID(), hd.getStaffID(), hd.getCusID(), Convert_date(hd.getCreatedTime()), formatMoney(ConvertDoubleToInt(hd.getTotal())) + "đ"
+        });
+    }
+
+    public void viewTableReceipt(JTable tblReceipt, ArrayList<receptDTO> list) throws ParseException {
+        convertBackgroundOfTable(tblReceipt);
+        String[] headers = {"Mã đơn", "Mã nhân viên", "Mã khách", "Ngày tạo đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        tblReceipt.setModel(model);
+        tblReceipt.setRowHeight(30);
+        tblReceipt.setFont(font);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblReceipt.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblReceipt.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblReceipt.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblReceipt.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        tblReceipt.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblReceipt.getColumnModel().getColumn(2).setPreferredWidth(50);
+
+        removeData();
+        for (receptDTO hd : list) {
+            addLine_Receipt(hd);
+        }
+
+    }
+    public void viewTableReceipt(String id,JTable tblReceipt) throws ParseException {
+convertBackgroundOfTable(tblReceipt);
+        String[] headers = {"Mã đơn", "Mã nhân viên", "Mã khách", "Ngày tạo đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        tblReceipt.setModel(model);
+        tblReceipt.setRowHeight(30);
+        tblReceipt.setFont(font);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblReceipt.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblReceipt.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblReceipt.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblReceipt.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        tblReceipt.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblReceipt.getColumnModel().getColumn(2).setPreferredWidth(50);
+
+        for (receptDTO hd : dshd) {
+            if (hd.getCusID().equals(id))
+                addLine_Receipt(hd);
+        }
+
+    }
+    public ArrayList<receptDTO> getListFromCustomer(String id){
+        ArrayList<receptDTO> tempList = new ArrayList<>();
+        for (receptDTO hd:dshd){
+            if (hd.getCusID().equals(id))
+                tempList.add(hd);
+        }
+        return tempList;
+    }
+    public void removeData() {
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
 }

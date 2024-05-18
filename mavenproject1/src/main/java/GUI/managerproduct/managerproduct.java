@@ -61,10 +61,13 @@ import java.util.Set;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.plaf.basic.BasicSpinnerUI;
 import Model.MyScrollBar;
+import GUI.managerproduct.editproducct;
+
 
 // Định dạng số
 public class managerproduct extends javax.swing.JPanel {
 
+    productDTO pr;
     sell testSell;
     private productBUS stbus = new productBUS();
     private DefaultTableModel model;
@@ -72,7 +75,7 @@ public class managerproduct extends javax.swing.JPanel {
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\betIMG\\"; // Đường dẫn tương đối
-
+    JFrame parentFrame;
     public DefaultTableModel getModel() {
         return model;
     }
@@ -170,27 +173,60 @@ public class managerproduct extends javax.swing.JPanel {
         convertBackgroundOfTable(jTable1);
         String[] headers = {"Producid", " Brandid", " Productname", " Unitprice", "Quantity", "IMG"};
 
-        model = new NonEditableTableModel(new Object[0][headers.length], headers);
 
-        jTable1.setModel(model);
-
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-        jTable1.getColumnModel().getColumn(1).setPreferredWidth(130);
-        jTable1.getColumnModel().getColumn(2).setPreferredWidth(180);
-        jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
-        jTable1.getColumnModel().getColumn(4).setPreferredWidth(40);
-        jTable1.getColumnModel().getColumn(5).setPreferredWidth(18);
-        TableCellRenderer centerRenderer = new CenterTableCellRenderer();
-        jTable1.setDefaultRenderer(Object.class, centerRenderer);
-
+    public void style() {
+       jTable1.setRowHeight(65);   
+       JTableHeader header = jTable1.getTableHeader();
+       header.setDefaultRenderer(new CustomHeaderRenderer());
+       convertBackgroundOfTable(jTable1);
+       String[] headers = {"Producid"," Brandid"," Productname"," Unitprice", "Quantity","IMG"};
+       
+       model = new NonEditableTableModel(new Object[0][headers.length], headers);
+       
+       jTable1.setModel(model);
+       
+       jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
+       jTable1.getColumnModel().getColumn(1).setPreferredWidth(130);
+       jTable1.getColumnModel().getColumn(2).setPreferredWidth(180);
+       jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
+       jTable1.getColumnModel().getColumn(4).setPreferredWidth(40);
+       jTable1.getColumnModel().getColumn(5).setPreferredWidth(18);
+       TableCellRenderer centerRenderer = new CenterTableCellRenderer();
+       jTable1.setDefaultRenderer(Object.class, centerRenderer);
+  
+         
     }
 
+public void openguiedit(){
+
+                   editproducct edit = new editproducct();
+                   edit.setManager(this);
+                   edit.getinfomationproduct(pr);
+                   JDialog dialog = new JDialog();
+                   dialog.setUndecorated(true);
+                   dialog.setContentPane(edit);
+                   dialog.pack();
+                   dialog.setLocationRelativeTo(null);
+                   dialog.setVisible(true);
+                     edit.getDong().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dialog.dispose(); // Đóng cửa sổ dialog
+                }
+            });
+}
+    
     public managerproduct() {
-        JScrollPane scrollPane = new JScrollPane(jTable1);
+       JScrollPane scrollPane = new JScrollPane(jTable1);
         initComponents();
+        parentFrame = new JFrame();
+
         jScrollPane2.setVerticalScrollBar(new MyScrollBar());
         DefaultEditor editor = (DefaultEditor) jSpinner1.getEditor();
         editor.getTextField().setEditable(false);
+        jTextField1.setEditable(false);
+        jTextField3.setEditable(false);
+        jTextField4.setEditable(false);
         Component[] components = jSpinner1.getComponents();
         for (Component component : components) {
             if (component instanceof JButton) {
@@ -235,60 +271,32 @@ public class managerproduct extends javax.swing.JPanel {
             }
         });
 
-        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting()) {
-                    selectedRowIndex = jTable1.getSelectedRow();
-                    if (selectedRowIndex >= 0) {
-                        // Lấy giá trị từ JTable
-                        String value1 = jTable1.getValueAt(selectedRowIndex, 0).toString();
-                        String value2 = jTable1.getValueAt(selectedRowIndex, 1).toString();
-                        String value3 = jTable1.getValueAt(selectedRowIndex, 2).toString();
-                        String value4; // Giá trị mặc định ; // Giá trị mặc định
-                        try {
-                            value4 = jTable1.getValueAt(selectedRowIndex, 3).toString();
-                        } catch (NumberFormatException e) {
-                            // Xử lý ngoại lệ nếu giá trị không hợp lệ
-                            value4 = "0.0"; // Giá trị mặc định nếu xảy ra ngoại lệ
-                        }
-                        int value5 = Integer.parseInt(jTable1.getValueAt(selectedRowIndex, 4).toString());
-                        ImageIcon value6 = (ImageIcon) jTable1.getValueAt(selectedRowIndex, 5);
+   editbutton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int selectedRowIndex = jTable1.getSelectedRow();
+        
+        if (selectedRowIndex >= 0) {
+            // Lấy giá trị từ JTable
+            String value1 = jTable1.getValueAt(selectedRowIndex, 0).toString();
+            String value2 = jTable1.getValueAt(selectedRowIndex, 1).toString();
+            String value3 = jTable1.getValueAt(selectedRowIndex, 2).toString();
 
-                        // Đặt giá trị vào các JTextField và JSpinner
-                        jTextField1.setText(value1);
-                        jComboBox1.setSelectedItem(value2);
-                        jTextField3.setText(value3);
-                        jTextField4.setText(value4);
-                        jSpinner1.setValue(value5);
+           String value4Str = jTable1.getValueAt(selectedRowIndex, 3).toString().replaceAll(",", "");
+          Double value4 = Double.parseDouble(value4Str);
+            int value5 = Integer.parseInt(jTable1.getValueAt(selectedRowIndex, 4).toString());
+            String imageName = jTable1.getValueAt(selectedRowIndex, 5).toString();
 
-                        // Hiển thị hình ảnh trong JLabel
-                        ImageIcon imageIcon = value6;
-                        Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                        ImageIcon scaledImageIcon = new ImageIcon(image);
-                        won.setIcon(scaledImageIcon);
-                    }
-                }
-            }
-        });
+            // Hiển thị giao diện editproducct
+            pr = new productDTO(value1, value2, value3, value4, value5, imageName);
+            openguiedit();
+        } else if(selectedRowIndex <0 || pr ==null){
+              MyMessageAlert alert = new MyMessageAlert(parentFrame, "vui lòng chọn hàng muốn sửa");
+        alert.setVisible(true);
+        }
+    }
+});
 
-        editbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRowIndex = jTable1.getSelectedRow();
-                if (selectedRowIndex >= 0) {
-                    // Lấy giá trị từ JTable
-                    String value1 = jTable1.getValueAt(selectedRowIndex, 0).toString();
-                    String value2 = jTable1.getValueAt(selectedRowIndex, 1).toString();
-                    String value3 = jTable1.getValueAt(selectedRowIndex, 2).toString();
-                    Double value4 = Double.parseDouble(jTable1.getValueAt(selectedRowIndex, 3).toString());
-                    int value5 = Integer.parseInt(jTable1.getValueAt(selectedRowIndex, 4).toString());
-                    String imageName = jTable1.getValueAt(selectedRowIndex, 5).toString();
-
-                    productDTO product = new productDTO(value1, value2, value3, value4, value5, imageName);
-
-                }
-            }
-        });
 
         buttonxoa.addActionListener(new ActionListener() {
             @Override
@@ -464,9 +472,36 @@ public class managerproduct extends javax.swing.JPanel {
         }
     }
 
-    public void addtodisplayData(productDTO nc) {
-        ArrayList<productDTO> list = stbus.getList();
-        boolean idExists = false;
+
+                if (!idExists) {
+                    list.add(nc);
+                    try {
+                        double unitPrice = nc.getUnitPrice();
+                        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+                        String formattedUnitPrice = decimalFormat.format(unitPrice);
+
+                        File imgFile = new File(relativePath + nc.getIMG());
+                        ImageIcon imageIcon = new ImageIcon(imgFile.getAbsolutePath());
+
+                      TableCellRenderer renderer = new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                    
+                    int newWidth = 80;
+                    int newHeight = 70;
+                    ImageIcon currentIcon = (ImageIcon) value;
+                    Image currentImage = currentIcon.getImage();
+                    Image scaledImage = currentImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                    label.setIcon(scaledIcon);
+                     
+
+                    return label;
+                }
+            };
+
 
         // Kiểm tra sự tồn tại của id trong list
         for (productDTO product : list) {
@@ -589,16 +624,16 @@ public class managerproduct extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel1.setText("ProducID");
+        jLabel1.setText("Mã");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel2.setText("BrandID");
+        jLabel2.setText("Hãng");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel4.setText("ProducName");
+        jLabel4.setText("Tên");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel5.setText("Quantity");
+        jLabel5.setText("Số lượng");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel6.setText("IMG");
@@ -637,7 +672,7 @@ public class managerproduct extends javax.swing.JPanel {
         jLabel3.setText("ID");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel8.setText("UnitPrice");
+        jLabel8.setText("Giá");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("NAME");
@@ -797,7 +832,6 @@ public class managerproduct extends javax.swing.JPanel {
             jTable1.getColumnModel().getColumn(4).setMaxWidth(50);
         }
 
-        export.setBackground(new java.awt.Color(211, 127, 118));
         export.setText("export");
         export.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
