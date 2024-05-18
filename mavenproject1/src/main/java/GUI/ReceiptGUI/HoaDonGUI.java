@@ -20,6 +20,7 @@ import static Model.helpers.*;
 import Model.MyScrollBar;
 import Model.NonEditableTableModel;
 import java.awt.Font;
+import java.util.Collections;
 import javax.swing.JTable;
 
 /*
@@ -64,7 +65,8 @@ public class HoaDonGUI extends javax.swing.JPanel {
         AddLine_cbRectipt();
         Addline_cbImport();
         OnOff(false);
-
+        list_nh = new ArrayList<>(list_nh);
+        Collections.reverse(list_nh);
         viewTableReceipt(tblReceipt, list_hd);
         viewTableImport(tblImport, list_nh);
     }
