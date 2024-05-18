@@ -42,7 +42,6 @@ public class MainGUI extends javax.swing.JFrame {
     private customerGUI nguoidung;
     private TaoPhieuNhapGUI taophieunhap;
     private NhaCungCapGUI nhacungcap;
-    
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
@@ -755,21 +754,6 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.updateUI();
                 break;
 
-
-            case 4:
-                lblConnguoi.setEnabled(true);
-                jmain.removeAll();
-                nguoidung = new customerGUI();
-                nguoidung.setSize(950,650);
-                jmain.add(nguoidung);
-                jmain.updateUI();
-                break;
-            case 8:
-                lblNhanvien.setEnabled(true);
-                jmain.removeAll();
-                nhanvien = new employeeGUI();
-                nhanvien.setSize(950,650);
-                jmain.add(nhanvien);
             case 2:
                 MNproduct = new managerproduct();
                 MNproduct.setEnabled(true);
@@ -778,15 +762,7 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.add(MNproduct);
                 jmain.updateUI();
                 break;
-            // case 4:
 
-//                lblConnguoi.setEnabled(true);
-//                jmain.removeAll();
-//                nguoidung = new customerGUI();
-//                nguoidung.setSize(950,650);
-//                jmain.add(nguoidung);
-//                jmain.updateUI();
-//                break;
             case 3:
                 this.lblNhacungcap.setEnabled(true);
                 jmain.removeAll();
@@ -794,23 +770,16 @@ public class MainGUI extends javax.swing.JFrame {
                 nhacungcap.setSize(950, 650);
                 jmain.add(nhacungcap);
                 jmain.updateUI();
+                break;    
+                
+            case 4:
+                lblConnguoi.setEnabled(true);
+                jmain.removeAll();
+                nguoidung = new customerGUI();
+                nguoidung.setSize(950,650);
+                jmain.add(nguoidung);
+                jmain.updateUI();
                 break;
-//              case 8:
-//                lblNhanvien.setEnabled(true);
-//                jmain.removeAll();
-//                nhanvien = new employeeGUI();
-//                nhanvien.setSize(950,650);
-//                jmain.add(nhanvien);
-//                jmain.updateUI();
-//                break;
-            //  case 8:
-//                lblNhanvien.setEnabled(true);
-//                jmain.removeAll();
-//                nhanvien = new employeeGUI();
-//                nhanvien.setSize(950,650);
-//                jmain.add(nhanvien);
-//                jmain.updateUI();
-//                break;
 
             case 5:
                 lblHoadon.setEnabled(true);
