@@ -132,11 +132,11 @@ public class DoanhThuDAO {
 //                    + "where YEAR(hd.CreatedTime) = YEAR(nh.Created_Time) AND QUARTER(hd.CreatedTime) = QUARTER(nh.Created_Time) "
 //                    + "GROUP BY YEAR(hd.CreatedTime), CEILING(MONTH(hd.CreatedTime) / 3), YEAR(nh.Created_Time), CEILING(MONTH(nh.Created_Time) / 3) "
 //                    + "ORDER BY Year_hd, Quarter_hd ASC";
-            String sql = "select YEAR(hd.CreatedTime) as Year_hd, QUARTER(hd.CreatedTime) as Quarter_hd, SUM(hd.Total) as Total_hd, YEAR(MONTH(hd.CreatedTime)) as Year_nh, "
-                    + "QUARTER(nh.Created_Time) as Quarter_nh, SUM(nh.Total) as Total_nh from receipt hd, import nh "
-                    + "where YEAR(hd.CreatedTime) = YEAR(nh.Created_Time) "
-                    + "AND QUARTER(hd.CreatedTime) = QUARTER(nh.Created_Time) GROUP BY YEAR(hd.CreatedTime), CEILING(MONTH(hd.CreatedTime) / 3), YEAR(nh.Created_Time),"
-                    + " CEILING(MONTH(nh.Created_Time) / 3) ORDER BY Year_hd, Quarter_hd ASC";
+//            String sql = "select YEAR(hd.CreatedTime) as Year_hd, QUARTER(hd.CreatedTime) as Quarter_hd, SUM(hd.Total) as Total_hd, YEAR(MONTH(hd.CreatedTime)) as Year_nh, "
+//                    + "QUARTER(nh.Created_Time) as Quarter_nh, SUM(nh.Total) as Total_nh from receipt hd, import nh "
+//                    + "where YEAR(hd.CreatedTime) = YEAR(nh.Created_Time) "
+//                    + "AND QUARTER(hd.CreatedTime) = QUARTER(nh.Created_Time) GROUP BY YEAR(hd.CreatedTime), CEILING(MONTH(hd.CreatedTime) / 3), YEAR(nh.Created_Time),"
+//                    + " CEILING(MONTH(nh.Created_Time) / 3) ORDER BY Year_hd, Quarter_hd ASC";
             String sql = "WITH Receipt AS ( "
                     + "SELECT YEAR(CreatedTime) as Year_hd, "
                     + "CEILING(MONTH(CreatedTime) / 3) as Quarter_hd, "

@@ -42,7 +42,7 @@ public class MainGUI extends javax.swing.JFrame {
     private customerGUI nguoidung;
     private TaoPhieuNhapGUI taophieunhap;
     private NhaCungCapGUI nhacungcap;
-    private showkm showkm;
+    
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();

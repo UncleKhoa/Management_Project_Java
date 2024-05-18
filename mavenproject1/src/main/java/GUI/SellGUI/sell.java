@@ -859,6 +859,9 @@ public class sell extends javax.swing.JPanel {
         choose.setVisible(true);
     }//GEN-LAST:event_btnChonActionPerformed
 
+    
+    
+    
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
 
         if (this.tblProduct.getRowCount() == 0) {
@@ -907,7 +910,7 @@ public class sell extends javax.swing.JPanel {
             }
             btnThanhtoan.hide();
         }
-
+        }
     }//GEN-LAST:event_btnSuaActionPerformed
     private int Tinh(String productID, int sl, int dongia) {
         promotion_detailBUS proBUS = new promotion_detailBUS();

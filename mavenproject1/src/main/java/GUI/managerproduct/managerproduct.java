@@ -172,6 +172,7 @@ public class managerproduct extends javax.swing.JPanel {
         header.setDefaultRenderer(new CustomHeaderRenderer());
         convertBackgroundOfTable(jTable1);
         String[] headers = {"Producid", " Brandid", " Productname", " Unitprice", "Quantity", "IMG"};
+    }
 
 
     public void style() {
@@ -501,7 +502,7 @@ public void openguiedit(){
                     return label;
                 }
             };
-
+                    
 
         // Kiểm tra sự tồn tại của id trong list
         for (productDTO product : list) {
@@ -560,7 +561,7 @@ public void openguiedit(){
 
         }
     }
-
+}
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

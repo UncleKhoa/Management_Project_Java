@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import static org.apache.poi.hssf.usermodel.HeaderFooter.font;
 /**
  *
  * @author MY PC
@@ -144,7 +145,8 @@ public class receptBUS {
         Date datestart22 = formatter.parse(datestart2);
         Date dateEnd22 = formatter.parse(dateEnd2);
 
-        return (dateBanHang.compareTo(datestart22) >= 0 && dateBanHang.compareTo(dateEnd22) <= 0);
+      //  return (dateBanHang.compareTo(datestart22) >= 0 && dateBanHang.compareTo(dateEnd22) <= 0);
+      return(dateBanHang.equals( dateStart) || dateBanHang.equals( dateEnd));
     }
     
 
