@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.table.JTableHeader;
+import Model.CustomHeaderRenderer;
+import Model.MyScrollBar;
 /**
  *
  * @author MY PC
@@ -27,46 +29,47 @@ public class brandGUI extends javax.swing.JFrame {
     /**
      * Creates new form branGUI
      */
-       DefaultTableModel model;
+    DefaultTableModel model;
     private ArrayList<brandDTO> list;
+
     public brandGUI() {
         initComponents();
-          brandBUS bus = new brandBUS();
-        list= bus.list();
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
+        brandBUS bus = new brandBUS();
+        list = bus.list();
         ViewData(list);
+        JTableHeader header = tblBrand.getTableHeader();
+        header.setDefaultRenderer(new CustomHeaderRenderer());
         this.txtMa.setEditable(false);
-        On(true,false);
-        
+        On(true, false);
+
     }
-    private void ViewData(ArrayList<brandDTO>list)
-    {
-          convertBackgroundOfTable(this.tblBrand);
-          String[] header ={"Mã nhãn hiệu","Tên nhãn hiệu"};
-          model = new NonEditableTableModel(new Object[0][header.length], header);
-          tblBrand.setModel(model);
-          model.setColumnIdentifiers(header);
-          tblBrand.getColumnModel().getColumn(0).setPreferredWidth(70);
-          tblBrand.getColumnModel().getColumn(1).setPreferredWidth(90);
-          removeData();
-          for(brandDTO brand:list)
-          {
-              addData(brand);
-          }
-          
-          
+
+    private void ViewData(ArrayList<brandDTO> list) {
+        convertBackgroundOfTable(this.tblBrand);
+        String[] header = {"Mã nhãn hiệu", "Tên nhãn hiệu"};
+        model = new NonEditableTableModel(new Object[0][header.length], header);
+        tblBrand.setModel(model);
+        model.setColumnIdentifiers(header);
+        tblBrand.getColumnModel().getColumn(0).setPreferredWidth(70);
+        tblBrand.getColumnModel().getColumn(1).setPreferredWidth(90);
+        removeData();
+        for (brandDTO brand : list) {
+            addData(brand);
+        }
+
     }
-    private void addData(brandDTO brand)
-    {
-        model.addRow( new Object[]{
-            brand.getBrandId(),brand.getBrandName()
+
+    private void addData(brandDTO brand) {
+        model.addRow(new Object[]{
+            brand.getBrandId(), brand.getBrandName()
         }
         );
     }
-    private void removeData()
-    {
+
+    private void removeData() {
         int count = model.getRowCount();
-        for(int i = count-1;i>=0;i--)
-        {
+        for (int i = count - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
@@ -216,79 +219,76 @@ public class brandGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void On(boolean a, boolean b)
-    {
+    private void On(boolean a, boolean b) {
         this.btnThem.setVisible(a);
         this.btnSua.setVisible(a);
         this.btnXacnhan.setVisible(b);
         this.btnHuy.setVisible(b);
     }
-            
+
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        CustomConfirmDialog corfirm =  new CustomConfirmDialog(this,"Xác nhận","Bạn có muốn thêm nhãn?","question.png");
-            corfirm .setVisible(true);
-        if(corfirm.getSelected()) {
+        CustomConfirmDialog corfirm = new CustomConfirmDialog(this, "Xác nhận", "Bạn có muốn thêm nhãn?", "question.png");
+        corfirm.setVisible(true);
+        if (corfirm.getSelected()) {
             this.txtMa.setText("");
             this.txtMa.setEditable(true);
             this.txtTen.setText("");
-            On(false,true);
-      
+            On(false, true);
+
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-           if(this.txtTen.getText().trim().isEmpty())
-        {
-           MyMessageAlert alert = new MyMessageAlert(this, "Tên không được để trống ");
-              alert.setVisible(true);
-              return;
+        if (this.txtTen.getText().trim().isEmpty()) {
+            MyMessageAlert alert = new MyMessageAlert(this, "Tên không được để trống ");
+            alert.setVisible(true);
+            return;
         }
-         if(containsDigit(this.txtTen.getText()))
-        {
-           MyMessageAlert alert = new MyMessageAlert(this, "Tên sai định dạng ");
-              alert.setVisible(true);
-              return;
+        if (containsDigit(this.txtTen.getText())) {
+            MyMessageAlert alert = new MyMessageAlert(this, "Tên sai định dạng ");
+            alert.setVisible(true);
+            return;
         }
-          CustomConfirmDialog corfirm =  new CustomConfirmDialog(this,"Xác nhận","Bạn có muốn sửa nhãn không?","question.png");
-            corfirm .setVisible(true);
-        if(corfirm.getSelected()) {
+        CustomConfirmDialog corfirm = new CustomConfirmDialog(this, "Xác nhận", "Bạn có muốn sửa nhãn không?", "question.png");
+        corfirm.setVisible(true);
+        if (corfirm.getSelected()) {
             brandBUS bus = new brandBUS();
             String ma = this.txtMa.getText();
             String ten = this.txtTen.getText();
-            brandDTO brand = new brandDTO(ma,ten);
-           try {
-               bus.update(brand);
-               MyMessageAccept accept = new MyMessageAccept(this, "Đã sửa nhãn thành công!");
-               accept.setVisible(true);
-               load();
-           } catch (SQLException ex) {
-               Logger.getLogger(brandGUI.class.getName()).log(Level.SEVERE, null, ex);
-           }
+            brandDTO brand = new brandDTO(ma, ten);
+            try {
+                bus.update(brand);
+                MyMessageAccept accept = new MyMessageAccept(this, "Đã sửa nhãn thành công!");
+                accept.setVisible(true);
+                load();
+            } catch (SQLException ex) {
+                Logger.getLogger(brandGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-         
+
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
-        CustomConfirmDialog corfirm =  new CustomConfirmDialog(this,"Xác nhận","Bạn có muốn xóa nhãn không?","question.png");
-            corfirm .setVisible(true);
-        if(corfirm.getSelected()) {
+        CustomConfirmDialog corfirm = new CustomConfirmDialog(this, "Xác nhận", "Bạn có muốn xóa nhãn không?", "question.png");
+        corfirm.setVisible(true);
+        if (corfirm.getSelected()) {
             brandBUS bus = new brandBUS();
             String ma = this.txtMa.getText();
             String ten = this.txtTen.getText();
-            brandDTO brand = new brandDTO(ma,ten);
-           try {
-               bus.delete(brand);
-               MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa nhãn thành công!");
-               accept.setVisible(true);
-               this.txtMa.setText("");
-               this.txtTen.setText("");
-               load();
-           } catch (SQLException ex) {
-               Logger.getLogger(brandGUI.class.getName()).log(Level.SEVERE, null, ex);
-           }
+            brandDTO brand = new brandDTO(ma, ten);
+            try {
+                bus.delete(brand);
+                MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa nhãn thành công!");
+                accept.setVisible(true);
+                this.txtMa.setText("");
+                this.txtTen.setText("");
+                load();
+            } catch (SQLException ex) {
+                Logger.getLogger(brandGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btnXoaActionPerformed
 
@@ -305,85 +305,78 @@ public class brandGUI extends javax.swing.JFrame {
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         // TODO add your handling code here:
-       
-       String s = txtSearch.getText();
-        if(!s.equals("")){
+
+        String s = txtSearch.getText();
+        if (!s.equals("")) {
             ArrayList<brandDTO> brandlist = new ArrayList<>();
             brandBUS bus = new brandBUS();
             brandlist = bus.SeardByIdAndName(s, list);
-            ViewData( brandlist);
-        }
-        else{
+            ViewData(brandlist);
+        } else {
             load();
         }
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
         // TODO add your handling code here:
-                 if(this.txtTen.getText().trim().isEmpty())
-        {
-           MyMessageAlert alert = new MyMessageAlert(this, "Tên không được để trống ");
-              alert.setVisible(true);
-              return;
+        if (this.txtTen.getText().trim().isEmpty()) {
+            MyMessageAlert alert = new MyMessageAlert(this, "Tên không được để trống ");
+            alert.setVisible(true);
+            return;
         }
-      
-           
-         if(containsDigit(this.txtTen.getText()))
-        {
-           MyMessageAlert alert = new MyMessageAlert(this, "Tên sai định dạng ");
-              alert.setVisible(true);
-              return;
+
+        if (containsDigit(this.txtTen.getText())) {
+            MyMessageAlert alert = new MyMessageAlert(this, "Tên sai định dạng ");
+            alert.setVisible(true);
+            return;
         }
-           
-                 if(this.txtMa.getText().trim().isEmpty())
-                    {
-                       MyMessageAlert alert = new MyMessageAlert(this, "Mã không được để trống ");
-                          alert.setVisible(true);
-                          return;
-                    }
-                 
-                  if(containsDigit(this.txtMa.getText()))
-                    {
-                       MyMessageAlert alert = new MyMessageAlert(this, "Tên sai định dạng ");
-                          alert.setVisible(true);
-                          return;
-                    }
-                  
-            brandBUS bus = new brandBUS();
-            String ma =  txtMa.getText();
-            if(bus.checkID(ma, list))
-            {
-                        MyMessageAlert alert = new MyMessageAlert(this, "Mã bị trùng, Vui lòng nhập mã khác ");
-                          alert.setVisible(true);
-                          return;
-            }
-            String ten = this.txtTen.getText();
-            brandDTO brand = new brandDTO(ma,ten);
-           try {
-               bus.add(brand);
-               MyMessageAccept accept = new MyMessageAccept(this, "Đã thêm nhãn thành công!");
-               this.txtMa.setText("");
-               this.txtTen.setText("");
-               accept.setVisible(true);
-               this.txtMa.setEditable(false);
-               On(true,false);
-               
-               load();
-               
-           } catch (SQLException ex) {
-               Logger.getLogger(brandGUI.class.getName()).log(Level.SEVERE, null, ex);
-           }
+
+        if (this.txtMa.getText().trim().isEmpty()) {
+            MyMessageAlert alert = new MyMessageAlert(this, "Mã không được để trống ");
+            alert.setVisible(true);
+            return;
+        }
+
+        if (containsDigit(this.txtMa.getText())) {
+            MyMessageAlert alert = new MyMessageAlert(this, "Tên sai định dạng ");
+            alert.setVisible(true);
+            return;
+        }
+
+        brandBUS bus = new brandBUS();
+        String ma = txtMa.getText();
+        if (bus.checkID(ma, list)) {
+            MyMessageAlert alert = new MyMessageAlert(this, "Mã bị trùng, Vui lòng nhập mã khác ");
+            alert.setVisible(true);
+            return;
+        }
+        
+        String ten = this.txtTen.getText();
+        brandDTO brand = new brandDTO(ma, ten);
+        try {
+            bus.add(brand);
+            MyMessageAccept accept = new MyMessageAccept(this, "Đã thêm nhãn thành công!");
+            this.txtMa.setText("");
+            this.txtTen.setText("");
+            accept.setVisible(true);
+            this.txtMa.setEditable(false);
+            On(true, false);
+
+            load();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(brandGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnXacnhanActionPerformed
- private void load()
-    {
-        brandBUS bus = new  brandBUS();
+    private void load() {
+        brandBUS bus = new brandBUS();
         ArrayList list = new ArrayList<>();
-        list= bus.list();
-        ViewData( list);
+        list = bus.list();
+        ViewData(list);
     }
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
         // TODO add your handling code here:
-        On(true,false);
+        On(true, false);
     }//GEN-LAST:event_btnHuyActionPerformed
 
     /**

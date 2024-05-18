@@ -14,34 +14,35 @@ import java.util.ArrayList;
  * @author MY PC
  */
 public class supplierBUS {
+
     supplierDAO dao;
-    private ArrayList <supplierDTO>list;
-     public supplierBUS() {
+    private ArrayList<supplierDTO> list;
+
+    public supplierBUS() {
         list();
     }
 
-    public ArrayList<supplierDTO> list() 
-    {
+    public ArrayList<supplierDTO> list() {
         supplierDAO dao = new supplierDAO();
         return dao.list();
     }
-    public void add(supplierDTO supplier) throws SQLException
-    {
+
+    public void add(supplierDTO supplier) throws SQLException {
         supplierDAO dao = new supplierDAO();
         dao.add(supplier);
     }
-    public void update(supplierDTO supplier) throws SQLException
-    {
+
+    public void update(supplierDTO supplier) throws SQLException {
         supplierDAO dao = new supplierDAO();
         dao.update(supplier);
-    }     
-    public void delete(supplierDTO supplier) throws SQLException
-    {
+    }
+
+    public void delete(supplierDTO supplier) throws SQLException {
         supplierDAO dao = new supplierDAO();
         dao.delete(supplier);
     }
-     public String createId()
-    {
+
+    public String createId() {
         supplierDAO dao = new supplierDAO();
         String maNcc;
         list = new ArrayList<>();
@@ -57,40 +58,37 @@ public class supplierBUS {
         return maNcc;
 
     }
-     public ArrayList<supplierDTO> SeardByIdAndName(String s, ArrayList<supplierDTO> list) {
-        ArrayList<supplierDTO > ketQua = new ArrayList<>();
+
+    public ArrayList<supplierDTO> SeardByIdAndName(String s, ArrayList<supplierDTO> list) {
+        ArrayList<supplierDTO> ketQua = new ArrayList<>();
         for (supplierDTO supplier : list) {
-            if (supplier.getSupplierID().toLowerCase().contains(s.toLowerCase())||supplier.getSupplierName().toLowerCase().contains(s.toLowerCase())) {
+            if (supplier.getSupplierID().toLowerCase().contains(s.toLowerCase()) || supplier.getSupplierName().toLowerCase().contains(s.toLowerCase())) {
                 ketQua.add(supplier);
             }
         }
         return ketQua;
     }
-     public ArrayList<supplierDTO> SearchByName(String a1, String a2, ArrayList<supplierDTO> list)
-     {
-         ArrayList<supplierDTO> result = new ArrayList<>();
-         char kitu1 = 0, kitu2 = 0;
-         boolean empty1 = false,empty2 = false;
-         if(a1.trim().isEmpty())
-         {
-             empty1 = true;
-             kitu2 = a2.charAt(0);
-             kitu2 = Character.toLowerCase( kitu2);
-             
-             
-         }
-           if(a2.trim().isEmpty())
-         {
-             empty2 = true;
-             kitu1 = a1.charAt(0);
-             kitu1 = Character.toLowerCase( kitu1);
-             
-         }
-            if(!a1.trim().isEmpty()&&!a2.trim().isEmpty())
-            {
-                 kitu1 = Character.toLowerCase(a1.charAt(0));
-                  kitu2 = Character.toLowerCase(a2.charAt(0));
-            }
+
+    public ArrayList<supplierDTO> SearchByName(String a1, String a2, ArrayList<supplierDTO> list) {
+        ArrayList<supplierDTO> result = new ArrayList<>();
+        char kitu1 = 0, kitu2 = 0;
+        boolean empty1 = false, empty2 = false;
+        if (a1.trim().isEmpty()) {
+            empty1 = true;
+            kitu2 = a2.charAt(0);
+            kitu2 = Character.toLowerCase(kitu2);
+
+        }
+        if (a2.trim().isEmpty()) {
+            empty2 = true;
+            kitu1 = a1.charAt(0);
+            kitu1 = Character.toLowerCase(kitu1);
+
+        }
+        if (!a1.trim().isEmpty() && !a2.trim().isEmpty()) {
+            kitu1 = Character.toLowerCase(a1.charAt(0));
+            kitu2 = Character.toLowerCase(a2.charAt(0));
+        }
         for (supplierDTO supplier : list) {
             char firstChar = supplier.getSupplierName().charAt(0);
             char firstCharLower = Character.toLowerCase(firstChar);
