@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import Model.MyScrollBar;
-
+import Model.CustomHeaderRenderer;
 /**
  *
  * @author MY PC
@@ -51,13 +51,11 @@ public class chonSP extends javax.swing.JFrame {
         initComponents();
         jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         setLocationRelativeTo(null);
-        this.dispose();
         this.productBUS = new productBUS();
         list = productBUS.getList();
         _testsell = testsell;
         JTableHeader header = tblSP.getTableHeader();
-        header.setFont(new Font("Tahoma", Font.BOLD, 16));
-        header.setResizingAllowed(false);
+        header.setDefaultRenderer(new CustomHeaderRenderer());
         ViewData(list);
 
     }
@@ -116,6 +114,7 @@ public class chonSP extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 380));
 
@@ -175,7 +174,7 @@ public class chonSP extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 17, Short.MAX_VALUE)
+                        .addGap(0, 15, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,7 +191,7 @@ public class chonSP extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -22,7 +22,7 @@ import Model.NonEditableTableModel;
 import java.awt.Font;
 import java.util.Collections;
 import javax.swing.JTable;
-
+import static Model.helpers.*;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
@@ -83,6 +83,8 @@ public class HoaDonGUI extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        btnExportExcelNH = new javax.swing.JButton();
+        btnExportExcelHD = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         cbMethodReceipt = new Model.Combobox();
@@ -132,6 +134,26 @@ public class HoaDonGUI extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Danh sách hóa đơn chứng từ");
 
+        btnExportExcelNH.setBackground(new java.awt.Color(51, 204, 0));
+        btnExportExcelNH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnExportExcelNH.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportExcelNH.setText("Xuất Excel PN");
+        btnExportExcelNH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportExcelNHActionPerformed(evt);
+            }
+        });
+
+        btnExportExcelHD.setBackground(new java.awt.Color(51, 204, 0));
+        btnExportExcelHD.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnExportExcelHD.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportExcelHD.setText("Xuất Excel HĐ");
+        btnExportExcelHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportExcelHDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -139,14 +161,21 @@ public class HoaDonGUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 456, Short.MAX_VALUE)
+                .addComponent(btnExportExcelHD)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExportExcelNH)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabel2)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(btnExportExcelNH)
+                    .addComponent(btnExportExcelHD))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(246, 246, 250));
@@ -602,6 +631,21 @@ public class HoaDonGUI extends javax.swing.JPanel {
         }
     }
 
+    public void ExportExcel(int a) {
+        switch (a) {
+            case 1:
+                Export_Excell(tblReceipt);
+                break;
+
+            case 2:
+                Export_Excell(tblImport);
+                break;
+
+            default:
+                throw new AssertionError();
+        }
+    }
+
     private void btnacceptMethodHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnacceptMethodHDActionPerformed
         if (cbMethodReceipt.getSelectedItem().equals("Mã")) {
             OnOff_Receipt(true, false, false);
@@ -750,7 +794,7 @@ public class HoaDonGUI extends javax.swing.JPanel {
                 try {
                     ArrayList<importDTO> newlist_import = new ArrayList<>();
                     newlist_import = importBUS.getListPrice(c, d);
-                    
+
                     viewTableImport(tblImport, newlist_import);
                 } catch (ParseException ex) {
                     Logger.getLogger(HoaDonGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -793,6 +837,26 @@ public class HoaDonGUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tblImportMouseClicked
 
+    private void btnExportExcelNHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportExcelNHActionPerformed
+        if (tblImport.getRowCount() <= 0) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Chưa có dữ liệu nào trong bảng nhập hàng");
+            alert.setVisible(true);
+            return;
+        } else {
+            ExportExcel(2);
+        }
+    }//GEN-LAST:event_btnExportExcelNHActionPerformed
+
+    private void btnExportExcelHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportExcelHDActionPerformed
+        if (tblReceipt.getRowCount() <= 0) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Chưa có dữ liệu nào trong bảng hóa đơn");
+            alert.setVisible(true);
+            return;
+        } else {
+            ExportExcel(1);
+        }
+    }//GEN-LAST:event_btnExportExcelHDActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateEndImport;
@@ -804,6 +868,8 @@ public class HoaDonGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnAcceptMethodNH;
     private javax.swing.JButton btnAcceptReceipt;
     private javax.swing.JButton btnAcceptReceiptPrice;
+    private javax.swing.JButton btnExportExcelHD;
+    private javax.swing.JButton btnExportExcelNH;
     private javax.swing.JButton btnacceptMethodHD;
     private Model.Combobox cbMethodImport;
     private Model.Combobox cbMethodReceipt;
