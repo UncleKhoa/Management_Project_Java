@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.customer;
+
 import BUS.customerBUS;
 import DTO.customerDTO;
 import DAO.customerDAO;
@@ -25,60 +26,65 @@ import java.util.ArrayList;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author Lenovo
  */
 public class customerGUI extends javax.swing.JPanel {
-    private ArrayList <customerDTO> list = new ArrayList<>();
+
+    private ArrayList<customerDTO> list = new ArrayList<>();
     private customerBUS customerBUS = new customerBUS();
-    private customerDAO customerDAO= new customerDAO();
+    private customerDAO customerDAO = new customerDAO();
     private DefaultTableModel model;
     private DefaultTableModel model2;
     private JFrame parentFrame;
-    private receptBUS receptBUS= new receptBUS();
+    private receptBUS receptBUS = new receptBUS();
+
     /**
      * Creates new form customer2
      */
     public customerGUI() {
         initComponents();
         customerBUS = new customerBUS();
-        list= customerBUS.getList();
-        
-        model = (DefaultTableModel) cusTable.getModel(); 
-        model2 = (DefaultTableModel) receiptTable.getModel(); ;
-        
+        list = customerBUS.getList();
+
+        model = (DefaultTableModel) cusTable.getModel();
+        model2 = (DefaultTableModel) receiptTable.getModel();;
+
         viewData(list);
         viewIcon();
-        
+
         resetdata();
         convertBackgroundOfTable(cusTable);
         convertBackgroundOfTable(receiptTable);
         exportHD.setVisible(false);
-        
+
         JTableHeader header = cusTable.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         JTableHeader header2 = receiptTable.getTableHeader();
         header2.setDefaultRenderer(new CustomHeaderRenderer());
-    } 
-    public void viewIcon(){
+    }
+
+    public void viewIcon() {
         //search icon
         File file = new File("");
         String currentDirectory = file.getAbsolutePath();
         String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
-        ImageIcon imageIcon = new ImageIcon(relativePath+"search.png");
+        ImageIcon imageIcon = new ImageIcon(relativePath + "search.png");
         searchIcon.setIcon(imageIcon);
     }
-    public void addLineData(customerDTO i)
-    {
-     model.addRow(new Object[]{
-         i.getCusID(),i.getFirstName(),i.getLastName(),i.getGender(),i.getPhoneNumber(),i.getGmail(),i.getAddress()
-           
-     });   
+
+    public void addLineData(customerDTO i) {
+        model.addRow(new Object[]{
+            i.getCusID(), i.getFirstName(), i.getLastName(), i.getGender(), i.getPhoneNumber(), i.getGmail(), i.getAddress()
+
+        });
     }
-    public void viewData(ArrayList<customerDTO> list){
+
+    public void viewData(ArrayList<customerDTO> list) {
         convertBackgroundOfTable(cusTable);
-        String[] headers = {"Mã KH", "Họ", "Tên", "Giới Tính","SDT","Gmail","Địa chỉ"}; // Đặt tiêu đề cột của bảng
+        String[] headers = {"Mã KH", "Họ", "Tên", "Giới Tính", "SDT", "Gmail", "Địa chỉ"}; // Đặt tiêu đề cột của bảng
         model = new NonEditableTableModel(new Object[0][headers.length], headers);
         cusTable.setModel(model);
         cusTable.setRowHeight(30);
@@ -93,76 +99,91 @@ public class customerGUI extends javax.swing.JPanel {
         cusTable.getColumnModel().getColumn(2).setPreferredWidth(50);
 
         removeData();
-        for (customerDTO i:list){
-            addLineData(i); 
+        for (customerDTO i : list) {
+            addLineData(i);
         }
         headline.setText("Quản lý khách hàng");
-        headline2.setText("Khách hàng: "+list.size());
-      }
-    public void viewdata2(){
+        headline2.setText("Khách hàng: " + list.size());
+    }
+
+    public void viewdata2() {
         String[] headers = {"Mã đơn", "Mã nhân viên", "Mã khách", "Ngày tạo đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
         model = new NonEditableTableModel(new Object[0][headers.length], headers);
-                int selectRow = cusTable.getSelectedRow();
+        int selectRow = cusTable.getSelectedRow();
         customerDTO cus = list.get(selectRow);
         viewInformation(cus);
         id.setFocusable(false);
-        
-        
+
         try {
             //receipt
             receptBUS.viewTableReceipt(cus.getCusID(), receiptTable);
             exportHD.setVisible(true);
-            
+
         } catch (ParseException ex) {
             Logger.getLogger(customerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void removeData(){
+
+    public void removeData() {
         int rowCount = model.getRowCount();
-        for (int i=rowCount-1;i>=0;i--){
+        for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
-    public customerDTO getTextField(){
-        Boolean check=true;
+
+    public customerDTO getTextField() {
+        Boolean check = true;
         customerDTO cus = new customerDTO();
         cus.setCusID(id.getText());
         cus.setFirstName(fname.getText());
-        if (!(checkString(fname.getText()) ==1 )) check=false;
-        
+        if (!(checkString(fname.getText()) == 1)) {
+            check = false;
+        }
+
         cus.setLastName(lname.getText());
-        if (!(checkString(lname.getText()) ==1 )) check=false;
-        
+        if (!(checkString(lname.getText()) == 1)) {
+            check = false;
+        }
+
         nam.setActionCommand("Nam");
         nu.setActionCommand("Nữ");
         cus.setGender(gender.getSelection().getActionCommand());
         cus.setPhoneNumber(phonenumber.getText());
-        if (!(checkString(phonenumber.getText()) ==2 )) check=false;
+        if (!(checkString(phonenumber.getText()) == 2)) {
+            check = false;
+        }
         cus.setGmail(gmail.getText());
-        if (gmail.getText().equals(""))   check = false;
+        if (gmail.getText().equals("")) {
+            check = false;
+        }
         cus.setAddress(address.getText());
-        if (address.getText().equals(""))   check = false;
-        if (check == false){
-            
-             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Dữ liệu không hợp lệ!");
+        if (address.getText().equals("")) {
+            check = false;
+        }
+        if (check == false) {
+
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Dữ liệu không hợp lệ!");
             alert.setVisible(true);
-           return null;
+            return null;
         }
         return cus;
-      
+
     }
-    public void viewInformation(customerDTO cus){
+
+    public void viewInformation(customerDTO cus) {
         id.setText(cus.getCusID());
         fname.setText(cus.getFirstName());
         lname.setText(cus.getLastName());
-        if (cus.getGender().equals("Nam"))
+        if (cus.getGender().equals("Nam")) {
             nam.setSelected(true);
-        else 
+        } else {
             nu.setSelected(true);
+        }
         phonenumber.setText(cus.getPhoneNumber());
         gmail.setText(cus.getGmail());
         address.setText(cus.getAddress());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -755,8 +776,10 @@ public class customerGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_addressActionPerformed
 
-    private void editCustomer(customerDTO cus){
-        if (cus==null) return;
+    private void editCustomer(customerDTO cus) {
+        if (cus == null) {
+            return;
+        }
         customerDAO = new customerDAO();
         try {
             customerDAO.update(cus);
@@ -765,7 +788,7 @@ public class customerGUI extends javax.swing.JPanel {
         }
         customerBUS = new customerBUS();
         this.list = customerBUS.getList();
-        viewData(list);  
+        viewData(list);
     }
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         // TODO add your handling code here:
@@ -778,9 +801,11 @@ public class customerGUI extends javax.swing.JPanel {
             alert.setVisible(true);
         }
     }//GEN-LAST:event_editActionPerformed
-    private void addCustomer(){
+    private void addCustomer() {
         customerDTO cus = getTextField();
-        if (cus==null) return;
+        if (cus == null) {
+            return;
+        }
         this.list.add(cus);
         try {
             customerDAO.add(cus);
@@ -788,8 +813,9 @@ public class customerGUI extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(customerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-    private void removeCustomer(customerDTO cus){
+    }
+
+    private void removeCustomer(customerDTO cus) {
         list.remove(cus);
         customerDAO = new customerDAO();
         try {
@@ -797,17 +823,17 @@ public class customerGUI extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(customerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        viewData(list);        
+        viewData(list);
     }
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
         // TODO add your handling code here:
         int selectRow = cusTable.getSelectedRow();
-        if (selectRow == -1){
+        if (selectRow == -1) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn nhân viên để xóa!");
             alert.setVisible(true);
-             return;
-        } 
+            return;
+        }
         customerDTO cus = list.get(selectRow);
         CustomConfirmDialog confirm = new CustomConfirmDialog(parentFrame, "Xác nhận xóa", "Bạn có muốn xóa khách hàng " + cus.getCusID(), "close_red.png");
         confirm.setVisible(true);
@@ -817,12 +843,14 @@ public class customerGUI extends javax.swing.JPanel {
             alert.setVisible(true);
         }
     }//GEN-LAST:event_deleteActionPerformed
-    private void resetdata(){
+    private void resetdata() {
         // TODO add your handling code here
-        String idname ="";
-        if (list.size() <10 ) 
-            idname="KH0"+(list.size()+1);
-        else idname = "KH"+(list.size()+1);
+        String idname = "";
+        if (list.size() < 10) {
+            idname = "KH0" + (list.size() + 1);
+        } else {
+            idname = "KH" + (list.size() + 1);
+        }
         id.setText(idname);
         fname.setText("");
         lname.setText("");
@@ -842,14 +870,14 @@ public class customerGUI extends javax.swing.JPanel {
     private void cusTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cusTableMouseClicked
         // TODO add your handling code here:
         viewdata2();
-        
+
     }//GEN-LAST:event_cusTableMouseClicked
 
     private void exportHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHDActionPerformed
         // TODO add your handling code here:
-         Export_Excell(receiptTable);
+        Export_Excell(receiptTable);
     }//GEN-LAST:event_exportHDActionPerformed
-    private int checkString(String s){
+    private int checkString(String s) {
         boolean hasLetter = false;
         boolean hasDigit = false;
 
@@ -881,7 +909,7 @@ public class customerGUI extends javax.swing.JPanel {
     private void fnameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fnameFocusLost
         // TODO add your handling code here:
         if (!(checkString(fname.getText()) == 1))
-            fname.setForeground( Color.RED);
+            fname.setForeground(Color.RED);
         else
             fname.setForeground(Color.black);
     }//GEN-LAST:event_fnameFocusLost
@@ -892,28 +920,23 @@ public class customerGUI extends javax.swing.JPanel {
 
     private void lnameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lnameFocusLost
         // TODO add your handling code here:
-                if (!(checkString(lname.getText()) == 1))
-            lname.setForeground( Color.RED);
+        if (!(checkString(lname.getText()) == 1))
+            lname.setForeground(Color.RED);
         else
             lname.setForeground(Color.black);
     }//GEN-LAST:event_lnameFocusLost
 
     private void phonenumberFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phonenumberFocusLost
 
-        if (!(checkString(phonenumber.getText()) == 2))
-            {
-            phonenumber.setForeground( Color.RED);
-            }
-        else
-        {
+        if (!(checkString(phonenumber.getText()) == 2)) {
+            phonenumber.setForeground(Color.RED);
+        } else {
             phonenumber.setForeground(Color.black);
         }
-        if (phonenumber.getText().length() != 10 )
-        {
+        if (phonenumber.getText().length() != 10) {
             nhacnho.setText("Vui lòng nhập đủ 10 số!");
             nhacnho.setForeground(Color.red);
-        }
-        else{
+        } else {
             nhacnho.setForeground(Color.black);
             nhacnho.setText("");
         }
@@ -935,18 +958,19 @@ public class customerGUI extends javax.swing.JPanel {
 
     private void searchIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchIconMouseClicked
         // TODO add your handling code here:
-         if (searchField.getText().equals("")){
+        if (searchField.getText().equals("")) {
             viewData(list);
-        }else{
-            ArrayList <customerDTO> list2 = customerBUS.search(searchField.getText());
-            if (list2.size()==0 ){
+        } else {
+            ArrayList<customerDTO> list2 = customerBUS.search(searchField.getText());
+            if (list2.size() == 0) {
                 MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không tìm thấy khách hàng ");
-                alert.setVisible(true);}
-            else{
+                alert.setVisible(true);
+            } else {
                 removeData();
-                this.list= list2;
+                this.list = list2;
                 viewData(list2);
-            }}
+            }
+        }
     }//GEN-LAST:event_searchIconMouseClicked
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed

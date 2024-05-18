@@ -239,7 +239,7 @@ public class manageraccount extends javax.swing.JFrame {
         // Lọc các dòng có tên trùng nhau và thêm vào bảng sao (newTableModel)
         ArrayList<userDTO> list = stbus.getlist();
         System.out.print(list);
-// Lọc các đối tượng có tên trùng nhau và thêm vào bảng sao (newTableModel)
+        // Lọc các đối tượng có tên trùng nhau và thêm vào bảng sao (newTableModel)
         for (userDTO staff : list) {
             String name = staff.getUsername();
             if (name.equalsIgnoreCase(searchName)) {
