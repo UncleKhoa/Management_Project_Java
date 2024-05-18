@@ -36,7 +36,9 @@ public class ProductDetailBUS {
      public void add(productDetailDTO SP) throws SQLException {
       dtDAO.add(SP);
       }
-    
+     public void update(productDetailDTO SP) throws SQLException {
+      dtDAO.update(SP);
+      }
     
     public static void main(String[] args) {
     ProductDetailBUS productDetailBUS = new ProductDetailBUS();

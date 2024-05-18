@@ -98,7 +98,6 @@ public class choosestaffid extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         dong = new javax.swing.JButton();
 
-        table.setBackground(new java.awt.Color(204, 255, 204));
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
@@ -117,7 +116,7 @@ public class choosestaffid extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(table);
 
-        jPanel2.setBackground(new java.awt.Color(51, 153, 0));
+        jPanel2.setBackground(new java.awt.Color(66, 100, 220));
 
         dong.setBackground(new java.awt.Color(255, 102, 102));
         dong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -151,7 +150,7 @@ public class choosestaffid extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
