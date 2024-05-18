@@ -63,21 +63,16 @@ import javax.swing.plaf.basic.BasicSpinnerUI;
 import Model.MyScrollBar;
 
 // Định dạng số
-
-
-
 public class managerproduct extends javax.swing.JPanel {
-    
+
     sell testSell;
-    private productBUS stbus=new productBUS();
+    private productBUS stbus = new productBUS();
     private DefaultTableModel model;
     private int selectedRowIndex = -1;
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\betIMG\\"; // Đường dẫn tương đối
-    
-    
-    
+
     public DefaultTableModel getModel() {
         return model;
     }
@@ -85,80 +80,73 @@ public class managerproduct extends javax.swing.JPanel {
     public JTable getjTable1() {
         return jTable1;
     }
-    
-   
-    
-       public void combobox(){
-    ArrayList<productDTO> list = stbus.getList();
-          
-    DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(); // Tạo một mô hình cho JComboBox
-    Set<String> brandSet = new HashSet<>(); // Sử dụng Set để lưu trữ các giá trị brandid duy nhất
-    
-    for (productDTO product : list) {
-        String brandID = product.getBrandID();
-        brandSet.add(brandID); // Thêm brandid vào Set
+
+    public void combobox() {
+        ArrayList<productDTO> list = stbus.getList();
+
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(); // Tạo một mô hình cho JComboBox
+        Set<String> brandSet = new HashSet<>(); // Sử dụng Set để lưu trữ các giá trị brandid duy nhất
+
+        for (productDTO product : list) {
+            String brandID = product.getBrandID();
+            brandSet.add(brandID); // Thêm brandid vào Set
+        }
+
+        for (String brandID : brandSet) {
+            comboBoxModel.addElement(brandID); // Thêm từng giá trị brandid vào mô hình
+        }
+
+        jComboBox1.setModel(comboBoxModel); // Gán mô hình cho JComboBox
+        jComboBox1.setBackground(Color.WHITE);
     }
-    
-    for (String brandID : brandSet) {
-        comboBoxModel.addElement(brandID); // Thêm từng giá trị brandid vào mô hình
-    }
-    
-    jComboBox1.setModel(comboBoxModel); // Gán mô hình cho JComboBox
-    jComboBox1.setBackground(Color.WHITE);
-}
-    
-    
-    
-private void selectRowById(String searchId) {
-    boolean found = false;
-    
-    for (int row = 0; row < jTable1.getRowCount(); row++) {
-        String id = jTable1.getValueAt(row, 0).toString();
-        if (id.equals(searchId)) {
-            jTable1.setRowSelectionInterval(row, row);
-            jTable1.scrollRectToVisible(jTable1.getCellRect(row, 0, true));
-            selectedRowIndex = row;
-            found = true;
-            break;
+
+    private void selectRowById(String searchId) {
+        boolean found = false;
+
+        for (int row = 0; row < jTable1.getRowCount(); row++) {
+            String id = jTable1.getValueAt(row, 0).toString();
+            if (id.equals(searchId)) {
+                jTable1.setRowSelectionInterval(row, row);
+                jTable1.scrollRectToVisible(jTable1.getCellRect(row, 0, true));
+                selectedRowIndex = row;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+
         }
     }
-    
-    if (!found) {
-        
+
+    class CenterTableCellRenderer extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            setHorizontalAlignment(CENTER); // Căn giữa nội dung của ô
+            return cellComponent;
+        }
     }
-}
 
-   
-    
-    
-class CenterTableCellRenderer extends DefaultTableCellRenderer {
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        setHorizontalAlignment(CENTER); // Căn giữa nội dung của ô
-        return cellComponent;
-    }
-}
-
-
-static public void Export_Excell(JTable jTable1){
+    static public void Export_Excell(JTable jTable1) {
         JFileChooser chooser = new JFileChooser();
         int i = chooser.showSaveDialog(chooser);
         if (i == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             try {
                 //FileWriter out = new FileWriter(file+".xlsx");
-                FileOutputStream out = new FileOutputStream(file+".xls");
+                FileOutputStream out = new FileOutputStream(file + ".xls");
                 Writer writer = new java.io.OutputStreamWriter((out), "utf8");
                 try (BufferedWriter bwrite = new BufferedWriter(writer)) {
                     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                    
+
                     // ten Cot
                     for (int j = 0; j < jTable1.getColumnCount(); j++) {
                         bwrite.write(model.getColumnName(j) + "\t");
                     }
                     bwrite.write("\n");
-                    
+
                     // Lay du lieu dong
                     for (int j = 0; j < jTable1.getRowCount(); j++) {
                         for (int k = 0; k < jTable1.getColumnCount(); k++) {
@@ -175,36 +163,31 @@ static public void Export_Excell(JTable jTable1){
         }
     }
 
-
-
-    
     public void style() {
-       jTable1.setRowHeight(65);   
-       JTableHeader header = jTable1.getTableHeader();
-       header.setDefaultRenderer(new CustomHeaderRenderer());
-       convertBackgroundOfTable(jTable1);
-       String[] headers = {"Producid"," Brandid"," Productname"," Unitprice", "Quantity","IMG"};
-       
-       model = new NonEditableTableModel(new Object[0][headers.length], headers);
-       
-       jTable1.setModel(model);
-       
-       jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-       jTable1.getColumnModel().getColumn(1).setPreferredWidth(130);
-       jTable1.getColumnModel().getColumn(2).setPreferredWidth(180);
-       jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
-       jTable1.getColumnModel().getColumn(4).setPreferredWidth(40);
-       jTable1.getColumnModel().getColumn(5).setPreferredWidth(18);
-       TableCellRenderer centerRenderer = new CenterTableCellRenderer();
-       jTable1.setDefaultRenderer(Object.class, centerRenderer);
-  
-         
+        jTable1.setRowHeight(65);
+        JTableHeader header = jTable1.getTableHeader();
+        header.setDefaultRenderer(new CustomHeaderRenderer());
+        convertBackgroundOfTable(jTable1);
+        String[] headers = {"Producid", " Brandid", " Productname", " Unitprice", "Quantity", "IMG"};
+
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+
+        jTable1.setModel(model);
+
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(130);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(180);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(40);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(18);
+        TableCellRenderer centerRenderer = new CenterTableCellRenderer();
+        jTable1.setDefaultRenderer(Object.class, centerRenderer);
+
     }
 
-    
     public managerproduct() {
-       JScrollPane scrollPane = new JScrollPane(jTable1);
-        initComponents(); 
+        JScrollPane scrollPane = new JScrollPane(jTable1);
+        initComponents();
         jScrollPane2.setVerticalScrollBar(new MyScrollBar());
         DefaultEditor editor = (DefaultEditor) jSpinner1.getEditor();
         editor.getTextField().setEditable(false);
@@ -218,113 +201,108 @@ static public void Export_Excell(JTable jTable1){
         combobox();
         style();
         displayData();
-        
-    jTable1.addMouseListener(new MouseAdapter() {
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 2) { // Kiểm tra nếu là sự kiện nhấp chuột hai lần
-            int selectedRowIndex = jTable1.getSelectedRow();
-            String productid = jTable1.getValueAt(selectedRowIndex, 0).toString();
-            
-            Productdetail productDetail = new Productdetail(productid);
-            
-            JDialog dialog = new JDialog();
-            dialog.setUndecorated(true); // Tắt thanh tiêu đề và nút đóng
-            dialog.setContentPane(productDetail);
-            dialog.pack();
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
-            
-            // Đặt sự kiện cho nút "Đóng" trên Productdetail
-            productDetail.getDong().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dialog.dispose(); // Đóng cửa sổ dialog
+
+        jTable1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Kiểm tra nếu là sự kiện nhấp chuột hai lần
+                    int selectedRowIndex = jTable1.getSelectedRow();
+                    String productid = jTable1.getValueAt(selectedRowIndex, 0).toString();
+
+                    Productdetail productDetail = new Productdetail(productid);
+
+                    JDialog dialog = new JDialog();
+                    dialog.setUndecorated(true); // Tắt thanh tiêu đề và nút đóng
+                    dialog.setContentPane(productDetail);
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
+
+                    // Đặt sự kiện cho nút "Đóng" trên Productdetail
+                    productDetail.getDong().addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            dialog.dispose(); // Đóng cửa sổ dialog
+                        }
+                    });
                 }
-            });
-        }
-    }
-});
-        export.addActionListener(new ActionListener() {
-       @Override
-       public void actionPerformed(ActionEvent e) {
-           Export_Excell(jTable1);
-       }
-   });
-        
-        
-jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-    public void valueChanged(ListSelectionEvent event) {
-        if (!event.getValueIsAdjusting()) {
-            selectedRowIndex = jTable1.getSelectedRow();
-            if (selectedRowIndex >= 0) {
-                // Lấy giá trị từ JTable
-                String value1 = jTable1.getValueAt(selectedRowIndex, 0).toString();
-                String value2 = jTable1.getValueAt(selectedRowIndex, 1).toString();
-                String value3 = jTable1.getValueAt(selectedRowIndex, 2).toString();
-                String value4; // Giá trị mặc định ; // Giá trị mặc định
-               try {
-    value4 = jTable1.getValueAt(selectedRowIndex, 3).toString();
-} catch (NumberFormatException e) {
-    // Xử lý ngoại lệ nếu giá trị không hợp lệ
-    value4 = "0.0"; // Giá trị mặc định nếu xảy ra ngoại lệ
-}
-                int value5 = Integer.parseInt(jTable1.getValueAt(selectedRowIndex, 4).toString());
-                ImageIcon value6 = (ImageIcon) jTable1.getValueAt(selectedRowIndex, 5);
-
-                // Đặt giá trị vào các JTextField và JSpinner
-                jTextField1.setText(value1);
-                jComboBox1.setSelectedItem(value2);
-                jTextField3.setText(value3);
-                jTextField4.setText(value4);
-                jSpinner1.setValue(value5);
-
-                // Hiển thị hình ảnh trong JLabel
-                ImageIcon imageIcon = value6;
-                Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                ImageIcon scaledImageIcon = new ImageIcon(image);
-                won.setIcon(scaledImageIcon);
             }
-        }
-    }
-});
+        });
+        export.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Export_Excell(jTable1);
+            }
+        });
 
-
-    editbutton.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        int selectedRowIndex = jTable1.getSelectedRow();
-        if (selectedRowIndex >= 0) {
-            // Lấy giá trị từ JTable
-            String value1 = jTable1.getValueAt(selectedRowIndex, 0).toString();
-            String value2 = jTable1.getValueAt(selectedRowIndex, 1).toString();
-            String value3 = jTable1.getValueAt(selectedRowIndex, 2).toString();
-            Double value4 = Double.parseDouble(jTable1.getValueAt(selectedRowIndex, 3).toString());
-            int value5 = Integer.parseInt(jTable1.getValueAt(selectedRowIndex, 4).toString());
-            String imageName = jTable1.getValueAt(selectedRowIndex, 5).toString();
-
-            
-            productDTO product = new productDTO(value1, value2, value3, value4, value5, imageName);
-
-        }
-    }
-});
-
-
-     
-         buttonxoa.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    selectedRowIndex = jTable1.getSelectedRow();
                     if (selectedRowIndex >= 0) {
-                        // Xóa hàng khỏi JTable
-                        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                        model.removeRow(selectedRowIndex);
+                        // Lấy giá trị từ JTable
+                        String value1 = jTable1.getValueAt(selectedRowIndex, 0).toString();
+                        String value2 = jTable1.getValueAt(selectedRowIndex, 1).toString();
+                        String value3 = jTable1.getValueAt(selectedRowIndex, 2).toString();
+                        String value4; // Giá trị mặc định ; // Giá trị mặc định
                         try {
-                            String productid = jTextField1.getText();
-       
+                            value4 = jTable1.getValueAt(selectedRowIndex, 3).toString();
+                        } catch (NumberFormatException e) {
+                            // Xử lý ngoại lệ nếu giá trị không hợp lệ
+                            value4 = "0.0"; // Giá trị mặc định nếu xảy ra ngoại lệ
+                        }
+                        int value5 = Integer.parseInt(jTable1.getValueAt(selectedRowIndex, 4).toString());
+                        ImageIcon value6 = (ImageIcon) jTable1.getValueAt(selectedRowIndex, 5);
+
+                        // Đặt giá trị vào các JTextField và JSpinner
+                        jTextField1.setText(value1);
+                        jComboBox1.setSelectedItem(value2);
+                        jTextField3.setText(value3);
+                        jTextField4.setText(value4);
+                        jSpinner1.setValue(value5);
+
+                        // Hiển thị hình ảnh trong JLabel
+                        ImageIcon imageIcon = value6;
+                        Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                        ImageIcon scaledImageIcon = new ImageIcon(image);
+                        won.setIcon(scaledImageIcon);
+                    }
+                }
+            }
+        });
+
+        editbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRowIndex = jTable1.getSelectedRow();
+                if (selectedRowIndex >= 0) {
+                    // Lấy giá trị từ JTable
+                    String value1 = jTable1.getValueAt(selectedRowIndex, 0).toString();
+                    String value2 = jTable1.getValueAt(selectedRowIndex, 1).toString();
+                    String value3 = jTable1.getValueAt(selectedRowIndex, 2).toString();
+                    Double value4 = Double.parseDouble(jTable1.getValueAt(selectedRowIndex, 3).toString());
+                    int value5 = Integer.parseInt(jTable1.getValueAt(selectedRowIndex, 4).toString());
+                    String imageName = jTable1.getValueAt(selectedRowIndex, 5).toString();
+
+                    productDTO product = new productDTO(value1, value2, value3, value4, value5, imageName);
+
+                }
+            }
+        });
+
+        buttonxoa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (selectedRowIndex >= 0) {
+                    // Xóa hàng khỏi JTable
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    model.removeRow(selectedRowIndex);
+                    try {
+                        String productid = jTextField1.getText();
+
                         // Xóa nội dung trong các JTextField
                         jTextField1.setText("");
-                       
+
                         jTextField3.setText("");
                         jTextField4.setText("");
                         jTextField6.setText("");
@@ -334,14 +312,13 @@ jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener()
 
                         stbus.delete(productid);
 
-                         } catch (SQLException ex) {
+                    } catch (SQLException ex) {
                         ex.printStackTrace(); // Hoặc xử lý ngoại lệ theo nhu cầu của bạn
-                         }
                     }
                 }
-            });
-        
-        
+            }
+        });
+
 //       buttonsua.addActionListener(new ActionListener() {
 //    @Override
 //    public void actionPerformed(ActionEvent e) {
@@ -379,188 +356,176 @@ jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener()
 //        }
 //    }
 //}); 
-        
-                                     
-        
 //        
-        
-      timkiem.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String searchId = jTextField6.getText();
-        selectRowById(searchId);
-    }
-});  
-
-      
-      timkiem.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String searchName = jTextField7.getText();
-
-        DefaultTableModel oldTableModel = (DefaultTableModel) jTable1.getModel();
-        int rowCount = oldTableModel.getRowCount();
-        
-        DefaultTableModel newTableModel = new DefaultTableModel();
-        newTableModel.addColumn("Product ID");
-        newTableModel.addColumn("Brand ID");
-        newTableModel.addColumn("Product Name");
-        newTableModel.addColumn("Unit Price");
-        newTableModel.addColumn("Quantity");
-        newTableModel.addColumn("Image");
-
-        for (int i = 0; i < rowCount; i++) {
-            String productName = (String) oldTableModel.getValueAt(i, 1);
-            if (productName.equalsIgnoreCase(searchName)) {
-                Object[] rowData = new Object[6];
-                for (int j = 0; j < 6; j++) {
-                    rowData[j] = oldTableModel.getValueAt(i, j);
-                }
-                newTableModel.addRow(rowData);
+        timkiem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchId = jTextField6.getText();
+                selectRowById(searchId);
             }
-        }
+        });
 
-        JTable newTable = new JTable(newTableModel);
-        newTable.setRowHeight(65);
-        JScrollPane scrollPane = new JScrollPane(newTable);
+        timkiem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchName = jTextField7.getText();
 
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setTitle("Search Results");
-        frame.add(scrollPane);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
-});
-      
-    }
- 
-    
+                DefaultTableModel oldTableModel = (DefaultTableModel) jTable1.getModel();
+                int rowCount = oldTableModel.getRowCount();
 
-private void displayData() {
-                ArrayList<productDTO> list = stbus.getList();
+                DefaultTableModel newTableModel = new DefaultTableModel();
+                newTableModel.addColumn("Product ID");
+                newTableModel.addColumn("Brand ID");
+                newTableModel.addColumn("Product Name");
+                newTableModel.addColumn("Unit Price");
+                newTableModel.addColumn("Quantity");
+                newTableModel.addColumn("Image");
 
-                for (productDTO sp : list) {           
-                    try {
-                        double unitPrice = sp.getUnitPrice();
-                        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
-                        String formattedUnitPrice = decimalFormat.format(unitPrice);
-
-                        File imgFile = new File(relativePath + sp.getIMG());
-                        ImageIcon imageIcon = new ImageIcon(imgFile.getAbsolutePath());
-
-                      TableCellRenderer renderer = new DefaultTableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                  
-                    int newWidth = 80;
-                    int newHeight = 70;
-                    ImageIcon currentIcon = (ImageIcon) value;
-                    Image currentImage = currentIcon.getImage();
-                    Image scaledImage = currentImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
-                    label.setIcon(scaledIcon);
-                     
-
-                    return label;
-                }
-            };
-
-                       // Thêm các dữ liệu vào model của bảng
-            model.addRow(new Object[]{
-                sp.getProducctID(),
-                sp.getBrandID(),
-                sp.getProductName(),
-                formattedUnitPrice,
-                sp.getQuantity(),
-                imageIcon
-            });
-
-        // Đặt renderer cho cột hiển thị hình ảnh
-        int columnIndex = model.findColumn("IMG"); // Thay "IMG" bằng tên cột hiển thị hình ảnh
-        jTable1.getColumnModel().getColumn(columnIndex).setCellRenderer(renderer);
-
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            jTable1.setModel(model);
-
-            if (selectedRowIndex != -1 && selectedRowIndex < jTable1.getRowCount()) {
-                jTable1.setRowSelectionInterval(selectedRowIndex, selectedRowIndex);
-                jTable1.scrollRectToVisible(jTable1.getCellRect(selectedRowIndex, 0, true));
-            }
-}
-     
-      public void addtodisplayData(productDTO nc) {
-                          ArrayList<productDTO> list = stbus.getList();
-                boolean idExists = false;
-
-                // Kiểm tra sự tồn tại của id trong list
-                for (productDTO product : list) {
-                    if (product.getProducctID().equals(nc.getProducctID())) {
-                        idExists = true;
-                        break;
+                for (int i = 0; i < rowCount; i++) {
+                    String productName = (String) oldTableModel.getValueAt(i, 1);
+                    if (productName.equalsIgnoreCase(searchName)) {
+                        Object[] rowData = new Object[6];
+                        for (int j = 0; j < 6; j++) {
+                            rowData[j] = oldTableModel.getValueAt(i, j);
+                        }
+                        newTableModel.addRow(rowData);
                     }
                 }
 
-                if (!idExists) {
-                    list.add(nc);
-                    try {
-                        double unitPrice = nc.getUnitPrice();
-                        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
-                        String formattedUnitPrice = decimalFormat.format(unitPrice);
+                JTable newTable = new JTable(newTableModel);
+                newTable.setRowHeight(65);
+                JScrollPane scrollPane = new JScrollPane(newTable);
 
-                        File imgFile = new File(relativePath + nc.getIMG());
-                        ImageIcon imageIcon = new ImageIcon(imgFile.getAbsolutePath());
+                JFrame frame = new JFrame();
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setTitle("Search Results");
+                frame.add(scrollPane);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
 
-                      TableCellRenderer renderer = new DefaultTableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+    }
 
-                  
-                    int newWidth = 80;
-                    int newHeight = 70;
-                    ImageIcon currentIcon = (ImageIcon) value;
-                    Image currentImage = currentIcon.getImage();
-                    Image scaledImage = currentImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
-                    label.setIcon(scaledIcon);
-                     
+    private void displayData() {
+        ArrayList<productDTO> list = stbus.getList();
 
-                    return label;
-                }
-            };
+        for (productDTO sp : list) {
+            try {
+                double unitPrice = sp.getUnitPrice();
+                DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+                String formattedUnitPrice = decimalFormat.format(unitPrice);
 
-                       // Thêm các dữ liệu vào model của bảng
-            model.addRow(new Object[]{
-                nc.getProducctID(),
-                nc.getBrandID(),
-                nc.getProductName(),
-                formattedUnitPrice,
-                nc.getQuantity(),
-                imageIcon
-            });
+                File imgFile = new File(relativePath + sp.getIMG());
+                ImageIcon imageIcon = new ImageIcon(imgFile.getAbsolutePath());
 
-        // Đặt renderer cho cột hiển thị hình ảnh
-        int columnIndex = model.findColumn("IMG"); // Thay "IMG" bằng tên cột hiển thị hình ảnh
-        jTable1.getColumnModel().getColumn(columnIndex).setCellRenderer(renderer);
+                TableCellRenderer renderer = new DefaultTableCellRenderer() {
+                    @Override
+                    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            
+                        int newWidth = 80;
+                        int newHeight = 70;
+                        ImageIcon currentIcon = (ImageIcon) value;
+                        Image currentImage = currentIcon.getImage();
+                        Image scaledImage = currentImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+                        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                        label.setIcon(scaledIcon);
+
+                        return label;
+                    }
+                };
+
+                // Thêm các dữ liệu vào model của bảng
+                model.addRow(new Object[]{
+                    sp.getProducctID(),
+                    sp.getBrandID(),
+                    sp.getProductName(),
+                    formattedUnitPrice,
+                    sp.getQuantity(),
+                    imageIcon
+                });
+
+                // Đặt renderer cho cột hiển thị hình ảnh
+                int columnIndex = model.findColumn("IMG"); // Thay "IMG" bằng tên cột hiển thị hình ảnh
+                jTable1.getColumnModel().getColumn(columnIndex).setCellRenderer(renderer);
+
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        jTable1.setModel(model);
+
+        if (selectedRowIndex != -1 && selectedRowIndex < jTable1.getRowCount()) {
+            jTable1.setRowSelectionInterval(selectedRowIndex, selectedRowIndex);
+            jTable1.scrollRectToVisible(jTable1.getCellRect(selectedRowIndex, 0, true));
+        }
+    }
+
+    public void addtodisplayData(productDTO nc) {
+        ArrayList<productDTO> list = stbus.getList();
+        boolean idExists = false;
+
+        // Kiểm tra sự tồn tại của id trong list
+        for (productDTO product : list) {
+            if (product.getProducctID().equals(nc.getProducctID())) {
+                idExists = true;
+                break;
+            }
+        }
+
+        if (!idExists) {
+            list.add(nc);
+            try {
+                double unitPrice = nc.getUnitPrice();
+                DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+                String formattedUnitPrice = decimalFormat.format(unitPrice);
+
+                File imgFile = new File(relativePath + nc.getIMG());
+                ImageIcon imageIcon = new ImageIcon(imgFile.getAbsolutePath());
+
+                TableCellRenderer renderer = new DefaultTableCellRenderer() {
+                    @Override
+                    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                        int newWidth = 80;
+                        int newHeight = 70;
+                        ImageIcon currentIcon = (ImageIcon) value;
+                        Image currentImage = currentIcon.getImage();
+                        Image scaledImage = currentImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+                        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                        label.setIcon(scaledIcon);
+
+                        return label;
+                    }
+                };
+
+                // Thêm các dữ liệu vào model của bảng
+                model.addRow(new Object[]{
+                    nc.getProducctID(),
+                    nc.getBrandID(),
+                    nc.getProductName(),
+                    formattedUnitPrice,
+                    nc.getQuantity(),
+                    imageIcon
+                });
+
+                // Đặt renderer cho cột hiển thị hình ảnh
+                int columnIndex = model.findColumn("IMG"); // Thay "IMG" bằng tên cột hiển thị hình ảnh
+                jTable1.getColumnModel().getColumn(columnIndex).setCellRenderer(renderer);
+
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
 
             jTable1.setModel(model);
 
-            
-}
-      }
+        }
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -568,30 +533,27 @@ private void displayData() {
             }
         });
     }
-       
-      
+
 //    private void showProductDetailGUI() {
 //    Productdetail productDetailGUI = new Productdetail();
 //    productDetailGUI.setVisible(true);
 //}
-    
-        private static void createAndShowGUI() {
-                JFrame frame = new JFrame("Manager Product");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private static void createAndShowGUI() {
+        JFrame frame = new JFrame("Manager Product");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                // Tạo một instance của JPanel Form
-                managerproduct panel = new managerproduct();
+        // Tạo một instance của JPanel Form
+        managerproduct panel = new managerproduct();
 
-                // Thêm JPanel Form vào JFrame
-                frame.getContentPane().add(panel);
+        // Thêm JPanel Form vào JFrame
+        frame.getContentPane().add(panel);
 
-                // Cấu hình kích thước, vị trí và hiển thị JFrame
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            }
+        // Cấu hình kích thước, vị trí và hiển thị JFrame
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
 
-     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -868,24 +830,23 @@ private void displayData() {
 
     private void themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themActionPerformed
         // TODO add 
-                   addproduct addProductPanel = new addproduct();
-                   addProductPanel.setManager(this);
+        addproduct addProductPanel = new addproduct();
+        addProductPanel.setManager(this);
 
-                   JDialog dialog = new JDialog();
-                   dialog.setUndecorated(true);
-                   dialog.setContentPane(addProductPanel);
-                   dialog.pack();
-                   dialog.setLocationRelativeTo(null);
-                   dialog.setVisible(true);
-    
-            
-            // Đặt sự kiện cho nút "Đóng" trên Productdetail
-            addProductPanel.getDong().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dialog.dispose(); // Đóng cửa sổ dialog
-                }
-            });
+        JDialog dialog = new JDialog();
+        dialog.setUndecorated(true);
+        dialog.setContentPane(addProductPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+
+        // Đặt sự kiện cho nút "Đóng" trên Productdetail
+        addProductPanel.getDong().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose(); // Đóng cửa sổ dialog
+            }
+        });
     }//GEN-LAST:event_themActionPerformed
 
     private void comboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxActionPerformed
@@ -893,8 +854,8 @@ private void displayData() {
     }//GEN-LAST:event_comboboxActionPerformed
 
     private void editbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbuttonActionPerformed
-       
-    
+
+
     }//GEN-LAST:event_editbuttonActionPerformed
 
 

@@ -22,10 +22,13 @@ public class ChonNCCGUI extends javax.swing.JFrame {
     /**
      * Creates new form ChonNCCGUI
      */
-      DefaultTableModel model;
-       private ArrayList<supplierDTO> listsp = new ArrayList<>();
-       TaoPhieuNhapGUI taopn;
-        public ChonNCCGUI(){}
+    DefaultTableModel model;
+    private ArrayList<supplierDTO> listsp = new ArrayList<>();
+    TaoPhieuNhapGUI taopn;
+
+    public ChonNCCGUI() {
+    }
+
     public ChonNCCGUI(TaoPhieuNhapGUI tpn) {
         initComponents();
         supplierBUS bus = new supplierBUS();
@@ -34,12 +37,12 @@ public class ChonNCCGUI extends javax.swing.JFrame {
         JTableHeader header = tblNC.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         ViewData(listsp);
-        
+
     }
-    public void ViewData(ArrayList<supplierDTO> list)
-    {
+
+    public void ViewData(ArrayList<supplierDTO> list) {
         convertBackgroundOfTable(tblNC);
-        String[] header = {"Mã","Tên nhà cung cấp","Số điện thoại","Địa chỉ"};
+        String[] header = {"Mã", "Tên nhà cung cấp", "Số điện thoại", "Địa chỉ"};
         model = new NonEditableTableModel(new Object[0][header.length], header);
         tblNC.setModel(model);
         model.setColumnIdentifiers(header);
@@ -48,29 +51,26 @@ public class ChonNCCGUI extends javax.swing.JFrame {
         tblNC.getColumnModel().getColumn(2).setPreferredWidth(90);
         tblNC.getColumnModel().getColumn(3).setPreferredWidth(110);
         removeData();
-        
-        for(supplierDTO sup:list)
-        {
-             addData(sup);
-            
+
+        for (supplierDTO sup : list) {
+            addData(sup);
+
         }
-       
+
     }
-    public void addData(supplierDTO sup)
-    {
+
+    public void addData(supplierDTO sup) {
         model.addRow(new Object[]{
-           sup.getSupplierID(),sup.getSupplierName(),sup.getPhoneNumber(),sup.getAddress()
+            sup.getSupplierID(), sup.getSupplierName(), sup.getPhoneNumber(), sup.getAddress()
         });
     }
-      public void removeData()
-    {
+
+    public void removeData() {
         int count = model.getRowCount();
-        for(int i= count-1;i>=0;i--)
-        {
+        for (int i = count - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
-      
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -185,31 +185,31 @@ public class ChonNCCGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
 //        this.hide();
 //        _testsell.setVisible(true);
-         this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         // TODO add your handling code here:
-       int rowCount = model.getRowCount();
+        int rowCount = model.getRowCount();
 
-if (rowCount > 0) {
-    int select = this.tblNC.getSelectedRow();
- 
-    if (select >= 0 && select < rowCount) {
-        Object ID = model.getValueAt(select, 0);
-        Object Name = model.getValueAt(select, 1);
-        String id = ID.toString();
-        String name = Name.toString();
-        taopn.lbMancc.setText(id);
-        taopn.lbTenncc.setText(name);
-    } else {
-        // Xử lý chỉ số hàng đã chọn không hợp lệ
-        System.err.println("Chỉ số hàng đã chọn không hợp lệ: " + select);
-    }
-} else {
-    // Xử lý trường hợp không có hàng nào trong mô hình
-    System.err.println("Mô hình không có hàng nào.");
-}
+        if (rowCount > 0) {
+            int select = this.tblNC.getSelectedRow();
+
+            if (select >= 0 && select < rowCount) {
+                Object ID = model.getValueAt(select, 0);
+                Object Name = model.getValueAt(select, 1);
+                String id = ID.toString();
+                String name = Name.toString();
+                taopn.lbMancc.setText(id);
+                taopn.lbTenncc.setText(name);
+            } else {
+                // Xử lý chỉ số hàng đã chọn không hợp lệ
+                System.err.println("Chỉ số hàng đã chọn không hợp lệ: " + select);
+            }
+        } else {
+            // Xử lý trường hợp không có hàng nào trong mô hình
+            System.err.println("Mô hình không có hàng nào.");
+        }
 
 
     }//GEN-LAST:event_btnChonActionPerformed

@@ -49,32 +49,33 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-     
+
 public class TaoPhieuNhapGUI extends javax.swing.JPanel {
 
     /**
      * Creates new form TaoPhieuNhapGUI
      */
-       File file = new File("");
-       DefaultTableModel model;
-        DefaultTableModel model1;
-       JFrame parentFrame;
-        private int sl =1;
-        String currentDirectory = file.getAbsolutePath();
-        String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\";
-        String pdfpath = currentDirectory + "\\src\\main\\java\\pdf\\";
-        private LocalDate today;
-        private String formattedDate;
-        private DateTimeFormatter formatter;
-        productBUS productBUS;
-        private int tt;
-        ArrayList<productDTO> listproduct;
-        MainGUI main;
-        private String id;
-        boolean off;
-        productBUS product;
-     private ArrayList<table_receiptDTO> datalist;
-  private ImageIcon scaleImage(String filename, int width, int height) {
+    File file = new File("");
+    DefaultTableModel model;
+    DefaultTableModel model1;
+    JFrame parentFrame;
+    private int sl = 1;
+    String currentDirectory = file.getAbsolutePath();
+    String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\";
+    String pdfpath = currentDirectory + "\\src\\main\\java\\pdf\\";
+    private LocalDate today;
+    private String formattedDate;
+    private DateTimeFormatter formatter;
+    productBUS productBUS;
+    private int tt;
+    ArrayList<productDTO> listproduct;
+    MainGUI main;
+    private String id;
+    boolean off;
+    productBUS product;
+    private ArrayList<table_receiptDTO> datalist;
+
+    private ImageIcon scaleImage(String filename, int width, int height) {
         try {
             BufferedImage img = ImageIO.read(new File(relativePath + filename));
             Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -84,74 +85,73 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
         }
         return null;
     }
+
     public TaoPhieuNhapGUI(MainGUI mainGUI) {
         initComponents();
         JTableHeader header = tblSp.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
-         JTableHeader header1 = tblPn.getTableHeader();
+        JTableHeader header1 = tblPn.getTableHeader();
         header1.setDefaultRenderer(new CustomHeaderRenderer());
-     ImageIcon lich= scaleImage("calendar-48.png", 40, 40);
-      this.lbLich.setIcon(lich);
-      ImageIcon ncc = scaleImage("user-48.png", 30, 30);
-      this.lbNcc.setIcon(ncc);
-      ImageIcon nv = scaleImage("staff-48.png", 40, 40);
-      this.lbNv.setIcon(nv);
-      this.btnThanhtoan.setVisible(false);
-      this.lbtong.setVisible(false);
-      this.lbTongtien.setVisible(false);
-      today = LocalDate.now();
-      formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-      formattedDate = today.format(formatter);
-      main = mainGUI;
-      String id = main.id;
-      String name = main.name;
-      this.lbManv.setText(id);
-      this.lbTennv.setText(name);
-       this.productBUS= new productBUS();
-       listproduct = productBUS.getList();
-       ViewData(listproduct);
+        ImageIcon lich = scaleImage("calendar-48.png", 40, 40);
+        this.lbLich.setIcon(lich);
+        ImageIcon ncc = scaleImage("user-48.png", 30, 30);
+        this.lbNcc.setIcon(ncc);
+        ImageIcon nv = scaleImage("staff-48.png", 40, 40);
+        this.lbNv.setIcon(nv);
+        this.btnThanhtoan.setVisible(false);
+        this.lbtong.setVisible(false);
+        this.lbTongtien.setVisible(false);
+        today = LocalDate.now();
+        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        formattedDate = today.format(formatter);
+        main = mainGUI;
+        String id = main.id;
+        String name = main.name;
+        this.lbManv.setText(id);
+        this.lbTennv.setText(name);
+        this.productBUS = new productBUS();
+        listproduct = productBUS.getList();
+        ViewData(listproduct);
         lbNgay.setText(formattedDate);
-         convertBackgroundOfTable(tblPn);
-          String[] headers= {"Mã sản phẩm ","Hãng","Tên sản phẩm","Số lượng","Giá"};
-         model1 = new NonEditableTableModel(new Object[0][headers.length], headers);
-         tblPn.setModel(model1);
-          model1.setColumnIdentifiers(headers);
+        convertBackgroundOfTable(tblPn);
+        String[] headers = {"Mã sản phẩm ", "Hãng", "Tên sản phẩm", "Số lượng", "Giá"};
+        model1 = new NonEditableTableModel(new Object[0][headers.length], headers);
+        tblPn.setModel(model1);
+        model1.setColumnIdentifiers(headers);
     }
-      public void ViewData(ArrayList<productDTO> list)
-    {
+
+    public void ViewData(ArrayList<productDTO> list) {
         convertBackgroundOfTable(tblSp);
-        String[] header = {"Mã sản phẩm ","Hãng","Tên sản phẩm","Giá"};
-      
+        String[] header = {"Mã sản phẩm ", "Hãng", "Tên sản phẩm", "Giá"};
+
         model = new NonEditableTableModel(new Object[0][header.length], header);
-       
+
         tblSp.setModel(model);
-      
-        model.setColumnIdentifiers(header); 
-       
+
+        model.setColumnIdentifiers(header);
+
         tblSp.getColumnModel().getColumn(0).setPreferredWidth(70);
         tblSp.getColumnModel().getColumn(1).setPreferredWidth(90);
         tblSp.getColumnModel().getColumn(2).setPreferredWidth(110);
         tblSp.getColumnModel().getColumn(3).setPreferredWidth(90);
         removeData();
-        
-        for(productDTO product:list)
-        {
-             addData(product);
-            
+
+        for (productDTO product : list) {
+            addData(product);
+
         }
-       
+
     }
-  public void addData(productDTO product)
-    {
+
+    public void addData(productDTO product) {
         model.addRow(new Object[]{
-            product.getProducctID(), product.getBrandID(),product.getProductName(),ConvertDoubleToInt(product.getUnitPrice()*(1-0.4))
+            product.getProducctID(), product.getBrandID(), product.getProductName(), ConvertDoubleToInt(product.getUnitPrice() * (1 - 0.4))
         });
     }
-      public void removeData()
-    {
+
+    public void removeData() {
         int count = model.getRowCount();
-        for(int i= count-1;i>=0;i--)
-        {
+        for (int i = count - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
@@ -486,12 +486,11 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
-            if (this.tblPn.getRowCount() == 0) {
-                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
-                alert.setVisible(true);
-                return;
-         }
+        if (this.tblPn.getRowCount() == 0) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
+            alert.setVisible(true);
+            return;
+        }
         if (txtSp.getText().trim().isEmpty()) {
             // alert.setVisible(true);
             MyMessageAlert alert1 = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm cần sửa");
@@ -505,30 +504,26 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
             if (sl == 0) {
                 MyMessageAlert alert2 = new MyMessageAlert(parentFrame, "Số lượng cần sửa lớn hơn 0");
                 alert2.setVisible(true);
-            } 
-             if(this.tblPn.getRowCount()==0)
-                        { 
-                            this.txtSp.setText("");
-                        }
-            else {
-                productBUS product = new productBUS();
-                try {
-                    if (product.compareQuantity(id, sl) == 0) {
-                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm không đủ");
-                        alert.setVisible(true);
-                    } else {
-                        model1.setValueAt(sl, row, 3);
-                       
-                   }
+            }
+            if (this.tblPn.getRowCount() == 0) {
+                this.txtSp.setText("");
+            } else {
+//                productBUS product = new productBUS();
+//                try {
+//                    if (product.compareQuantity(id, sl) == 0) {
+//                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm không đủ");
+//                        alert.setVisible(true);
+//                    } else {
+                model1.setValueAt(sl, row, 3);
 
-               } catch (SQLException ex) {
-                   Logger.getLogger(TaoPhieuNhapGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+//                   }
+//
+//               } catch (SQLException ex) {
+//                   Logger.getLogger(TaoPhieuNhapGUI.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
 
         }
-       // btnThanhtoan.hide();
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhtoanActionPerformed
@@ -543,50 +538,48 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
         String staffid = this.lbManv.getText();
         double total = tt;
         Date create_day = java.sql.Date.valueOf(today);
-        productBUS product = new  productBUS();
-        importDTO iDto = new importDTO (id,supid,staffid,create_day,total);
-           try {
-               iBus.add(iDto);
+        productBUS product = new productBUS();
+        importDTO iDto = new importDTO(id, supid, staffid, create_day, total);
+        try {
+            iBus.add(iDto);
 //        btnThanhtoan.hide();
-           } catch (SQLException ex) {
-               Logger.getLogger(TaoPhieuNhapGUI.class.getName()).log(Level.SEVERE, null, ex);
-           }
-           import_detailBUS idetail = new import_detailBUS();
-           int l= idetail.list_size();
-            datalist = new ArrayList<>();
-         //   List<Integer> rowsToImport = new ArrayList<>();
+        } catch (SQLException ex) {
+            Logger.getLogger(TaoPhieuNhapGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        import_detailBUS idetail = new import_detailBUS();
+        int l = idetail.list_size();
+        datalist = new ArrayList<>();
+        //   List<Integer> rowsToImport = new ArrayList<>();
 
-         //     for (int row = tblPn.getRowCount() - 1; row >= 0; row--) {
-    // Kiểm tra và lưu trữ chỉ mục của các hàng cần xử lý
-                //rowsToImport .add(row);
-             // }
-              
-           // System.out.println(model1.getRowCount());
-         //  for(int row = tblPn.getRowCount() - 1; row >= 0; row--)
-               for (int row = 0; row < this.tblPn.getRowCount(); row++)
-           {
-               //System.out.println(tblPn.getRowCount());
-              // System.out.println(row);
-               String cid=idetail.createId(l, row+1);
-               String importid = id;
-               Object proId = model1.getValueAt(row, 0);
-               Object sl = model1.getValueAt(row, 3);
-               Object gia = model1.getValueAt(row, 4);
-               String productid = proId.toString();
-               int quantity = (int)sl;
-               double unitPrice =((Number) gia).doubleValue();
-               double subTotal = quantity*unitPrice;
-               Object name = model1.getValueAt(row, 2);
-               String proName = name.toString();
-               String soLuong = Integer.toString(quantity);
-               int g = ConvertDoubleToInt(unitPrice);
-               String giaban =formatMoney(g);
-               int sum = ConvertDoubleToInt(subTotal);
-               String tongCong = formatMoney(sum);
-               table_receiptDTO  report = new table_receiptDTO (proName,soLuong,giaban,tongCong);
-               
-               import_detailDTO dto = new import_detailDTO(cid,importid,productid,quantity,unitPrice,subTotal,true);
-               
+        //     for (int row = tblPn.getRowCount() - 1; row >= 0; row--) {
+        // Kiểm tra và lưu trữ chỉ mục của các hàng cần xử lý
+        //rowsToImport .add(row);
+        // }
+        // System.out.println(model1.getRowCount());
+        //  for(int row = tblPn.getRowCount() - 1; row >= 0; row--)
+        for (int row = 0; row < this.tblPn.getRowCount(); row++) {
+            //System.out.println(tblPn.getRowCount());
+            // System.out.println(row);
+            String cid = idetail.createId(l, row + 1);
+            String importid = id;
+            Object proId = model1.getValueAt(row, 0);
+            Object sl = model1.getValueAt(row, 3);
+            Object gia = model1.getValueAt(row, 4);
+            String productid = proId.toString();
+            int quantity = (int) sl;
+            double unitPrice = ((Number) gia).doubleValue();
+            double subTotal = quantity * unitPrice;
+            Object name = model1.getValueAt(row, 2);
+            String proName = name.toString();
+            String soLuong = Integer.toString(quantity);
+            int g = ConvertDoubleToInt(unitPrice);
+            String giaban = formatMoney(g);
+            int sum = ConvertDoubleToInt(subTotal);
+            String tongCong = formatMoney(sum);
+            table_receiptDTO report = new table_receiptDTO(proName, soLuong, giaban, tongCong);
+
+            import_detailDTO dto = new import_detailDTO(cid, importid, productid, quantity, unitPrice, subTotal, true);
+
             try {
                 idetail.add(dto);
                 datalist.add(report);
@@ -595,23 +588,22 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
             } catch (SQLException ex) {
                 Logger.getLogger(TaoPhieuNhapGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-           }
-           try {
-                add_to_jasper(datalist);
-            } catch ( JRException ex) {
-                Logger.getLogger(TaoPhieuNhapGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                 this.btnThanhtoan.setVisible(false);
+
+        }
+        try {
+            add_to_jasper(datalist);
+        } catch (JRException ex) {
+            Logger.getLogger(TaoPhieuNhapGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.btnThanhtoan.setVisible(false);
     }//GEN-LAST:event_btnThanhtoanActionPerformed
-  
-    public void add_to_jasper(ArrayList< table_receiptDTO > data) throws JRException
-    {
+
+    public void add_to_jasper(ArrayList< table_receiptDTO> data) throws JRException {
         String filename = "pn.jrxml";
         int i = datalist.size();
         System.out.println(i);
-        JasperReport jasper = JasperCompileManager.compileReport(pdfpath+filename);
-        Map<String,Object> parameters = new HashMap<>();
+        JasperReport jasper = JasperCompileManager.compileReport(pdfpath + filename);
+        Map<String, Object> parameters = new HashMap<>();
         String maPn = this.id;
         String tenNv = this.lbTennv.getText();
         String maNcc = this.lbMancc.getText();
@@ -625,37 +617,34 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
         parameters.put("ngay", ngay);
         parameters.put("tc", tongCong);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper,parameters,dataSource);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper, parameters, dataSource);
         CustomJasperViewer customViewer = new CustomJasperViewer(jasperPrint);
         customViewer.setVisible(true);
-        
+
     }
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
 //        chonSP choose = new chonSP(this);
 //        choose.setVisible(true);
-    if (this.tblPn.getRowCount() == 0) {
-                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
-                alert.setVisible(true);
-                return;
-         }
+        if (this.tblPn.getRowCount() == 0) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
+            alert.setVisible(true);
+            return;
+        }
 
-          try {
+        try {
 
             int[] rows = tblPn.getSelectedRows();
             for (int i = rows.length - 1; i >= 0; i--) {
-                Object [] newRow = new Object[4];
-                newRow[0]= model1.getValueAt(i, 0);
-                newRow[1]= model1.getValueAt(i, 1);
-                newRow[2]= model1.getValueAt(i, 2);
-                newRow[3]= model1.getValueAt(i, 4);
+                Object[] newRow = new Object[4];
+                newRow[0] = model1.getValueAt(i, 0);
+                newRow[1] = model1.getValueAt(i, 1);
+                newRow[2] = model1.getValueAt(i, 2);
+                newRow[3] = model1.getValueAt(i, 4);
                 model.addRow(newRow);
                 model1.removeRow(rows[i]);
-                this.txtSp.setText("");
-                        
-                
-                
             }
+            this.txtSp.setText("");
             //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
         } catch (Exception ex) {
 
@@ -671,19 +660,18 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
 
     private void tblSpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSpMouseClicked
         // TODO add your handling code here:
-        
-          if (evt.getClickCount() == 2 && off == false)
-          {
-              Object []newRow = new Object[5];
-              int select = tblSp.getSelectedRow();
-              newRow[0] = model.getValueAt(select, 0);
-              newRow[1] = model.getValueAt(select, 1);
-              newRow[2] = model.getValueAt(select, 2);
-              newRow[3] = sl;
-              newRow[4] = model.getValueAt(select, 3);
-              model1.addRow(newRow);
-              model.removeRow(select);
-          }
+
+        if (evt.getClickCount() == 2 && off == false) {
+            Object[] newRow = new Object[5];
+            int select = tblSp.getSelectedRow();
+            newRow[0] = model.getValueAt(select, 0);
+            newRow[1] = model.getValueAt(select, 1);
+            newRow[2] = model.getValueAt(select, 2);
+            newRow[3] = sl;
+            newRow[4] = model.getValueAt(select, 3);
+            model1.addRow(newRow);
+            model.removeRow(select);
+        }
     }//GEN-LAST:event_tblSpMouseClicked
 
     private void tblPnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPnMouseClicked
@@ -695,17 +683,16 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
 
     private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
         // TODO add your handling code here:
-            if (this.tblPn.getRowCount() == 0) {
-                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
-                alert.setVisible(true);
-                return;
-         }
-            if(this.lbMancc.getText().trim().isEmpty())
-                {
-                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn nhà cung cấp ");
-                alert.setVisible(true);
-                return;
-         }
+        if (this.tblPn.getRowCount() == 0) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
+            alert.setVisible(true);
+            return;
+        }
+        if (this.lbMancc.getText().trim().isEmpty()) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn nhà cung cấp ");
+            alert.setVisible(true);
+            return;
+        }
         this.lbChonncc.setVisible(false);
         this.txtSp.setVisible(false);
         this.btnSua.setVisible(false);
@@ -718,17 +705,16 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
         this.lbTongtien.setVisible(true);
         this.txtSp.setVisible(false);
         this.lbs.setVisible(false);
-         off = true;
-        tt=0;
-        for(int i = 0;i<model1.getRowCount();i++)
-        {
-            Object sl = model1.getValueAt(i,3);
+        off = true;
+        tt = 0;
+        for (int i = 0; i < model1.getRowCount(); i++) {
+            Object sl = model1.getValueAt(i, 3);
             int quantity = (int) sl;
-            Object gia = model1.getValueAt(i,4);
+            Object gia = model1.getValueAt(i, 4);
             int unitPrice = (int) gia;
-            int total = quantity*unitPrice;
-            tt = tt+total;
-            
+            int total = quantity * unitPrice;
+            tt = tt + total;
+
         }
         String tongTien = formatMoney(tt);
         this.lbTongtien.setText(tongTien);
@@ -751,12 +737,11 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
         off = false;
     }//GEN-LAST:event_btnHuyActionPerformed
 
-   
+
     private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
         // TODO add your handling code here:
 
-       
-       // model1.setRowCount(0);
+        // model1.setRowCount(0);
         this.btnThanhtoan.hide();
         this.btnXacnhan.show();
         this.lbChonncc.setVisible(true);
@@ -771,17 +756,17 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
         this.lbs.setVisible(true);
         off = false;
         this.txtSp.setVisible(true);
-       
-          for (int i = tblPn.getRowCount() - 1; i >= 0; i--) {
-                Object[] newRow = new Object[4];
-                newRow[0] = model1.getValueAt(i, 0);
-                newRow[1] = model1.getValueAt(i, 1);
-                newRow[2] = model1.getValueAt(i, 2);
-                newRow[3] = model1.getValueAt(i, 4);
-                model.addRow(newRow);
-                model1.removeRow(i);
+
+        for (int i = tblPn.getRowCount() - 1; i >= 0; i--) {
+            Object[] newRow = new Object[4];
+            newRow[0] = model1.getValueAt(i, 0);
+            newRow[1] = model1.getValueAt(i, 1);
+            newRow[2] = model1.getValueAt(i, 2);
+            newRow[3] = model1.getValueAt(i, 4);
+            model.addRow(newRow);
+            model1.removeRow(i);
     }//GEN-LAST:event_btnLammoiActionPerformed
- }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;

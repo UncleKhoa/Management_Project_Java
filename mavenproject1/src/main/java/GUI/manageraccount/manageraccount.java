@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI.manageraccount;
+
 import BUS.userBUS;
 import DTO.userDTO;
 import DAO.DBConnect;
@@ -40,16 +41,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-
-
-
-
-
-
-
-
-
-
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -73,55 +64,53 @@ import GUI.manageraccount.adduser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author ADMIN
  */
 public class manageraccount extends javax.swing.JFrame {
-    private userBUS stbus=new userBUS();
+
+    private userBUS stbus = new userBUS();
     private DefaultTableModel model;
     private int selectedRowIndex = -1;
-   
 
-private void selectRowById(String searchId) {
-    boolean found = false;
-    
-    for (int row = 0; row < table.getRowCount(); row++) {
-        String id = table.getValueAt(row, 0).toString();
-        if (id.equals(searchId)) {
-            table.setRowSelectionInterval(row, row);
-            table.scrollRectToVisible(table.getCellRect(row, 0, true));
-            selectedRowIndex = row;
-            found = true;
-            break;
+    private void selectRowById(String searchId) {
+        boolean found = false;
+
+        for (int row = 0; row < table.getRowCount(); row++) {
+            String id = table.getValueAt(row, 0).toString();
+            if (id.equals(searchId)) {
+                table.setRowSelectionInterval(row, row);
+                table.scrollRectToVisible(table.getCellRect(row, 0, true));
+                selectedRowIndex = row;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Không tồn tại ID trong bảng.");
         }
     }
-    
-    if (!found) {
-        JOptionPane.showMessageDialog(this, "Không tồn tại ID trong bảng.");
-    }
-}
 
-   
-static public void Export_Excell(JTable jTable1){
+    static public void Export_Excell(JTable jTable1) {
         JFileChooser chooser = new JFileChooser();
         int i = chooser.showSaveDialog(chooser);
         if (i == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             try {
                 //FileWriter out = new FileWriter(file+".xlsx");
-                FileOutputStream out = new FileOutputStream(file+".xls");
+                FileOutputStream out = new FileOutputStream(file + ".xls");
                 Writer writer = new java.io.OutputStreamWriter((out), "utf8");
                 try (BufferedWriter bwrite = new BufferedWriter(writer)) {
                     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                    
+
                     // ten Cot
                     for (int j = 0; j < jTable1.getColumnCount(); j++) {
                         bwrite.write(model.getColumnName(j) + "\t");
                     }
                     bwrite.write("\n");
-                    
+
                     // Lay du lieu dong
                     for (int j = 0; j < jTable1.getRowCount(); j++) {
                         for (int k = 0; k < jTable1.getColumnCount(); k++) {
@@ -138,162 +127,148 @@ static public void Export_Excell(JTable jTable1){
         }
     }
 
+    class CenterTableCellRenderer extends DefaultTableCellRenderer {
 
-
-class CenterTableCellRenderer extends DefaultTableCellRenderer {
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        setHorizontalAlignment(CENTER); // Căn giữa nội dung của ô
-        return cellComponent;
-    }
-}
- 
-  public void style() {
-       table.setRowHeight(40);
-       JTableHeader header = table.getTableHeader();
-       header.setDefaultRenderer(new CustomHeaderRenderer());
-       convertBackgroundOfTable(table);
-       String[] headers = {"StaffID","Username","Passwork","Gmail","Enable"};
-       
-       model = new NonEditableTableModel(new Object[0][headers.length], headers);
-       
-       table.setModel(model);
-       
-       table.getColumnModel().getColumn(0).setPreferredWidth(90);
-       table.getColumnModel().getColumn(1).setPreferredWidth(90);
-       table.getColumnModel().getColumn(2).setPreferredWidth(90);
-       table.getColumnModel().getColumn(3).setPreferredWidth(200);
-       TableCellRenderer centerRenderer = new manageraccount.CenterTableCellRenderer();
-       table.setDefaultRenderer(Object.class, centerRenderer);
-       
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            setHorizontalAlignment(CENTER); // Căn giữa nội dung của ô
+            return cellComponent;
+        }
     }
 
-   
-    public manageraccount() { 
-    
-       JScrollPane scrollPane = new JScrollPane(table);
+    public void style() {
+        table.setRowHeight(40);
+        JTableHeader header = table.getTableHeader();
+        header.setDefaultRenderer(new CustomHeaderRenderer());
+        convertBackgroundOfTable(table);
+        String[] headers = {"StaffID", "Username", "Passwork", "Gmail", "Enable"};
+
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+
+        table.setModel(model);
+
+        table.getColumnModel().getColumn(0).setPreferredWidth(90);
+        table.getColumnModel().getColumn(1).setPreferredWidth(90);
+        table.getColumnModel().getColumn(2).setPreferredWidth(90);
+        table.getColumnModel().getColumn(3).setPreferredWidth(200);
+        TableCellRenderer centerRenderer = new manageraccount.CenterTableCellRenderer();
+        table.setDefaultRenderer(Object.class, centerRenderer);
+
+    }
+
+    public manageraccount() {
+
+        JScrollPane scrollPane = new JScrollPane(table);
         initComponents();
-        
+
         cbb.addItem("unlock");
         cbb.addItem("locked");
-        
-         jTextField1.setEditable(false);
+
+        jTextField1.setEditable(false);
 //         table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-            model =new DefaultTableModel();
-            model.addColumn("StaffID");
-            model.addColumn("Username");
-            model.addColumn("Password");
-            model.addColumn("Gmail");
-            model.addColumn("Enable"); 
-            model.addColumn("action"); 
-       
-       
+        model = new DefaultTableModel();
+        model.addColumn("StaffID");
+        model.addColumn("Username");
+        model.addColumn("Password");
+        model.addColumn("Gmail");
+        model.addColumn("Enable");
+        model.addColumn("action");
+
         style();
         getContentPane().add(scrollPane);
         displayData();
 
-         export.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Export_Excell(table);
-    }
-});
-        
-        
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() { 
-    public void valueChanged(ListSelectionEvent event) {
-        if (!event.getValueIsAdjusting()) {
-            selectedRowIndex = table.getSelectedRow();
-            if (selectedRowIndex >= 0) {
-                // Lấy dữ liệu từ JTable và hiển thị lên các JTextField tương ứng
-                jTextField1.setText(table.getValueAt(selectedRowIndex, 0).toString());
-                jTextField2.setText(table.getValueAt(selectedRowIndex, 1).toString());
-                jTextField3.setText(table.getValueAt(selectedRowIndex, 3).toString());
-                jTextField4.setText(table.getValueAt(selectedRowIndex, 2).toString());
-                jComboBox1.setSelectedItem(table.getValueAt(selectedRowIndex, 4).toString());
+        export.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Export_Excell(table);
             }
-        }
-    }
-});
-        
+        });
 
-        
-                    buttonxoa.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    selectedRowIndex = table.getSelectedRow();
+                    if (selectedRowIndex >= 0) {
+                        // Lấy dữ liệu từ JTable và hiển thị lên các JTextField tương ứng
+                        jTextField1.setText(table.getValueAt(selectedRowIndex, 0).toString());
+                        jTextField2.setText(table.getValueAt(selectedRowIndex, 1).toString());
+                        jTextField3.setText(table.getValueAt(selectedRowIndex, 3).toString());
+                        jTextField4.setText(table.getValueAt(selectedRowIndex, 2).toString());
+                        jComboBox1.setSelectedItem(table.getValueAt(selectedRowIndex, 4).toString());
+                    }
                 }
-            });
-        
+            }
+        });
+
+        buttonxoa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         buttonsua.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-    
-}
-});
-        
-        
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         timkiem.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String searchId = jTextField6.getText();
-        selectRowById(searchId);
-    }  
-});
-        
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchId = jTextField6.getText();
+                selectRowById(searchId);
+            }
+        });
 
-         
-     hienthi.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        displaytable();
+        hienthi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displaytable();
+            }
+        });
     }
-});
-    }
-
-    
-
 
     @SuppressWarnings("unchecked")
 
-    
-private void displaytable() {
-    String searchName = jTextField6.getText(); 
-    DefaultTableModel newTableModel = new DefaultTableModel();
-    // Lọc các dòng có tên trùng nhau và thêm vào bảng sao (newTableModel)
-   ArrayList<userDTO> list = stbus.getlist();
-   System.out.print(list);
+    private void displaytable() {
+        String searchName = jTextField6.getText();
+        DefaultTableModel newTableModel = new DefaultTableModel();
+        // Lọc các dòng có tên trùng nhau và thêm vào bảng sao (newTableModel)
+        ArrayList<userDTO> list = stbus.getlist();
+        System.out.print(list);
 // Lọc các đối tượng có tên trùng nhau và thêm vào bảng sao (newTableModel)
-for (userDTO staff : list) {
-    String name = staff.getUsername();
-    if (name.equalsIgnoreCase(searchName)) {
-         newTableModel.addRow(new Object[]{staff.getStaffID(),
-                staff.getUsername(),
-                staff.getPassword(),
-                staff.getGmail(),               
-                staff.getEnable(),
-                });
+        for (userDTO staff : list) {
+            String name = staff.getUsername();
+            if (name.equalsIgnoreCase(searchName)) {
+                newTableModel.addRow(new Object[]{staff.getStaffID(),
+                    staff.getUsername(),
+                    staff.getPassword(),
+                    staff.getGmail(),
+                    staff.getEnable(),});
+            }
+        }
+        // Kiểm tra nếu bảng sao không có dữ liệu
+        if (newTableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có dữ liệu phù hợp", "Bảng Sao", JOptionPane.PLAIN_MESSAGE);
+            return;
+        }
+
+        // ...
+        JTable newTable = new JTable(newTableModel);
+
+        JScrollPane scrollPane = new JScrollPane(newTable);
+
+        JFrame frame = new JFrame("Bảng Sao");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(scrollPane);
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
     }
-}
-    // Kiểm tra nếu bảng sao không có dữ liệu
-    if (newTableModel.getRowCount() == 0) {
-        JOptionPane.showMessageDialog(null, "Không có dữ liệu phù hợp", "Bảng Sao", JOptionPane.PLAIN_MESSAGE);
-        return;
-    }
-
-   // ...
-JTable newTable = new JTable(newTableModel);
-
-JScrollPane scrollPane = new JScrollPane(newTable);
-
-JFrame frame = new JFrame("Bảng Sao");
-frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-frame.add(scrollPane);
-frame.setLocationRelativeTo(null);
-frame.pack();
-frame.setVisible(true);
-}
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -557,28 +532,27 @@ frame.setVisible(true);
 
     private void themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themActionPerformed
         // TODO add your handling code here:
-      
+
         try {
-           adduser  guiuser = new adduser();
+            adduser guiuser = new adduser();
 //                   
-       
-                guiuser.setManager(this);
-                   JDialog dialog = new JDialog();
-                   dialog.setUndecorated(true);
-                   dialog.setContentPane(guiuser);
-                   dialog.pack();
-                   dialog.setLocationRelativeTo(null);
-                   dialog.setVisible(true);
-    
-            
+
+            guiuser.setManager(this);
+            JDialog dialog = new JDialog();
+            dialog.setUndecorated(true);
+            dialog.setContentPane(guiuser);
+            dialog.pack();
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
+
             // Đặt sự kiện cho nút "Đóng" trên Productdetail
-             guiuser.getDong().addActionListener(new ActionListener() {
+            guiuser.getDong().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     dialog.dispose(); // Đóng cửa sổ dialog
                 }
             });
-              } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(manageraccount.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_themActionPerformed
@@ -586,117 +560,111 @@ frame.setVisible(true);
     private void buttonxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonxoaActionPerformed
         // TODO add your handling code here:
         if (selectedRowIndex >= 0) {
-                        // Xóa hàng khỏi JTable
-                        DefaultTableModel model = (DefaultTableModel) table.getModel();
-                        model.removeRow(selectedRowIndex);
-                        try {
-                            String staffid = jTextField1.getText();
+            // Xóa hàng khỏi JTable
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.removeRow(selectedRowIndex);
+            try {
+                String staffid = jTextField1.getText();
 
+                // Xóa thông tin trong danh sách dữ liệu
+                // Ví dụ: stbus là đối tượng của lớp chứa danh sách dữ liệu
+                //            stbus.deleteBus(selectedRowIndex);
+                // Xóa nội dung trong các JTextField
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                jTextField6.setText("");
 
-                        // Xóa thông tin trong danh sách dữ liệu
-                        // Ví dụ: stbus là đối tượng của lớp chứa danh sách dữ liệu
-            //            stbus.deleteBus(selectedRowIndex);
+                // Reset selectedRowIndex
+                selectedRowIndex = -1;
 
-                        // Xóa nội dung trong các JTextField
-                        jTextField1.setText("");
-                        jTextField2.setText("");
-                        jTextField3.setText("");
-                        jTextField4.setText("");
-                        jTextField6.setText("");
+                stbus.delete(staffid);
 
-                        // Reset selectedRowIndex
-                        selectedRowIndex = -1;
-
-                        stbus.delete(staffid);
-
-                         } catch (SQLException ex) {
-                        ex.printStackTrace(); // Hoặc xử lý ngoại lệ theo nhu cầu của bạn
-                         }
-                    }
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Hoặc xử lý ngoại lệ theo nhu cầu của bạn
+            }
+        }
     }//GEN-LAST:event_buttonxoaActionPerformed
 
     private void buttonsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonsuaActionPerformed
         // TODO add your handling code here:
         if (selectedRowIndex >= 0) {
-        try {
-            // Lấy thông tin từ các JTextField
-            String staffid = jTextField1.getText();
-            String username = jTextField2.getText();
-            String password = jTextField4.getText();
-            String email = jTextField3.getText();                
-            String enable = jComboBox1.getSelectedItem().toString();
+            try {
+                // Lấy thông tin từ các JTextField
+                String staffid = jTextField1.getText();
+                String username = jTextField2.getText();
+                String password = jTextField4.getText();
+                String email = jTextField3.getText();
+                String enable = jComboBox1.getSelectedItem().toString();
 
-            table.setValueAt(staffid, selectedRowIndex, 0);
-            table.setValueAt(username, selectedRowIndex, 1);
-            table.setValueAt(password, selectedRowIndex, 2);
-            table.setValueAt(email, selectedRowIndex, 3);
-            table.setValueAt(enable, selectedRowIndex, 4);
+                table.setValueAt(staffid, selectedRowIndex, 0);
+                table.setValueAt(username, selectedRowIndex, 1);
+                table.setValueAt(password, selectedRowIndex, 2);
+                table.setValueAt(email, selectedRowIndex, 3);
+                table.setValueAt(enable, selectedRowIndex, 4);
 
-            // Cập nhật thông tin trong danh sách dữ liệu
-            userDTO staff = new userDTO(staffid, username, password, email, enable);
-            stbus.update(staff);
+                // Cập nhật thông tin trong danh sách dữ liệu
+                userDTO staff = new userDTO(staffid, username, password, email, enable);
+                stbus.update(staff);
 
-            // Xóa nội dung trong các JTextField
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jTextField3.setText("");
-            jTextField4.setText("");
-            jTextField6.setText("");
+                // Xóa nội dung trong các JTextField
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                jTextField6.setText("");
 
-            // Reset selectedRowIndex
-            selectedRowIndex = -1;
-        } catch (SQLException ex) {
-            ex.printStackTrace(); // Hoặc xử lý ngoại lệ theo nhu cầu của bạn
+                // Reset selectedRowIndex
+                selectedRowIndex = -1;
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Hoặc xử lý ngoại lệ theo nhu cầu của bạn
+            }
         }
-    }
     }//GEN-LAST:event_buttonsuaActionPerformed
 
-  private void displayData() { 
-    ArrayList<userDTO> list = stbus.getlist();
+    private void displayData() {
+        ArrayList<userDTO> list = stbus.getlist();
 
-    for (userDTO staff : list) {
+        for (userDTO staff : list) {
+            Object[] rowData = {
+                staff.getStaffID(),
+                staff.getUsername(),
+                staff.getPassword(),
+                staff.getGmail(),
+                staff.getEnable(),};
+            model.addRow(rowData);
+        }
+
+        table.setModel(model);
+        if (selectedRowIndex != -1 && selectedRowIndex < table.getRowCount()) {
+            table.setRowSelectionInterval(selectedRowIndex, selectedRowIndex);
+            table.scrollRectToVisible(table.getCellRect(selectedRowIndex, 0, true));
+        }
+    }
+
+    public void addtodisplayData(userDTO staff) {
+
         Object[] rowData = {
             staff.getStaffID(),
             staff.getUsername(),
             staff.getPassword(),
             staff.getGmail(),
-            staff.getEnable(),         
-        };
-        model.addRow(rowData);
-    }
-
-    table.setModel(model);
-    if (selectedRowIndex != -1 && selectedRowIndex < table.getRowCount()) {
-        table.setRowSelectionInterval(selectedRowIndex, selectedRowIndex);
-        table.scrollRectToVisible(table.getCellRect(selectedRowIndex, 0, true));
-    }
-}
-  
- public void addtodisplayData(userDTO staff) { 
-   
-        Object[] rowData = {
-            staff.getStaffID(),
-            staff.getUsername(),
-            staff.getPassword(),
-            staff.getGmail(),
-            staff.getEnable(),         
-        };
+            staff.getEnable(),};
         model.addRow(rowData);
         table.setModel(model);
-    
-}
-    
 
-   
-   public static void main(String args[]) {
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            manageraccount manager = new manageraccount();
-            manager.setVisible(true);
-            manager.setLocationRelativeTo(null);
-        }
-    });
+    }
+
+    public static void main(String args[]) {
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                manageraccount manager = new manageraccount();
+                manager.setVisible(true);
+                manager.setLocationRelativeTo(null);
+            }
+        });
 
     }
 
