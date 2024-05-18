@@ -394,6 +394,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
              MyMessageAccept accept = new MyMessageAccept(parentFrame, "Đã xóa nhà cung cấp thành công!");
              accept.setVisible(true);
              load();
+             this.txtMancc.setText("");
              this.txtTen.setText("");
              this.txtSdt.setText("");
              this.txtDiachi.setText("");
@@ -505,7 +506,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
         String sdt = this.txtSdt.getText();
         if(containsDigit(ten))
         {
-              MyMessageAlert alert = new MyMessageAlert(parentFrame, "Họ sai định dạng");
+              MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tên sai định dạng");
               alert.setVisible(true);
               return true;
         }
@@ -560,7 +561,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
          Export_Excell(this.tblNc);
     }//GEN-LAST:event_btnXuatActionPerformed
 
-    private boolean khongHopLe(String ma, String ten, String sdt,String diaChi)
+    private boolean khongHopLe(String ma, String ten, String sdt,String diaChi,ArrayList<supplierDTO> listncc)
     {
          supplierBUS bus = new supplierBUS();
         if(containsDigit(ten))
@@ -575,6 +576,11 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
               alert.setVisible(true);
               return true;
         }
+                if (ma.trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Mã bị bỏ trống ");
+                alert.setVisible(true);
+                return true;
+               }
                  if (ten.trim().isEmpty()) {
                 MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tên bị bỏ trống ");
                 alert.setVisible(true);
@@ -606,6 +612,7 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
     }
     private void btnNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapActionPerformed
         // TODO add your handling code here:
+        int check = 0;
         JFileChooser chooser = new JFileChooser();
         supplierBUS bus = new supplierBUS();
         int j = chooser.showOpenDialog(chooser);
@@ -624,19 +631,26 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
                     String ten = row.getCell(1).getStringCellValue();
                     String sdt = row.getCell(2).getStringCellValue();
                     String diaChi = row.getCell(3).getStringCellValue();
-                   if(khongHopLe(ma,ten,sdt,diaChi))
+                   if(khongHopLe(ma,ten,sdt,diaChi,listncc))
                    {
                       int dong = i+1;
                       MyMessageAlert alert = new MyMessageAlert(parentFrame, "Dòng "+dong+ " không thế thêm");
                       alert.setVisible(true);
-                       return;
+                      check = 1;
+                      break;
                    }
+                   else{
                    supplierDTO supplier = new supplierDTO(ma,ten,sdt,diaChi);
                    bus.add(supplier);
+                  // load();
+                   }
             }
+             
+             load();
+             if(check == 0){
              MyMessageAccept accept = new MyMessageAccept(parentFrame, "Đã thêm thành công!");
              accept.setVisible(true);
-                load();
+             }  
                 
             }
             catch (IOException ex) {
