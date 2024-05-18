@@ -23,6 +23,16 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import Model.MyScrollBar;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.swing.JFileChooser;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  *
  * @author MY PC
@@ -537,6 +547,9 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
             list =  bus.SeardByIdAndName(s, listncc);
             ViewData(list);
         }
+        else{
+            load();
+        }
        
          
         
@@ -547,9 +560,91 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
          Export_Excell(this.tblNc);
     }//GEN-LAST:event_btnXuatActionPerformed
 
+    private boolean khongHopLe(String ma, String ten, String sdt,String diaChi)
+    {
+         supplierBUS bus = new supplierBUS();
+        if(containsDigit(ten))
+        {
+              MyMessageAlert alert = new MyMessageAlert(parentFrame, "Họ sai định dạng");
+              alert.setVisible(true);
+              return true;
+        }
+              if(containsLetter(sdt))
+        {
+              MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số điện thoại sai định dạng");
+              alert.setVisible(true);
+              return true;
+        }
+                 if (ten.trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tên bị bỏ trống ");
+                alert.setVisible(true);
+                return true;
+               }
+                  if (sdt.trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số điện thoại bị bỏ trống");
+                alert.setVisible(true);
+                return true;
+               }
+                     if ( diaChi.trim().isEmpty()) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Địa chỉ bị bỏ trống");
+                alert.setVisible(true);
+                return true;
+               }
+                       if( sdt.length()!=10)
+        {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số điện thoại sai định dạng");
+            alert.setVisible(true);
+            return true;
+        }
+         if(bus.checkId(ma, listncc))
+         {
+              MyMessageAlert alert = new MyMessageAlert(parentFrame, "Mã đã bị trùng");
+                alert.setVisible(true);
+                return true;
+         }
+         return false;
+    }
     private void btnNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapActionPerformed
         // TODO add your handling code here:
-        
+        JFileChooser chooser = new JFileChooser();
+        supplierBUS bus = new supplierBUS();
+        int j = chooser.showOpenDialog(chooser);
+        if (j == JFileChooser.APPROVE_OPTION) {
+         File file = chooser.getSelectedFile();
+            try {
+                InputStream input = new FileInputStream(file);
+               
+               XSSFWorkbook wb = new XSSFWorkbook(input); // Sử dụng XSSFWorkbook trực tiếp
+
+                XSSFSheet sheet = wb.getSheetAt(0);
+                Row row;
+                for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+                    row = sheet.getRow(i);
+                    String ma = row.getCell(0).getStringCellValue();
+                    String ten = row.getCell(1).getStringCellValue();
+                    String sdt = row.getCell(2).getStringCellValue();
+                    String diaChi = row.getCell(3).getStringCellValue();
+                   if(khongHopLe(ma,ten,sdt,diaChi))
+                   {
+                      int dong = i+1;
+                      MyMessageAlert alert = new MyMessageAlert(parentFrame, "Dòng "+dong+ " không thế thêm");
+                      alert.setVisible(true);
+                       return;
+                   }
+                   supplierDTO supplier = new supplierDTO(ma,ten,sdt,diaChi);
+                   bus.add(supplier);
+            }
+             MyMessageAccept accept = new MyMessageAccept(parentFrame, "Đã thêm thành công!");
+             accept.setVisible(true);
+                load();
+                
+            }
+            catch (IOException ex) {
+                 Logger.getLogger(NhaCungCapGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(NhaCungCapGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
     }//GEN-LAST:event_btnNhapActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
