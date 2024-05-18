@@ -40,37 +40,38 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+
 /**
  *
  * @author ADMIN
  */
-public class addproduct extends javax.swing.JPanel { 
+public class addproduct extends javax.swing.JPanel {
+
     JFrame parentFrame;
-     private ProductDetailBUS detailbus=new ProductDetailBUS();
-     private productBUS stbus=new productBUS();
-     private managerproduct manager;
-     private String imagePath;
-     File file = new File("");
-     String currentDirectory = file.getAbsolutePath();
-     String relativePath = currentDirectory + "\\src\\main\\java\\betIMG\\"; // Đường dẫn tương đối
+    private ProductDetailBUS detailbus = new ProductDetailBUS();
+    private productBUS stbus = new productBUS();
+    private managerproduct manager;
+    private String imagePath;
+    File file = new File("");
+    String currentDirectory = file.getAbsolutePath();
+    String relativePath = currentDirectory + "\\src\\main\\java\\betIMG\\"; // Đường dẫn tương đối
+
     /**
      * Creates new form addproduct
-     * 
-     */ 
-   
-     public JTextField getjTextField1() {
+     *
+     */
+
+    public JTextField getjTextField1() {
         return jTextField1;
     }
 
     public void setManager(managerproduct manager) {
         this.manager = manager;
     }
-    
- 
-    
+
     public addproduct() {
         initComponents();
-         JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) jSpinner1.getEditor();
+        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) jSpinner1.getEditor();
         editor.getTextField().setEditable(false);
         Component[] components = jSpinner1.getComponents();
         for (Component component : components) {
@@ -79,40 +80,43 @@ public class addproduct extends javax.swing.JPanel {
                 button.setEnabled(false);
             }
         }
-         parentFrame = new JFrame();
-         choose.addActionListener(new java.awt.event.ActionListener() {
+        parentFrame = new JFrame();
+        choose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chooseActionPerformed(evt);
             }
         });
     }
-private productDTO createObjectFromInputs() {
-    String producid = jTextField1.getText();
-    String brandid = jComboBox1.getSelectedItem().toString();
-    String productname = jTextField3.getText();
-    double unitprice = Double.parseDouble(jTextField4.getText());
-    int quantity = Integer.parseInt(jSpinner1.getValue().toString());
 
-    // Tạo đối tượng mới với dữ liệu từ các trường
-    productDTO object = new productDTO(producid, brandid, productname, unitprice, quantity, imagePath);
+    private productDTO createObjectFromInputs() {
+        String producid = jTextField1.getText();
+        String brandid = jComboBox1.getSelectedItem().toString();
+        String productname = jTextField3.getText();
+        double unitprice = Double.parseDouble(jTextField4.getText());
+        int quantity = Integer.parseInt(jSpinner1.getValue().toString());
 
-    return object;
-}
+        // Tạo đối tượng mới với dữ liệu từ các trường
+        productDTO object = new productDTO(producid, brandid, productname, unitprice, quantity, imagePath);
+
+        return object;
+    }
+
     public JButton getDong() {
         return dong;
     }
- private void chooseActionPerformed(java.awt.event.ActionEvent evt) {
+
+    private void chooseActionPerformed(java.awt.event.ActionEvent evt) {
         // Create a file chooser dialog
         JFileChooser fileChooser = new JFileChooser();
-        
+
         // Show the dialog and get the result
         int result = fileChooser.showOpenDialog(this);
-        
+
         // Check if a file is selected
         if (result == JFileChooser.APPROVE_OPTION) {
             // Get the selected file
             java.io.File selectedFile = fileChooser.getSelectedFile();
-            
+
             // Set the selected file path to the 'won' JLabel
             won.setIcon(new javax.swing.ImageIcon(selectedFile.getAbsolutePath()));
             String selectedImagePath = selectedFile.getAbsolutePath();
@@ -120,36 +124,36 @@ private productDTO createObjectFromInputs() {
             imagePath = selectedImageName;
         }
     }
- private void jpaneldetail(){
-       try {
-        // Tạo đối tượng detail
-        detail adddetail = new detail();
-        
-        // Tạo cửa sổ dialog để hiển thị detail
-        JDialog dialog = new JDialog();
-        dialog.setUndecorated(true);
-        dialog.setContentPane(adddetail);
-        dialog.pack();
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-        
-        // Đặt sự kiện cho nút "Đóng" trên Productdetail
+
+    private void jpaneldetail() {
+        try {
+            // Tạo đối tượng detail
+            detail adddetail = new detail();
+
+            // Tạo cửa sổ dialog để hiển thị detail
+            JDialog dialog = new JDialog();
+            dialog.setUndecorated(true);
+            dialog.setContentPane(adddetail);
+            dialog.pack();
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
+
+            // Đặt sự kiện cho nút "Đóng" trên Productdetail
 //        adddetail.getDong().addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
 //                dialog.dispose(); // Đóng cửa sổ dialog
 //            }
 //        });
-        
-        // Lấy giá trị từ JTextField trong addproduct
-        String textValue = getjTextField1().getText();
-        
-        // Đặt giá trị vào JTextField trong detail
-        adddetail.setjTextField1(textValue);
-    } catch (SQLException ex) {
-        Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
+            // Lấy giá trị từ JTextField trong addproduct
+            String textValue = getjTextField1().getText();
+
+            // Đặt giá trị vào JTextField trong detail
+            adddetail.setjTextField1(textValue);
+        } catch (SQLException ex) {
+            Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
- }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -326,69 +330,69 @@ private productDTO createObjectFromInputs() {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
 //        managerproduct manager = (managerproduct) SwingUtilities.getAncestorOfClass(managerproduct.class, this);
-      
-    String kiemtraname = jTextField3.getText();
-    String kiemtragia = jTextField4.getText();
 
-    ArrayList<productDTO> list = stbus.getList();
-    kt ktt = new kt();
+        String kiemtraname = jTextField3.getText();
+        String kiemtragia = jTextField4.getText();
 
-    if (jTextField3.getText().isEmpty() || jTextField4.getText().isEmpty() || jTextField1.getText().isEmpty()) {
-        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng nhập đủ thông tin");
-        alert.setVisible(true);
-        return;
-    }
+        ArrayList<productDTO> list = stbus.getList();
+        kt ktt = new kt();
 
-    if (imagePath == null || imagePath.isEmpty()) {
-        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn ảnh");
-        alert.setVisible(true);
-        return;
-    }
-
-    String idToCheck = jTextField1.getText();
-    boolean isIdExist = false;
-    for (productDTO product : list) {
-        if (product.getProducctID().equals(idToCheck)) {
-            isIdExist = true;
-            break;
+        if (jTextField3.getText().isEmpty() || jTextField4.getText().isEmpty() || jTextField1.getText().isEmpty()) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng nhập đủ thông tin");
+            alert.setVisible(true);
+            return;
         }
-    }
 
-    if (isIdExist) {
-        MyMessageAlert alert = new MyMessageAlert(parentFrame, "ID đã tồn tại");
-        alert.setVisible(true);
-        return;
-    }
+        if (imagePath == null || imagePath.isEmpty()) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn ảnh");
+            alert.setVisible(true);
+            return;
+        }
 
-    if (ktt.kiemtraten(kiemtraname)) {
-        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tên không được chứa số");
-        alert.setVisible(true);
-        return;
-    }
+        String idToCheck = jTextField1.getText();
+        boolean isIdExist = false;
+        for (productDTO product : list) {
+            if (product.getProducctID().equals(idToCheck)) {
+                isIdExist = true;
+                break;
+            }
+        }
 
-    if (ktt.kiemtragia(kiemtragia)) {
-        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Nhập giá không hợp lệ");
-        alert.setVisible(true);
-        return;
-    }
-      if (isIdExist) {
-        MyMessageAlert alert = new MyMessageAlert(parentFrame, "ID đã tồn tại");
-        alert.setVisible(true);
-    }
-    productDTO sp = createObjectFromInputs();
-    manager.addtodisplayData(sp);
-    try {
-        stbus.add(sp);
-        detail adddetail = new detail();
+        if (isIdExist) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "ID đã tồn tại");
+            alert.setVisible(true);
+            return;
+        }
+
+        if (ktt.kiemtraten(kiemtraname)) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Tên không được chứa số");
+            alert.setVisible(true);
+            return;
+        }
+
+        if (ktt.kiemtragia(kiemtragia)) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Nhập giá không hợp lệ");
+            alert.setVisible(true);
+            return;
+        }
+        if (isIdExist) {
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "ID đã tồn tại");
+            alert.setVisible(true);
+        }
+        productDTO sp = createObjectFromInputs();
+        manager.addtodisplayData(sp);
+        try {
+            stbus.add(sp);
+            detail adddetail = new detail();
 //        adddetail.setclose(this);
-    } catch (SQLException ex) {
-        Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
-    }
-      SwingUtilities.getWindowAncestor(addproduct.this).dispose();
-      jpaneldetail();
+        } catch (SQLException ex) {
+            Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        SwingUtilities.getWindowAncestor(addproduct.this).dispose();
+        jpaneldetail();
 
     }//GEN-LAST:event_addActionPerformed
- 
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;

@@ -17,11 +17,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MY PC
  */
 public class receptBUS {
+    Font font = new Font("Segoe UI", Font.PLAIN, 15);
     DefaultTableModel model;
     private ArrayList<receptDTO> dshd;
     private ArrayList<receptDTO> listdata;
@@ -37,8 +39,8 @@ public class receptBUS {
         dshd = new ArrayList<>();
         dshd = dao.list();
     }
-    
-    public ArrayList<receptDTO> getListReceipt(){
+
+    public ArrayList<receptDTO> getListReceipt() {
         return dshd;
     }
 
@@ -69,7 +71,7 @@ public class receptBUS {
         s = receptDAO.TongDonHang();
         return s;
     }
-    
+
     //Lọc hóa đơn theo mã
     public ArrayList<receptDTO> timHoaDonTheoMa(String id) {
         ArrayList<receptDTO> ketQua = new ArrayList<>();
@@ -81,60 +83,59 @@ public class receptBUS {
         }
         return ketQua;
     }
-    
+
     //Lọc hóa đơn theo giá tiền
-    public ArrayList<receptDTO> getListPrice(int a, int b){
+    public ArrayList<receptDTO> getListPrice(int a, int b) {
         ArrayList<receptDTO> newlist = new ArrayList<>();
         ArrayList<receptDTO> list_old = dshd;
-        for(receptDTO hd:list_old){
-            if(ConvertDoubleToInt(hd.getTotal())>=a && ConvertDoubleToInt(hd.getTotal())<=b){
+        for (receptDTO hd : list_old) {
+            if (ConvertDoubleToInt(hd.getTotal()) >= a && ConvertDoubleToInt(hd.getTotal()) <= b) {
                 newlist.add(hd);
             }
         }
         return newlist;
     }
-    
+
     //Lọc hóa đơn theo ngày
     public ArrayList<receptDTO> getHoadon_NgayBan(Date dateStart, Date dateEnd) {
         listdata = getListReceipt();
         ArrayList<receptDTO> new_listdata = new ArrayList<>();
-        for(receptDTO hd:listdata){
-            try{
-                if(compareDate(hd.getCreatedTime(), dateStart, dateEnd)){
+        for (receptDTO hd : listdata) {
+            try {
+                if (compareDate(hd.getCreatedTime(), dateStart, dateEnd)) {
                     new_listdata.add(hd);
-                }                
-            }
-            catch(ParseException ex){
-                
+                }
+            } catch (ParseException ex) {
+
             }
         }
         return new_listdata;
     }
-    
+
     //Lấy danh sách tên khách hàng và nhân viên ứng với từng hóa đơn
-    public void listName(){
+    public void listName() {
         receptDAO receptDAO = new receptDAO();
         listname = new ArrayList<>();
         listname = receptDAO.list_Name();
     }
-    
-    public ArrayList<receptDTO> get_ListName(){
+
+    public ArrayList<receptDTO> get_ListName() {
         return listname;
     }
-    
+
     //Lấy tên khách hàng và nhân viên theo đúng với hóa đơn
-    public receptDTO get_Name_HD(receptDTO hd){
+    public receptDTO get_Name_HD(receptDTO hd) {
         listname = get_ListName();
         receptDTO get_obj = null;
-        for(receptDTO name:listname){
-            if(hd.getReceptID().equals(name.getReceptID())){
-                get_obj = new receptDTO(name.getReceptID(), name.getCusID(), name.getStaffID(), name.getCusName(), name.getStaffName());                
+        for (receptDTO name : listname) {
+            if (hd.getReceptID().equals(name.getReceptID())) {
+                get_obj = new receptDTO(name.getReceptID(), name.getCusID(), name.getStaffID(), name.getCusName(), name.getStaffName());
                 break;
             }
         }
         return get_obj;
     }
-    
+
     public Boolean compareDate(Date dateBanHang, Date dateStart, Date dateEnd) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -146,7 +147,6 @@ public class receptBUS {
 
         return (dateBanHang.compareTo(datestart22) >= 0 && dateBanHang.compareTo(dateEnd22) <= 0);
     }
-    
 
     public void addLine_Receipt(receptDTO hd) throws ParseException {
         model.addRow(new Object[]{
@@ -177,8 +177,9 @@ public class receptBUS {
         }
 
     }
-    public void viewTableReceipt(String id,JTable tblReceipt) throws ParseException {
-convertBackgroundOfTable(tblReceipt);
+
+    public void viewTableReceipt(String id, JTable tblReceipt) throws ParseException {
+        convertBackgroundOfTable(tblReceipt);
         String[] headers = {"Mã đơn", "Mã nhân viên", "Mã khách", "Ngày tạo đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
         model = new NonEditableTableModel(new Object[0][headers.length], headers);
         tblReceipt.setModel(model);
@@ -195,19 +196,23 @@ convertBackgroundOfTable(tblReceipt);
         tblReceipt.getColumnModel().getColumn(2).setPreferredWidth(50);
 
         for (receptDTO hd : dshd) {
-            if (hd.getCusID().equals(id))
+            if (hd.getCusID().equals(id)) {
                 addLine_Receipt(hd);
+            }
         }
 
     }
-    public ArrayList<receptDTO> getListFromCustomer(String id){
+
+    public ArrayList<receptDTO> getListFromCustomer(String id) {
         ArrayList<receptDTO> tempList = new ArrayList<>();
-        for (receptDTO hd:dshd){
-            if (hd.getCusID().equals(id))
+        for (receptDTO hd : dshd) {
+            if (hd.getCusID().equals(id)) {
                 tempList.add(hd);
+            }
         }
         return tempList;
     }
+
     public void removeData() {
         int rowCount = model.getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {

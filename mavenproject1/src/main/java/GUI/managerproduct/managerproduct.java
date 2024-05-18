@@ -63,7 +63,6 @@ import javax.swing.plaf.basic.BasicSpinnerUI;
 import Model.MyScrollBar;
 import GUI.managerproduct.editproducct;
 
-
 // Định dạng số
 public class managerproduct extends javax.swing.JPanel {
 
@@ -76,6 +75,7 @@ public class managerproduct extends javax.swing.JPanel {
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\betIMG\\"; // Đường dẫn tương đối
     JFrame parentFrame;
+
     public DefaultTableModel getModel() {
         return model;
     }
@@ -173,51 +173,42 @@ public class managerproduct extends javax.swing.JPanel {
         convertBackgroundOfTable(jTable1);
         String[] headers = {"Producid", " Brandid", " Productname", " Unitprice", "Quantity", "IMG"};
 
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
 
-    public void style() {
-       jTable1.setRowHeight(65);   
-       JTableHeader header = jTable1.getTableHeader();
-       header.setDefaultRenderer(new CustomHeaderRenderer());
-       convertBackgroundOfTable(jTable1);
-       String[] headers = {"Producid"," Brandid"," Productname"," Unitprice", "Quantity","IMG"};
-       
-       model = new NonEditableTableModel(new Object[0][headers.length], headers);
-       
-       jTable1.setModel(model);
-       
-       jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-       jTable1.getColumnModel().getColumn(1).setPreferredWidth(130);
-       jTable1.getColumnModel().getColumn(2).setPreferredWidth(180);
-       jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
-       jTable1.getColumnModel().getColumn(4).setPreferredWidth(40);
-       jTable1.getColumnModel().getColumn(5).setPreferredWidth(18);
-       TableCellRenderer centerRenderer = new CenterTableCellRenderer();
-       jTable1.setDefaultRenderer(Object.class, centerRenderer);
-  
-         
+        jTable1.setModel(model);
+
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(130);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(180);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(40);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(18);
+        TableCellRenderer centerRenderer = new CenterTableCellRenderer();
+        jTable1.setDefaultRenderer(Object.class, centerRenderer);
+
     }
 
-public void openguiedit(){
+    public void openguiedit() {
 
-                   editproducct edit = new editproducct();
-                   edit.setManager(this);
-                   edit.getinfomationproduct(pr);
-                   JDialog dialog = new JDialog();
-                   dialog.setUndecorated(true);
-                   dialog.setContentPane(edit);
-                   dialog.pack();
-                   dialog.setLocationRelativeTo(null);
-                   dialog.setVisible(true);
-                     edit.getDong().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dialog.dispose(); // Đóng cửa sổ dialog
-                }
-            });
-}
-    
+        editproducct edit = new editproducct();
+        edit.setManager(this);
+        edit.getinfomationproduct(pr);
+        JDialog dialog = new JDialog();
+        dialog.setUndecorated(true);
+        dialog.setContentPane(edit);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+        edit.getDong().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose(); // Đóng cửa sổ dialog
+            }
+        });
+    }
+
     public managerproduct() {
-       JScrollPane scrollPane = new JScrollPane(jTable1);
+        JScrollPane scrollPane = new JScrollPane(jTable1);
         initComponents();
         parentFrame = new JFrame();
 
@@ -271,32 +262,31 @@ public void openguiedit(){
             }
         });
 
-   editbutton.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        int selectedRowIndex = jTable1.getSelectedRow();
-        
-        if (selectedRowIndex >= 0) {
-            // Lấy giá trị từ JTable
-            String value1 = jTable1.getValueAt(selectedRowIndex, 0).toString();
-            String value2 = jTable1.getValueAt(selectedRowIndex, 1).toString();
-            String value3 = jTable1.getValueAt(selectedRowIndex, 2).toString();
+        editbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRowIndex = jTable1.getSelectedRow();
 
-           String value4Str = jTable1.getValueAt(selectedRowIndex, 3).toString().replaceAll(",", "");
-          Double value4 = Double.parseDouble(value4Str);
-            int value5 = Integer.parseInt(jTable1.getValueAt(selectedRowIndex, 4).toString());
-            String imageName = jTable1.getValueAt(selectedRowIndex, 5).toString();
+                if (selectedRowIndex >= 0) {
+                    // Lấy giá trị từ JTable
+                    String value1 = jTable1.getValueAt(selectedRowIndex, 0).toString();
+                    String value2 = jTable1.getValueAt(selectedRowIndex, 1).toString();
+                    String value3 = jTable1.getValueAt(selectedRowIndex, 2).toString();
 
-            // Hiển thị giao diện editproducct
-            pr = new productDTO(value1, value2, value3, value4, value5, imageName);
-            openguiedit();
-        } else if(selectedRowIndex <0 || pr ==null){
-              MyMessageAlert alert = new MyMessageAlert(parentFrame, "vui lòng chọn hàng muốn sửa");
-        alert.setVisible(true);
-        }
-    }
-});
+                    String value4Str = jTable1.getValueAt(selectedRowIndex, 3).toString().replaceAll(",", "");
+                    Double value4 = Double.parseDouble(value4Str);
+                    int value5 = Integer.parseInt(jTable1.getValueAt(selectedRowIndex, 4).toString());
+                    String imageName = jTable1.getValueAt(selectedRowIndex, 5).toString();
 
+                    // Hiển thị giao diện editproducct
+                    pr = new productDTO(value1, value2, value3, value4, value5, imageName);
+                    openguiedit();
+                } else if (selectedRowIndex < 0 || pr == null) {
+                    MyMessageAlert alert = new MyMessageAlert(parentFrame, "vui lòng chọn hàng muốn sửa");
+                    alert.setVisible(true);
+                }
+            }
+        });
 
         buttonxoa.addActionListener(new ActionListener() {
             @Override
@@ -415,9 +405,10 @@ public void openguiedit(){
         });
 
     }
-
+    
     private void displayData() {
         ArrayList<productDTO> list = stbus.getList();
+
 
         for (productDTO sp : list) {
             try {
@@ -472,36 +463,9 @@ public void openguiedit(){
         }
     }
 
-
-                if (!idExists) {
-                    list.add(nc);
-                    try {
-                        double unitPrice = nc.getUnitPrice();
-                        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
-                        String formattedUnitPrice = decimalFormat.format(unitPrice);
-
-                        File imgFile = new File(relativePath + nc.getIMG());
-                        ImageIcon imageIcon = new ImageIcon(imgFile.getAbsolutePath());
-
-                      TableCellRenderer renderer = new DefaultTableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                    
-                    int newWidth = 80;
-                    int newHeight = 70;
-                    ImageIcon currentIcon = (ImageIcon) value;
-                    Image currentImage = currentIcon.getImage();
-                    Image scaledImage = currentImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
-                    label.setIcon(scaledIcon);
-                     
-
-                    return label;
-                }
-            };
-
+    public void addtodisplayData(productDTO nc) {
+        ArrayList<productDTO> list = stbus.getList();
+        boolean idExists = false;
 
         // Kiểm tra sự tồn tại của id trong list
         for (productDTO product : list) {
