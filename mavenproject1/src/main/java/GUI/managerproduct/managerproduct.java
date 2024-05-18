@@ -316,45 +316,7 @@ public class managerproduct extends javax.swing.JPanel {
                 }
             }
         });
-
-//       buttonsua.addActionListener(new ActionListener() {
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        if (selectedRowIndex >= 0) {
-//            try {
-//               String producid = jTextField1.getText();
-//               String brandid = jComboBox1.getSelectedItem().toString();
-//               String productname = jTextField3.getText();
-//               double unitprice = Double.parseDouble(jTextField4.getText());
-//               int quantity = Integer.parseInt(jSpinner1.getValue().toString());
-//               String IMG = jTextField5.getText();
-//
-//                // Cập nhật dữ liệu trong JTable
-//                jTable1.setValueAt(producid, selectedRowIndex, 0);
-//                jTable1.setValueAt(brandid, selectedRowIndex, 1);
-//                jTable1.setValueAt(productname, selectedRowIndex, 2);
-//                jTable1.setValueAt(unitprice, selectedRowIndex, 3);
-//                jTable1.setValueAt(quantity, selectedRowIndex, 4);
-//                jTable1.setValueAt(IMG, selectedRowIndex, 5);
-//
-//                productDTO sp = new productDTO(producid, brandid, productname, unitprice, quantity, IMG);
-//                stbus.update(sp);
-//
-//                // Xóa nội dung trong các JTextField
-//                jTextField1.setText("");
-//                jTextField3.setText("");
-//                jTextField4.setText("");
-//                jTextField6.setText("");
-//
-//                // Reset selectedRowIndex
-//                selectedRowIndex = -1;
-//            } catch (SQLException ex) {
-//                ex.printStackTrace(); // Hoặc xử lý ngoại lệ theo nhu cầu của bạn
-//            }
-//        }
-//    }
-//}); 
-//        
+    
         timkiem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -35,30 +35,33 @@ import Model.NonEditableTableModel;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
 import static Model.helpers.*;
+import Model.CustomConfirmDialog;
 
 /**
  *
  * @author Bon Nguyen
  */
 public class TaoKhuyenMai extends javax.swing.JFrame {
+
     private ArrayList<productDTO> list = new ArrayList<>();
-    private ArrayList<Object> newlist = new ArrayList<>(); 
+    private ArrayList<Object> newlist = new ArrayList<>();
     DefaultTableModel model;
     productBUS productBUS;
     promotionBUS promotionBUS;
-    int selectedRow;    
+    int selectedRow;
     int selectedRowDel;
     String titlePlaceHolder = "Nhập mô tả...";
     LocalDate currentDate;
     Reload_Event event;
     String role;
+
     /**
      * Creates new form TaoKhuyenMai
      */
-    public TaoKhuyenMai(){
+    public TaoKhuyenMai() {
         initComponents();
     }
-    
+
     public TaoKhuyenMai(String role) {
         initComponents();
         this.role = role;
@@ -72,7 +75,7 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
         viewData_product(list);
         viewData_ChooseProduct();
         txtDescribe.setText(titlePlaceHolder);
-        txtDescribe.setForeground(new Color(0,0,0,50));
+        txtDescribe.setForeground(new Color(0, 0, 0, 50));
         currentDate = LocalDate.now();
     }
 
@@ -377,64 +380,63 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
-    public void dispose(){
+    public void dispose() {
         this.event.load();
         super.dispose();
     }
-  
-    
-    public void addReloadEvent(Reload_Event event){
+
+    public void addReloadEvent(Reload_Event event) {
         this.event = event;
     }
-    
-    public void addLineData(productDTO product){
+
+    public void addLineData(productDTO product) {
         model.addRow(new Object[]{
             product.getProducctID(), product.getBrandID(), product.getProductName(), ConvertDoubleToInt(product.getUnitPrice())
         });
     }
-    
-    public void viewData_product(ArrayList<productDTO> list){
-       convertBackgroundOfTable(tableProduct);
-       
-       String[] headers = {"MÃ","HÃNG","TÊN SẢN PHẨM","GIÁ"};
-       
-       model = new NonEditableTableModel(new Object[0][headers.length], headers);
-       
-       tableProduct.setModel(model);
-       
-       tableProduct.getColumnModel().getColumn(0).setPreferredWidth(90);
-       tableProduct.getColumnModel().getColumn(1).setPreferredWidth(70);
-       tableProduct.getColumnModel().getColumn(2).setPreferredWidth(280);
-       tableProduct.getColumnModel().getColumn(3).setPreferredWidth(143);
-       removeData();
-       for(productDTO product:list){
-           addLineData(product);
-       }
-    }
-    
-    public void viewData_ChooseProduct(){
-        convertBackgroundOfTable(tableChoose);
-        String[] headers = {"MÃ","HÃNG","TÊN SẢN PHẨM","GIÁ"};
-        
+
+    public void viewData_product(ArrayList<productDTO> list) {
+        convertBackgroundOfTable(tableProduct);
+
+        String[] headers = {"MÃ", "HÃNG", "TÊN SẢN PHẨM", "GIÁ"};
+
         model = new NonEditableTableModel(new Object[0][headers.length], headers);
-        
+
+        tableProduct.setModel(model);
+
+        tableProduct.getColumnModel().getColumn(0).setPreferredWidth(90);
+        tableProduct.getColumnModel().getColumn(1).setPreferredWidth(70);
+        tableProduct.getColumnModel().getColumn(2).setPreferredWidth(280);
+        tableProduct.getColumnModel().getColumn(3).setPreferredWidth(143);
+        removeData();
+        for (productDTO product : list) {
+            addLineData(product);
+        }
+    }
+
+    public void viewData_ChooseProduct() {
+        convertBackgroundOfTable(tableChoose);
+        String[] headers = {"MÃ", "HÃNG", "TÊN SẢN PHẨM", "GIÁ"};
+
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+
         tableChoose.setModel(model);
-        
+
         tableChoose.getColumnModel().getColumn(0).setPreferredWidth(90);
         tableChoose.getColumnModel().getColumn(1).setPreferredWidth(70);
         tableChoose.getColumnModel().getColumn(2).setPreferredWidth(280);
         tableChoose.getColumnModel().getColumn(3).setPreferredWidth(143);
         removeData();
-        
+
     }
-    
-    public void removeData(){
+
+    public void removeData() {
         int rowCount = model.getRowCount();
-        for (int i=rowCount-1;i>=0;i--){
+        for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
-    
+
     private void txtPromoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPromoIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPromoIDActionPerformed
@@ -446,7 +448,7 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchActionPerformed
-    
+
     private void btnSaveNewPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveNewPassActionPerformed
         promotionBUS = new promotionBUS();
         if (endDate.getDate() == null || txtPromoID.getText().equals("") || txtPercent.getText().equals("")) {
@@ -469,40 +471,46 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
                             MyMessageAlert alert = new MyMessageAlert(this, "Mã khuyến mãi đã tồn tại");
                             alert.setVisible(true);
                         } else {
-                            Date end = endDate.getDate();
-                            String rs = promotionBUS.Date_String(end);
-                            String promoID = txtPromoID.getText();
-                            Float percent = Float.parseFloat(txtPercent.getText()) / 100;
-                            String des = txtDescribe.getText();
-                            Date from = java.sql.Date.valueOf(currentDate);
-                            Date end_date;
-                            promotionDTO promo;
-                            promotion_detailDTO promo_detail;
 
-                            //Lưu vào Promotion
-                            try {
-                                end_date = promotionBUS.Convert_date(rs);
-                                promo = new promotionDTO(promoID, from, end_date, des, percent, "active");
-                                promotionBUS.Add(promo);
-                            } catch (ParseException ex) {
-                                Logger.getLogger(TaoKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+                            CustomConfirmDialog confirm = new CustomConfirmDialog(this, "Xác nhận", "Bạn có muốn tạo mới mã khuyến mãi?", "question.png");
+                            confirm.setVisible(true);
+                            if (confirm.getSelected()) {
+                                Date end = endDate.getDate();
+                                String rs = promotionBUS.Date_String(end);
+                                String promoID = txtPromoID.getText();
+                                Float percent = Float.parseFloat(txtPercent.getText()) / 100;
+                                String des = txtDescribe.getText();
+                                Date from = java.sql.Date.valueOf(currentDate);
+                                Date end_date;
+                                promotionDTO promo;
+                                promotion_detailDTO promo_detail;
+
+                                //Lưu vào Promotion
+                                try {
+                                    end_date = promotionBUS.Convert_date(rs);
+                                    promo = new promotionDTO(promoID, from, end_date, des, percent, "active");
+                                    promotionBUS.Add(promo);
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(TaoKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                //Lưu vào PromotionDetail
+                                ArrayList<String> newl = new ArrayList<>();
+                                newl = new_ARR(0, newlist);
+                                for (String a : newl) {
+                                    promo_detail = new promotion_detailDTO("", promoID, a, percent);
+                                    System.out.println(promo_detail.toString());
+                                    promotionBUS.Add_Detail(promo_detail);
+                                }
+
+                                MyMessageAccept accept = new MyMessageAccept(this, "Tạo mới khuyến mãi thành công!");
+                                accept.setVisible(true);
+
+                                KhuyenMaiGUI khuyenmai = new KhuyenMaiGUI(role);
+                                khuyenmai.Load_Event(true);
+                                this.dispose();
                             }
 
-                            //Lưu vào PromotionDetail
-                            ArrayList<String> newl = new ArrayList<>();
-                            newl = new_ARR(0, newlist);
-                            for (String a : newl) {
-                                promo_detail = new promotion_detailDTO("", promoID, a, percent);
-                                System.out.println(promo_detail.toString());
-                                promotionBUS.Add_Detail(promo_detail);
-                            }
-
-                            MyMessageAccept accept = new MyMessageAccept(this, "Tạo mới khuyến mãi thành công!");
-                            accept.setVisible(true);
-
-                            KhuyenMaiGUI khuyenmai = new KhuyenMaiGUI(role);
-                            khuyenmai.Load_Event(true);
-                            this.dispose();
                         }
                     }
                 }
@@ -511,7 +519,7 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveNewPassActionPerformed
 
     private void tableProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductMouseClicked
-        
+
     }//GEN-LAST:event_tableProductMouseClicked
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
@@ -533,7 +541,7 @@ public class TaoKhuyenMai extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDescribeMouseClicked
 
     private void txtDescribeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescribeMouseReleased
-   
+
 // TODO add your handling code here:
     }//GEN-LAST:event_txtDescribeMouseReleased
 
