@@ -113,7 +113,7 @@ public class supplierBUS {
              return true;
          }
          for (supplierDTO supplier : list) {
-              if(supplier.getSupplierID().equals("id"))
+              if(supplier.getSupplierID().equals(id))
                   return true;
           }
           return false;
