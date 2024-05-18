@@ -852,8 +852,6 @@ public class sell extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         if (this.tblProduct.getRowCount() == 0) {
-            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn sản phẩm ");
-            alert.setVisible(true);
             return;
         }
         if (txtSp.getText().trim().isEmpty()) {

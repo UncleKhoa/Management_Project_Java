@@ -6,18 +6,21 @@ package GUI.employee;
 import BUS.staffBUS;
 import DAO.staffDAO;
 import DTO.staffDTO;
+import Model.CustomConfirmDialog;
 import Model.CustomHeaderRenderer;
+import Model.MyMessageAlert;
 import static Model.helpers.ConvertDoubleToInt;
 import static Model.helpers.Export_Excell;
 import static Model.helpers.convertBackgroundOfTable;
+import static Model.helpers.formatMoney;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.table.JTableHeader;
 /**
 /**
@@ -27,27 +30,43 @@ import javax.swing.table.JTableHeader;
 public class employeeGUI extends javax.swing.JPanel {
 
 private ArrayList<staffDTO> list = new ArrayList<>();
-    DefaultTableModel model;
+    private DefaultTableModel model;
+    private JFrame parentFrame;
     /**
      * Creates new form employee
      */
-    private static staffBUS staffBUS = new staffBUS();
+    private staffBUS staffBUS = new staffBUS();
     public employeeGUI() {
         initComponents();
+        //staff list
         this.staffBUS = new staffBUS();
         list = staffBUS.getList();
+        
+        // staff table
         model = (DefaultTableModel) staffTable.getModel();
         JTableHeader header = staffTable.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
-        viewData(list);
-        /*setLocationRelativeTo(null);*/
-        //combobox
-        sapxep.setLabeText("Sắp xếp");
-        sapxep.addItem("Tên");
-        sapxep.addItem("Năm sinh");
         convertBackgroundOfTable(staffTable);
         
+        //view 
+        viewData(list);
+        viewIcon();
 
+    }
+    
+    
+    public void viewIcon(){
+    //search icon
+        File file = new File("");
+        String currentDirectory = file.getAbsolutePath();
+        String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
+        ImageIcon imageIcon = new ImageIcon(relativePath+"search.png");
+        searchIcon.setIcon(imageIcon);
+        
+    //combo box
+        sapxep.setLabeText("Sắp xếp");
+        sapxep.addItem("Năm sinh");
+        sapxep.addItem("Tên");
     }
     public void viewInformation(staffDTO staff){
         id.setText(staff.getStaffID());
@@ -57,15 +76,15 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         year.setText(String.valueOf(staff.getYearofbirth()));
         phonenumber.setText(staff.getPhonenumber());
         role.setText(staff.getRole());
-        salary.setText(String.valueOf(staff.getSalary()));
+        int salary = ConvertDoubleToInt(staff.getSalary());
+        String temp= formatMoney(salary); 
+        txtSalary.setText(temp);
         address.setText(staff.getAddress());
-            File file = new File("");
-    String currentDirectory = file.getAbsolutePath();
-    String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\IMG_STAFF\\"; // Đường dẫn tương đối
-        ImageIcon imageIcon = new ImageIcon(relativePath+staff.getStaffID()+".png");
+        File file = new File("");
+        String currentDirectory = file.getAbsolutePath();
+        String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\IMG_STAFF\\"; // Đường dẫn tương đối
+        ImageIcon imageIcon = new ImageIcon(relativePath+staff.getImg());
         avt.setIcon(imageIcon);
-        
-        
     }
     public void addLineData(staffDTO i)
     {
@@ -74,6 +93,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         });
     }
     public void viewData(ArrayList<staffDTO> list){
+        // view table
         removeData();
         for (staffDTO i:list){
             addLineData(i); 
@@ -99,10 +119,10 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
         jPanel2 = new javax.swing.JPanel();
         headline = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        excelExport = new javax.swing.JButton();
         searchField = new javax.swing.JFormattedTextField();
-        search = new javax.swing.JButton();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        searchIcon = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         staffTable = new javax.swing.JTable();
@@ -125,7 +145,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         lname = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         year = new javax.swing.JTextField();
-        salary = new javax.swing.JTextField();
+        txtSalary = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         role = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -135,7 +155,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         jPanel3 = new javax.swing.JPanel();
         addButton = new javax.swing.JButton();
         remove = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
         reset = new javax.swing.JButton();
         sapxep = new Model.Combobox();
 
@@ -148,12 +168,13 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         headline.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         headline.setText("Quản lý Nhân viên");
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 0));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Xuất Excel");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        excelExport.setBackground(new java.awt.Color(0, 102, 102));
+        excelExport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        excelExport.setForeground(new java.awt.Color(255, 255, 255));
+        excelExport.setText("Xuất Excel");
+        excelExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                excelExportActionPerformed(evt);
             }
         });
 
@@ -170,10 +191,9 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             }
         });
 
-        search.setText("O..");
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
+        searchIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchIconMouseClicked(evt);
             }
         });
 
@@ -186,10 +206,10 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                 .addComponent(headline, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(excelExport, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,8 +226,8 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(headline)
                             .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(search)))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(searchIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(excelExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
 
@@ -308,8 +328,8 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         year.setFocusable(false);
         year.setPreferredSize(new java.awt.Dimension(250, 35));
 
-        salary.setFocusable(false);
-        salary.setPreferredSize(new java.awt.Dimension(250, 35));
+        txtSalary.setFocusable(false);
+        txtSalary.setPreferredSize(new java.awt.Dimension(250, 35));
 
         jLabel11.setText("Hệ số lương");
 
@@ -405,7 +425,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(salary, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(131, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
@@ -447,7 +467,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(salary, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel11)))
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -533,14 +553,14 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(0, 102, 102));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Sửa");
-        jButton4.setPreferredSize(new java.awt.Dimension(130, 30));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnSua.setBackground(new java.awt.Color(0, 102, 102));
+        btnSua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSua.setForeground(new java.awt.Color(255, 255, 255));
+        btnSua.setText("Sửa");
+        btnSua.setPreferredSize(new java.awt.Dimension(130, 30));
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnSuaActionPerformed(evt);
             }
         });
 
@@ -571,11 +591,11 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                 .addGap(18, 18, 18)
                 .addComponent(remove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(sapxep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sapxep, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
         jPanel3Layout.setVerticalGroup(
@@ -587,7 +607,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(remove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28))
                     .addComponent(sapxep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -617,13 +637,11 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void excelExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excelExportActionPerformed
         // TODO add your handling code here:
-        //kiem tra goi exel
-//        new export_popup("a").setVisible(true);
         Export_Excell(staffTable);
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_excelExportActionPerformed
 
     private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
         // TODO add your handling code here:
@@ -634,24 +652,6 @@ private ArrayList<staffDTO> list = new ArrayList<>();
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchFieldActionPerformed
-
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        // TODO add your handling code here:
-        if (searchField.getText().equals("")){
-            viewData(list);
-        }else{
-            ArrayList <staffDTO> list2 = staffBUS.search(searchField.getText());
-            if (list2.size()==0 ){
-                JOptionPane.showMessageDialog(null, "Không tìm thấy!", "Lỗi tìm kiếm", JOptionPane.ERROR_MESSAGE);
-            }
-            else{
-                removeData();
-
-                this.list= list2;
-                viewData(list2);
-
-            }}
-    }//GEN-LAST:event_searchActionPerformed
 
     private void staffTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_staffTableMouseClicked
         // TODO add your handling code here:
@@ -680,48 +680,44 @@ private ArrayList<staffDTO> list = new ArrayList<>();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
-        // TODO add your handling code here:
+
         int selectColumn = staffTable.getSelectedRow();
         if (selectColumn == -1){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên để xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);;
-
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn nhân viên ");
+            alert.setVisible(true);
         }else{
-
             String id = list.get(selectColumn).getStaffID();
-            {
-                int choice = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa nhân viên ID "+id +" ?", "Xác nhận", JOptionPane.OK_CANCEL_OPTION);
-                if (choice == JOptionPane.OK_OPTION){
+            CustomConfirmDialog confirm = new CustomConfirmDialog(parentFrame, "Xác nhận xóa", "Bạn có muốn xóa nhân viên " + id, "close_red.png");
+            confirm.setVisible(true);
+            if (confirm.getSelected()) {
                     list.remove(selectColumn);
                     viewData(list);
                     staffDAO a = new staffDAO();
                     try {
                         a.delete(id);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(employee.class.getName()).log(Level.SEVERE, null, ex);
+                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Xóa thành công! ");
+                        alert.setVisible(true);
                     }
+                    catch (SQLException ex) {
+                        Logger.getLogger(employeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
 
-                }
-                else if (choice == JOptionPane.CANCEL_OPTION){
-
-                }
             }
-
-        }
-
+            }
     }//GEN-LAST:event_removeActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
         int selectRow = staffTable.getSelectedRow();
         if (selectRow == -1){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên để sửa!", "Lỗi", JOptionPane.ERROR_MESSAGE);;
-
+            MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn nhân viên ");
+            alert.setVisible(true);
         }else{
             edit_popup edit = new edit_popup(list.get(selectRow));
             edit.setVisible(true);
         }
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnSuaActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         // TODO add your handling code here:
@@ -746,17 +742,34 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         }
     }//GEN-LAST:event_sapxepActionPerformed
 
+    private void searchIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchIconMouseClicked
+        // TODO add your handling code here:
+         if (searchField.getText().equals("")){
+            viewData(list);
+        }else{
+            ArrayList <staffDTO> list2 = staffBUS.search(searchField.getText());
+            if (list2.size()==0 ){
+                           MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không tìm thấy nhân viên ");
+            alert.setVisible(true);}
+            else{
+                removeData();
+                this.list= list2;
+                viewData(list2);
+
+            }}
+    }//GEN-LAST:event_searchIconMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JTextField address;
     private javax.swing.JLabel avt;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton excelExport;
     private javax.swing.JTextField fname;
     private javax.swing.JTextField gender;
     private javax.swing.JLabel headline;
     private javax.swing.JTextField id;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -783,11 +796,11 @@ private ArrayList<staffDTO> list = new ArrayList<>();
     private javax.swing.JButton remove;
     private javax.swing.JButton reset;
     private javax.swing.JTextField role;
-    private javax.swing.JTextField salary;
     private Model.Combobox sapxep;
-    private javax.swing.JButton search;
     private javax.swing.JFormattedTextField searchField;
+    private javax.swing.JLabel searchIcon;
     private javax.swing.JTable staffTable;
+    private javax.swing.JTextField txtSalary;
     private javax.swing.JTextField year;
     // End of variables declaration//GEN-END:variables
 }

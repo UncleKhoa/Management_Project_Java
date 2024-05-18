@@ -23,7 +23,6 @@ import GUI.SellGUI.sell;
 import GUI.SellGUI.showkm;
 import GUI.StatisticGUI.ThongKe;
 import GUI.SupplierGUI.NhaCungCapGUI;
-import GUI.employee.employee;
 import GUI.ReceiptGUI.HoaDonGUI;
 
 /**
@@ -36,10 +35,8 @@ public class MainGUI extends javax.swing.JFrame {
     private showkm showkm;
     private employeeGUI nhanvien;
     private customerGUI nguoidung;
-    private employeeGUI nhanvien;
     private TaoPhieuNhapGUI taophieunhap;
     private NhaCungCapGUI nhacungcap;
-    private showkm showkm; 
     //Lấy đường dẫn tới file
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
@@ -780,14 +777,14 @@ public class MainGUI extends javax.swing.JFrame {
                 jmain.add(nhacungcap);
                 jmain.updateUI();
                 break;
-              case 8:
-                lblNhanvien.setEnabled(true);
-                jmain.removeAll();
-                nhanvien = new employeeGUI();
-                nhanvien.setSize(950,650);
-                jmain.add(nhanvien);
-                jmain.updateUI();
-                break;
+//              case 8:
+//                lblNhanvien.setEnabled(true);
+//                jmain.removeAll();
+//                nhanvien = new employeeGUI();
+//                nhanvien.setSize(950,650);
+//                jmain.add(nhanvien);
+//                jmain.updateUI();
+//                break;
             //  case 8:
 //                lblNhanvien.setEnabled(true);
 //                jmain.removeAll();
