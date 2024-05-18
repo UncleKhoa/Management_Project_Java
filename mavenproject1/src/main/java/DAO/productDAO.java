@@ -63,24 +63,23 @@ public class productDAO {
               pst.close();
           }
             public void update(productDTO sp) {
-		try {
-			    Connection connection = DBConnect.getConnect();
-			
-			PreparedStatement pst = connection.prepareStatement("UPDATE account SET ProductID=?, BrandID=?, ProductName=?, UnitPrice=?,  Quantity?, IMG=?");
-                          pst.setString(1, sp.getProducctID());
-                            pst.setString(2, sp.getBrandID());
-                            pst.setString(3, sp.getProductName());
-                            pst.setDouble(4, sp.getUnitPrice());
-                            pst.setInt(5, sp.getQuantity());
-                            pst.setString(6, sp.getIMG());
-                            System.out.println("update thành công");
-                           pst.close();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    try {
+        Connection connection = DBConnect.getConnect();
+        PreparedStatement pst = connection.prepareStatement("UPDATE product SET BrandID=?, ProductName=?, UnitPrice=?, Quantity=?, IMG=? WHERE ProductID=?");
+        pst.setString(1, sp.getBrandID());
+        pst.setString(2, sp.getProductName());
+        pst.setDouble(3, sp.getUnitPrice());
+        pst.setInt(4, sp.getQuantity());
+        pst.setString(5, sp.getIMG());
+        pst.setString(6, sp.getProducctID());
+        pst.executeUpdate();
+        System.out.println("Update thành công");
+        pst.close();
+        connection.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
                 public void delete(String sp) {
                         try {
                               Connection connection = DBConnect.getConnect();

@@ -31,7 +31,13 @@ public import_detailDTO(String importDTID, String importID, String productID, in
       this.subTotal = subTotal;
    }
     
-
+public import_detailDTO(String importID, String productID, int quantity, double unitPrice, double subTotal) {
+        this.importID = importID;
+        this.productID = productID;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.subTotal = subTotal;
+    }
     
     public import_detailDTO(){
         
