@@ -193,8 +193,8 @@ public class ChonNCCGUI extends javax.swing.JFrame {
        int rowCount = model.getRowCount();
 
 if (rowCount > 0) {
-    int select = 0; // Tính toán chỉ số hàng đã chọn
-
+    int select = this.tblNC.getSelectedRow();
+ 
     if (select >= 0 && select < rowCount) {
         Object ID = model.getValueAt(select, 0);
         Object Name = model.getValueAt(select, 1);

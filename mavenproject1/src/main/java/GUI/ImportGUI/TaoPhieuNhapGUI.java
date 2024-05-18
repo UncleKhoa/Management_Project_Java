@@ -499,27 +499,31 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
         } else {
 
             int row = this.tblPn.getSelectedRow();
-            Object ID = model.getValueAt(row, 0);
+            Object ID = model1.getValueAt(row, 0);
             String id = ID.toString();
             int sl = Integer.valueOf(txtSp.getText());
             if (sl == 0) {
                 MyMessageAlert alert2 = new MyMessageAlert(parentFrame, "Số lượng cần sửa lớn hơn 0");
                 alert2.setVisible(true);
-            } else {
-//                productBUS product = new productBUS();
-//                try {
-//                    if (product.compareQuantity(id, sl) == 0) {
-//                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm " + id + " không đủ");
-//                        alert.setVisible(true);
-//                    } else {
+            } 
+             if(this.tblPn.getRowCount()==0)
+                        { 
+                            this.txtSp.setText("");
+                        }
+            else {
+                productBUS product = new productBUS();
+                try {
+                    if (product.compareQuantity(id, sl) == 0) {
+                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Số lượng sản phẩm không đủ");
+                        alert.setVisible(true);
+                    } else {
                         model1.setValueAt(sl, row, 3);
-                        if(this.tblPn.getRowCount()==0)
-                        { this.txtSp.setText("");}
-//                    }
+                       
+                   }
 
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-//                }
+               } catch (SQLException ex) {
+                   Logger.getLogger(TaoPhieuNhapGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
 
@@ -647,6 +651,9 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
                 newRow[3]= model1.getValueAt(i, 4);
                 model.addRow(newRow);
                 model1.removeRow(rows[i]);
+                this.txtSp.setText("");
+                        
+                
                 
             }
             //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
