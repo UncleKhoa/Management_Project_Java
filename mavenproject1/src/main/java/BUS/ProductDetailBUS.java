@@ -41,5 +41,8 @@ public class ProductDetailBUS {
     public void update(productDetailDTO SP) throws SQLException {
         dtDAO.update(SP);
     }
+        public void delete(String brandid) throws SQLException {
+              dtDAO.delete(brandid);
+          }
 
 }
