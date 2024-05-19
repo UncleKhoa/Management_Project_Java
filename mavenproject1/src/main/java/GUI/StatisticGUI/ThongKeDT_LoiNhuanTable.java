@@ -72,10 +72,11 @@ public class ThongKeDT_LoiNhuanTable extends javax.swing.JPanel {
     
     public void removeData(){
         int rowCount = model.getRowCount();
-        for(int i=rowCount-1;i>=0;i--){
+        for(int i=rowCount;i>0;i--){
             model.removeRow(i);
         }
-    }
+    }   
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

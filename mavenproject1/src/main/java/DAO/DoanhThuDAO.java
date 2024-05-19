@@ -27,7 +27,8 @@ public class DoanhThuDAO {
             String sql = "select sp.ProductName, SUM(cthd.Quantity) as SLBan, SUM(SubTotal) as TongTien "
             + "from receiptdetail cthd, product sp "
             + "where cthd.ProductID = sp.ProductID "
-            + "group by cthd.ProductID";
+            + "group by cthd.ProductID "
+            + "order by SLBan desc ";
             PreparedStatement stmt_DTSP = conn.prepareStatement(sql);
             ResultSet rs = stmt_DTSP.executeQuery();
             
