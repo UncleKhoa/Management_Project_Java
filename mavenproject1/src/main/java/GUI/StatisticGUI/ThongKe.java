@@ -30,6 +30,7 @@ import static Model.helpers.*;
  * @author Bon Nguyen
  */
 public class ThongKe extends javax.swing.JPanel {
+
     int selected;
     JFrame parentFrame;
     productBUS productBUS;
@@ -46,7 +47,7 @@ public class ThongKe extends javax.swing.JPanel {
     ThongKeBH_KhachHangTable BH_KH;
     ThongKeBH_KhachHangBarChart BH_KH_Chart;
     private ArrayList<doanhthuDTO> ds_DTSP = new ArrayList<>();
-    
+
     JTable table_dtsp;
     JTable table_dttn;
     JTable table_bhkh;
@@ -55,57 +56,58 @@ public class ThongKe extends javax.swing.JPanel {
     File file = new File("");
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
+
     /**
      * Creates new form ThongKe
      */
     public ThongKe() {
-        initComponents();selected = -1;
+        initComponents();
+        selected = -1;
         parentFrame = new JFrame();
         productBUS productBUS = new productBUS();
         customerBUS customerBUS = new customerBUS();
         receptBUS receptBUS = new receptBUS();
         staffBUS staffBUS = new staffBUS();
-        File image_cus = new File(relativePath+"user.png");
+        File image_cus = new File(relativePath + "user.png");
         // Tạo một ImageIcon từ một File
         ImageIcon cus = new ImageIcon(image_cus.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
         lblcus.setIcon(cus);
-        
-        File image_profit = new File(relativePath+"profits.png");
+
+        File image_profit = new File(relativePath + "profits.png");
         // Tạo một ImageIcon từ một File
         ImageIcon profit = new ImageIcon(image_profit.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
         lblProfit.setIcon(profit);
-        
-        File image_product = new File(relativePath+"product.png");
+
+        File image_product = new File(relativePath + "product.png");
         // Tạo một ImageIcon từ một File
         ImageIcon product = new ImageIcon(image_product.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
         lblProduct.setIcon(product);
-        
-        File image_receipt = new File(relativePath+"bill.png");
+
+        File image_receipt = new File(relativePath + "bill.png");
         // Tạo một ImageIcon từ một File
         ImageIcon receipt = new ImageIcon(image_receipt.getAbsolutePath());
         // Thiết lập biểu tượng cho JLabel
         lblReceipt.setIcon(receipt);
-        
+
 //        int s = productBUS.TotalProduct();
-    //    lblNBProduct.setText(""+s);
-        
+        //    lblNBProduct.setText(""+s);
         int t = customerBUS.TotalCustomer();
-        lblNBCus.setText(""+t);
-        
+        lblNBCus.setText("" + t);
+
         int f = receptBUS.Get_SLHD();
-        lblNBReceipt.setText(""+f);
-        
+        lblNBReceipt.setText("" + f);
+
         int b = staffBUS.Get_SLNV();
-        lblNBStf.setText(""+b);
-        
+        lblNBStf.setText("" + b);
+
         cbMethod.setLabeText("Chọn hình thức");
         cbType.setLabeText("Chọn dạng");
         cbMethod.addItem("Doanh thu");
-        cbMethod.addItem("Bán hàng");        
-        
+        cbMethod.addItem("Bán hàng");
+
         OnOff(false);
     }
 
@@ -252,7 +254,7 @@ public class ThongKe extends javax.swing.JPanel {
         pannelTable.setLayout(pannelTableLayout);
         pannelTableLayout.setHorizontalGroup(
             pannelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGap(0, 501, Short.MAX_VALUE)
         );
         pannelTableLayout.setVerticalGroup(
             pannelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,8 +267,7 @@ public class ThongKe extends javax.swing.JPanel {
             pannelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pannelChartLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pannelTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addComponent(pannelTable, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE))
         );
         pannelChartLayout.setVerticalGroup(
             pannelChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,7 +279,7 @@ public class ThongKe extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(432, 432, 432)
+                .addGap(426, 426, 426)
                 .addComponent(pannelChart, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -549,63 +550,63 @@ public class ThongKe extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void OnOff(boolean a){
+    public void OnOff(boolean a) {
         DateStart.show(a);
         DateEnd.show(a);
         txtDateStart.show(a);
-        txtDateEnd.show(a);        
-    }    
+        txtDateEnd.show(a);
+    }
 
     public void Method() {
-        Object selectedItem = cbMethod.getSelectedItem();        
+        Object selectedItem = cbMethod.getSelectedItem();
         if (selectedItem != null) {
             if (selectedItem.equals("Doanh thu")) {
                 cbType.addItem("Sản phẩm");
                 cbType.addItem("Khoảng thời gian");
-                cbType.addItem("Theo quý"); 
+                cbType.addItem("Theo quý");
             } else if (selectedItem.equals("Bán hàng")) {
                 cbType.addItem("Khách hàng");
             }
-        }
-        else{
-            
+        } else {
+
         }
     }
-    
-    public void CheckDate(){
-        if(DateStart.getDate() == null || DateEnd.getDate() == null){
+
+    public void CheckDate() {
+        if (DateStart.getDate() == null || DateEnd.getDate() == null) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn đầy đủ ngày");
             alert.setVisible(true);
             return;
         }
-    }    
-    
-    public Date getDateStartChooser() throws ParseException{
+    }
+
+    public Date getDateStartChooser() throws ParseException {
         return Convert_date(DateStart.getDate());
     }
-    
-    public Date getDateEndChooser() throws ParseException{
+
+    public Date getDateEndChooser() throws ParseException {
         return Convert_date(DateEnd.getDate());
     }
-    
-    public void Show_DT() throws ParseException{
-        if(cbMethod.getSelectedItem() != null && cbType.getSelectedItem() != null){
-            if(cbMethod.getSelectedItem().equals("Doanh thu") && cbType.getSelectedItem().equals("Sản phẩm")){
+
+    public void Show_DT() throws ParseException {
+        if (cbMethod.getSelectedItem() != null && cbType.getSelectedItem() != null) {
+            if (cbMethod.getSelectedItem().equals("Doanh thu") && cbType.getSelectedItem().equals("Sản phẩm")) {
                 pannelTable.removeAll();
                 DT_SP = new ThongKeDT_SanPhamTable();
                 DT_SP.setSize(426, 420);
                 pannelTable.add(DT_SP);
                 pannelTable.updateUI();
+                System.out.print("OK");
                 flag = 1;
                 table_dtsp = DT_SP.getTable();
-                
+
                 pannelChart.removeAll();
                 DT_SP_Chart = new ThongKeDT_SanPhamBarChart();
                 DT_SP_Chart.setSize(507, 420);
                 pannelChart.add(DT_SP_Chart);
                 pannelChart.updateUI();
             }
-            
+
             if (cbMethod.getSelectedItem().equals("Doanh thu") && cbType.getSelectedItem().equals("Khoảng thời gian")) {
                 CheckDate();
                 if (!Compare_Date(DateStart.getDate(), DateEnd.getDate())) {
@@ -623,64 +624,62 @@ public class ThongKe extends javax.swing.JPanel {
 
                     pannelChart.removeAll();
                     DT_TN_Chart = new ThongKeDT_TheoNgayBarChart(getDateStartChooser(), getDateEndChooser());
-                    DT_TN_Chart.setSize(507,420);
+                    DT_TN_Chart.setSize(507, 420);
                     pannelChart.add(DT_TN_Chart);
                     pannelChart.updateUI();
                 }
             }
-            
-            if(cbMethod.getSelectedItem().equals("Bán hàng") && cbType.getSelectedItem().equals("Khách hàng")){
+
+            if (cbMethod.getSelectedItem().equals("Bán hàng") && cbType.getSelectedItem().equals("Khách hàng")) {
                 pannelTable.removeAll();
                 BH_KH = new ThongKeBH_KhachHangTable();
                 BH_KH.setSize(426, 420);
                 pannelTable.add(BH_KH);
-                pannelTable.updateUI();   
+                pannelTable.updateUI();
                 flag = 2;
                 table_bhkh = BH_KH.getTable_BHKH();
-                
+
                 pannelChart.removeAll();
                 BH_KH_Chart = new ThongKeBH_KhachHangBarChart();
                 BH_KH_Chart.setSize(507, 420);
                 pannelChart.add(BH_KH_Chart);
                 pannelChart.updateUI();
             }
-            
-            if(cbMethod.getSelectedItem().equals("Doanh thu") && cbType.getSelectedItem().equals("Theo quý")){
+
+            if (cbMethod.getSelectedItem().equals("Doanh thu") && cbType.getSelectedItem().equals("Theo quý")) {
                 pannelTable.removeAll();
                 DT_TQ = new ThongKeDT_LoiNhuanTable();
                 DT_TQ.setSize(426, 420);
                 DT_TQ.setVisible(true);
                 pannelTable.add(DT_TQ);
                 pannelTable.updateUI();
-                
+
                 pannelChart.removeAll();
-                DT_TQ_Chart =  new ThongKeDT_LoiNhuanBarChart();
+                DT_TQ_Chart = new ThongKeDT_LoiNhuanBarChart();
                 DT_TQ_Chart.setSize(513, 410);
                 DT_TQ_Chart.setVisible(true);
                 pannelChart.add(DT_TQ_Chart);
                 pannelChart.updateUI();
             }
-            
-        }
-        
-        else{
+
+        } else {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn đầy đủ");
             alert.setVisible(true);
         }
     }
-    
-    public void printExcel(){
-        if(flag == 1){
+
+    public void printExcel() {
+        if (flag == 1) {
             Export_Excell(table_dtsp);
         }
-        if(flag == 2){
+        if (flag == 2) {
             Export_Excell(table_dttn);
         }
-        if(flag == 3){
+        if (flag == 3) {
             Export_Excell(table_bhkh);
         }
     }
-    
+
     private void pannelTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pannelTableMouseClicked
 
         // TODO add your handling code here:
@@ -718,7 +717,7 @@ public class ThongKe extends javax.swing.JPanel {
             } catch (ParseException ex) {
                 Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
             }
-            } 
+        }
     }//GEN-LAST:event_btnShowActionPerformed
 
     private void btnExportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportExcelActionPerformed
