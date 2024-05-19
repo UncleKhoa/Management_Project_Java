@@ -131,6 +131,7 @@ public void setManager(manageraccount managerac) {
 
         them.setBackground(new java.awt.Color(0, 102, 204));
         them.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        them.setForeground(new java.awt.Color(255, 255, 255));
         them.setText("Thêm");
         them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,6 +149,7 @@ public void setManager(manageraccount managerac) {
 
         dong.setBackground(new java.awt.Color(255, 102, 102));
         dong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        dong.setForeground(new java.awt.Color(255, 255, 255));
         dong.setText("Đóng");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -183,7 +185,7 @@ public void setManager(manageraccount managerac) {
                         .addGap(111, 111, 111)
                         .addComponent(dong, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(them)
+                        .addComponent(them, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(32, 32, 32))
         );
@@ -209,7 +211,7 @@ public void setManager(manageraccount managerac) {
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(them)
+                    .addComponent(them, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dong, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addContainerGap(23, Short.MAX_VALUE))

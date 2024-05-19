@@ -222,7 +222,7 @@ public class addproduct extends javax.swing.JPanel {
         choose.setForeground(new java.awt.Color(255, 255, 255));
         choose.setText("chọn ảnh");
 
-        add.setBackground(new java.awt.Color(51, 102, 255));
+        add.setBackground(new java.awt.Color(86, 7, 100));
         add.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         add.setForeground(new java.awt.Color(255, 255, 255));
         add.setText("Thêm");
@@ -232,9 +232,7 @@ public class addproduct extends javax.swing.JPanel {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acer", "ASUS", "Lenovo", "Apple", "Microsoft", "Dell", "HP" }));
-
-        dong.setBackground(new java.awt.Color(255, 0, 51));
+        dong.setBackground(new java.awt.Color(145, 49, 117));
         dong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         dong.setForeground(new java.awt.Color(255, 255, 255));
         dong.setText("Đóng");
