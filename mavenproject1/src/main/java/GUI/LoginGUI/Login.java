@@ -117,7 +117,7 @@ public class Login extends javax.swing.JFrame {
 
         Login_In.setBackground(new java.awt.Color(66, 100, 255));
         Login_In.setForeground(new java.awt.Color(255, 255, 255));
-        Login_In.setText("Sing In");
+        Login_In.setText("Sign In");
         Login_In.setColor(new java.awt.Color(66, 100, 255));
         Login_In.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Login_In.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -141,7 +141,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Sing In");
+        jLabel1.setText("Sign In");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
