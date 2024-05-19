@@ -697,6 +697,7 @@ public class sell extends javax.swing.JPanel {
             int[] rows = tblProduct.getSelectedRows();
             for (int i = rows.length - 1; i >= 0; i--) {
                 model.removeRow(rows[i]);
+              
             }
             this.txtSp.setText("");
             //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
@@ -858,6 +859,9 @@ public class sell extends javax.swing.JPanel {
         choose.setVisible(true);
     }//GEN-LAST:event_btnChonActionPerformed
 
+    
+    
+    
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
 
         if (this.tblProduct.getRowCount() == 0) {
