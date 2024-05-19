@@ -660,7 +660,7 @@ public class ThongKe extends javax.swing.JPanel {
 
                 pannelChart.removeAll();
                 DT_TQ_Chart = new ThongKeDT_LoiNhuanBarChart();
-                DT_TQ_Chart.setSize(513, 416);
+                DT_TQ_Chart.setSize(507, 416);
                 DT_TQ_Chart.setVisible(true);
                 pannelChart.add(DT_TQ_Chart);
                 pannelChart.updateUI();
