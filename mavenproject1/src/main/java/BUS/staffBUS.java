@@ -127,6 +127,11 @@ public class staffBUS {
         int s = staffDAO.SL_NV();
         return s;
     }
+    public void delete(String staffID) throws SQLException
+    {
+          staffDAO staffDAO = new staffDAO();
+          staffDAO.delete(staffID);
+    }
     
 }
     
