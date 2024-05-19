@@ -4,8 +4,10 @@
  */
 package GUI.managerproduct;
 
+import BUS.brandBUS;
 import BUS.customerBUS;
 import BUS.productBUS;
+import DTO.brandDTO;
 import DTO.productDTO;
 import DTO.userDTO;
 import GUI.BrandGUI.brandGUI;
@@ -76,6 +78,7 @@ public class managerproduct extends javax.swing.JPanel {
     String currentDirectory = file.getAbsolutePath();
     String relativePath = currentDirectory + "\\src\\main\\java\\betIMG\\"; // Đường dẫn tương đối
     JFrame parentFrame;
+    
 
     public DefaultTableModel getModel() {
         return model;
@@ -86,13 +89,16 @@ public class managerproduct extends javax.swing.JPanel {
     }
 
     public void combobox() {
-        ArrayList<productDTO> list = stbus.getList();
-
+        //ArrayList<productDTO> list = stbus.getList();
+        brandBUS bus = new brandBUS();
+        ArrayList<brandDTO> list = bus.list();
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(); // Tạo một mô hình cho JComboBox
         Set<String> brandSet = new HashSet<>(); // Sử dụng Set để lưu trữ các giá trị brandid duy nhất
 
-        for (productDTO product : list) {
-            String brandID = product.getBrandID();
+      //  for (productDTO product : list) {
+          for (brandDTO brand : list) {
+           // String brandID = product.getBrandID();
+           String brandID = brand.getBrandId();
             brandSet.add(brandID); // Thêm brandid vào Set
         }
 
@@ -814,7 +820,7 @@ public class managerproduct extends javax.swing.JPanel {
 
     private void comboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxActionPerformed
         // TODO add your handling code here:
-        brandGUI brand = new brandGUI();
+        brandGUI brand = new brandGUI(this);
         brand.show();
     }//GEN-LAST:event_comboboxActionPerformed
 
@@ -855,7 +861,7 @@ public class managerproduct extends javax.swing.JPanel {
     private javax.swing.JButton combobox;
     private javax.swing.JButton editbutton;
     private javax.swing.JButton export;
-    private javax.swing.JComboBox<String> jComboBox1;
+    public javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

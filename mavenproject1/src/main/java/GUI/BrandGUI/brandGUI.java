@@ -6,6 +6,7 @@ package GUI.BrandGUI;
 
 import BUS.brandBUS;
 import DTO.brandDTO;
+import GUI.managerproduct.managerproduct;
 import Model.CustomConfirmDialog;
 import Model.MyMessageAccept;
 import Model.MyMessageAlert;
@@ -20,6 +21,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import Model.CustomHeaderRenderer;
 import Model.MyScrollBar;
+import java.awt.Color;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
 /**
  *
  * @author MY PC
@@ -31,13 +36,16 @@ public class brandGUI extends javax.swing.JFrame {
      */
     DefaultTableModel model;
     private ArrayList<brandDTO> list;
-
-    public brandGUI() {
+    managerproduct product;
+    public brandGUI()
+    {}
+    public brandGUI(managerproduct managerproduct) {
         initComponents();
         jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         brandBUS bus = new brandBUS();
         list = bus.list();
         ViewData(list);
+        product = managerproduct;
         JTableHeader header = tblBrand.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         this.txtMa.setEditable(false);
@@ -393,7 +401,29 @@ public class brandGUI extends javax.swing.JFrame {
 
     private void lbThoatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbThoatMouseClicked
         // TODO add your handling code here:
+        
+      //  product = new managerproduct();
+         brandBUS bus = new brandBUS();
+        ArrayList<brandDTO> list = bus.list();
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(); // Tạo một mô hình cho JComboBox
+        Set<String> brandSet = new HashSet<>(); // Sử dụng Set để lưu trữ các giá trị brandid duy nhất
+
+      //  for (productDTO product : list) {
+          for (brandDTO brand : list) {
+           // String brandID = product.getBrandID();
+           String brandID = brand.getBrandId();
+            brandSet.add(brandID); // Thêm brandid vào Set
+        }
+
+        for (String brandID : brandSet) {
+            comboBoxModel.addElement(brandID); // Thêm từng giá trị brandid vào mô hình
+        }
+
+         product.jComboBox1.setModel(comboBoxModel); // Gán mô hình cho JComboBox
+        product.jComboBox1.setBackground(Color.WHITE);
+       
         this.dispose();
+        
     }//GEN-LAST:event_lbThoatMouseClicked
 
     /**
