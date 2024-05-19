@@ -83,7 +83,7 @@ public class sell extends javax.swing.JPanel {
     showkm showkm;
     receipt_DetailBUS receipt_DetailBUS;
     private int tt;
-    
+
     private ImageIcon scaleImage(String filename, int width, int height) {
         try {
             BufferedImage img = ImageIO.read(new File(relativePath + filename));
@@ -94,10 +94,10 @@ public class sell extends javax.swing.JPanel {
         }
         return null;
     }
-    
+
     public sell(MainGUI main) {
         initComponents();
-        
+
         addTextChanged(txtTiennhan);
         ImageIcon hoadon = scaleImage("bill.png", 83, 84);
         lbHD.setIcon(hoadon);
@@ -120,16 +120,16 @@ public class sell extends javax.swing.JPanel {
         receptBUS receipt = new receptBUS();
         String mhd = receipt.createId();
         this.lbhd.setText(mhd);
-        
+
         today = LocalDate.now();
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         formattedDate = today.format(formatter);
-        
+
         lbNgay.setText(formattedDate);
-        
+
         JTableHeader header1 = tblProduct.getTableHeader();
         header1.setDefaultRenderer(new CustomHeaderRenderer());
-        
+
         convertBackgroundOfTable(tblProduct);
         String[] header = {"Mã sản phẩm", "Hãng", "Tên sản phẩm", "Số lượng", "Giá"};
         model = (DefaultTableModel) tblProduct.getModel();
@@ -139,15 +139,15 @@ public class sell extends javax.swing.JPanel {
         tblProduct.getColumnModel().getColumn(2).setPreferredWidth(110);
         tblProduct.getColumnModel().getColumn(3).setPreferredWidth(90);
         tblProduct.getColumnModel().getColumn(4).setPreferredWidth(90);
-        
+
         CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
         tblProduct.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         tblProduct.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         tblProduct.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        
+
         removeData();
     }
-    
+
     public void removeData() {
         int count = model.getRowCount();
         for (int i = count - 1; i >= 0; i--) {
@@ -693,7 +693,7 @@ public class sell extends javax.swing.JPanel {
             return;
         }
         try {
-            
+
             int[] rows = tblProduct.getSelectedRows();
             for (int i = rows.length - 1; i >= 0; i--) {
                 model.removeRow(rows[i]);
@@ -701,11 +701,11 @@ public class sell extends javax.swing.JPanel {
             this.txtSp.setText("");
             //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
         } catch (Exception ex) {
-            
+
         }
 
     }//GEN-LAST:event_btnXoaActionPerformed
-    
+
     public static void printTableReceiptList(List<table_receiptDTO> list) {
         for (table_receiptDTO element : list) {
             System.out.println("Mã SP: " + element.getMaSp());
@@ -749,7 +749,7 @@ public class sell extends javax.swing.JPanel {
         String id = iD;
         Date create_day = java.sql.Date.valueOf(today);
         String tien = this.txtTiennhan.getText().replace(".", "");
-        
+
         try {
             int tn = Integer.parseInt(tien);
             String tiennhan = formatMoney(tn);
@@ -763,10 +763,10 @@ public class sell extends javax.swing.JPanel {
             String thua = formatMoney(tienthua);
             this.lbTienthua.setText(thua);
         } catch (NumberFormatException e) {
-            
+
         }
         double Total = Double.valueOf(tt);
-        
+
         receptDTO receipt = new receptDTO(maHd, maKh, id, create_day, Total);
         receptBUS bus = new receptBUS();
         try {
@@ -781,14 +781,14 @@ public class sell extends javax.swing.JPanel {
         l = l + 1;
         List<table_receiptDTO> dataList = new ArrayList<>();
         for (int row = 0; row < this.tblProduct.getRowCount(); row++) {
-            
+
             String receiptDetailID = receiptDetailBUS.createId(l, row + 1);
             String receiptID = this.lbhd.getText();
             Object proID = model.getValueAt(row, 0);
             String productID = proID.toString();
             String promotionID = " ";
             promotion_detailBUS proBUS = new promotion_detailBUS();
-            
+
             try {
                 promotionID = proBUS.getPromotionID(productID);
             } catch (SQLException ex) {
@@ -796,13 +796,13 @@ public class sell extends javax.swing.JPanel {
             }
             Object sl = model.getValueAt(row, 3);
             int quantity = sl instanceof Integer ? (int) sl : 0;
-            
+
             Object dongia = model.getValueAt(row, 4);
             double unitPrice = 0.0;
             if (dongia instanceof Number) {
                 unitPrice = ((Number) dongia).doubleValue();
             }
-            
+
             double subTotal = 0;
             double sub = 0;
             float per = 0;
@@ -819,7 +819,7 @@ public class sell extends javax.swing.JPanel {
                 subTotal = quantity * unitPrice;
                 sub = unitPrice;
             }
-            
+
             productBUS product = new productBUS();
             receptDetailDTO dto = new receptDetailDTO(receiptDetailID, receiptID, promotionID, productID, quantity, unitPrice, subTotal);
             String soluong = Integer.toString(quantity);
@@ -837,7 +837,7 @@ public class sell extends javax.swing.JPanel {
                 receiptDetailBUS.add(dto);
             } catch (SQLException ex) {
                 Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
-                
+
             }
             try {
                 product.update_quantity(productID, quantity);
@@ -860,7 +860,6 @@ public class sell extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
 
-        if (this.tblProduct.getRowCount() == 0) {
         if (containsLetter(txtSp.getText())) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chỉ nhập số");
             alert.setVisible(true);
@@ -876,7 +875,7 @@ public class sell extends javax.swing.JPanel {
                 alert1.setVisible(true);
                 return;
             } else {
-                
+
                 int row = this.tblProduct.getSelectedRow();
                 Object ID = model.getValueAt(row, 0);
                 String id = ID.toString();
@@ -896,16 +895,14 @@ public class sell extends javax.swing.JPanel {
                                 this.txtSp.setText("");
                             }
                         }
-                        
+
                     } catch (SQLException ex) {
                         Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
+
                 }
-                
+
             }
-            btnThanhtoan.hide();
-        }
         }
     }//GEN-LAST:event_btnSuaActionPerformed
     private int Tinh(String productID, int sl, int dongia) {
@@ -918,14 +915,14 @@ public class sell extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         km = percent * dongia;
         double total = percent * dongia * sl;
         int totalInt = (int) total;
         return totalInt;
-        
+
     }
-    
+
     public void add_row_jasper(List<table_receiptDTO> dataList, JasperReport jasperReport, Map<String, Object> parameters) throws JRException {
 //         Map<String, Object> parameters = new HashMap<>();
 //         parameters.put("yourVariableName", "product_name");
@@ -934,9 +931,9 @@ public class sell extends javax.swing.JPanel {
         //   JRBeanCollectionDataSource datasource = new  JRBeanCollectionDataSource();
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dataList);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-        
+
     }
-    
+
     private void add_to_jasper(List<table_receiptDTO> dataList) throws JRException {
         String file_name = "hd.jrxml";
         JasperReport jasperReport = JasperCompileManager.compileReport(pdfpath + file_name);
@@ -961,7 +958,7 @@ public class sell extends javax.swing.JPanel {
         parameters.put("tt", tt);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dataList);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-        
+
         CustomJasperViewer customViewer = new CustomJasperViewer(jasperPrint); // Sử dụng CustomJasperViewer thay vì JasperViewer
         customViewer.setVisible(true); // Hiển thị cửa sổ báo cáo
 
@@ -970,7 +967,7 @@ public class sell extends javax.swing.JPanel {
     private void btnXacnhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanActionPerformed
         // TODO add your handling code here:
         String makh = this.lbMakh.getText();
-        
+
         if (makh == null || makh.trim().isEmpty()) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Chưa có thông tin khách hàng");
             alert.setVisible(true);
@@ -995,7 +992,7 @@ public class sell extends javax.swing.JPanel {
                         Logger.getLogger(sell.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+
                 this.btnXacnhan.hide();
                 this.btnHuy.show();
                 this.lbXemkm.show();
@@ -1011,9 +1008,9 @@ public class sell extends javax.swing.JPanel {
                 tblProduct.clearSelection();
                 s = 0;
                 sum = 0;
-                
+
                 for (int row = tblProduct.getRowCount() - 1; row >= 0; row--) {
-                    
+
                     int tinhkm = 0;
                     Object id = model.getValueAt(row, 0);
                     String productID = id.toString();
@@ -1028,11 +1025,11 @@ public class sell extends javax.swing.JPanel {
                     //float per = 0;
                     if (tinhkm < giasp) {
                         s = s + tinhkm;
-                        
+
                     }
-                    
+
                 }
-                
+
                 tt = sum - s;
                 String ss = formatMoney(s);
                 this.lbKm.setText(ss);
@@ -1040,9 +1037,9 @@ public class sell extends javax.swing.JPanel {
                 lbTongtien.setText(tongTien);
                 String thanhToan = formatMoney(tt);
                 lbThanhtoan.setText(thanhToan);
-                
+
             }
-            
+
         }
 
     }//GEN-LAST:event_btnXacnhanActionPerformed
@@ -1075,7 +1072,7 @@ public class sell extends javax.swing.JPanel {
         model.setRowCount(0);
         this.btnThanhtoan.hide();
         this.btnXacnhan.show();
-        
+
 
     }//GEN-LAST:event_btnLammoiActionPerformed
 
@@ -1112,7 +1109,7 @@ public class sell extends javax.swing.JPanel {
             newFormRow[4] = tinhkmObject; // Số tiền được giảm giá
             newFormRow[5] = tienkmbject;
             modelShowKM.addRow(newFormRow);
-            
+
         }
 
     }//GEN-LAST:event_lbXemkmMouseClicked
@@ -1144,11 +1141,11 @@ public class sell extends javax.swing.JPanel {
                     this.lbdt.hide();
                     this.lbkt.show();
                 }
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(TestSell.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         } else {
             this.lbtenk.hide();
             this.lbma.hide();
@@ -1177,7 +1174,6 @@ public class sell extends javax.swing.JPanel {
     private void txtSpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSpActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSpActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -19,14 +19,17 @@ import static Model.helpers.formatMoney;
 import static Model.helpers.*;
 import javax.swing.JTable;
 import Model.MyScrollBar;
+
 /**
  *
  * @author Bon Nguyen
  */
 public class ThongKeBH_KhachHangTable extends javax.swing.JPanel {
+
     Font font = new Font("Segoe UI", Font.PLAIN, 14);
     DefaultTableModel model;
-    ArrayList<customerDTO> ds_bhkh = new ArrayList<>();    
+    ArrayList<customerDTO> ds_bhkh = new ArrayList<>();
+
     /**
      * Creates new form ThongKeBH_KhachHang
      */
@@ -90,48 +93,48 @@ public class ThongKeBH_KhachHangTable extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-         public void addLine(customerDTO bh_kh){
+    public void addLine(customerDTO bh_kh) {
         model.addRow(new Object[]{
             bh_kh.getCusID(), bh_kh.getLastName(), bh_kh.getSldon(), formatMoney(ConvertDoubleToInt(bh_kh.getTongtien())) + "đ"
-        });  
-    }
-    
-    public void viewData(JTable tblBHKH, ArrayList<customerDTO> list){
-        int s=0;
-        convertBackgroundOfTable(tblBHKH);
-        String[] headers = {"Mã khách hàng", "Tên khách", "Số lượng đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
-        model = new NonEditableTableModel(new Object[0][headers.length], headers);            
-        tblBHKH.setModel(model);
-        tblBHKH.setRowHeight(30);
-        tblBHKH.setFont(font);
-        
-        tblBHKH.getColumnModel().getColumn(2).setPreferredWidth(60);
-        
-        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
-        tblBHKH.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        tblBHKH.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        
-        removeData();
-        for(customerDTO dt_bh:list){
-            addLine(dt_bh);
-            s+=dt_bh.getTongtien();
-        }       
-        model.addRow(new Object[]{
-            "","","Tổng",formatMoney(s)+"đ"
         });
     }
 
-    public void removeData(){
+    public void viewData(JTable tblBHKH, ArrayList<customerDTO> list) {
+        int s = 0;
+        convertBackgroundOfTable(tblBHKH);
+        String[] headers = {"Mã khách hàng", "Tên khách", "Số lượng đơn", "Tổng tiền"}; // Đặt tiêu đề cột của bảng
+        model = new NonEditableTableModel(new Object[0][headers.length], headers);
+        tblBHKH.setModel(model);
+        tblBHKH.setRowHeight(30);
+        tblBHKH.setFont(font);
+
+        tblBHKH.getColumnModel().getColumn(2).setPreferredWidth(60);
+
+        CustomTableCellRenderer centerRenderer = new CustomTableCellRenderer();
+        tblBHKH.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblBHKH.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        removeData();
+        for (customerDTO dt_bh : list) {
+            addLine(dt_bh);
+            s += dt_bh.getTongtien();
+        }
+        model.addRow(new Object[]{
+            "", "", "Tổng", formatMoney(s) + "đ"
+        });
+    }
+
+    public void removeData() {
         int rowCount = model.getRowCount();
-        for (int i=rowCount-1;i>=0;i--){
+        for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
-    
-    public JTable getTable_BHKH(){
+
+    public JTable getTable_BHKH() {
         return tblBHKH;
     }
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
