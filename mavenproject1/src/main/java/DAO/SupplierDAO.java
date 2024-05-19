@@ -50,6 +50,13 @@ public class supplierDAO {
                 + ")";
         PreparedStatement p = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         p.executeUpdate();
+        
+//        String sqlq = "INSERT INTO supplier VALUES ('"+supplier.getSupplierID()+"',"
+//                + "'"+supplier.getSupplierName()+"'"
+//                + ",'"+supplier.getPhoneNumber()+"'"
+//                + ",'"+supplier.getAddress()+"')";
+//        PreparedStatement p = conn.prepareStatement(sqlq);
+//        p.executeUpdate();
     }
 
     public void update(supplierDTO supplier) throws SQLException {
@@ -61,6 +68,12 @@ public class supplierDAO {
         
         PreparedStatement stmt_up = conn.prepareStatement(sql);
         stmt_up.executeUpdate();
+
+//String sql="UPDATE supplier SET SupplierName = '"+supplier.getSupplierName()+"'"
+//+ ",PhoneNumber = '"+supplier.getPhoneNumber()+"',"
+//        + "Address = '"+supplier.getAddress()+"' Where SupplierID = '"+supplier.getSupplierID()+"'";
+//PreparedStatement p = conn.prepareStatement(sql);
+//p.executeUpdate();
     }
 
     public void delete(supplierDTO supplier) throws SQLException {

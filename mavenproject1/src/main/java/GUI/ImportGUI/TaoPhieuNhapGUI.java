@@ -643,7 +643,6 @@ public class TaoPhieuNhapGUI extends javax.swing.JPanel {
                 newRow[3] = model1.getValueAt(i, 4);
                 model.addRow(newRow);
                 model1.removeRow(rows[i]);
-
             }
             this.txtSp.setText("");
             //   MyMessageAccept accept = new MyMessageAccept(this, "Đã xóa sản phẩm thành công!");
