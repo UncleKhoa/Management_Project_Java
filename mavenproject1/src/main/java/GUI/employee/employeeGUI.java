@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.employee;
+
 import BUS.staffBUS;
 import DAO.staffDAO;
 import DTO.staffDTO;
@@ -22,53 +23,55 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.table.JTableHeader;
+
 /**
-/**
+ * /**
  *
  * @author Lenovo
  */
 public class employeeGUI extends javax.swing.JPanel {
 
-private ArrayList<staffDTO> list = new ArrayList<>();
+    private ArrayList<staffDTO> list = new ArrayList<>();
     private DefaultTableModel model;
     private JFrame parentFrame;
     /**
      * Creates new form employee
      */
     private staffBUS staffBUS = new staffBUS();
+
     public employeeGUI() {
         initComponents();
         //staff list
         this.staffBUS = new staffBUS();
         list = staffBUS.getList();
-        
+
         // staff table
         model = (DefaultTableModel) staffTable.getModel();
         JTableHeader header = staffTable.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
         convertBackgroundOfTable(staffTable);
-        
+
         //view 
         viewData(list);
         viewIcon();
 
     }
-    
-    
-    public void viewIcon(){
-    //search icon
+
+    public void viewIcon() {
+        //search icon
         File file = new File("");
         String currentDirectory = file.getAbsolutePath();
         String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\"; // Đường dẫn tương đối
-        ImageIcon imageIcon = new ImageIcon(relativePath+"search.png");
+        ImageIcon imageIcon = new ImageIcon(relativePath + "search.png");
         searchIcon.setIcon(imageIcon);
-        
-    //combo box
+
+        //combo box
         sapxep.setLabeText("Sắp xếp");
         sapxep.addItem("Năm sinh");
         sapxep.addItem("Tên");
     }
-    public void viewInformation(staffDTO staff){
+
+    public void viewInformation(staffDTO staff) {
         id.setText(staff.getStaffID());
         fname.setText(staff.getFirstname());
         lname.setText(staff.getLastname());
@@ -77,33 +80,35 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         phonenumber.setText(staff.getPhonenumber());
         role.setText(staff.getRole());
         int salary = ConvertDoubleToInt(staff.getSalary());
-        String temp= formatMoney(salary); 
+        String temp = formatMoney(salary);
         txtSalary.setText(temp);
         address.setText(staff.getAddress());
         File file = new File("");
         String currentDirectory = file.getAbsolutePath();
         String relativePath = currentDirectory + "\\src\\main\\java\\IMG\\IMG_STAFF\\"; // Đường dẫn tương đối
-        ImageIcon imageIcon = new ImageIcon(relativePath+staff.getImg());
-        avt.setIcon(imageIcon);
+        ImageIcon imageIcon = new ImageIcon(relativePath + staff.getImg());
+        avt.setIcon(imageIcon);        
     }
-    public void addLineData(staffDTO i)
-    {
-     model.addRow(new Object[]{
-           i.getStaffID(),i.getFirstname(),i.getLastname(),i.getYearofbirth(),i.getGender(),i.getPhonenumber(),i.getAddress(),ConvertDoubleToInt(i.getSalary()),i.getRole(),i.getImg()
+
+    public void addLineData(staffDTO i) {
+        model.addRow(new Object[]{
+            i.getStaffID(), i.getFirstname(), i.getLastname(), i.getYearofbirth(), i.getGender(), i.getPhonenumber(), i.getAddress(), ConvertDoubleToInt(i.getSalary()), i.getRole(), i.getImg()
         });
     }
-    public void viewData(ArrayList<staffDTO> list){
+
+    public void viewData(ArrayList<staffDTO> list) {
         // view table
         removeData();
-        for (staffDTO i:list){
-            addLineData(i); 
+        for (staffDTO i : list) {
+            addLineData(i);
         }
-        headline.setText("Quản lý nhân viên ("+list.size()+")");
-        
-      }
-    public void removeData(){
+        headline.setText("Quản lý nhân viên (" + list.size() + ")");
+
+    }
+
+    public void removeData() {
         int rowCount = model.getRowCount();
-        for (int i=rowCount-1;i>=0;i--){
+        for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }
@@ -134,7 +139,6 @@ private ArrayList<staffDTO> list = new ArrayList<>();
         gender = new javax.swing.JTextField();
         phonenumber = new javax.swing.JTextField();
         address = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -297,8 +301,6 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             }
         });
 
-        jLabel4.setText("ID");
-
         jLabel5.setText("Tên");
 
         jLabel6.setText("Họ");
@@ -372,21 +374,15 @@ private ArrayList<staffDTO> list = new ArrayList<>();
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)
-                        .addGap(197, 197, 197))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(169, 169, 169)
-                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(157, 157, 157)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(87, 87, 87)))
+                        .addGap(169, 169, 169)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(87, 87, 87)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel12)
@@ -473,8 +469,7 @@ private ArrayList<staffDTO> list = new ArrayList<>();
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(role, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel4))))))
+                                    .addComponent(jLabel12))))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -682,37 +677,36 @@ private ArrayList<staffDTO> list = new ArrayList<>();
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
 
         int selectColumn = staffTable.getSelectedRow();
-        if (selectColumn == -1){
+        if (selectColumn == -1) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn nhân viên ");
             alert.setVisible(true);
-        }else{
+        } else {
             String id = list.get(selectColumn).getStaffID();
             CustomConfirmDialog confirm = new CustomConfirmDialog(parentFrame, "Xác nhận xóa", "Bạn có muốn xóa nhân viên " + id, "close_red.png");
             confirm.setVisible(true);
             if (confirm.getSelected()) {
-                    list.remove(selectColumn);
-                    viewData(list);
-                    staffDAO a = new staffDAO();
-                    try {
-                        a.delete(id);
-                        MyMessageAlert alert = new MyMessageAlert(parentFrame, "Xóa thành công! ");
-                        alert.setVisible(true);
-                    }
-                    catch (SQLException ex) {
-                        Logger.getLogger(employeeGUI.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                list.remove(selectColumn);
+                viewData(list);
+                staffDAO a = new staffDAO();
+                try {
+                    a.delete(id);
+                    MyMessageAlert alert = new MyMessageAlert(parentFrame, "Xóa thành công! ");
+                    alert.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(employeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
-            }
+        }
     }//GEN-LAST:event_removeActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
         int selectRow = staffTable.getSelectedRow();
-        if (selectRow == -1){
+        if (selectRow == -1) {
             MyMessageAlert alert = new MyMessageAlert(parentFrame, "Vui lòng chọn nhân viên ");
             alert.setVisible(true);
-        }else{
+        } else {
             edit_popup edit = new edit_popup(list.get(selectRow));
             edit.setVisible(true);
         }
@@ -730,12 +724,11 @@ private ArrayList<staffDTO> list = new ArrayList<>();
     private void sapxepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sapxepActionPerformed
         // TODO add your handling code here:
         int index = sapxep.getSelectedIndex();
-        if (index == 0){
+        if (index == 0) {
             removeData();
-            this.list= staffBUS.sortByBirth();
+            this.list = staffBUS.sortByBirth();
             viewData(list);
-        }
-        else if (index ==1 ){
+        } else if (index == 1) {
             removeData();
             this.list = staffBUS.sortByName();
             viewData((list));
@@ -744,19 +737,20 @@ private ArrayList<staffDTO> list = new ArrayList<>();
 
     private void searchIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchIconMouseClicked
         // TODO add your handling code here:
-         if (searchField.getText().equals("")){
+        if (searchField.getText().equals("")) {
             viewData(list);
-        }else{
-            ArrayList <staffDTO> list2 = staffBUS.search(searchField.getText());
-            if (list2.size()==0 ){
-                           MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không tìm thấy nhân viên ");
-            alert.setVisible(true);}
-            else{
+        } else {
+            ArrayList<staffDTO> list2 = staffBUS.search(searchField.getText());
+            if (list2.size() == 0) {
+                MyMessageAlert alert = new MyMessageAlert(parentFrame, "Không tìm thấy nhân viên ");
+                alert.setVisible(true);
+            } else {
                 removeData();
-                this.list= list2;
+                this.list = list2;
                 viewData(list2);
 
-            }}
+            }
+        }
     }//GEN-LAST:event_searchIconMouseClicked
 
 
@@ -776,7 +770,6 @@ private ArrayList<staffDTO> list = new ArrayList<>();
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

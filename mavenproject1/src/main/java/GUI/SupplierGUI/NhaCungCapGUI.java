@@ -746,10 +746,10 @@ public class NhaCungCapGUI extends javax.swing.JPanel {
          supplierBUS bus = new supplierBUS();
          ArrayList<supplierDTO> listds = new ArrayList<>();
 
-          listds= bus.SearchByName(a1, a2, listncc);
+          listds = bus.SearchByName(a1, a2, listncc);
           if(listds!= null)
           {
-               ViewData( listds);
+               ViewData(listds);
           }
           else
           {

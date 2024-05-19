@@ -69,52 +69,64 @@ public class supplierBUS {
         return ketQua;
     }
 
+//    public ArrayList<supplierDTO> SearchByName(String a1, String a2, ArrayList<supplierDTO> list) {
+//        ArrayList<supplierDTO> result = new ArrayList<>();
+//        char kitu1 = 0, kitu2 = 0;
+//        boolean empty1 = false, empty2 = false;
+//        if (a1.trim().isEmpty()) {
+//            empty1 = true;
+//            kitu2 = a2.charAt(0);
+//            kitu2 = Character.toLowerCase(kitu2);
+//
+//        }
+//        if (a2.trim().isEmpty()) {
+//            empty2 = true;
+//            kitu1 = a1.charAt(0);
+//            kitu1 = Character.toLowerCase(kitu1);
+//
+//        }
+//        if (!a1.trim().isEmpty() && !a2.trim().isEmpty()) {
+//            kitu1 = Character.toLowerCase(a1.charAt(0));
+//            kitu2 = Character.toLowerCase(a2.charAt(0));
+//        }
+//        for (supplierDTO supplier : list) {
+//            char firstChar = supplier.getSupplierName().charAt(0);
+//            char firstCharLower = Character.toLowerCase(firstChar);
+//
+//            if (empty1 && firstCharLower == kitu2) {
+//                result.add(supplier);
+//            } else if (empty2 && firstCharLower == kitu1) {
+//                result.add(supplier);
+//            } else if (!empty1 && !empty2 && (firstCharLower == kitu1 || firstCharLower == kitu2)) {
+//                result.add(supplier);
+//            }
+//        }
+//        return result;
+//    }
+
     public ArrayList<supplierDTO> SearchByName(String a1, String a2, ArrayList<supplierDTO> list) {
-        ArrayList<supplierDTO> result = new ArrayList<>();
-        char kitu1 = 0, kitu2 = 0;
-        boolean empty1 = false, empty2 = false;
-        if (a1.trim().isEmpty()) {
-            empty1 = true;
-            kitu2 = a2.charAt(0);
-            kitu2 = Character.toLowerCase(kitu2);
-
-        }
-        if (a2.trim().isEmpty()) {
-            empty2 = true;
-            kitu1 = a1.charAt(0);
-            kitu1 = Character.toLowerCase(kitu1);
-
-        }
-        if (!a1.trim().isEmpty() && !a2.trim().isEmpty()) {
-            kitu1 = Character.toLowerCase(a1.charAt(0));
-            kitu2 = Character.toLowerCase(a2.charAt(0));
-        }
-        for (supplierDTO supplier : list) {
-            char firstChar = supplier.getSupplierName().charAt(0);
-            char firstCharLower = Character.toLowerCase(firstChar);
-
-            if (empty1 && firstCharLower == kitu2) {
-                result.add(supplier);
-            } else if (empty2 && firstCharLower == kitu1) {
-                result.add(supplier);
-            } else if (!empty1 && !empty2 && (firstCharLower == kitu1 || firstCharLower == kitu2)) {
-                result.add(supplier);
+        ArrayList<supplierDTO> new_list = new ArrayList<>();
+        for(supplierDTO sup:list){
+            String firstchar1 = String.valueOf(sup.getSupplierName().toLowerCase().charAt(0));
+            String firstchar2 = String.valueOf(sup.getSupplierName().toLowerCase().charAt(0));
+            if(a1.toLowerCase().equals(firstchar1) || a2.toLowerCase().equals(firstchar2)){
+                new_list.add(sup);
             }
         }
-         return result;
-     }
-     public boolean checkId(String id,ArrayList<supplierDTO> list)
-     {
-         String haiKyTuDau = id.substring(0, 3);
-         if(!haiKyTuDau.equals("SUP"))
-         {
-             return true;
-         }
-         for (supplierDTO supplier : list) {
-              if(supplier.getSupplierID().equals(id))
-                  return true;
-          }
-          return false;
-     }
-     
+        return new_list;
+    }
+    
+    public boolean checkId(String id, ArrayList<supplierDTO> list) {
+        String haiKyTuDau = id.substring(0, 3);
+        if (!haiKyTuDau.equals("SUP")) {
+            return true;
+        }
+        for (supplierDTO supplier : list) {
+            if (supplier.getSupplierID().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

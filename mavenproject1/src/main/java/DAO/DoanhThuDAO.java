@@ -152,7 +152,7 @@ public class DoanhThuDAO {
                     + "SELECT r.Year_hd, r.Quarter_hd, r.Total_hd, i.Year_nh, i.Quarter_nh, i.Total_nh "
                     + "FROM Receipt as r "
                     + "JOIN Import as i "
-                    + "ON r.Year_hd = i.Year_nh AND r.Quarter_hd = i.Quarter_nh "
+                    + "ON r.Year_hd = i .Year_nh AND r.Quarter_hd = i.Quarter_nh "
                     + "ORDER BY r.Year_hd, r.Quarter_hd ";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
