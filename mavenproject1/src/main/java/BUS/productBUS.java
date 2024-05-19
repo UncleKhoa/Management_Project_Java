@@ -45,6 +45,7 @@ public class productBUS {
               spDAO.delete(sp);
               
           }
+
     public int ConvertDoubleToInt(double price){
         return (int) price;
     }
@@ -99,6 +100,18 @@ public class productBUS {
         }
         return list;
     }
+    public ArrayList<productDTO> SeardByname(String s) {
+            ArrayList<productDTO > list = getList();
+        ArrayList<productDTO > ketQua = new ArrayList<>();
+        for (productDTO brand : list) {
+            
+            if (s.equalsIgnoreCase(brand.getBrandID())) {
+                ketQua.add(brand);
+            }
+        }
+        return ketQua;
+    }
+    
 
 
 }

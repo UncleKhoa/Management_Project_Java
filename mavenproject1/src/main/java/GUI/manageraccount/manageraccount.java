@@ -277,9 +277,10 @@ public class manageraccount extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setText("MANAGER ACCOUNT");
 
-        them.setBackground(new java.awt.Color(172, 202, 231));
-        them.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        them.setText("THÊM");
+        them.setBackground(new java.awt.Color(41, 67, 92));
+        them.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        them.setForeground(new java.awt.Color(255, 255, 255));
+        them.setText("Thêm");
         them.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.white, null, null));
         them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,9 +288,10 @@ public class manageraccount extends javax.swing.JPanel {
             }
         });
 
-        buttonxoa.setBackground(new java.awt.Color(190, 100, 115));
-        buttonxoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        buttonxoa.setText("XÓA");
+        buttonxoa.setBackground(new java.awt.Color(47, 87, 110));
+        buttonxoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonxoa.setForeground(new java.awt.Color(255, 255, 255));
+        buttonxoa.setText("Xóa");
         buttonxoa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.white, null, null));
         buttonxoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,9 +299,10 @@ public class manageraccount extends javax.swing.JPanel {
             }
         });
 
-        buttonsua.setBackground(new java.awt.Color(102, 151, 102));
-        buttonsua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        buttonsua.setText("SỬA");
+        buttonsua.setBackground(new java.awt.Color(92, 84, 112));
+        buttonsua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonsua.setForeground(new java.awt.Color(255, 255, 255));
+        buttonsua.setText("Sửa");
         buttonsua.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.white, null, null));
         buttonsua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -307,9 +310,10 @@ public class manageraccount extends javax.swing.JPanel {
             }
         });
 
-        timkiem.setBackground(new java.awt.Color(213, 167, 213));
-        timkiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        timkiem.setText("TÌM KIẾM");
+        timkiem.setBackground(new java.awt.Color(148, 78, 99));
+        timkiem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        timkiem.setForeground(new java.awt.Color(255, 255, 255));
+        timkiem.setText("Tìm kiếm");
         timkiem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -347,14 +351,15 @@ public class manageraccount extends javax.swing.JPanel {
                                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(23, 23, 23)
+                                        .addComponent(buttonxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(9, 9, 9)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(29, 29, 29)
-                                                .addComponent(buttonxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(buttonsua, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(9, 9, 9))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -463,7 +468,7 @@ public class manageraccount extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(export, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

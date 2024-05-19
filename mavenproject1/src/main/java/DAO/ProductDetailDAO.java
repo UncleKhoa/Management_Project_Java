@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -91,5 +93,16 @@ public class ProductDetailDAO {
         stmt_update.executeUpdate();
         stmt_update.close();
     }
+    public void delete(String brandid) throws SQLException {
+           try {
+              Connection connection = DBConnect.getConnect();
+              String sql = "DELETE FROM productdetail WHERE ProductID = '" + brandid + "'";
+              PreparedStatement stmt_add = conn.prepareStatement(sql);
+              stmt_add.executeUpdate();
+    
+               } catch (SQLException ex) {
+            Logger.getLogger(ProductDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
 
 }

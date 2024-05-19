@@ -10,6 +10,7 @@ import DTO.staffDTO;
 import GUI.managerproduct.detail;
 import Model.CustomHeaderRenderer;
 import Model.NonEditableTableModel;
+import static Model.helpers.ConvertDoubleToInt;
 import static Model.helpers.convertBackgroundOfTable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -73,7 +74,7 @@ public class choosestaffid extends javax.swing.JPanel {
                 staff.getGender(),
                 staff.getPhonenumber(),
                 staff.getAddress(),
-                staff.getSalary(),
+                ConvertDoubleToInt(staff.getSalary()),
                 staff.getRole(),
                 staff.getYearofbirth()
             };
