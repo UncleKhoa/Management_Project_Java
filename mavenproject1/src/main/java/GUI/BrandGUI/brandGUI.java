@@ -88,7 +88,7 @@ public class brandGUI extends javax.swing.JFrame {
         tblBrand = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbThoat = new javax.swing.JLabel();
         txtTen = new javax.swing.JTextField();
         txtMa = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -98,6 +98,7 @@ public class brandGUI extends javax.swing.JFrame {
         btnSua = new javax.swing.JButton();
         btnXacnhan = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -131,13 +132,19 @@ public class brandGUI extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Thông tin nhãn hiệu");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(459, 7, 184, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 184, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("Mã nhãn hiệu");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(419, 82, 102, -1));
+        lbThoat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbThoat.setForeground(new java.awt.Color(122, 178, 178));
+        lbThoat.setText("Thoát");
+        lbThoat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbThoatMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lbThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, 50, -1));
         jPanel1.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(539, 181, 149, 32));
-        jPanel1.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(539, 77, 149, 32));
+        jPanel1.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 149, 32));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Tìm kiếm");
@@ -159,7 +166,7 @@ public class brandGUI extends javax.swing.JFrame {
                 btnXoaActionPerformed(evt);
             }
         });
-        jPanel1.add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(611, 286, -1, 25));
+        jPanel1.add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 286, -1, 25));
 
         btnThem.setBackground(new java.awt.Color(142, 62, 99));
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -204,6 +211,10 @@ public class brandGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(521, 286, -1, 25));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("Mã nhãn hiệu");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 102, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -379,6 +390,11 @@ public class brandGUI extends javax.swing.JFrame {
         On(true, false);
     }//GEN-LAST:event_btnHuyActionPerformed
 
+    private void lbThoatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbThoatMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_lbThoatMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -422,10 +438,11 @@ public class brandGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbThoat;
     private javax.swing.JTable tblBrand;
     private javax.swing.JTextField txtMa;
     private javax.swing.JTextField txtSearch;

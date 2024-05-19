@@ -8,6 +8,7 @@ import BUS.customerBUS;
 import BUS.productBUS;
 import DTO.productDTO;
 import DTO.userDTO;
+import GUI.BrandGUI.brandGUI;
 import GUI.SellGUI.sell;
 import static GUI.manageraccount.manageraccount.Export_Excell;
 import Model.CustomHeaderRenderer;
@@ -172,7 +173,7 @@ public class managerproduct extends javax.swing.JPanel {
         header.setDefaultRenderer(new CustomHeaderRenderer());
         convertBackgroundOfTable(jTable1);
         String[] headers = {"Producid", " Brandid", " Productname", " Unitprice", "Quantity", "IMG"};
-    }
+    
 
         model = new NonEditableTableModel(new Object[0][headers.length], headers);
 
@@ -487,14 +488,8 @@ public class managerproduct extends javax.swing.JPanel {
 
         }
     }
-}
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
+
+   
 
 //    private void showProductDetailGUI() {
 //    Productdetail productDetailGUI = new Productdetail();
@@ -631,14 +626,17 @@ public class managerproduct extends javax.swing.JPanel {
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2))
                                 .addGap(32, 32, 32)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(36, 36, 36))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(48, 48, 48)
-                                        .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(36, 36, 36))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(53, 53, 53))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(editbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(71, 71, 71)))
@@ -703,11 +701,10 @@ public class managerproduct extends javax.swing.JPanel {
                             .addComponent(timkiem))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(25, 25, 25)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -750,6 +747,11 @@ public class managerproduct extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(jTable1);
@@ -812,6 +814,8 @@ public class managerproduct extends javax.swing.JPanel {
 
     private void comboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxActionPerformed
         // TODO add your handling code here:
+        brandGUI brand = new brandGUI();
+        brand.show();
     }//GEN-LAST:event_comboboxActionPerformed
 
     private void editbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbuttonActionPerformed
@@ -819,6 +823,32 @@ public class managerproduct extends javax.swing.JPanel {
 
     }//GEN-LAST:event_editbuttonActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+            if (evt.getClickCount() == 1) {
+                    int selectedRow = jTable1.getSelectedRow();
+                    jTextField1.setText(jTable1.getValueAt(selectedRow, 0).toString());
+                    jComboBox1.setSelectedItem(jTable1.getValueAt(selectedRow, 1).toString());
+                    jTextField3.setText(jTable1.getValueAt(selectedRow, 2).toString());
+                    jTextField4.setText(jTable1.getValueAt(selectedRow, 3).toString());
+                    jSpinner1.setValue(jTable1.getValueAt(selectedRow, 4));
+                     ImageIcon imageIcon = (ImageIcon) jTable1.getValueAt(selectedRow, jTable1.getColumnCount() - 1);
+                        int newWidth = 113;
+                        int newHeight = 110;
+                        Image currentImage = imageIcon.getImage();
+                        Image scaledImage = currentImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+                        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+                        won.setIcon(scaledIcon);
+                }
+    }//GEN-LAST:event_jTable1MouseClicked
+ public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonxoa;
