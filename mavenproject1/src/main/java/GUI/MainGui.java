@@ -801,7 +801,7 @@ public class MainGUI extends javax.swing.JFrame {
                 MNaccount.setEnabled(true);
                 jmain.removeAll();
                 MNaccount.setSize(950, 650);
-                jmain.add(MNaccount.getContentPane());
+                jmain.add(MNaccount);
                 jmain.updateUI();
                 break;
 
