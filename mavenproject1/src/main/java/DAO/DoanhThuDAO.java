@@ -173,4 +173,59 @@ public class DoanhThuDAO {
         return doanhthu;
     }
     
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    public ArrayList<doanhthuDTO> abc(){
+        ArrayList<doanhthuDTO> newlist = new ArrayList<>();
+        try{
+            String sql = "select (DISTINCT cthd.ProductID), sp.ProductName, SUM(cthd.Quantity), SUM(ctnh.SubTotal) as tienvon, SUM(cthd.Subtotal) as doanhthu "
+                    + "from receiptdatail cthd, product sp, importdetail ctnh "
+                    + "where cthd.ProductID = sp.ProductID and sp.ProductID = ctnh.ProductID "
+                    + "GROUP BY cthd.ProductID";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                String productid = rs.getString("ProductID");
+                String productname = rs.getString("ProductName");
+                int quantity = rs.getInt("Quantity");
+                double tienvon = rs.getDouble("tienvon");
+                double doanhthu = rs.getDouble("doanhthu");
+                double tienloi = tienvon - doanhthu;
+                doanhthuDTO obj = new doanhthuDTO(productid, productname, quantity, tienvon, doanhthu, tienloi);
+                newlist.add(obj);
+            }
+        }
+        catch(SQLException ex){
+            System.out.print(ex);
+        }
+        return newlist;
+    }
+    
 }
