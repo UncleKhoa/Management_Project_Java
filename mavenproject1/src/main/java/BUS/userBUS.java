@@ -172,8 +172,8 @@ public class userBUS {
 
     public void Mail(String t, String mail, String name) throws MessagingException, UnsupportedEncodingException {
         //Gửi email
-        final String accountName = "khoanguyen052096@gmail.com";
-        final String accountPassword = "kouk sduc mewa phtq";
+        final String accountName = "";
+        final String accountPassword = "";
         String subject = "Lấy lại mật khẩu";
 
         Properties props = new Properties();

@@ -122,6 +122,10 @@ public class doanhthuBUS {
     
     public ArrayList<doanhthuDTO> GetList_DTTQ(){
         return ds_dttq;
-    }   
+    } 
+    
+    
+    
+    
 
 }
